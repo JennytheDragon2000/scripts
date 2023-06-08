@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get the currently focused window ID
+current_window_id=$(xdotool getactivewindow)
+
+# Check if LibreWolf is already running
+if ! pgrep -x "librewolf" > /dev/null; then
+    # Open LibreWolf if it's not running
+    librewolf &
+else
+    # Find the window ID of LibreWolf
+    window_id=$(xdotool search --name "LibreWolf" | head -1)
+
+    if [ -n "$window_id" ]; then
+        # Check if the currently focused window is a LibreWolf window
+        if [ "$current_window_id" == "$window_id" ]; then
+            # Activate the most recently focused window
+            xdotool windowactivate $(xprop -root _NET_ACTIVE_WINDOW | awk -F' ' '{print $5}')
+
+        else
+            # Focus LibreWolf if it's already running
+            i3-msg "[id=$window_id] focus"
+        fi
+    fi
+fi
