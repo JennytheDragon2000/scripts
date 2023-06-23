@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# store pwd in a variable
+ZOXIDE_RESULTS=$(zoxide query $1)
+
+
+if [ -z "$ZOXIDE_RESULTS" ]; then
+    exit 0
+fi
+
+
+# get the folder name
+FOLDER=$(basename $ZOXIDE_RESULTS)
+
+
+# lookup tmux session name
+SESSION=$(tmux list-sessions | grep $FOLDER | awk '{print $1}')
+echo "$SESSION"
+echo "not session"
+

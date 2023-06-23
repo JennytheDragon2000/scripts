@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DMEDITOR="kitty -e nvim"
+# DMEDITOR="kitty zsh -c 'nvim'"
 PDFVIEWER="zathura"
 
 declare -a options=(
@@ -25,6 +26,9 @@ declare -a options=(
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
 "mathsCw - $HOME/Semester2/Maths-Cw-2022.pdf"
 "keyd - /etc/keyd/default.conf"
+"live-server - $HOME/.live-server.json"
+"environmet-variables - /etc/environment"
+"wget - $HOME/.wgetrc."
 "Quit"
 )
 
