@@ -1,38 +1,41 @@
 #!/usr/bin/env bash
 
-DMEDITOR="kitty -e nvim"
+DMEDITOR="kitty -c /home/srinath/.config/kitty/kitty.conf -e nvim -u /home/srinath/.config/nvim/init.lua"
 # DMEDITOR="kitty zsh -c 'nvim'"
 PDFVIEWER="zathura"
 
 declare -a options=(
-"Alacritty - $HOME/.config/alacritty/alacritty.yml"
-"AwesomeWM - $HOME/.config/awesome/rc.lua"
-"Bash - $HOME/.bashrc"
-"NeoVim - $HOME/.config/nvim/init.lua"
-"Picom - $HOME/.config/picom/picom.conf"
-"Rofi - $HOME/.config/rofi/config.rasi"
-"rconfig - $HOME/scripts/rofi-config-menu-updated.sh"
-"Ranger - $HOME/.config/ranger/rc.conf"
-"Zsh - $HOME/.zshrc"
-"i3 - $HOME/.config/i3/config"
-"alias - $HOME/.config/aliasrc"
-"lf - $HOME/.config/lf/lfrc"
-"polybar - $HOME/.config/polybar/config.ini"
-"qutebrowser - $HOME/.config/qutebrowser/config.py"
-"kitty - $HOME/.config/kitty/kitty.conf"
-"tmux - $HOME/.tmux.conf"
-"mpvInputs - $HOME/.config/mpv/input.conf"
-"mpv - $HOME/.config/mpv/mpv.conf"
-"sxhkd - $HOME/.config/sxhkd/sxhkdrc"
-"mathsCw - $HOME/Semester2/Maths-Cw-2022.pdf"
+"Alacritty - /home/srinath/.config/alacritty/alacritty.yml"
+"AwesomeWM - /home/srinath/.config/awesome/rc.lua"
+"Bash - /home/srinath/.bashrc"
+"NeoVim - /home/srinath/.config/nvim/init.lua"
+"Picom - /home/srinath/.config/picom/picom.conf"
+"Rofi - /home/srinath/.config/rofi/config.rasi"
+"rconfig - /home/srinath/scripts/rofi-config-menu-updated.sh"
+"Ranger - /home/srinath/.config/ranger/rc.conf"
+"Zsh - /home/srinath/.zshrc"
+"i3 - /home/srinath/.config/i3/config"
+"alias - /home/srinath/.config/aliasrc"
+"lf - /home/srinath/.config/lf/lfrc"
+"polybar - /home/srinath/.config/polybar/config.ini"
+"qutebrowser - /home/srinath/.config/qutebrowser/config.py"
+"kitty - /home/srinath/.config/kitty/kitty.conf"
+"tmux - /home/srinath/.tmux.conf"
+"mpvInputs - /home/srinath/.config/mpv/input.conf"
+"mpv - /home/srinath/.config/mpv/mpv.conf"
+"sxhkd - /home/srinath/.config/sxhkd/sxhkdrc"
+"mathsCw - /home/srinath/Semester2/Maths-Cw-2022.pdf"
 "keyd - /etc/keyd/default.conf"
-"live-server - $HOME/.live-server.json"
+"live-server - /home/srinath/.live-server.json"
 "environmet-variables - /etc/environment"
-"wget - $HOME/.wgetrc."
+"wget - /home/srinath/.wgetrc."
+"sway - /home/srinath/.config/sway/config"
+"kmonad - /home/srinath/.config/kmonad/config.kbd"
+"dnf - /etc/dnf/dnf.conf"
 "Quit"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | rofi -dmenu -i  20 -p 'Edit config:')
+choice=$(printf '%s\n' "${options[@]}" | rofi -theme /home/srinath/.config/rofi/config.rasi -dmenu -i  20 -p 'Edit config:')
 
 if [[ "$choice" == "Quit" ]]; then
     echo "Program terminated." && exit 1
@@ -46,7 +49,7 @@ elif [ "$choice" ]; then
 	fi
 
     if [[ "$cfg" == *".config/nvim"* ]]; then
-		cd "$HOME/.config/nvim/"
+		cd "/home/srinath/.config/nvim/"
 	fi
 
 	$DMEDITOR "$cfg"
