@@ -32,6 +32,8 @@ declare -a options=(
 "sway - /home/srinath/.config/sway/config"
 "kmonad - /home/srinath/.config/kmonad/config.kbd"
 "dnf - /etc/dnf/dnf.conf"
+"git - /etc/gitconfig"
+
 "Quit"
 )
 
