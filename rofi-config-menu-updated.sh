@@ -33,6 +33,7 @@ declare -a options=(
 "kmonad - /home/srinath/.config/kmonad/config.kbd"
 "dnf - /etc/dnf/dnf.conf"
 "git - /etc/gitconfig"
+"axel - /etc/axelrc"
 
 "Quit"
 )
