@@ -65,3 +65,4 @@ sudo -u hadoopusr -H start-dfs.sh
 sudo -u hadoopusr -H start-yarn.sh
 sudo -u hadoopusr -H jps
 
+# ssh -v -L 9870:localhost:9870 -L 8088:localhost:8088 hadoopusr@139.162.41.103

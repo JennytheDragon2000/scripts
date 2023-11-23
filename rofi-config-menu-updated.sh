@@ -21,8 +21,8 @@ declare -a options=(
 "qutebrowser - /home/srinath/.config/qutebrowser/config.py"
 "kitty - /home/srinath/.config/kitty/kitty.conf"
 "tmux - /home/srinath/.tmux.conf"
-"mpvInputs - /home/srinath/.config/mpv/input.conf"
 "mpv - /home/srinath/.config/mpv/mpv.conf"
+"mpvInputs - /home/srinath/.config/mpv/input.conf"
 "sxhkd - /home/srinath/.config/sxhkd/sxhkdrc"
 "mathsCw - /home/srinath/Semester2/Maths-Cw-2022.pdf"
 "keyd - /etc/keyd/default.conf"
@@ -34,6 +34,8 @@ declare -a options=(
 "dnf - /etc/dnf/dnf.conf"
 "git - /etc/gitconfig"
 "axel - /etc/axelrc"
+"fish - /home/srinath/.config/fish/config.fish"
+
 
 "Quit"
 )
