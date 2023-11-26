@@ -28,7 +28,7 @@ printf "Current Time: %s\n" "$TIME_POSITION"
 
 printf "File name: %s\n" "$FILENAME"
 
-dir_to_save="/tmp/mpv"
+dir_to_save="/home/srinath/mpvTimeStamps/"
 if [ ! -d "$dir_to_save" ]; then
   mkdir "$dir_to_save"
   echo "Directory $dir_to_save created"

@@ -1,4 +1,4 @@
-dir_to_load="/tmp/mpv"
+dir_to_load="/home/srinath/mpvTimeStamps/"
 filename=$(ls -R $dir_to_load | dmenu -l 20 -p "Select the File")
 echo $filename
 timestamp=$(echo $filename | awk -F ',' '{print $3}')

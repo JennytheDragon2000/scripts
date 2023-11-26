@@ -12,5 +12,5 @@ kitty_pid=$(ps -o pid= -o args= -p "$window_pid" | awk '/kitty/ { print $1 }')
 command=$1
 
 # kitty @ --to unix:/home/srinath/kitty-sockets/mykitty-464218 send-text --match id:1 "$command\n"
-kitty @ --to unix:/home/srinath/kitty-sockets/mykitty-464218 send-text --match id:1 "$command"
+kitty @ --to unix:/home/srinath/kitty-sockets/mykitty-$kitty_pid send-text --match id:1 "$command"
 
