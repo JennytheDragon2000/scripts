@@ -2,7 +2,7 @@
 # get arugments from commandline
 echo $1
 echo $2
-while inotifywait -e modify $1; do
+while inotifywait -e modify,move,create,delete $1; do
     clear
 
     # run the command

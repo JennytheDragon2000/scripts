@@ -12,7 +12,11 @@ selected_email=$(printf '%s\n' "${emails[@]}" | dmenu -l 10 -i -p "Select an ema
 echo "You selected: $selected_email"
 guerrillamail setaddr $selected_email 2>/dev/null
 email=$(guerrillamail info 2>/dev/null | cut -d ':' -f 2)
+echo $email
+
+# type using xdotool
 xdotool type --delay 5 $email && xdotool key Return
+
 
 # Start the timer
 start_time=$(date +%s)

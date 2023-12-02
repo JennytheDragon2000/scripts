@@ -35,6 +35,7 @@ declare -a options=(
 "git - /etc/gitconfig"
 "axel - /etc/axelrc"
 "fish - /home/srinath/.config/fish/config.fish"
+"espanso - /home/srinath/.config/espanso/match/base.yml"
 
 
 "Quit"

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 from pynput.mouse import Button, Listener
 import time
 import subprocess
