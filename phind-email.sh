@@ -45,7 +45,11 @@ do
 
         link=$(guerrillamail get $latest_email_id 2>/dev/null | grep -o '<a href[^>]*>' | awk -F'"' '{print $2}')
         echo "Your links: $link"
-        xdg-open $link
+        # xdg-open $link
+        executable=$($HOME/scripts/getExecutableofWindow.sh | grep -i "executable" | cut -d ":" -f 2 )
+        notify-send "Opening link in $executable"
+        $executable $link
+
         break
     fi
 
