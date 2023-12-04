@@ -1,2 +1,1 @@
-   mouseHoldUpdated.py* 
-removeOlderSnaps.s
+https://kb.froglogic.com/misc/find-process-for-window/

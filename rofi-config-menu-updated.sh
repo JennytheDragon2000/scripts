@@ -36,6 +36,7 @@ declare -a options=(
 "axel - /etc/axelrc"
 "fish - /home/srinath/.config/fish/config.fish"
 "espanso - /home/srinath/.config/espanso/match/base.yml"
+"kitty - /home/srinath/.config/kitty/open-actions.conf"
 
 
 "Quit"
