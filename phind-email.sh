@@ -3,10 +3,13 @@
 
 domain="phind.com"
 # Define the email addresses
-emails=("phind1" "phind2" "phind3" "phind4" "phind5" "phind6" "phind7 " "phind8" "phind9" "phind10")
+# emails=("phind1" "phind2" "phind3" "phind4" "phind5" "phind6" "phind7 " "phind8" "phind9" "phind10")
 
-# Use dmenu to present the email addresses and store the selected choice in a variable
-selected_email=$(printf '%s\n' "${emails[@]}" | dmenu -l 10 -i -p "Select an email:")
+# # Use dmenu to present the email addresses and store the selected choice in a variable
+# selected_email=$(printf '%s\n' "${emails[@]}" | dmenu -l 10 -i -p "Select an email:")
+
+
+selected_email="phind$(zenity --entry --title='Enter Email Address' --text='Tags')"
 
 # Print the selected email
 echo "You selected: $selected_email"
