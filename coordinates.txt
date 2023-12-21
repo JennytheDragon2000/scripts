@@ -1,0 +1,4 @@
+Selection at (81, 71) to (1211, 708)
+Rectangle drawn at (193, 148) to (484, 253)
+Rectangle drawn at (634, 172) to (1001, 290)
+Rectangle drawn at (345, 367) to (743, 488)

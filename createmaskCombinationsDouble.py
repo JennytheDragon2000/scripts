@@ -56,7 +56,7 @@ for i, rects in enumerate(rect_combinations):
         else:
             cv2.rectangle(canvas2, rect[0], rect[1], red, -1)
 
-    cv2.imwrite(f'mask_{i}.1.png', canvas1)
-    cv2.imwrite(f'mask_{i}.2.png', canvas2)
+    cv2.imwrite(f'mask_{i}.2.png', canvas1)
+    cv2.imwrite(f'mask_{i}.1.png', canvas2)
 
 
