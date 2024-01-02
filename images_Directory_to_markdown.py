@@ -1,9 +1,22 @@
 import os
 import shutil
+import subprocess
+import sys
 import time
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
+
+cmd = [
+    "zenity",
+    "--entry",
+    '--title="Choose File"',
+    '--text="Choose the MD file_name"',
+]
+result = subprocess.check_output(cmd)
+result = result.decode("utf-8")
+target_directory = f"/home/srinath/Documents/Obsidian-Vault/brandNew/{result}"
+print(target_directory)
 
 
 class Watcher:
@@ -13,9 +26,8 @@ class Watcher:
         self.observer = Observer()
 
     def run(self):
-        # Create the DIRECTORY_TO_WATCH if it doesn't exist
         os.makedirs(self.DIRECTORY_TO_WATCH, exist_ok=True)
-        time.sleep(0.1)  # Add a small delay
+        time.sleep(0.1)
 
         event_handler = Handler()
         self.observer.schedule(event_handler, self.DIRECTORY_TO_WATCH, recursive=True)
@@ -37,34 +49,28 @@ class Handler(FileSystemEventHandler):
             return None
 
         elif event.event_type == "created":
-            ...
-            if event.src_path.endswith(".png") or event.src_path.endswith(
-                ".jpg"
-            ):  # check for image file
+            print(event)
+            if event.src_path.endswith(".png") or event.src_path.endswith(".jpg"):
                 file_name = os.path.basename(event.src_path)
 
-                # Add a delay before copying the file
                 time.sleep(0.1)
 
-                # Ensure the file is not empty
                 if os.path.getsize(event.src_path) > 0:
-                    # Copy the file to the target directory
-                    target_directory = (
-                        "/home/srinath/Documents/Obsidian-Vault/brandNew/test"
-                    )
                     os.makedirs(f"{target_directory}/attach", exist_ok=True)
+
+                    md_file_path = f"{target_directory}/{result}.md"
+                    if not os.path.isfile(md_file_path):
+                        with open(md_file_path, "w") as f:
+                            f.write(f"![[attach/{file_name}]]\n")
+                    else:
+                        with open(md_file_path, "a") as f:
+                            f.write(f"![[attach/{file_name}]]\n")
 
                     try:
                         shutil.copy(
                             event.src_path,
                             os.path.join(f"{target_directory}/attach", file_name),
                         )
-                        with open(
-                            f"{target_directory}/images.md", "a"
-                        ) as f:  # open in append mode
-                            f.write(
-                                f"![[attach/{file_name}]]\n"
-                            )  # write image markdown to file
                     except IOError as e:
                         print(f"Unable to copy file. {e}")
                     except:
