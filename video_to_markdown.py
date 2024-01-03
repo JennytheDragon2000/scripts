@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 import os
 import shutil
 import subprocess
@@ -50,10 +52,11 @@ class Handler(FileSystemEventHandler):
 
         elif event.event_type == "created":
             print(event)
+
             if event.src_path.endswith(".png") or event.src_path.endswith(".jpg"):
                 file_name = os.path.basename(event.src_path)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 if os.path.getsize(event.src_path) > 0:
                     os.makedirs(f"{target_directory}/attach", exist_ok=True)
@@ -61,10 +64,10 @@ class Handler(FileSystemEventHandler):
                     md_file_path = f"{target_directory}/{result}.md"
                     if not os.path.isfile(md_file_path):
                         with open(md_file_path, "w") as f:
-                            f.write(f"![[attach/{file_name}]]\n")
+                            f.write(f"![[attach/{file_name}]]\n\n")
                     else:
                         with open(md_file_path, "a") as f:
-                            f.write(f"![[attach/{file_name}]]\n")
+                            f.write(f"![[attach/{file_name}]]\n\n")
 
                     try:
                         shutil.copy(

@@ -13,9 +13,9 @@ selected_email="phind$(zenity --entry --title='Enter Email Address' --text='Tags
 
 # Print the selected email
 echo "You selected: $selected_email"
-# guerrillamail setaddr $selected_email 2>/dev/null
-guerrillamail setaddr $selected_email 2>/dev/null
-email=$(guerrillamail info 2>/dev/null | cut -d ':' -f 2)
+# proxychains guerrillamail setaddr $selected_email 2>/dev/null
+proxychains guerrillamail setaddr $selected_email 2>/dev/null
+email=$(proxychains guerrillamail info 2>/dev/null | cut -d ':' -f 2)
 echo $email
 
 # type using xdotool
@@ -28,7 +28,7 @@ start_time=$(date +%s)
 while true
 do
     # Get the email list and filter it to only include emails from the specified domain
-    email_list=$(guerrillamail list 2>/dev/null | grep "@$domain")
+    email_list=$(proxychains guerrillamail list 2>/dev/null | grep "@$domain")
     echo "Your email list: $email_list"
 
     # Check if the email list is empty
@@ -47,13 +47,13 @@ do
         latest_email_id=$(echo $email_ids | head --lines 1 | cut -d ' ' -f 1)
         echo "Your latest email id :$latest_email_id"
 
-        link=$(guerrillamail get $latest_email_id 2>/dev/null | grep -o '<a href[^>]*>' | awk -F'"' '{print $2}')
+        link=$(proxychains guerrillamail get $latest_email_id 2>/dev/null | grep -o '<a href[^>]*>' | awk -F'"' '{print $2}')
         echo "Your links: $link"
         # xdg-open $link
         executable=$($HOME/scripts/getExecutableofWindow.sh | grep -i "executable" | cut -d ":" -f 2 )
         notify-send "Opening link in $executable"
         # $executable $link
-        $executable $link
+        proxychains $executable $link
 
         break
     fi

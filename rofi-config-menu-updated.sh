@@ -38,6 +38,7 @@ declare -a options=(
 "espanso - /home/srinath/.config/espanso/match/base.yml"
 "kitty - /home/srinath/.config/kitty/open-actions.conf"
 "PermenentMount - /etc/fstab"
+"proxychains - /etc/proxychains.conf"
 
 
 "Quit"
