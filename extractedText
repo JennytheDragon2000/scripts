@@ -1,1 +1,64 @@
-So even though we haven't really used the term branch, we haven't made branches or referenced themin any way.In Git you are always working on a branch and we've seen evidence of this.
+So even though we haven't really used the term branch, we haven't made branches or referenced them
+in any way.
+In Git you are always working on a branch and we've seen evidence of this.
+You've hopefully seen this before.
+On Branch Master, nothing to commit or it may not say nothing to commit, but on branch master something.
+So in any repository, here's my first novel if I type git status.
+Here we are on Branch Master and you can see the way I have my terminal configured.
+It also shows me my branch that I'm on currently.
+It shows master here.
+That's what that is.
+So when we learn how to change branches, you'll see that updated as well on this right hand side.
+So we're always on a branch.
+Even though we didn't decide to be on the master branch, we didn't create the master branch.
+It's just there for us.
+And that's exactly what the master branch is.
+It's just the default branch name.
+When you make a new git repository, when we run Git in it, automatically the branch that we start
+on is called Master.
+When you make a new git repository, when we run Git in it, automatically the branch that we start
+on is called Master.
+Now it doesn't do anything special, it doesn't have any fancy powers whatsoever.
+It's just like any other branch, every single possible branch you create, they have the same abilities,
+the same commands.
+There's nothing special about Master except for the fact that it just happens to be made for you.
+Now, some people do treat the master branch as special in their own project.
+They treat it as the source of truth, the official project branch, the main branch where they don't
+want to mess anything up.
+So they treat the master branches like our official working code base.
+And then I'll try things on other branches and if they work I combine them back into master.
+But again, that is a choice that you make or that specific developers make.
+From gets perspective, the master branch is just like any other branch.
+It does not have to hold the master copy of your project.
+You can delete it, you can rename it.
+And in fact, I want to talk about renaming it for a moment.
+This is a topic that will come up again a couple of times throughout the course.
+The name on Git and GitHub for the default branch name for a long time was Master.
+However, in 2020, GitHub announced that they were renaming the default branch name from master to
+Main as part of a larger push by tech companies to try and avoid any potentially offensive language.
+So GitHub, again, just GitHub made this change from master to main with Git.
+However, what we're using, we haven't touched GitHub yet.
+Git, the default branch name is still master and that's why we see things like on Branch Master.
+We didn't name it master, it's just the default branch name.
+However, there are conversations happening and that may change in the future.
+And I will also show you how to change the default branch name.
+If you want to do this, it's easy to do, but I'm going to wait until we talk a little bit more about
+branches.
+I don't want to talk about renaming and changing branch names before we even really understand what
+they are.
+So we will come back to this.
+But I want to bring this up because on most of the documentation, tutorials, videos that you see out
+there, you will see the term master branch as the default branch name and over time more and more people
+will likely adopt main.
+So we'll put a pin in that for now and my slides are going to continue to use Master just because it
+is what your get is going to show you.
+Branch Master.
+But once we get to GitHub, we will use Main OC.
+So I mentioned that there's nothing special at all about the master branch, but a lot of companies
+are.
+A lot of people treat it as your main branch where things should always be working.
+It should be the main copy of your code base or of your project.
+So you could then make a branch to try something experimental and make some commits and test something
+out.
+And then if you like that you can incorporate it back to Master Branch or you can abandon it and just
+move on and keep working on your master branch and just not incorporate this experimental branch.

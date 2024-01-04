@@ -38,7 +38,7 @@ for index, sub in enumerate(subs):
 
 with open("extractedText", "a") as file:
     for sub in subs[startNumber:endNumber]:
-        file.write(f"{sub.text}")
+        file.write(f"{sub.text}\n")
 
 with open("endNumber.txt", "w") as file:
     file.write(str(endNumber))

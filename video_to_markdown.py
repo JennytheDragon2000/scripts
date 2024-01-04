@@ -9,6 +9,8 @@ import time
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
+import subtitleFinal
+
 cmd = [
     "zenity",
     "--entry",
@@ -62,6 +64,7 @@ class Handler(FileSystemEventHandler):
                     os.makedirs(f"{target_directory}/attach", exist_ok=True)
 
                     md_file_path = f"{target_directory}/{result}.md"
+                    subtitleFinal.main(md_file_path)
                     if not os.path.isfile(md_file_path):
                         with open(md_file_path, "w") as f:
                             f.write(f"![[attach/{file_name}]]\n\n")

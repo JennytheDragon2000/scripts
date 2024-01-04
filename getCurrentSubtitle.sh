@@ -12,7 +12,6 @@ mpv_communicate() {
 
 working_directory=$(mpv_communicate working-directory)
 video_file_path=$(mpv_communicate path )
-file_without_extension=${video_file_path%%.*}
 
 echo $video_file_path
 echo $file_without_extension
@@ -23,6 +22,6 @@ subtitle_line=$(mpv_communicate sub-text)
 echo "Current subtitle_line: $subtitle_line"
 echo "Current path: $subtitle_file_path"
 
-python sub.py "$subtitle_file_path" "$(cat ./endNumber.txt)" "$subtitle_line"
+# python sub.py "$subtitle_file_path" "$(cat ./endNumber.txt)" "$subtitle_line"
 
 
