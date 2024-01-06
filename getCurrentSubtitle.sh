@@ -10,7 +10,7 @@ mpv_communicate() {
   printf '{ "command": ["get_property", "%s"] }\n' "$1" | socat - "${SOCKET}" | jq -r ".data"
 }
 
-working_directory=$(mpv_communicate working-directory)
+# working_directory=$(mpv_communicate working-directory)
 video_file_path=$(mpv_communicate path )
 
 echo $video_file_path
