@@ -2,6 +2,7 @@
 
 # DMEDITOR="alacritty -e nvim"
 DMEDITOR="kitty -e nvim"
+HOME="/home/jenny"
 
 declare -a options=(
 "Alacritty - $HOME/.config/alacritty/alacritty.yml"
@@ -10,7 +11,7 @@ declare -a options=(
 "NeoVim - $HOME/.config/nvim/init.lua"
 "Picom - $HOME/.config/picom/picom.conf"
 "Rofi - $HOME/.config/rofi/config.rasi"
-"rconfig - $HOME/scripts/rofi-config-menu.sh"
+"rconfig - /opt/scripts/rofi-config-menu.sh"
 "Ranger - $HOME/.config/ranger/rc.conf"
 "Zsh - $HOME/.zshrc"
 "i3 - $HOME/.config/i3/config"
@@ -23,6 +24,7 @@ declare -a options=(
 "mpvInputs - $HOME/.config/mpv/input.conf"
 "mpv - $HOME/.config/mpv/mpv.conf"
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
+"enviroment - /etc/environment"
 
 
 "Quit"

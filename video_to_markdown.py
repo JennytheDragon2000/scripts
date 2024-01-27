@@ -19,7 +19,11 @@ cmd = [
 ]
 result = subprocess.check_output(cmd)
 result = result.decode("utf-8")
-target_directory = f"/home/srinath/Documents/Obsidian-Vault/brandNew/{result}"
+
+home_dir = os.path.expanduser("~")
+print(home_dir)
+
+target_directory = f"{home_dir}/Documents/Obsidian-Vault/brandNew/{result}"
 print(target_directory)
 
 
