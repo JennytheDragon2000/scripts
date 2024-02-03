@@ -1,0 +1,29 @@
+#! /bin/bash
+
+
+current_time=$(printf '{ "command": ["get_property", "time-pos"] }\n' | socat - /tmp/mpvsocket | jq -r ".data" | awk '{printf "%02d:%02d:%02d\n", int($1/3600), int(($1%3600)/60), $1%60}')
+
+working_directory=$(printf '{ "command": ["get_property", "working-directory"] }\n' | socat - /tmp/mpvsocket | jq -r ".data")
+video_file_name=$(printf '{ "command": ["get_property", "path"] }\n' | socat - /tmp/mpvsocket | jq -r ".data")
+abs_path="$working_directory/$video_file_name"
+echo $abs_path
+
+# current_time="00:03:00"
+#
+#
+ffmpeg -i $abs_path -ss $(cat /tmp/old_time) -t $current_time -q:a 0 -map a /tmp/output-audio.mp3
+vosk-transcriber -m /opt/vosk-model-small-en-us-0.15 -i /tmp/output-audio.mp3 -o /tmp/hello2.txt
+#
+# Define the sentence and context
+sentence=$(cat /tmp/hello2.txt)
+context="This is a lesson about devops engineering"
+
+# Create the prompt
+prompt="Please correct the following sentences: '$sentence'. Here is the context for better understanding: '$context'"
+echo $prompt
+
+last_text=$(tgpt -q -w "$prompt")
+echo $last_text >> /tmp/correct.txt
+echo $current_time > /tmp/old_time
+
+

@@ -4,4 +4,4 @@ SOCKET_FILE="/tmp/mpvsocket"
 
 echo '{"command": ["set_property", "pause", true]}' | socat - $SOCKET_FILE
 
-flameshot gui --region 1920x1080+0+0 --path /tmp/obsidianImages
+/opt/flameshot2/build/src/flameshot gui --region 1920x1080+0+0 --path /tmp/obsidianImages

@@ -21,9 +21,10 @@ declare -a options=(
 "qutebrowser - $HOME/.config/qutebrowser/config.py"
 "kitty - $HOME/.config/kitty/kitty.conf"
 "tmux - $HOME/.tmux.conf"
-"mpvInputs - $HOME/.config/mpv/input.conf"
 "mpv - $HOME/.config/mpv/mpv.conf"
+"mpvInputs - $HOME/.config/mpv/input.conf"
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
+"sway - $HOME/.config/sway/config"
 "enviroment - /etc/environment"
 
 
