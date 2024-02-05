@@ -7,6 +7,8 @@ working_directory=$(printf '{ "command": ["get_property", "working-directory"] }
 video_file_name=$(printf '{ "command": ["get_property", "path"] }\n' | socat - /tmp/mpvsocket | jq -r ".data")
 abs_path="$working_directory/$video_file_name"
 echo $abs_path
+cat /tmp/old_time
+echo $current_time
 
 # current_time="00:03:00"
 #
@@ -19,11 +21,11 @@ sentence=$(cat /tmp/hello2.txt)
 context="This is a lesson about devops engineering"
 
 # Create the prompt
-prompt="Please correct the following sentences: '$sentence'. Here is the context for better understanding: '$context'"
+prompt="Please correct the following sentences: '$sentence'. Here is the context for better understanding: '$context'. Your output should only contain the corrected sentence. I don't want any explanantion"
 echo $prompt
 
 last_text=$(tgpt -q -w "$prompt")
-echo $last_text >> /tmp/correct.txt
+echo $last_text > /tmp/correct.txt
 echo $current_time > /tmp/old_time
 
 

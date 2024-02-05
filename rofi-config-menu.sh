@@ -26,6 +26,7 @@ declare -a options=(
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
 "sway - $HOME/.config/sway/config"
 "enviroment - /etc/environment"
+"fish - $HOME/.config/fish/config.fish"
 
 
 "Quit"
