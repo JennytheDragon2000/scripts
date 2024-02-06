@@ -1,0 +1,48 @@
+#! /bin/bash
+
+
+# Get the current time in seconds
+current_time_in_seconds=$(printf '{ "command": ["get_property", "time-pos"] }\n' | socat - /tmp/mpvsocket | jq -r ".data" )
+current_time_in_seconds=$(printf "%.0f" $current_time_in_seconds)
+
+# Read the old time in seconds from a file
+old_time_in_seconds=$(cat /tmp/old_time_in_seconds)
+old_time_in_seconds=$(printf "%.0f" $old_time_in_seconds)
+
+# Calculate the duration in seconds
+duration=$((current_time_in_seconds - old_time_in_seconds))
+
+# Print the current time in HH:MM:SS format
+current_time=$(printf "%02d:%02d:%02d\n" $((current_time_in_seconds/3600)) $(( (current_time_in_seconds%3600)/60)) $((current_time_in_seconds%60)))
+old_time=$(printf "%02d:%02d:%02d\n" $((old_time_in_seconds/3600)) $(( (old_time_in_seconds%3600)/60)) $((old_time_in_seconds%60)))
+echo "Current Time: $current_time"
+
+# Print the duration in seconds
+echo "Duration: $duration seconds"
+
+working_directory=$(printf '{ "command": ["get_property", "working-directory"] }\n' | socat - /tmp/mpvsocket | jq -r ".data")
+video_file_name=$(printf '{ "command": ["get_property", "path"] }\n' | socat - /tmp/mpvsocket | jq -r ".data")
+abs_path="$working_directory/$video_file_name"
+
+ffmpeg -i $abs_path -ss $old_time -t $duration -q:a 0 -map a /tmp/output-audio.mp3
+vosk-transcriber -m /opt/vosk-model-small-en-us-0.15 -i /tmp/output-audio.mp3 -o /tmp/hello2.txt
+
+split -C  3000 --numeric-suffixes /tmp/hello2.txt /tmp/part
+
+context="This is a lesson about devops engineering"
+
+# Create the prompt
+# prompt="Please correct the following sentences: '$sentence'. Here is the context for better understanding: '$context'. Your output should only contain the corrected sentence. I don't want any explanantion"
+
+for fl in /tmp/part*; do
+    # prompt="Please correct the following sentences: '$(cat $fl)'. Here is the context for better understanding: '$context'."
+    # output=$(echo "$prompt" | tgpt -q -w)
+    output=$(tgpt -q -w "correct the mistakes of this text. this is a part of an explanation in devOps tutorial series. '$(cat $fl)'")
+    echo $output >> /tmp/correct.txt
+done
+
+# Update the old time in seconds file
+echo $current_time_in_seconds > /tmp/old_time_in_seconds
+rm /tmp/output-audio.mp3
+rm /tmp/hello2.txt
+rm /tmp/part*
