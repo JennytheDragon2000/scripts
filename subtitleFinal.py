@@ -47,8 +47,7 @@ def main(file_to_write):
     subtitle_file_path = None
 
     # Sort the subtitle files numerically
-    all_files.sort(key=lambda x: int(''.join(filter(str.isdigit, x.name))))
-
+    all_files.sort(key=lambda x: int("".join(filter(str.isdigit, x.name))))
 
     # Iterate over all files
     for file in all_files:
@@ -79,7 +78,7 @@ def main(file_to_write):
         startNumber = int(file.read().strip())
     print(f"startNumber: {startNumber}")
 
-    # endNumber = None
+    endNumber = None
 
     for index, sub in enumerate(subs):
         if sub.text == subtitle_line:
