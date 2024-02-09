@@ -1,0 +1,3616 @@
+1
+00:00:00,650 --> 00:00:03,978
+Called items. So that's basically the top of the hierarchy.
+
+2
+00:00:04,074 --> 00:00:08,026
+Inside the items is an array and inside that array
+
+3
+00:00:08,058 --> 00:00:11,566
+we have objects for each pod and in that
+
+4
+00:00:11,588 --> 00:00:14,938
+object we have attributes like API version
+
+5
+00:00:15,034 --> 00:00:18,366
+kind and metadata. And metadata is the one
+
+6
+00:00:18,468 --> 00:00:21,434
+that contains the name of the pod.
+
+7
+00:00:21,562 --> 00:00:25,158
+So basically this way we can work through
+
+8
+00:00:25,284 --> 00:00:29,174
+the whole hierarchy to find the attribute that
+
+9
+00:00:29,212 --> 00:00:32,470
+we're looking for. So we have to chain all this together.
+
+10
+00:00:32,620 --> 00:00:36,262
+So again going back here we first
+
+11
+00:00:36,316 --> 00:00:40,154
+start with dot items and this will give us
+
+12
+00:00:40,272 --> 00:00:43,706
+all the items which is an array. From that array we
+
+13
+00:00:43,728 --> 00:00:47,626
+can get the first element like this. This will
+
+14
+00:00:47,648 --> 00:00:51,230
+be just one pod. So as you see this is
+
+15
+00:00:51,300 --> 00:00:55,834
+a very ugly output of JSON
+
+16
+00:00:55,882 --> 00:00:58,270
+configuration of one single pod.
+
+17
+00:00:59,890 --> 00:01:04,318
+And from that pod we want the metadata attribute.
+
+18
+00:01:04,414 --> 00:01:07,726
+Let's see that first getting a little bit smaller.
+
+19
+00:01:07,838 --> 00:01:11,154
+And in the metadata we have bunch of this stuff
+
+20
+00:01:11,272 --> 00:01:14,580
+but we only want to know the name.
+
+21
+00:01:15,210 --> 00:01:18,454
+And metadata name will give us
+
+22
+00:01:18,572 --> 00:01:21,906
+the name of the pod. So this basically ended
+
+23
+00:01:21,938 --> 00:01:25,238
+up being our first expression that gives us
+
+24
+00:01:25,404 --> 00:01:28,826
+the name of the first pod in the list.
+
+25
+00:01:28,928 --> 00:01:32,410
+But we want to print out names of all the pods. For that
+
+26
+00:01:32,480 --> 00:01:36,138
+we just do star which means for every
+
+27
+00:01:36,304 --> 00:01:40,038
+item in the array give me metadata
+
+28
+00:01:40,214 --> 00:01:43,130
+name value and execute.
+
+29
+00:01:43,290 --> 00:01:47,706
+And this is a list of all the pod names.
+
+30
+00:01:47,818 --> 00:01:51,326
+Now as you see we have the output in one single line which
+
+31
+00:01:51,348 --> 00:01:55,134
+is not very nice. So using JSON path expression
+
+32
+00:01:55,182 --> 00:01:58,674
+we can also print the values on a new
+
+33
+00:01:58,712 --> 00:02:01,700
+line and let's see how that works.
+
+34
+00:02:02,230 --> 00:02:06,674
+Json path we also have a couple of built in functions.
+
+35
+00:02:06,802 --> 00:02:10,562
+One of them is range which basically lets us iterate
+
+36
+00:02:10,626 --> 00:02:14,822
+through the items. And for each item print out
+
+37
+00:02:14,956 --> 00:02:18,602
+the metadata name and add
+
+38
+00:02:18,656 --> 00:02:22,586
+a new line here and then end
+
+39
+00:02:22,688 --> 00:02:26,202
+the whole expression. Again, this is probably not very
+
+40
+00:02:26,256 --> 00:02:29,706
+intuitive and you'll have to learn how to iterate through
+
+41
+00:02:29,808 --> 00:02:33,626
+arrays for example. But it will help you get specific output
+
+42
+00:02:33,658 --> 00:02:36,926
+that you're interested in. So let's execute this and as you
+
+43
+00:02:36,948 --> 00:02:40,698
+see you get the values in a nice list. Now let's
+
+44
+00:02:40,714 --> 00:02:44,094
+say we want multiple values, not just pod
+
+45
+00:02:44,142 --> 00:02:48,030
+names but also pod ips next to the names.
+
+46
+00:02:48,110 --> 00:02:51,250
+So how can we do that? Well, it's pretty simple actually.
+
+47
+00:02:51,400 --> 00:02:57,990
+After their metadata name we can create
+
+48
+00:02:58,060 --> 00:03:01,606
+a space or a tab like this and
+
+49
+00:03:01,628 --> 00:03:06,070
+then extract the IP address from status
+
+50
+00:03:07,290 --> 00:03:10,262
+pod IP of each item.
+
+51
+00:03:10,406 --> 00:03:13,878
+So here we have the name from the metadata section
+
+52
+00:03:13,974 --> 00:03:17,206
+and the pod IP is actually defined in the status section
+
+53
+00:03:17,318 --> 00:03:20,734
+of the item. So status and metadata are on the same
+
+54
+00:03:20,772 --> 00:03:24,394
+level. And this will actually give us pod
+
+55
+00:03:24,442 --> 00:03:28,334
+name and its IP address next
+
+56
+00:03:28,372 --> 00:03:32,026
+to each other. And this way you can specify any other attribute
+
+57
+00:03:32,138 --> 00:03:35,762
+you want to extract from this configuration. And let's do one
+
+58
+00:03:35,816 --> 00:03:37,300
+more again,
+
+59
+00:03:38,230 --> 00:03:40,210
+separated by tab.
+
+60
+00:03:41,190 --> 00:03:44,894
+And let's get the start time or when the pod
+
+61
+00:03:44,942 --> 00:03:49,062
+was started, which is also in the status section and
+
+62
+00:03:49,116 --> 00:03:52,790
+called start time. And there you go. So now
+
+63
+00:03:52,860 --> 00:03:56,374
+we have a list of all the pods with their
+
+64
+00:03:56,412 --> 00:03:59,658
+names, IP address, and when it was started.
+
+65
+00:03:59,744 --> 00:04:03,446
+Now as I said, the JSON path expressions
+
+66
+00:04:03,638 --> 00:04:07,322
+are not very easy and you may not want to type
+
+67
+00:04:07,376 --> 00:04:11,054
+that often. So one useful thing could be
+
+68
+00:04:11,092 --> 00:04:15,162
+to write custom scripts with JSON path expressions
+
+69
+00:04:15,226 --> 00:04:19,294
+for Kubectl to print out some of the most common data that
+
+70
+00:04:19,332 --> 00:04:22,862
+developers or you as an admin may need when
+
+71
+00:04:22,916 --> 00:04:26,590
+working with the cluster. So you can have these pre configured
+
+72
+00:04:26,670 --> 00:04:30,306
+and ready to go expressions whenever you need
+
+73
+00:04:30,328 --> 00:04:33,998
+them. So for example, we could save the above in a script
+
+74
+00:04:34,094 --> 00:04:38,210
+called pod name ip
+
+75
+00:04:38,950 --> 00:04:42,920
+created et sh
+
+76
+00:04:44,650 --> 00:04:48,730
+like this and make it executable.
+
+77
+00:04:50,910 --> 00:04:54,554
+And whenever you execute it, you basically have
+
+78
+00:04:54,592 --> 00:04:58,490
+the same output. So this could be a
+
+79
+00:04:58,640 --> 00:05:01,882
+useful way to use the JSON path expressions
+
+80
+00:05:02,026 --> 00:05:05,946
+without having to type them all the time. And you can distribute
+
+81
+00:05:05,978 --> 00:05:08,320
+the scripts to your developers as well.
+
+82
+00:05:10,850 --> 00:05:14,846
+Now if you have such scripts that give you an output of different
+
+83
+00:05:15,028 --> 00:05:18,818
+data, it may not always be clear what this data actually
+
+84
+00:05:18,904 --> 00:05:22,498
+represent. So could be a name of the pod, or it
+
+85
+00:05:22,504 --> 00:05:26,318
+could be a name of the service, or what these IP addresses
+
+86
+00:05:26,414 --> 00:05:30,246
+belong to or what this date is about. So it
+
+87
+00:05:30,268 --> 00:05:33,634
+will be actually useful to have some kind of column names
+
+88
+00:05:33,682 --> 00:05:37,282
+for all these data, right? So can we add column names
+
+89
+00:05:37,346 --> 00:05:41,146
+to these values? We can actually do that using
+
+90
+00:05:41,248 --> 00:05:45,718
+another output format type called custom columns,
+
+91
+00:05:45,814 --> 00:05:49,258
+which is simpler to use than the JSON path actually.
+
+92
+00:05:49,424 --> 00:05:53,382
+And this may also be very useful in debugging.
+
+93
+00:05:53,446 --> 00:05:57,514
+So let's see how that works. We have, let's use same Kubectl
+
+94
+00:05:57,562 --> 00:06:01,098
+get pod command, and instead of JSON path
+
+95
+00:06:01,194 --> 00:06:04,286
+we're going to have custom columns
+
+96
+00:06:04,478 --> 00:06:08,402
+output type. And the syntax is actually pretty
+
+97
+00:06:08,456 --> 00:06:11,714
+straightforward. We have the name of the column, let's call it
+
+98
+00:06:11,752 --> 00:06:14,922
+pod name. And this can be uppercase,
+
+99
+00:06:15,006 --> 00:06:18,594
+lowercase doesn't matter, I'm just going to use uppercase
+
+100
+00:06:18,642 --> 00:06:22,246
+and underscore separation after the name you
+
+101
+00:06:22,268 --> 00:06:26,802
+have column, and then you have to define which values
+
+102
+00:06:26,946 --> 00:06:30,586
+will be grouped under this column name. And in our
+
+103
+00:06:30,608 --> 00:06:34,266
+case that's going to be metadata name. Note here that
+
+104
+00:06:34,288 --> 00:06:37,994
+I don't have to use items, I can just grab the
+
+105
+00:06:38,112 --> 00:06:41,726
+metadata name directly. And we separate the rest of the
+
+106
+00:06:41,748 --> 00:06:45,374
+columns with their values using comma. So the
+
+107
+00:06:45,412 --> 00:06:48,110
+second column will be pod iP,
+
+108
+00:06:48,930 --> 00:06:51,630
+column status,
+
+109
+00:06:51,970 --> 00:06:53,780
+pod ip as we saw.
+
+110
+00:06:55,350 --> 00:06:59,090
+And finally, let's call the third
+
+111
+00:06:59,240 --> 00:07:03,730
+column created at and
+
+112
+00:07:03,800 --> 00:07:08,262
+the value is going to be dot status start time.
+
+113
+00:07:08,396 --> 00:07:12,246
+And note that you shouldn't have spaces between the comma here.
+
+114
+00:07:12,348 --> 00:07:16,406
+It should look exactly like this. And if I execute, you have
+
+115
+00:07:16,508 --> 00:07:20,250
+a super nice output with column name with
+
+116
+00:07:20,320 --> 00:07:24,294
+the values under it. So it's much more descriptive
+
+117
+00:07:24,342 --> 00:07:27,786
+and obvious what these values actually represent. So these were
+
+118
+00:07:27,808 --> 00:07:31,002
+some of the useful ways of debugging
+
+119
+00:07:31,066 --> 00:07:35,054
+in a cluster and maybe working a little bit more efficiently when
+
+120
+00:07:35,172 --> 00:07:39,150
+trying to find information about different cluster components
+
+121
+00:07:51,080 --> 00:07:55,348
+developers. Some issues happen to the control plane components
+
+122
+00:07:55,444 --> 00:07:59,016
+and worker processes. And since we are managing the
+
+123
+00:07:59,038 --> 00:08:02,170
+cluster ourselves, we need to take care of this.
+
+124
+00:08:04,940 --> 00:08:08,376
+Let's say one of the issues is that when we do Kubectl
+
+125
+00:08:08,408 --> 00:08:12,188
+get node, see, is that worker one
+
+126
+00:08:12,274 --> 00:08:16,124
+is in a not ready status. So obviously there is something wrong
+
+127
+00:08:16,162 --> 00:08:19,584
+with this node. The question is how can we debug this
+
+128
+00:08:19,622 --> 00:08:23,232
+and how can we identify what the issue is? The not
+
+129
+00:08:23,286 --> 00:08:27,212
+ready status of a node most probably indicates
+
+130
+00:08:27,356 --> 00:08:30,720
+that something is wrong with the Kubelet process running
+
+131
+00:08:30,790 --> 00:08:34,484
+on that node. So we can start by entering that node or
+
+132
+00:08:34,522 --> 00:08:38,948
+sshing into it and debugging and troubleshooting the Kubelet process.
+
+133
+00:08:39,114 --> 00:08:42,612
+And that's what we're going to do. We're going to ssh into worker one
+
+134
+00:08:42,746 --> 00:08:46,584
+and we're going to troubleshoot Kubelet. Now, Kubelet is not running as a
+
+135
+00:08:46,622 --> 00:08:49,860
+pod, but rather a Linux process, as we already learned.
+
+136
+00:08:49,940 --> 00:08:53,320
+So we're going to use Linux commands to troubleshoot it.
+
+137
+00:08:53,390 --> 00:08:57,292
+So first we're going to see whether Kubelet is running and which
+
+138
+00:08:57,426 --> 00:09:01,630
+state it is in. So we can do service
+
+139
+00:09:02,000 --> 00:09:04,700
+Kubelet status.
+
+140
+00:09:05,200 --> 00:09:08,368
+And this shows us that Kubelet is running.
+
+141
+00:09:08,534 --> 00:09:12,080
+However it is in activating status
+
+142
+00:09:12,500 --> 00:09:16,496
+so it's not running. And we also see a failure here.
+
+143
+00:09:16,678 --> 00:09:20,512
+Kubelet service failed and this seems like an error.
+
+144
+00:09:20,576 --> 00:09:24,564
+And we also see some of the logs of the Kubelet process that
+
+145
+00:09:24,602 --> 00:09:28,580
+says user localbean Kubelet. No such
+
+146
+00:09:28,650 --> 00:09:32,080
+directory. If we need more context or more logs,
+
+147
+00:09:32,160 --> 00:09:35,464
+we can also use journal control command to
+
+148
+00:09:35,502 --> 00:09:39,332
+check the complete logs of the Kubelet
+
+149
+00:09:39,396 --> 00:09:42,824
+service like this. So in our case, because we
+
+150
+00:09:42,862 --> 00:09:46,264
+see the error in the logs, we can try to identify
+
+151
+00:09:46,392 --> 00:09:50,124
+where this issue is coming from. So first of all, it says that
+
+152
+00:09:50,242 --> 00:09:53,896
+this path cannot be found. So we can validate
+
+153
+00:09:53,928 --> 00:09:57,384
+that by checking whether this
+
+154
+00:09:57,442 --> 00:10:01,184
+is accessible. And you see there is no file or
+
+155
+00:10:01,222 --> 00:10:05,184
+directory like this. So Kubelet executable is
+
+156
+00:10:05,222 --> 00:10:09,180
+not at this location. We can see where Kubelet
+
+157
+00:10:09,340 --> 00:10:13,072
+executable binary is located using which Kubelet
+
+158
+00:10:13,136 --> 00:10:17,072
+command. And this will show us the correct location
+
+159
+00:10:17,136 --> 00:10:20,260
+of Kubelet binary. Now where is
+
+160
+00:10:20,410 --> 00:10:23,752
+Kubelet configuration coming from? So where is this
+
+161
+00:10:23,806 --> 00:10:27,752
+binary executable defined so that we can fix it?
+
+162
+00:10:27,886 --> 00:10:31,716
+Well, in this output we actually see the location
+
+163
+00:10:31,908 --> 00:10:35,120
+of Kubelet configuration,
+
+164
+00:10:35,220 --> 00:10:42,924
+which is this one right here. So if we check this
+
+165
+00:10:42,962 --> 00:10:46,764
+location, and again we need
+
+166
+00:10:46,802 --> 00:10:51,072
+pseudo, you will see the
+
+167
+00:10:51,126 --> 00:10:54,080
+configuration which starts Kubelet.
+
+168
+00:10:55,060 --> 00:10:58,528
+And let's actually open it with Vim editor so we
+
+169
+00:10:58,534 --> 00:11:00,870
+can see some syntax highlighting as well.
+
+170
+00:11:02,680 --> 00:11:06,576
+And as you see, we have a couple of commands
+
+171
+00:11:06,608 --> 00:11:10,020
+here, just basic Linux commands that
+
+172
+00:11:10,170 --> 00:11:13,368
+basically configure and then start Kubelet service.
+
+173
+00:11:13,534 --> 00:11:16,808
+And all the way down here we have the exec start.
+
+174
+00:11:16,894 --> 00:11:21,032
+So basically where the start command of
+
+175
+00:11:21,086 --> 00:11:24,816
+Kubelet is defined with all the environment variables
+
+176
+00:11:24,868 --> 00:11:28,412
+as parameters. And right here we see that
+
+177
+00:11:28,546 --> 00:11:32,364
+wrong path is configured. So by updating it
+
+178
+00:11:32,402 --> 00:11:35,916
+to the right location which was
+
+179
+00:11:36,098 --> 00:11:37,100
+user,
+
+180
+00:11:37,600 --> 00:11:41,280
+Binkubelet should
+
+181
+00:11:41,350 --> 00:11:44,530
+fix the issue. So let's save this.
+
+182
+00:11:45,540 --> 00:11:49,308
+So we fix the configuration by providing
+
+183
+00:11:49,404 --> 00:11:52,420
+the correct location of Kubelet's executable.
+
+184
+00:11:52,760 --> 00:11:56,324
+However, we now have to restart Kubelet service so that
+
+185
+00:11:56,362 --> 00:11:59,940
+it can read the changed configuration.
+
+186
+00:12:00,520 --> 00:12:03,908
+And for that we need to first execute
+
+187
+00:12:04,004 --> 00:12:07,976
+demon reload. And then we are going to restart the
+
+188
+00:12:07,998 --> 00:12:12,920
+Kubelet service using system control. Restart Kubelet.
+
+189
+00:12:14,960 --> 00:12:22,780
+And again, let's check the status using
+
+190
+00:12:22,850 --> 00:12:26,264
+service Kubelet status command.
+
+191
+00:12:26,392 --> 00:12:30,156
+And as you see, Kubelet is now in an active
+
+192
+00:12:30,268 --> 00:12:34,092
+running state and we don't have the error message anymore.
+
+193
+00:12:34,236 --> 00:12:38,256
+And now of course we need to validate that node is
+
+194
+00:12:38,278 --> 00:12:41,700
+back to the ready state. It may take a couple of
+
+195
+00:12:41,770 --> 00:12:45,652
+seconds, but after that we should see that
+
+196
+00:12:45,706 --> 00:12:48,964
+worker one is back to ready. So that's how
+
+197
+00:12:49,002 --> 00:12:52,872
+you can troubleshoot and fix any issues with
+
+198
+00:12:52,926 --> 00:12:55,400
+Kubelet on the cluster nodes.
+
+199
+00:12:58,620 --> 00:13:03,064
+Now let's say we have a second issue where suddenly your
+
+200
+00:13:03,182 --> 00:13:06,684
+Kubectl commands stop working and we get
+
+201
+00:13:06,722 --> 00:13:10,264
+this error whenever we execute the Kubectl
+
+202
+00:13:10,312 --> 00:13:11,020
+command.
+
+203
+00:13:15,920 --> 00:13:19,256
+So whenever we try to execute Kubectl commands,
+
+204
+00:13:19,368 --> 00:13:23,456
+either we get an error that it cannot connect to the server or
+
+205
+00:13:23,478 --> 00:13:27,260
+the API server, or our Kubectl command, just hanks.
+
+206
+00:13:27,340 --> 00:13:30,420
+And we don't get any output like this for example.
+
+207
+00:13:30,570 --> 00:13:34,388
+So let's see how we can debug this issue. First of
+
+208
+00:13:34,394 --> 00:13:38,356
+all, we know that Kubectl configuration is defined in
+
+209
+00:13:38,378 --> 00:13:41,812
+a kubeconfig file. So if Kubectl is
+
+210
+00:13:41,866 --> 00:13:45,428
+not able to connect to the server, the first place we're
+
+211
+00:13:45,444 --> 00:13:49,540
+going to look at is the Kubectl configuration where the location
+
+212
+00:13:49,700 --> 00:13:53,300
+of the API server or the cluster is defined
+
+213
+00:13:53,380 --> 00:13:57,390
+as well as its credentials. So let's print out
+
+214
+00:13:59,200 --> 00:14:03,516
+the Kubeconfig contents and
+
+215
+00:14:03,698 --> 00:14:06,776
+validate that everything is configured properly.
+
+216
+00:14:06,888 --> 00:14:10,684
+First let's check the cluster configuration. We have certificate
+
+217
+00:14:10,732 --> 00:14:14,816
+data and the server address, so let's validate these two.
+
+218
+00:14:14,918 --> 00:14:18,560
+First of all, let's see that we are using the correct certificate
+
+219
+00:14:19,060 --> 00:14:22,436
+or that it hasn't been updated. So I'm going to
+
+220
+00:14:22,458 --> 00:14:25,910
+copy the certificate authority data
+
+221
+00:14:26,520 --> 00:14:29,956
+which is base 64 encoded. So we're going
+
+222
+00:14:29,978 --> 00:14:32,070
+to decode this.
+
+223
+00:14:36,540 --> 00:14:40,148
+So that's the CA certificate defined in the kubeconfig.
+
+224
+00:14:40,244 --> 00:14:43,320
+Now let's check that it is the same one
+
+225
+00:14:43,390 --> 00:14:45,470
+as what the cluster is using,
+
+226
+00:14:49,120 --> 00:14:53,000
+which is PKI
+
+227
+00:14:53,160 --> 00:14:54,780
+CA certificate.
+
+228
+00:14:56,000 --> 00:15:00,336
+And if we compare we see that this is the same
+
+229
+00:15:00,438 --> 00:15:04,204
+exact certificate, so the contents are the same. So the CA certificate
+
+230
+00:15:04,252 --> 00:15:07,456
+for the cluster is correct. The second thing we
+
+231
+00:15:07,478 --> 00:15:11,604
+want to check about the cluster is that the server endpoint is still
+
+232
+00:15:11,642 --> 00:15:15,264
+correct and it hasn't changed. We know that API server
+
+233
+00:15:15,312 --> 00:15:19,412
+is running on the master node on port six
+
+234
+00:15:19,546 --> 00:15:22,944
+four, three, so it's accessible on the master
+
+235
+00:15:22,992 --> 00:15:26,744
+node's ip address on this port, so the port is correct.
+
+236
+00:15:26,862 --> 00:15:30,328
+Now let's validate that the masternode's ip address is
+
+237
+00:15:30,414 --> 00:15:34,410
+also correct. And you can check that on the masternode itself
+
+238
+00:15:34,720 --> 00:15:37,928
+or in host file,
+
+239
+00:15:38,024 --> 00:15:41,820
+or we can also simply check it in the AWS console.
+
+240
+00:15:42,640 --> 00:15:46,764
+So this is our master node and that's the IP address
+
+241
+00:15:46,962 --> 00:15:50,544
+of the master node in the cluster. So I'm going to copy this
+
+242
+00:15:50,582 --> 00:15:53,884
+and compare it to what we have defined
+
+243
+00:15:53,932 --> 00:15:57,200
+here. And as you see this is a different IP address,
+
+244
+00:15:57,350 --> 00:16:00,976
+not the one that master node has, so that one needs
+
+245
+00:16:00,998 --> 00:16:04,564
+to be fixed. So this IP address needs to be an
+
+246
+00:16:04,602 --> 00:16:08,196
+IP address of the master, which is this
+
+247
+00:16:08,218 --> 00:16:11,670
+one right here, which we just copied. So we need to fix that.
+
+248
+00:16:15,740 --> 00:16:19,172
+So we're going to open the kubeconfig in an edit
+
+249
+00:16:19,236 --> 00:16:22,836
+mode and just going to paste in the correct IP
+
+250
+00:16:22,868 --> 00:16:25,996
+address of master Node and let's save it.
+
+251
+00:16:26,178 --> 00:16:30,364
+And now let's check that Kubectl commands work again.
+
+252
+00:16:30,482 --> 00:16:34,412
+And as you see we are able to
+
+253
+00:16:34,466 --> 00:16:38,716
+connect to the cluster again at this endpoint.
+
+254
+00:16:38,908 --> 00:16:42,448
+So these are some of the ways of debugging issues
+
+255
+00:16:42,534 --> 00:16:46,352
+in the cluster, either connectivity to your cluster or issues
+
+256
+00:16:46,486 --> 00:16:48,370
+on the nodes themselves.
+
+257
+00:16:57,070 --> 00:17:00,286
+Great developers have now access to the cluster and
+
+258
+00:17:00,308 --> 00:17:03,774
+they know how to debug stuff in there too. But at some
+
+259
+00:17:03,812 --> 00:17:07,354
+point they have a use case where they need to deploy
+
+260
+00:17:07,402 --> 00:17:11,298
+a small script next to the main application that
+
+261
+00:17:11,384 --> 00:17:14,974
+updates the cache of the application, or that talks
+
+262
+00:17:15,022 --> 00:17:18,942
+to the authentication service to authenticate users,
+
+263
+00:17:19,086 --> 00:17:22,626
+or an application that sends logs from the
+
+264
+00:17:22,648 --> 00:17:26,440
+application to a log service. So it's not part of the application,
+
+265
+00:17:26,810 --> 00:17:30,374
+but rather a small helper application for
+
+266
+00:17:30,412 --> 00:17:34,822
+the main application. In addition to that, they also want to deploy a script
+
+267
+00:17:34,966 --> 00:17:38,666
+that needs to run before each startup of the application.
+
+268
+00:17:38,848 --> 00:17:43,322
+The script prepares and configures the environment before application
+
+269
+00:17:43,456 --> 00:17:47,062
+startup, so they ask you, what is the best way to deploy
+
+270
+00:17:47,126 --> 00:17:50,106
+both of these scripts in Kubernetes cluster?
+
+271
+00:17:50,218 --> 00:17:53,514
+Do they create own pods for them, own deployment
+
+272
+00:17:53,562 --> 00:17:57,358
+files, or how will that work? So you go ahead and research
+
+273
+00:17:57,524 --> 00:17:59,650
+how this is done in practice.
+
+274
+00:18:06,340 --> 00:18:10,620
+As you learned in Kubernetes, Pod is like a virtual operating
+
+275
+00:18:10,700 --> 00:18:13,728
+system environment with its own IP address,
+
+276
+00:18:13,894 --> 00:18:17,580
+ports, access rules, its own network namespace,
+
+277
+00:18:17,660 --> 00:18:21,792
+et cetera. And you also learned that you can start multiple containers
+
+278
+00:18:21,856 --> 00:18:24,996
+inside the pod, one main application and a
+
+279
+00:18:25,018 --> 00:18:28,316
+small helper applications on the side. And that helper
+
+280
+00:18:28,368 --> 00:18:32,564
+application has a technical term called a sidecar
+
+281
+00:18:32,612 --> 00:18:36,676
+container. So if your MySQL database needs a script that runs
+
+282
+00:18:36,708 --> 00:18:40,760
+in parallel and synchronizes the data every five
+
+283
+00:18:40,830 --> 00:18:44,552
+minutes or so, that script will run in a sidecar
+
+284
+00:18:44,616 --> 00:18:48,284
+container inside the same pod. Same way, if you want to
+
+285
+00:18:48,322 --> 00:18:52,012
+collect logs regularly from your web application using
+
+286
+00:18:52,066 --> 00:18:56,012
+a separate application, you can deploy it as a sidecar
+
+287
+00:18:56,076 --> 00:18:59,376
+container in the same pod. The containers in the
+
+288
+00:18:59,398 --> 00:19:03,516
+same pod are able to talk to each other using localhost
+
+289
+00:19:03,628 --> 00:19:06,956
+without needing a service name or the IP
+
+290
+00:19:06,988 --> 00:19:10,804
+address of the pod or service, and they can share the
+
+291
+00:19:10,842 --> 00:19:14,084
+data among themselves as well. So having them
+
+292
+00:19:14,122 --> 00:19:17,412
+in the same pod makes the interaction between them much
+
+293
+00:19:17,466 --> 00:19:20,964
+easier. And note that you can have multiple sidecar
+
+294
+00:19:21,012 --> 00:19:22,600
+containers in a pod.
+
+295
+00:19:25,400 --> 00:19:29,572
+Now what about the script that is supposed to prepare the environment before
+
+296
+00:19:29,626 --> 00:19:33,384
+the main application runs? For example, it may need to
+
+297
+00:19:33,422 --> 00:19:36,936
+set some environment variables or do some system check
+
+298
+00:19:37,038 --> 00:19:41,016
+to make sure the environment is ready. Or as another example,
+
+299
+00:19:41,198 --> 00:19:44,956
+wait for a certain service to be available before the
+
+300
+00:19:44,978 --> 00:19:48,748
+main application can start. Do we run such scripts as
+
+301
+00:19:48,834 --> 00:19:52,780
+sidecar containers as well? Well, sidecar containers are
+
+302
+00:19:52,850 --> 00:19:56,700
+applications that run the whole time as the main application
+
+303
+00:19:56,850 --> 00:20:01,196
+is running and do some work regularly. In comparison,
+
+304
+00:20:01,308 --> 00:20:04,220
+this script would run just once at the beginning,
+
+305
+00:20:04,300 --> 00:20:07,248
+and that's it. Its job will be done. Also,
+
+306
+00:20:07,334 --> 00:20:10,996
+sidecar containers start at the same time as the
+
+307
+00:20:11,018 --> 00:20:14,512
+main container, so we can't be sure that environment
+
+308
+00:20:14,576 --> 00:20:18,372
+will be ready and prepared when the main application
+
+309
+00:20:18,506 --> 00:20:22,188
+starts. Well, for that we have a different type of container
+
+310
+00:20:22,304 --> 00:20:25,432
+called init container. You define them in its
+
+311
+00:20:25,486 --> 00:20:28,484
+own init container section of the pod.
+
+312
+00:20:28,532 --> 00:20:32,456
+Configuration and kubernetes will know to start it
+
+313
+00:20:32,558 --> 00:20:36,764
+first. Again, it will start in the same pod as the main application,
+
+314
+00:20:36,962 --> 00:20:40,252
+but as a first container it will do its job,
+
+315
+00:20:40,386 --> 00:20:44,204
+exit or complete, and only after that the main
+
+316
+00:20:44,242 --> 00:20:47,824
+and sidecar containers will be started. Now that you know how
+
+317
+00:20:47,862 --> 00:20:51,276
+such scripts or small applications need to be deployed
+
+318
+00:20:51,388 --> 00:20:54,912
+and learn about multicontainer pods with
+
+319
+00:20:54,966 --> 00:20:58,224
+init and sidecar containers, you want to test that
+
+320
+00:20:58,262 --> 00:21:01,920
+in practice and add the containers to the existing
+
+321
+00:21:02,000 --> 00:21:02,900
+deployment.
+
+322
+00:21:08,690 --> 00:21:12,974
+So we're going to open our NginX deployment configuration and
+
+323
+00:21:13,012 --> 00:21:17,146
+make the changes right here. First of all, let's add a sitecare
+
+324
+00:21:17,178 --> 00:21:20,926
+container that will be responsible for collecting
+
+325
+00:21:21,038 --> 00:21:24,674
+the logs of the application and sending it to a log service.
+
+326
+00:21:24,792 --> 00:21:28,590
+Now, in our case, we're just going to simulate it with a simple echo command,
+
+327
+00:21:28,670 --> 00:21:32,214
+but that could be a purpose of a sidecar container and
+
+328
+00:21:32,252 --> 00:21:35,734
+we're going to define that in the containers section. As you
+
+329
+00:21:35,772 --> 00:21:39,222
+see from the name as well, containers means it is a list
+
+330
+00:21:39,276 --> 00:21:43,326
+of containers. So in a YAmL format, the items
+
+331
+00:21:43,378 --> 00:21:46,874
+in a list always start with the dash. So we're going to have
+
+332
+00:21:46,912 --> 00:21:50,790
+another container here next to the NginX main container
+
+333
+00:21:50,870 --> 00:21:53,850
+and we're going to call this log sidecar.
+
+334
+00:21:56,210 --> 00:22:00,026
+And since we're just simulating using an echo
+
+335
+00:22:00,058 --> 00:22:03,562
+command, I'm just going to use a busy box image. You can also specify
+
+336
+00:22:03,626 --> 00:22:07,106
+a version and I'm going to pass in a
+
+337
+00:22:07,128 --> 00:22:10,418
+command to execute. And as I said,
+
+338
+00:22:10,504 --> 00:22:13,682
+the sitecar containers run the whole time
+
+339
+00:22:13,816 --> 00:22:17,794
+in parallel to the main application. So a log sidecar will
+
+340
+00:22:17,832 --> 00:22:21,334
+basically be a program that regularly collects the logs of the application,
+
+341
+00:22:21,452 --> 00:22:24,694
+sends it to a log service. So it's not going to be a
+
+342
+00:22:24,732 --> 00:22:27,510
+one time command. So to simulate that,
+
+343
+00:22:27,580 --> 00:22:29,350
+I'm just going to execute,
+
+344
+00:22:30,910 --> 00:22:35,494
+I'm just going to do shell executable.
+
+345
+00:22:35,622 --> 00:22:39,610
+And then we're just going to do a while loop here that basically
+
+346
+00:22:39,760 --> 00:22:43,914
+echoes something. Let's do sync application
+
+347
+00:22:44,112 --> 00:22:48,282
+logs and then it waits for 20 seconds
+
+348
+00:22:48,346 --> 00:22:50,400
+and logs again.
+
+349
+00:22:51,730 --> 00:22:55,054
+And we're going to need double quotes here. And this
+
+350
+00:22:55,092 --> 00:22:57,838
+is going to be executed in an endless loop.
+
+351
+00:22:57,934 --> 00:23:01,394
+So the log sidecar container will run
+
+352
+00:23:01,512 --> 00:23:05,026
+as long as the pod is alive. And you learned in one of
+
+353
+00:23:05,048 --> 00:23:08,918
+the previous lectures how to use the command attribute, right?
+
+354
+00:23:09,004 --> 00:23:12,054
+This is basically just overriding whatever is
+
+355
+00:23:12,092 --> 00:23:16,246
+defined in the image docker file as executable will
+
+356
+00:23:16,268 --> 00:23:19,718
+be ignored. And instead we're overriding it with
+
+357
+00:23:19,804 --> 00:23:22,966
+this command. And you also learned that you can use a combination
+
+358
+00:23:22,998 --> 00:23:27,466
+of command and arcs and basically pass this
+
+359
+00:23:27,568 --> 00:23:31,350
+as arguments. So this will be our sidecar container
+
+360
+00:23:31,510 --> 00:23:35,326
+and I'm going to save this, let's actually
+
+361
+00:23:35,428 --> 00:23:39,870
+delete the deployment, existing deployment
+
+362
+00:23:43,010 --> 00:23:49,670
+to create the new one kubectl
+
+363
+00:23:49,770 --> 00:23:53,262
+apply and let's create a new deployment
+
+364
+00:23:53,406 --> 00:23:57,346
+with two container pod and let's check
+
+365
+00:23:57,528 --> 00:24:00,914
+get pod. And as you see, three replicas
+
+366
+00:24:00,962 --> 00:24:04,742
+of the pod are being created, each with
+
+367
+00:24:04,876 --> 00:24:08,646
+two containers. And now in
+
+368
+00:24:08,668 --> 00:24:12,582
+order to check the logs of the container, we're going to do Kubectl
+
+369
+00:24:12,646 --> 00:24:15,260
+logs and the pod name.
+
+370
+00:24:16,670 --> 00:24:20,314
+However, when I execute this, you will see an error that
+
+371
+00:24:20,352 --> 00:24:23,878
+says the container name must be specified. So whenever we
+
+372
+00:24:23,904 --> 00:24:27,406
+have a pod with multiple containers, we always have to
+
+373
+00:24:27,508 --> 00:24:31,246
+specify explicitly which container we want to log
+
+374
+00:24:31,348 --> 00:24:35,066
+or which container we want to attach terminal to, et cetera.
+
+375
+00:24:35,178 --> 00:24:38,914
+And we can do that using c
+
+376
+00:24:39,032 --> 00:24:42,334
+for container and name of the container.
+
+377
+00:24:42,382 --> 00:24:45,598
+In this case, let's choose lock sidecar.
+
+378
+00:24:45,694 --> 00:24:48,854
+And as you see we already have the
+
+379
+00:24:48,892 --> 00:24:52,754
+echo commands, so it is running and executing
+
+380
+00:24:52,882 --> 00:24:56,582
+these commands every 20 seconds like
+
+381
+00:24:56,636 --> 00:24:59,510
+this. So that's our sidecar container.
+
+382
+00:25:02,030 --> 00:25:05,414
+Now let's go ahead and add the init container.
+
+383
+00:25:05,542 --> 00:25:09,046
+Again I'm going to open the deployment yaml.
+
+384
+00:25:09,158 --> 00:25:12,538
+And in addition to the containers attribute, we're going
+
+385
+00:25:12,544 --> 00:25:15,774
+to add init containers, which has
+
+386
+00:25:15,812 --> 00:25:22,894
+to be on the same level as containers here and
+
+387
+00:25:22,932 --> 00:25:26,834
+will be exactly the same type of list as
+
+388
+00:25:26,872 --> 00:25:30,590
+containers. The difference will be of course for kubernetes
+
+389
+00:25:30,670 --> 00:25:34,354
+to know that these containers should run first
+
+390
+00:25:34,552 --> 00:25:38,274
+and complete before this can start.
+
+391
+00:25:38,392 --> 00:25:41,634
+And again, init containers is a list. So you can have multiple
+
+392
+00:25:41,682 --> 00:25:45,350
+containers here as well. And let's say this init container will check
+
+393
+00:25:45,500 --> 00:25:49,254
+whether a certain service is available before the
+
+394
+00:25:49,292 --> 00:25:52,458
+main NginX application can run. So for example,
+
+395
+00:25:52,544 --> 00:25:56,362
+if the web application depends on a database, we can check here
+
+396
+00:25:56,496 --> 00:25:59,020
+MyDB available.
+
+397
+00:26:00,830 --> 00:26:10,494
+And again, let's use the busybox image and
+
+398
+00:26:10,532 --> 00:26:14,522
+the command will check whether a MyDB
+
+399
+00:26:14,586 --> 00:26:18,706
+service is available in the cluster or not. So what
+
+400
+00:26:18,728 --> 00:26:23,570
+we can do is execute until Nslookup,
+
+401
+00:26:24,310 --> 00:26:27,858
+let's call it MyDB service. So we're going to
+
+402
+00:26:27,864 --> 00:26:32,760
+do nslookup on MyDB service and
+
+403
+00:26:34,410 --> 00:26:38,806
+Echo waiting for database and
+
+404
+00:26:38,828 --> 00:26:42,798
+then we do that every 4 seconds.
+
+405
+00:26:42,914 --> 00:26:46,934
+So basically every 4 seconds this is going to check whether MyDB
+
+406
+00:26:46,982 --> 00:26:50,874
+service is available or not. And it will wait until
+
+407
+00:26:50,912 --> 00:26:55,054
+the service is available before letting the application start.
+
+408
+00:26:55,172 --> 00:26:57,200
+So let's actually save this.
+
+409
+00:26:57,730 --> 00:27:01,114
+And again, I'm going to delete the existing
+
+410
+00:27:01,242 --> 00:27:07,582
+deployment and
+
+411
+00:27:07,636 --> 00:27:11,086
+recreate it. And if I do Kubectl get pod.
+
+412
+00:27:11,118 --> 00:27:15,262
+Now you see that the old pods
+
+413
+00:27:15,326 --> 00:27:18,990
+are getting terminated and the new ones are getting started.
+
+414
+00:27:19,160 --> 00:27:21,830
+And let's check again. There you go.
+
+415
+00:27:21,980 --> 00:27:26,118
+And here we have a different status. Now we have zero
+
+416
+00:27:26,204 --> 00:27:30,038
+out of two containers ready. So these are actually
+
+417
+00:27:30,124 --> 00:27:34,006
+the main containers, not including the init container.
+
+418
+00:27:34,198 --> 00:27:38,422
+However here we see that init container hasn't completed
+
+419
+00:27:38,486 --> 00:27:42,358
+its job yet, right? So again the status
+
+420
+00:27:42,454 --> 00:27:46,382
+is that init container is being executed. Now we don't have
+
+421
+00:27:46,436 --> 00:27:50,734
+a MyDB service in the cluster, so this is going to basically keep
+
+422
+00:27:50,852 --> 00:27:54,782
+trying to access that service before the main
+
+423
+00:27:54,836 --> 00:27:58,626
+insidecar containers can start. However we
+
+424
+00:27:58,648 --> 00:28:02,114
+can also log the init containers just
+
+425
+00:28:02,152 --> 00:28:05,698
+like we do the regular ones. So I'm going to do get
+
+426
+00:28:05,864 --> 00:28:09,154
+kubectl logs. Again I will
+
+427
+00:28:09,192 --> 00:28:13,046
+get an error, but this time it says choose one of
+
+428
+00:28:13,148 --> 00:28:16,566
+Nginx or log sidecar or one of the
+
+429
+00:28:16,588 --> 00:28:20,440
+init containers. And this is my init container name,
+
+430
+00:28:20,810 --> 00:28:24,060
+so I can also specify this as an option.
+
+431
+00:28:24,510 --> 00:28:28,358
+And as you see here we have nslookup
+
+432
+00:28:28,454 --> 00:28:31,370
+output which tries to resolve the MyDB service,
+
+433
+00:28:31,440 --> 00:28:34,974
+but it cannot find one because we don't have it in the cluster. So to
+
+434
+00:28:35,012 --> 00:28:38,954
+fix that and basically let the init container
+
+435
+00:28:39,002 --> 00:28:48,258
+exit, let's actually create a service with
+
+436
+00:28:48,344 --> 00:28:52,530
+MyDB name. So cluster IP
+
+437
+00:28:52,870 --> 00:28:56,418
+is going to be my DB service, that's what
+
+438
+00:28:56,424 --> 00:28:59,634
+we called it. And we have one required attribute
+
+439
+00:28:59,682 --> 00:29:03,110
+which is port and let's have it at 80 80
+
+440
+00:29:05,130 --> 00:29:08,070
+and it is actually called tcp.
+
+441
+00:29:10,810 --> 00:29:14,474
+And now that we have the
+
+442
+00:29:14,512 --> 00:29:17,882
+service, MyDB service,
+
+443
+00:29:18,016 --> 00:29:21,642
+our init container should be
+
+444
+00:29:21,696 --> 00:29:26,746
+able to resolve that. So let's lock
+
+445
+00:29:26,858 --> 00:29:29,982
+the container and as you see
+
+446
+00:29:30,116 --> 00:29:33,274
+it was able to resolve it my DB
+
+447
+00:29:33,322 --> 00:29:36,730
+service to the IP address of the service.
+
+448
+00:29:36,900 --> 00:29:40,466
+And as a result you
+
+449
+00:29:40,488 --> 00:29:44,606
+see that the init container status is gone and both pods
+
+450
+00:29:44,718 --> 00:29:48,418
+have two containers running inside. So that's how you
+
+451
+00:29:48,424 --> 00:29:51,926
+can use init and sidecar containers in
+
+452
+00:29:51,948 --> 00:29:52,870
+your pod.
+
+453
+00:29:57,980 --> 00:30:01,380
+Data about the pod or Kubernetes environment
+
+454
+00:30:01,540 --> 00:30:05,524
+in your application. This could be a pod IP address or
+
+455
+00:30:05,582 --> 00:30:09,032
+pod namespace, a service account that the pod uses,
+
+456
+00:30:09,096 --> 00:30:13,004
+et cetera. For example in the sidecar logging application
+
+457
+00:30:13,202 --> 00:30:16,908
+you may want to add these values as metadata to each
+
+458
+00:30:16,994 --> 00:30:21,644
+application log. So how do you access information about pods
+
+459
+00:30:21,772 --> 00:30:25,920
+and cluster generally in the container running
+
+460
+00:30:25,990 --> 00:30:29,608
+inside the pod? Well actually the whole pod configuration
+
+461
+00:30:29,724 --> 00:30:32,996
+is available for all of its containers to access.
+
+462
+00:30:33,178 --> 00:30:37,056
+So if I do kubectl get pod with Yaml
+
+463
+00:30:37,088 --> 00:30:40,496
+output, that's the entire configuration
+
+464
+00:30:40,688 --> 00:30:45,188
+with all the data about the pod. And all of this is actually accessible
+
+465
+00:30:45,284 --> 00:30:48,852
+inside each container, including the generated
+
+466
+00:30:48,916 --> 00:30:52,888
+data like the status section. However in order to access
+
+467
+00:30:52,974 --> 00:30:56,684
+them we have to explicitly pass them. How can
+
+468
+00:30:56,722 --> 00:31:01,384
+we do that? We can define environment variables for the container
+
+469
+00:31:01,512 --> 00:31:04,920
+and pass the different pod configuration attributes
+
+470
+00:31:05,080 --> 00:31:08,764
+as the environment variable values.
+
+471
+00:31:08,892 --> 00:31:12,512
+Let's see an example again.
+
+472
+00:31:12,566 --> 00:31:16,320
+I'm going to bring up our NgInx deployment and
+
+473
+00:31:16,390 --> 00:31:20,008
+let's actually clean this up a little and remove the init
+
+474
+00:31:20,044 --> 00:31:23,812
+containers. We don't need them anymore. And let's say we want to
+
+475
+00:31:23,866 --> 00:31:27,684
+expose some of the values inside the log
+
+476
+00:31:27,802 --> 00:31:31,540
+sidecar container. To do that we're going to define
+
+477
+00:31:32,060 --> 00:31:35,800
+an attribute here called Env that stands for
+
+478
+00:31:35,870 --> 00:31:39,816
+environment variables. And this is a list of
+
+479
+00:31:39,918 --> 00:31:43,224
+environment variables that we can pass to
+
+480
+00:31:43,342 --> 00:31:46,812
+a container. And environment variables are basically just
+
+481
+00:31:46,866 --> 00:31:50,056
+key value pairs. And for each environment variable
+
+482
+00:31:50,088 --> 00:31:53,436
+we have the key, which is name the name of the
+
+483
+00:31:53,458 --> 00:31:56,984
+environment variable. Again this could be lowercase,
+
+484
+00:31:57,032 --> 00:32:00,844
+but as a standard you define the names of the environment variables
+
+485
+00:32:00,972 --> 00:32:04,796
+using all caps and underscore
+
+486
+00:32:04,828 --> 00:32:07,904
+separation. And you have the value of
+
+487
+00:32:07,942 --> 00:32:11,428
+that variable which can be a hard coded value
+
+488
+00:32:11,594 --> 00:32:15,680
+like my value. Or it could be a reference
+
+489
+00:32:15,840 --> 00:32:19,460
+to a data that actually contains that
+
+490
+00:32:19,530 --> 00:32:23,000
+value. And in that case we're going to define value
+
+491
+00:32:23,070 --> 00:32:26,708
+from and point to the reference.
+
+492
+00:32:26,884 --> 00:32:30,360
+Now in our case we want to reference different
+
+493
+00:32:30,510 --> 00:32:33,672
+data from the pod configuration. And let's start
+
+494
+00:32:33,726 --> 00:32:37,900
+with the name of the pod where this container is running.
+
+495
+00:32:38,050 --> 00:32:42,232
+Let's call it pod name. Now how do we reference
+
+496
+00:32:42,376 --> 00:32:45,672
+the pod configuration data in environment variable,
+
+497
+00:32:45,816 --> 00:32:49,420
+the syntax for that is field reference.
+
+498
+00:32:49,580 --> 00:32:53,148
+And under that we have field path.
+
+499
+00:32:53,244 --> 00:32:56,672
+So this basically points to the path to
+
+500
+00:32:56,806 --> 00:33:00,384
+the attribute that holds that value. In our case that's the pod
+
+501
+00:33:00,432 --> 00:33:05,012
+name which is in metadata section name.
+
+502
+00:33:05,146 --> 00:33:08,304
+And that's how we get values
+
+503
+00:33:08,352 --> 00:33:12,556
+defined in different sections of the pod configuration.
+
+504
+00:33:12,688 --> 00:33:16,084
+And you can also see this syntax in Kubernetes official
+
+505
+00:33:16,132 --> 00:33:20,404
+documentation about exposing pod information to containers
+
+506
+00:33:20,532 --> 00:33:24,020
+through environment variables, which is very descriptive.
+
+507
+00:33:24,180 --> 00:33:26,990
+And you have the examples right here.
+
+508
+00:33:27,440 --> 00:33:31,640
+And as I said, you can also get the values
+
+509
+00:33:31,720 --> 00:33:36,072
+of auto generated configuration like pod
+
+510
+00:33:36,136 --> 00:33:37,230
+service account.
+
+511
+00:33:41,140 --> 00:33:46,272
+Again, we have value from field
+
+512
+00:33:46,406 --> 00:33:50,416
+reference field path
+
+513
+00:33:50,528 --> 00:33:54,212
+in the specification with service
+
+514
+00:33:54,346 --> 00:33:57,856
+account name attribute. Let's also expose
+
+515
+00:33:57,888 --> 00:34:01,910
+the pod IP address and I'm simply going to copy this
+
+516
+00:34:05,500 --> 00:34:09,224
+status pod IP and all these
+
+517
+00:34:09,262 --> 00:34:12,776
+three values will be available inside the container. Now we can use
+
+518
+00:34:12,798 --> 00:34:16,372
+those environment variables in the application running
+
+519
+00:34:16,526 --> 00:34:20,472
+of the container as we wish, right in our case to just validate
+
+520
+00:34:20,536 --> 00:34:24,396
+that the values have been passed, let's just print them
+
+521
+00:34:24,418 --> 00:34:28,028
+out in the container. So after sync logs
+
+522
+00:34:28,124 --> 00:34:31,712
+we're going to do print env and
+
+523
+00:34:31,766 --> 00:34:35,490
+basically just print all of these,
+
+524
+00:34:37,460 --> 00:34:40,968
+all these values one by one to make sure they have been passed
+
+525
+00:34:41,004 --> 00:34:44,692
+correctly. Now if you have a large command that you want to pass
+
+526
+00:34:44,746 --> 00:34:48,768
+into a command, you can also as a multiline command,
+
+527
+00:34:48,864 --> 00:34:52,316
+we can also do that using arcs
+
+528
+00:34:52,448 --> 00:34:56,516
+attribute here. So instead of having all that defined
+
+529
+00:34:56,628 --> 00:35:00,164
+on one line, let's actually remove
+
+530
+00:35:00,212 --> 00:35:03,944
+that here. And we can define that in the arcs or
+
+531
+00:35:03,982 --> 00:35:08,616
+arguments as a multiline command. So let's
+
+532
+00:35:08,648 --> 00:35:12,284
+copy like
+
+533
+00:35:12,322 --> 00:35:12,910
+this.
+
+534
+00:35:23,220 --> 00:35:27,408
+And there you go. Now this can be a little bit easier to read
+
+535
+00:35:27,494 --> 00:35:30,848
+and maintain as well as adjust some values here
+
+536
+00:35:30,934 --> 00:35:34,144
+if you have a whole script that you're executing in a container.
+
+537
+00:35:34,272 --> 00:35:38,084
+So as you see, there are many different syntax variations with
+
+538
+00:35:38,122 --> 00:35:41,456
+the command and arguments and how you can define scripts
+
+539
+00:35:41,488 --> 00:35:44,808
+here, but you can always reference the documentation to see
+
+540
+00:35:44,894 --> 00:35:47,752
+whether you have a right syntax or not. So again,
+
+541
+00:35:47,806 --> 00:35:52,020
+let's save this and delete
+
+542
+00:35:52,100 --> 00:35:59,020
+the old deployment and
+
+543
+00:35:59,090 --> 00:36:03,100
+apply the changes. And let's check the logs
+
+544
+00:36:03,840 --> 00:36:07,100
+of our container.
+
+545
+00:36:14,080 --> 00:36:17,856
+And it's called lock sidecar. And you see
+
+546
+00:36:17,878 --> 00:36:21,356
+the values printed out here. So first we have sync app logs.
+
+547
+00:36:21,468 --> 00:36:24,708
+This is the pod name that we passed in as a
+
+548
+00:36:24,714 --> 00:36:28,704
+parameter. That's the service account name and the pod
+
+549
+00:36:28,752 --> 00:36:32,508
+IP address. And because we have a while loop, this gets printed
+
+550
+00:36:32,544 --> 00:36:35,944
+out multiple times. So again, as a use
+
+551
+00:36:35,982 --> 00:36:40,036
+case, if we had a log sidecar container that synchronized
+
+552
+00:36:40,068 --> 00:36:44,248
+the locks, it could append all this metadata information
+
+553
+00:36:44,414 --> 00:36:47,580
+to the application logs every time it collects them.
+
+554
+00:36:47,650 --> 00:36:51,468
+So that's how you can access any
+
+555
+00:36:51,554 --> 00:37:47,064
+pod configuration information inside the containers in
+
+556
+00:37:47,102 --> 00:37:50,572
+a cluster. However, after a couple of days of running
+
+557
+00:37:50,626 --> 00:37:54,252
+the application, the database pod died and
+
+558
+00:37:54,306 --> 00:37:57,836
+all the data inside got lost. And that's really bad because the
+
+559
+00:37:57,858 --> 00:38:01,952
+developers had created test data inside the database and now
+
+560
+00:38:02,006 --> 00:38:05,708
+the database is empty so they have to now recreate
+
+561
+00:38:05,724 --> 00:38:09,516
+the application state again. But generally if you had production
+
+562
+00:38:09,628 --> 00:38:12,992
+environment, you would not want to lose your database
+
+563
+00:38:13,056 --> 00:38:16,660
+data, right? So developers ask you to support them.
+
+564
+00:38:16,730 --> 00:38:20,452
+Configure data persistence in Kubernetes so that
+
+565
+00:38:20,506 --> 00:38:24,196
+even after the database pods or any other pods that have
+
+566
+00:38:24,298 --> 00:38:28,040
+data die, the data will still stay and
+
+567
+00:38:28,190 --> 00:38:31,592
+attach to the new pods. So to be able
+
+568
+00:38:31,646 --> 00:38:35,544
+to help developers configure persistent storage for
+
+569
+00:38:35,582 --> 00:38:39,740
+their applications in the cluster, we first have to understand how
+
+570
+00:38:39,810 --> 00:38:43,004
+data persistence actually works in Kubernetes and
+
+571
+00:38:43,042 --> 00:38:46,844
+what different components and resources we have available to
+
+572
+00:38:46,882 --> 00:38:51,776
+configure that show
+
+573
+00:38:51,798 --> 00:38:55,916
+you how you can persist data in Kubernetes using volumes.
+
+574
+00:38:56,028 --> 00:38:59,452
+We will cover three components of Kubernetes storage,
+
+575
+00:38:59,596 --> 00:39:03,600
+persistent volume, persistent volume claim and storage class,
+
+576
+00:39:03,750 --> 00:39:07,444
+and see what each component does and how it's created and
+
+577
+00:39:07,482 --> 00:39:09,860
+used for data persistence.
+
+578
+00:39:13,990 --> 00:39:17,278
+Consider a case where you have a MySQL database pod
+
+579
+00:39:17,374 --> 00:39:20,578
+which your application uses. Data gets added,
+
+580
+00:39:20,674 --> 00:39:23,814
+updated in the database. Maybe you create a new
+
+581
+00:39:23,852 --> 00:39:27,714
+database with a new user, et cetera. By default,
+
+582
+00:39:27,842 --> 00:39:31,786
+when you restart the pod, all those changes will be gone,
+
+583
+00:39:31,888 --> 00:39:35,546
+because Kubernetes doesn't give you data persistence out
+
+584
+00:39:35,568 --> 00:39:39,222
+of the box. That's something that you have to explicitly
+
+585
+00:39:39,286 --> 00:39:43,130
+configure for each application that needs saving data between
+
+586
+00:39:43,200 --> 00:39:46,606
+pod restarts. So basically you need
+
+587
+00:39:46,628 --> 00:39:50,250
+a storage that doesn't depend on the pod lifecycle,
+
+588
+00:39:50,410 --> 00:39:53,982
+so it will still be there when pod dies and new one gets
+
+589
+00:39:54,036 --> 00:39:57,366
+created. So the new pod can pick up where the previous
+
+590
+00:39:57,418 --> 00:40:00,946
+one left off, so it will read the existing data from
+
+591
+00:40:00,968 --> 00:40:03,860
+that storage to get up to date data.
+
+592
+00:40:04,310 --> 00:40:07,854
+However, you don't know on which node the new pod
+
+593
+00:40:07,902 --> 00:40:11,814
+restarts. So your storage must also be available on all
+
+594
+00:40:11,852 --> 00:40:15,686
+nodes, not just one specific one, so that when the
+
+595
+00:40:15,708 --> 00:40:19,798
+new pod tries to read the existing data, the up to date data
+
+596
+00:40:19,884 --> 00:40:23,610
+is there on any node in the cluster.
+
+597
+00:40:24,190 --> 00:40:27,878
+And also you need a highly available storage
+
+598
+00:40:27,974 --> 00:40:32,170
+that will survive even if the whole cluster crashed.
+
+599
+00:40:32,590 --> 00:40:35,918
+So these are the criteria or the requirements that
+
+600
+00:40:36,004 --> 00:40:39,178
+your storage, for example your database storage,
+
+601
+00:40:39,274 --> 00:40:43,214
+will need to have to be reliable. Another use case for
+
+602
+00:40:43,252 --> 00:40:46,766
+persistent storage which is not for database, is a directory.
+
+603
+00:40:46,878 --> 00:40:50,642
+Maybe you have an application that writes and reads files from
+
+604
+00:40:50,696 --> 00:40:54,334
+pre configured directory. This could be session files
+
+605
+00:40:54,462 --> 00:40:57,934
+for application or configuration files, et cetera.
+
+606
+00:40:58,062 --> 00:41:01,186
+And you can configure any of this type of storage
+
+607
+00:41:01,298 --> 00:41:05,442
+using Kubernetes component called persistent volume
+
+608
+00:41:05,586 --> 00:41:09,478
+think of a persistent volume as a cluster resource, just like
+
+609
+00:41:09,564 --> 00:41:13,580
+ram or cpu that is used to store data.
+
+610
+00:41:14,350 --> 00:41:17,766
+Persistent volume, just like any other component, gets created
+
+611
+00:41:17,798 --> 00:41:21,718
+using Kubernetes YaMl file where you can specify
+
+612
+00:41:21,894 --> 00:41:25,914
+the kind which is persistent volume. And in the specification
+
+613
+00:41:26,042 --> 00:41:29,934
+section you have to define different parameters like how
+
+614
+00:41:29,972 --> 00:41:33,114
+much storage should be created for the volume.
+
+615
+00:41:33,242 --> 00:41:37,710
+But since persistent volume is just an abstract component,
+
+616
+00:41:37,870 --> 00:41:41,022
+it must take the storage from the actual physical
+
+617
+00:41:41,086 --> 00:41:44,786
+storage, right? Like local hard drive from
+
+618
+00:41:44,808 --> 00:41:48,298
+the cluster nodes, or your external NFS servers
+
+619
+00:41:48,414 --> 00:41:52,690
+outside of the cluster. Or maybe cloud storage like AWS
+
+620
+00:41:52,850 --> 00:41:56,306
+block storage, or from Google Cloud storage, et cetera.
+
+621
+00:41:56,418 --> 00:42:00,054
+So the question is, where does this storage backend come
+
+622
+00:42:00,092 --> 00:42:03,606
+from? Local or remote or on cloud? Who configures
+
+623
+00:42:03,638 --> 00:42:07,126
+it? Who makes it available to the cluster? And that's
+
+624
+00:42:07,158 --> 00:42:10,614
+the tricky part of data persistence in Kubernetes.
+
+625
+00:42:10,742 --> 00:42:15,018
+Because Kubernetes doesn't care about your actual storage,
+
+626
+00:42:15,114 --> 00:42:19,214
+it gives you persistent volume component as an interface to
+
+627
+00:42:19,252 --> 00:42:22,622
+the actual storage that you as a maintainer or
+
+628
+00:42:22,676 --> 00:42:26,814
+administrator have to take care of. So you have to decide
+
+629
+00:42:26,942 --> 00:42:30,482
+what type of storage your cluster services or
+
+630
+00:42:30,536 --> 00:42:34,018
+applications would need and create and manage them
+
+631
+00:42:34,104 --> 00:42:37,422
+by yourself. Managing meaning do backups
+
+632
+00:42:37,486 --> 00:42:41,014
+and make sure they don't get corrupt, et cetera. So think
+
+633
+00:42:41,052 --> 00:42:44,274
+of storage in Kubernetes as an external
+
+634
+00:42:44,402 --> 00:42:47,910
+plugin to your cluster. Whether it's a local
+
+635
+00:42:47,980 --> 00:42:51,834
+storage on the actual nodes where the cluster is running or a
+
+636
+00:42:51,872 --> 00:42:56,038
+remote storage doesn't matter, they're all plugins to the cluster,
+
+637
+00:42:56,134 --> 00:42:59,766
+and you can have multiple storages configured for your cluster.
+
+638
+00:42:59,878 --> 00:43:03,710
+Where one application in your cluster uses local
+
+639
+00:43:03,780 --> 00:43:07,754
+disk storage, another one uses the NFS server,
+
+640
+00:43:07,882 --> 00:43:11,102
+and another one uses some cloud storage, or one
+
+641
+00:43:11,156 --> 00:43:14,478
+application may also use multiple of those
+
+642
+00:43:14,564 --> 00:43:17,950
+storage types. And by creating
+
+643
+00:43:18,030 --> 00:43:21,470
+persistent volumes you can use these actual physical
+
+644
+00:43:21,550 --> 00:43:25,374
+storages. So in the persistent volume specification section
+
+645
+00:43:25,502 --> 00:43:29,458
+you can define which storage backend
+
+646
+00:43:29,634 --> 00:43:33,426
+you want to use to create that storage abstraction
+
+647
+00:43:33,458 --> 00:43:37,366
+or storage resource for your applications. So this is an
+
+648
+00:43:37,388 --> 00:43:40,802
+example where we use NFS storage backend.
+
+649
+00:43:40,946 --> 00:43:44,842
+So basically we define how much storage we need some
+
+650
+00:43:44,896 --> 00:43:48,794
+additional parameters to that storage, like should it be read, write or read
+
+651
+00:43:48,832 --> 00:43:52,390
+only, et cetera, and the storage backend
+
+652
+00:43:52,470 --> 00:43:56,238
+with its parameters. And this is another
+
+653
+00:43:56,324 --> 00:44:00,730
+example where we use Google Cloud as a storage backend,
+
+654
+00:44:00,890 --> 00:44:05,322
+again with the storage backend specified here and capacity
+
+655
+00:44:05,386 --> 00:44:09,410
+and access modes here. Now obviously, depending on the storage type
+
+656
+00:44:09,560 --> 00:44:13,598
+on the storage backend, some of the attributes in the specification
+
+657
+00:44:13,694 --> 00:44:17,502
+will be different because they're specific to the storage
+
+658
+00:44:17,566 --> 00:44:21,446
+type. This is another example of a local storage which
+
+659
+00:44:21,468 --> 00:44:25,826
+is on the node itself, which has additional node affinity attributes.
+
+660
+00:44:25,938 --> 00:44:29,558
+In the official Kubernetes documentation, you can actually see the complete
+
+661
+00:44:29,644 --> 00:44:33,110
+list of more than 25 storage backends
+
+662
+00:44:33,190 --> 00:44:37,686
+that Kubernetes supports. Note here that persistent volumes
+
+663
+00:44:37,878 --> 00:44:41,334
+are not namespaced, meaning they're
+
+664
+00:44:41,382 --> 00:44:44,894
+accessible to the whole cluster. And unlike other
+
+665
+00:44:44,932 --> 00:44:47,726
+components that we saw, like pods and services,
+
+666
+00:44:47,908 --> 00:44:51,246
+they're not in any namespace. They're just available to
+
+667
+00:44:51,268 --> 00:44:53,550
+the whole cluster, to all the namespaces.
+
+668
+00:44:57,460 --> 00:45:00,720
+Now, it's important to differentiate here between two categories
+
+669
+00:45:00,800 --> 00:45:04,852
+of the volumes, local and remote. Each volume type
+
+670
+00:45:04,906 --> 00:45:08,596
+in these two categories has its own use case,
+
+671
+00:45:08,778 --> 00:45:12,584
+otherwise they won't exist, and we will see some of these use
+
+672
+00:45:12,622 --> 00:45:16,324
+cases later in this video. However, the local volume
+
+673
+00:45:16,372 --> 00:45:20,072
+types violate the second and third requirements of data
+
+674
+00:45:20,126 --> 00:45:23,836
+persistence for databases that I mentioned at
+
+675
+00:45:23,858 --> 00:45:27,052
+the beginning, which is one not being
+
+676
+00:45:27,106 --> 00:45:30,940
+tied to one specific node, but rather to
+
+677
+00:45:31,010 --> 00:45:34,284
+each node equally because you don't know where the
+
+678
+00:45:34,322 --> 00:45:38,172
+new pod will start and the second surviving
+
+679
+00:45:38,236 --> 00:45:41,676
+in cluster crash scenarios. Because of these reasons
+
+680
+00:45:41,788 --> 00:45:45,584
+for database persistence, you should almost always
+
+681
+00:45:45,702 --> 00:45:47,680
+use remote storage.
+
+682
+00:45:51,540 --> 00:45:55,040
+So who creates these persistent volumes and when?
+
+683
+00:45:55,190 --> 00:45:58,812
+As I said, persistent volumes are resources like CPU
+
+684
+00:45:58,876 --> 00:46:02,256
+or RAM, so they have to be already there in the
+
+685
+00:46:02,278 --> 00:46:05,412
+cluster when the pod that depends on it or that
+
+686
+00:46:05,466 --> 00:46:09,604
+uses it is created. So a side note here is
+
+687
+00:46:09,642 --> 00:46:13,584
+that there are two main roles in Kubernetes. There's an administrator
+
+688
+00:46:13,712 --> 00:46:17,432
+who sets up the cluster and maintains it and also
+
+689
+00:46:17,486 --> 00:46:21,256
+makes sure the cluster has enough resources. These are
+
+690
+00:46:21,278 --> 00:46:24,504
+usually system administrators or DevOps engineers in
+
+691
+00:46:24,542 --> 00:46:28,040
+a company, and the second role is Kubernetes
+
+692
+00:46:28,120 --> 00:46:31,256
+user that deploys the applications in the cluster,
+
+693
+00:46:31,368 --> 00:46:35,432
+either directly or through CI pipeline. These are developer
+
+694
+00:46:35,496 --> 00:46:38,984
+DevOps teams who create the applications and deploy
+
+695
+00:46:39,032 --> 00:46:42,172
+them. So in this case, the Kubernetes administrator
+
+696
+00:46:42,236 --> 00:46:45,920
+would be the one to configure the actual storage,
+
+697
+00:46:46,260 --> 00:46:50,044
+meaning to make sure that the NFS server
+
+698
+00:46:50,172 --> 00:46:53,396
+storage is there and configured, or maybe
+
+699
+00:46:53,498 --> 00:46:57,316
+create and configure a cloud storage that will be available for
+
+700
+00:46:57,338 --> 00:47:00,496
+the cluster. And second, create persistent
+
+701
+00:47:00,528 --> 00:47:03,936
+volume components from these storage backends
+
+702
+00:47:04,048 --> 00:47:08,244
+based on the information from developer team of what types of storage
+
+703
+00:47:08,372 --> 00:47:12,296
+their applications would need. And the developers then
+
+704
+00:47:12,398 --> 00:47:15,544
+will know that storage is there and can be used by their
+
+705
+00:47:15,582 --> 00:47:19,020
+applications. But for that, developers have to
+
+706
+00:47:19,090 --> 00:47:23,164
+explicitly configure the application YaML file to
+
+707
+00:47:23,202 --> 00:47:27,148
+use those persistent volume components. In other words,
+
+708
+00:47:27,234 --> 00:47:30,828
+application has to claim that volume storage,
+
+709
+00:47:30,924 --> 00:47:34,608
+and you do that using another component of Kubernetes called
+
+710
+00:47:34,694 --> 00:47:38,156
+persistent volume claim. Persistent volume
+
+711
+00:47:38,188 --> 00:47:41,420
+claims also pvcs are also created
+
+712
+00:47:41,500 --> 00:47:45,152
+with YAML configuration. Here's an example claim.
+
+713
+00:47:45,296 --> 00:47:48,996
+Again, don't worry about understanding each and every attribute that
+
+714
+00:47:49,018 --> 00:47:52,164
+is defined here. But on the higher level, the way it
+
+715
+00:47:52,202 --> 00:47:55,764
+works is that PVC claims a volume
+
+716
+00:47:55,892 --> 00:47:59,796
+with certain storage size or capacity, which is defined
+
+717
+00:47:59,828 --> 00:48:03,940
+in the persistent volume claim, and some additional characteristics
+
+718
+00:48:04,100 --> 00:48:07,820
+like access type. Should it be read only or read write,
+
+719
+00:48:07,970 --> 00:48:11,672
+or the type, et cetera. And whatever persistent
+
+720
+00:48:11,736 --> 00:48:14,924
+volume matches this criteria, or in other
+
+721
+00:48:14,962 --> 00:48:18,924
+words satisfies this claim, will be used for the
+
+722
+00:48:18,962 --> 00:48:22,352
+application. But that's not all. You have to now use that
+
+723
+00:48:22,406 --> 00:48:25,952
+claim in your pods configuration like this.
+
+724
+00:48:26,086 --> 00:48:30,080
+So in the pod specification here, you have the volumes
+
+725
+00:48:30,660 --> 00:48:34,976
+attribute that references the persistent
+
+726
+00:48:35,088 --> 00:48:38,916
+volume claim with its name. So now the
+
+727
+00:48:38,938 --> 00:48:42,820
+pod and all the containers inside the pod will have
+
+728
+00:48:42,890 --> 00:48:46,600
+access to that persistent volume storage.
+
+729
+00:48:49,980 --> 00:48:53,224
+So to go through those levels of abstraction step
+
+730
+00:48:53,262 --> 00:48:56,600
+by step, pods access storage by using
+
+731
+00:48:56,670 --> 00:49:01,080
+the claim as a volume, right? So they request the volume
+
+732
+00:49:01,160 --> 00:49:04,924
+through claim. The claim then will go and try to
+
+733
+00:49:04,962 --> 00:49:08,632
+find a volume persistent volume in the cluster that satisfies
+
+734
+00:49:08,696 --> 00:49:12,252
+the claim and the volume will have a storage,
+
+735
+00:49:12,316 --> 00:49:15,856
+the actual storage backend that it
+
+736
+00:49:15,878 --> 00:49:18,992
+will create that storage resource from.
+
+737
+00:49:19,046 --> 00:49:23,504
+And this way the pod will now be able to use that actual storage
+
+738
+00:49:23,552 --> 00:49:26,820
+backend. Note here that claims must
+
+739
+00:49:26,890 --> 00:49:30,404
+exist in the same namespace as the pod using the
+
+740
+00:49:30,442 --> 00:49:33,776
+claim. While as I mentioned before, persistent volumes
+
+741
+00:49:33,808 --> 00:49:37,876
+are not namespaced. So once the pod finds
+
+742
+00:49:37,908 --> 00:49:41,076
+the matching persistent volume through the volume claim,
+
+743
+00:49:41,188 --> 00:49:44,932
+through the persistent volume claim, the volume is then mounted
+
+744
+00:49:44,996 --> 00:49:48,056
+into the pod like this here. This is a
+
+745
+00:49:48,078 --> 00:49:52,024
+pod level, and then that volume can be mounted
+
+746
+00:49:52,072 --> 00:49:55,468
+into the container inside the pod, which is
+
+747
+00:49:55,554 --> 00:49:59,388
+this level right here. And if you have multiple containers here in
+
+748
+00:49:59,394 --> 00:50:03,024
+the pod, you can decide to mount this
+
+749
+00:50:03,062 --> 00:50:06,672
+volume in all the containers or just some of those.
+
+750
+00:50:06,806 --> 00:50:10,576
+So now the container and the application inside the
+
+751
+00:50:10,598 --> 00:50:14,156
+container can read and write to that storage, and when the pod
+
+752
+00:50:14,188 --> 00:50:17,556
+dies, a new one gets created. It will have access
+
+753
+00:50:17,658 --> 00:50:21,668
+to the same storage and see all the changes the previous pod or
+
+754
+00:50:21,674 --> 00:50:25,684
+the previous containers made. Again, the attributes here like
+
+755
+00:50:25,722 --> 00:50:29,496
+volumes and volume, miles, et cetera, and how they're used. I will show you
+
+756
+00:50:29,598 --> 00:50:33,000
+more specifically and explain in a later demo
+
+757
+00:50:33,070 --> 00:50:36,424
+video. Now you may be wondering why so many
+
+758
+00:50:36,462 --> 00:50:39,652
+abstractions for using volume where admin
+
+759
+00:50:39,716 --> 00:50:43,196
+role has to create persistent volume and user role creates a
+
+760
+00:50:43,218 --> 00:50:46,792
+claim on that persistent volume and that isn't used in pod.
+
+761
+00:50:46,856 --> 00:50:50,524
+Can I just use one component and configure everything there?
+
+762
+00:50:50,642 --> 00:50:54,188
+Well, this actually has a benefit because as a user,
+
+763
+00:50:54,284 --> 00:50:58,380
+meaning a developer who just wants to deploy their application in the cluster,
+
+764
+00:50:58,540 --> 00:51:02,320
+you don't care about where the actual storage is.
+
+765
+00:51:02,470 --> 00:51:05,532
+You know you want your database to have persistence,
+
+766
+00:51:05,676 --> 00:51:08,584
+and whether the data will leave on a cluster,
+
+767
+00:51:08,652 --> 00:51:11,924
+FS or AWS, EBS or local
+
+768
+00:51:12,042 --> 00:51:15,936
+storage doesn't matter for you as long as the data is safely
+
+769
+00:51:15,968 --> 00:51:19,700
+stored. Or if you need a directory storage for files.
+
+770
+00:51:19,780 --> 00:51:23,592
+You don't care where the directory actually leaves as long as it has enough
+
+771
+00:51:23,646 --> 00:51:27,108
+space and works properly. And you sure don't
+
+772
+00:51:27,124 --> 00:51:30,664
+want to care about setting up these actual storages
+
+773
+00:51:30,792 --> 00:51:34,168
+yourself. You just want 50 gigabyte storage
+
+774
+00:51:34,264 --> 00:51:38,252
+for your elastic or ten gigabyte for your application. That's it.
+
+775
+00:51:38,386 --> 00:51:42,000
+So you make a claim for storage using PVC and assume that
+
+776
+00:51:42,070 --> 00:51:46,368
+cluster has storage resources already
+
+777
+00:51:46,534 --> 00:51:50,508
+there. And this makes deploying the applications
+
+778
+00:51:50,684 --> 00:51:54,036
+easier for developers because they don't have to take care of the
+
+779
+00:51:54,058 --> 00:51:56,980
+stuff beyond deploying the applications.
+
+780
+00:52:01,010 --> 00:52:05,114
+Now there are two volume types that I think needs to be mentioned separately
+
+781
+00:52:05,242 --> 00:52:09,006
+because they're a bit different from the rest and these are config,
+
+782
+00:52:09,038 --> 00:52:12,846
+map and secret. Both of them are local volumes,
+
+783
+00:52:12,958 --> 00:52:16,862
+but unlike the rest, these two aren't created via PV
+
+784
+00:52:16,926 --> 00:52:20,718
+and PVC, but are rather own components and managed by
+
+785
+00:52:20,744 --> 00:52:24,802
+Kubernetes itself. Consider a case where you need a configuration
+
+786
+00:52:24,866 --> 00:52:28,914
+file for your Prometheus pod, or maybe a message broker
+
+787
+00:52:28,962 --> 00:52:32,670
+service like mosquito or consider when you need a certificate
+
+788
+00:52:32,770 --> 00:52:35,420
+file mounted inside your application.
+
+789
+00:52:35,950 --> 00:52:39,450
+In both cases you need a file available
+
+790
+00:52:39,600 --> 00:52:43,366
+to your pod. So how this works is that you create config
+
+791
+00:52:43,398 --> 00:52:47,286
+map or secret component and you can mount that into your
+
+792
+00:52:47,328 --> 00:52:51,018
+pod and into your container the same way as you would mount
+
+793
+00:52:51,114 --> 00:52:54,478
+persistent volume claim. So instead you would have a
+
+794
+00:52:54,484 --> 00:52:58,234
+config map or secret here. So to quickly summarize what we've
+
+795
+00:52:58,282 --> 00:53:01,906
+covered so far, as you see, at its core, a volume is
+
+796
+00:53:01,928 --> 00:53:05,474
+just a directory, possibly with some data in it which
+
+797
+00:53:05,512 --> 00:53:09,154
+is accessible to the containers in a pod, how that
+
+798
+00:53:09,192 --> 00:53:12,870
+directory is made available, or what storage medium actually
+
+799
+00:53:12,940 --> 00:53:17,350
+backs that, and the contents of that directory are
+
+800
+00:53:17,420 --> 00:53:21,320
+defined by a specific volume type you use.
+
+801
+00:53:21,770 --> 00:53:25,882
+So to use a volume, a pod specifies what volumes to
+
+802
+00:53:25,936 --> 00:53:30,134
+provide for the pod in the specification volumes
+
+803
+00:53:30,182 --> 00:53:34,202
+attribute and inside the pod. Then you can decide where to
+
+804
+00:53:34,256 --> 00:53:38,490
+mount that storage into using volume mounts
+
+805
+00:53:38,570 --> 00:53:42,222
+attribute inside the container section and
+
+806
+00:53:42,276 --> 00:53:45,822
+this is a path inside the container where
+
+807
+00:53:45,956 --> 00:53:50,062
+application can access whatever storage we mounted
+
+808
+00:53:50,126 --> 00:53:53,442
+into the container. And as I said, if you have
+
+809
+00:53:53,496 --> 00:53:56,914
+multiple containers, you can decide which containers should
+
+810
+00:53:56,952 --> 00:54:00,378
+get access to that storage. Interesting note
+
+811
+00:54:00,414 --> 00:54:04,546
+for you is that a pod can actually use multiple volumes
+
+812
+00:54:04,578 --> 00:54:08,950
+of different types simultaneously. Let's say you have an elasticsearch
+
+813
+00:54:09,610 --> 00:54:13,690
+application or pod running in your cluster that
+
+814
+00:54:13,760 --> 00:54:17,302
+needs a configuration file mounted through config
+
+815
+00:54:17,366 --> 00:54:21,718
+map, needs a certificate, let's say client certificate
+
+816
+00:54:21,894 --> 00:54:25,442
+mounted as a secret and it needs database storage,
+
+817
+00:54:25,526 --> 00:54:29,150
+let's say which is backed with AWS
+
+818
+00:54:29,810 --> 00:54:33,930
+elastic block storage. So in this case you can configure
+
+819
+00:54:34,010 --> 00:54:37,550
+all three inside your pod or deployment.
+
+820
+00:54:37,970 --> 00:54:41,380
+So this is the pod specification that we saw before.
+
+821
+00:54:41,830 --> 00:54:45,554
+And here on the volumes level you will just list all
+
+822
+00:54:45,592 --> 00:54:49,650
+the volumes that you want to mount into your pod.
+
+823
+00:54:50,470 --> 00:54:54,130
+So let's say you have a persistent volume claim that in the background
+
+824
+00:54:54,210 --> 00:54:57,746
+claims persistent volume from AWS block storage.
+
+825
+00:54:57,858 --> 00:55:01,554
+And here you have the config map, and here you have a secret.
+
+826
+00:55:01,682 --> 00:55:05,514
+And here in the volume mounts you can list all those
+
+827
+00:55:05,712 --> 00:55:09,114
+storage mounts using the names, right? So you
+
+828
+00:55:09,152 --> 00:55:12,534
+have the persistent storage, then you have the config
+
+829
+00:55:12,582 --> 00:55:16,526
+map and the secret and each one of them is mounted to a
+
+830
+00:55:16,548 --> 00:55:18,990
+certain path inside the container.
+
+831
+00:55:22,930 --> 00:55:25,834
+Now we saw that to persist data in kubernetes,
+
+832
+00:55:25,962 --> 00:55:30,438
+admins need to configure storage for the cluster, create persistent
+
+833
+00:55:30,474 --> 00:55:34,158
+volumes, and developers then can claim them using pvcs.
+
+834
+00:55:34,254 --> 00:55:37,518
+But consider a cluster with hundreds of applications
+
+835
+00:55:37,614 --> 00:55:41,758
+where things get deployed daily and storage is needed for these applications.
+
+836
+00:55:41,854 --> 00:55:45,106
+So developers need to ask admins to create persistent
+
+837
+00:55:45,138 --> 00:55:49,174
+volumes they need for applications before deploying them.
+
+838
+00:55:49,292 --> 00:55:52,950
+And admins then may have to manually request storage from cloud
+
+839
+00:55:53,020 --> 00:55:56,330
+or storage provider and create hundreds of
+
+840
+00:55:56,400 --> 00:55:59,722
+persistent volumes for all the applications that
+
+841
+00:55:59,776 --> 00:56:02,842
+need storage manually, and that can be
+
+842
+00:56:02,896 --> 00:56:06,454
+tedious, time consuming, and can get messy
+
+843
+00:56:06,502 --> 00:56:10,282
+very quickly. So to make this process more efficient,
+
+844
+00:56:10,426 --> 00:56:14,346
+there is a third component of Kubernetes persistence
+
+845
+00:56:14,538 --> 00:56:17,918
+called storage class. Storage class basically
+
+846
+00:56:18,004 --> 00:56:22,046
+creates or provisions persistent volumes dynamically
+
+847
+00:56:22,238 --> 00:56:25,682
+whenever PVC claims it. And this way
+
+848
+00:56:25,736 --> 00:56:29,810
+creating or provisioning volumes in a cluster may be automated.
+
+849
+00:56:30,230 --> 00:56:33,746
+Storage class also gets created using YAML
+
+850
+00:56:33,778 --> 00:56:37,766
+configuration file. So this is an example file where we have the
+
+851
+00:56:37,788 --> 00:56:41,126
+kind storage class. Storage class
+
+852
+00:56:41,228 --> 00:56:44,738
+creates persistent volumes dynamically in the background.
+
+853
+00:56:44,834 --> 00:56:48,502
+So remember we define storage backend in the persistent
+
+854
+00:56:48,566 --> 00:56:52,410
+volume component. Now we have to define it in the storage class
+
+855
+00:56:52,480 --> 00:56:57,566
+component. And we do that using the provisioner attribute which
+
+856
+00:56:57,588 --> 00:57:00,814
+is the main part of the storage class configuration because it
+
+857
+00:57:00,852 --> 00:57:04,686
+tells kubernetes which provisioner to be used for a
+
+858
+00:57:04,708 --> 00:57:08,554
+specific storage platform or cloud provider
+
+859
+00:57:08,682 --> 00:57:12,066
+to create the persistent volume component out of
+
+860
+00:57:12,088 --> 00:57:15,550
+it. So each storage backend has its own provisioner
+
+861
+00:57:15,630 --> 00:57:18,798
+that Kubernetes offers internally which are prefixed
+
+862
+00:57:18,814 --> 00:57:22,020
+with Kubernetes IO like this one here.
+
+863
+00:57:22,410 --> 00:57:26,310
+And these are internal provisioners. And for others
+
+864
+00:57:26,460 --> 00:57:30,690
+or other storage types they are external provisioners
+
+865
+00:57:30,850 --> 00:57:34,742
+that you have to then explicitly go and find and
+
+866
+00:57:34,796 --> 00:57:38,106
+use that in your storage class. And in
+
+867
+00:57:38,128 --> 00:57:41,946
+addition to provisioner attribute, we configure parameters of
+
+868
+00:57:41,968 --> 00:57:46,106
+the storage we want to request for our persistent volume, like this
+
+869
+00:57:46,128 --> 00:57:49,722
+one here. So storage class is basically another abstraction
+
+870
+00:57:49,786 --> 00:57:53,290
+level that abstracts the underlying storage provider
+
+871
+00:57:53,370 --> 00:57:56,682
+as well as parameters for that storage or characteristics
+
+872
+00:57:56,746 --> 00:58:00,434
+for that storage like what disk type or
+
+873
+00:58:00,552 --> 00:58:04,334
+etc. So how does it work or how do we use storage
+
+874
+00:58:04,382 --> 00:58:08,414
+class in the pod configuration? Same as persistent
+
+875
+00:58:08,462 --> 00:58:12,122
+volume, it is requested or claimed by PVC.
+
+876
+00:58:12,286 --> 00:58:15,942
+So in the PVC configuration here we add
+
+877
+00:58:15,996 --> 00:58:19,302
+additional attribute that is called storage class
+
+878
+00:58:19,356 --> 00:58:22,754
+name that references the storage
+
+879
+00:58:22,802 --> 00:58:26,342
+class to be used to create a persistent volume
+
+880
+00:58:26,406 --> 00:58:30,650
+that satisfies the claims of
+
+881
+00:58:30,800 --> 00:58:34,230
+this PVC. So now when a pod claims
+
+882
+00:58:34,310 --> 00:58:37,934
+storage through PVC, the PVC will request that
+
+883
+00:58:37,972 --> 00:58:41,770
+storage from storage class, which then will provision
+
+884
+00:58:41,930 --> 00:58:45,934
+or create persistent volume that meets the
+
+885
+00:58:45,972 --> 00:58:49,834
+needs of that claim using provisioner from the actual
+
+886
+00:58:49,972 --> 00:58:54,286
+storage backend. Now this should help you understand the concepts
+
+887
+00:58:54,398 --> 00:58:57,214
+of how data is persisted in Kubernetes.
+
+888
+00:58:57,342 --> 00:58:59,090
+As a high level overview,
+
+889
+00:59:01,910 --> 00:59:06,194
+figure different types of volumes for applications
+
+890
+00:59:06,242 --> 00:59:09,782
+in Kubernetes and the types of volumes actually depend on
+
+891
+00:59:09,836 --> 00:59:13,686
+where the data ends up persisted. So for example,
+
+892
+00:59:13,788 --> 00:59:17,286
+if you use cloud storage for your volumes or some remote
+
+893
+00:59:17,318 --> 00:59:20,998
+storage, then you'll be working with remote storage volumes,
+
+894
+00:59:21,094 --> 00:59:24,826
+and remote volumes are actually the ones that you
+
+895
+00:59:24,848 --> 00:59:28,670
+should be mostly using for databases and
+
+896
+00:59:28,740 --> 00:59:31,486
+any important application data,
+
+897
+00:59:31,668 --> 00:59:35,262
+especially in a production environment. However, it may be
+
+898
+00:59:35,316 --> 00:59:39,002
+a little bit tricky and difficult to configure.
+
+899
+00:59:39,146 --> 00:59:42,782
+So for test purposes, or if you have data that is not
+
+900
+00:59:42,836 --> 00:59:46,014
+so important to keep, you can actually use
+
+901
+00:59:46,132 --> 00:59:49,726
+local volume. So data will still be persisted, but not on
+
+902
+00:59:49,748 --> 00:59:53,762
+a remote storage where it can be backed up and replicated,
+
+903
+00:59:53,906 --> 00:59:57,206
+but rather on the cluster nodes itself,
+
+904
+00:59:57,308 --> 01:00:00,050
+and that's why they're called local volumes.
+

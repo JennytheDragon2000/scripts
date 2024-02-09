@@ -1,0 +1,3716 @@
+1
+00:00:00,090 --> 00:00:03,978
+Do we have to label other components as well other than pods
+
+2
+00:00:04,074 --> 00:00:07,722
+like services, deployments, config maps, et cetera.
+
+3
+00:00:07,866 --> 00:00:11,258
+And does Kubernetes add some of its own labels
+
+4
+00:00:11,354 --> 00:00:15,450
+to the components? Well, let's see. First of all, as I explained,
+
+5
+00:00:15,530 --> 00:00:19,482
+we use labels to identify and target any Kubernetes
+
+6
+00:00:19,546 --> 00:00:22,890
+component. So we can give labels to deployments,
+
+7
+00:00:23,050 --> 00:00:26,726
+services, config maps, secrets, et cetera, and of
+
+8
+00:00:26,748 --> 00:00:30,082
+course pods. And even though it's optional
+
+9
+00:00:30,146 --> 00:00:33,810
+for many components, it's actually one of the Kubernetes
+
+10
+00:00:33,890 --> 00:00:37,662
+best practices to label all the components.
+
+11
+00:00:37,746 --> 00:00:40,906
+We can also add more than one label to a
+
+12
+00:00:40,928 --> 00:00:44,940
+component. Now let's go ahead and label our service.
+
+13
+00:00:45,310 --> 00:00:50,034
+I'm going to make adjustment directly in the service configuration
+
+14
+00:00:50,102 --> 00:00:54,334
+file and
+
+15
+00:00:54,372 --> 00:00:57,642
+in the metadata section where we have name and the labels.
+
+16
+00:00:57,786 --> 00:01:01,406
+I'm going to add the labels list and add some
+
+17
+00:01:01,428 --> 00:01:05,154
+labels to our service. Again, when you're labeling services
+
+18
+00:01:05,272 --> 00:01:08,546
+and deployments together with the pods, it is
+
+19
+00:01:08,568 --> 00:01:11,826
+a best practice or a standard approach to give
+
+20
+00:01:11,848 --> 00:01:15,054
+them the same labels. So we could give the
+
+21
+00:01:15,112 --> 00:01:18,978
+service as well. App Nginx label
+
+22
+00:01:19,154 --> 00:01:22,374
+and let's add another label just as a test.
+
+23
+00:01:22,492 --> 00:01:26,482
+Let's do this is service test Nginx
+
+24
+00:01:26,626 --> 00:01:30,266
+and let's save it. Now, very important to understand
+
+25
+00:01:30,368 --> 00:01:33,686
+here, we just edited the YAML file,
+
+26
+00:01:33,718 --> 00:01:37,420
+the configuration file that we have just lying around
+
+27
+00:01:37,950 --> 00:01:41,246
+on our node. So changing a
+
+28
+00:01:41,268 --> 00:01:44,606
+YAML file for deployment or service or
+
+29
+00:01:44,628 --> 00:01:48,686
+whatever component doesn't actually update the service in
+
+30
+00:01:48,708 --> 00:01:52,358
+the cluster. For that to happen, we have to explicitly
+
+31
+00:01:52,474 --> 00:01:57,070
+apply that change to the existing service. So Kubectl
+
+32
+00:01:57,150 --> 00:02:01,102
+apply and providing the configuration
+
+33
+00:02:01,166 --> 00:02:05,414
+file. And let's see what happens. As you see now,
+
+34
+00:02:05,452 --> 00:02:08,546
+it says service NgInx, service configured.
+
+35
+00:02:08,658 --> 00:02:12,134
+So Kubectl apply command is smart enough to
+
+36
+00:02:12,172 --> 00:02:15,906
+know that we already have a component defined
+
+37
+00:02:15,938 --> 00:02:19,974
+in this YAML file running in the cluster or existing
+
+38
+00:02:20,022 --> 00:02:23,818
+in the cluster. So instead of creating a new one, it basically
+
+39
+00:02:23,904 --> 00:02:26,902
+configures or adjusts its configuration.
+
+40
+00:02:27,046 --> 00:02:30,106
+If it doesn't find a component defined in this
+
+41
+00:02:30,128 --> 00:02:33,534
+configuration file, it will create a new one. So instead
+
+42
+00:02:33,572 --> 00:02:37,594
+of configured it will say service NgINX service created.
+
+43
+00:02:37,722 --> 00:02:41,482
+And the simple way it can find whether the component exists
+
+44
+00:02:41,546 --> 00:02:45,870
+or not is using the name of the component.
+
+45
+00:02:46,030 --> 00:02:49,794
+So this right here, the name will be used to see
+
+46
+00:02:49,912 --> 00:02:52,994
+whether this component already exists or not.
+
+47
+00:02:53,112 --> 00:02:56,534
+That means you cannot have two services in
+
+48
+00:02:56,572 --> 00:02:59,878
+the same namespace with the same
+
+49
+00:02:59,964 --> 00:03:03,510
+name or two deployments with the same name.
+
+50
+00:03:03,580 --> 00:03:06,306
+And this applies to all other components.
+
+51
+00:03:06,418 --> 00:03:10,042
+So now that we applied the configuration changes to our
+
+52
+00:03:10,096 --> 00:03:13,962
+service, our engineering service should have those
+
+53
+00:03:14,016 --> 00:03:18,250
+two labels added to that now how do we check
+
+54
+00:03:18,400 --> 00:03:22,366
+labels of any component? Again, using a
+
+55
+00:03:22,388 --> 00:03:26,574
+Kubectl describe command that
+
+56
+00:03:26,612 --> 00:03:34,162
+shows us details of a component will
+
+57
+00:03:34,216 --> 00:03:37,186
+also show us its labels right here.
+
+58
+00:03:37,288 --> 00:03:40,978
+And we can check this on any component like
+
+59
+00:03:41,064 --> 00:03:44,926
+deployments, pods, et cetera. So you can do Kubectl
+
+60
+00:03:44,958 --> 00:03:49,910
+describe deployment, Nginx deployment.
+
+61
+00:03:51,290 --> 00:03:54,966
+And this will again give you a bunch of information. And one of them
+
+62
+00:03:55,068 --> 00:03:59,194
+is labels. Now this may be too much information just
+
+63
+00:03:59,232 --> 00:04:02,374
+to check the labels for a component.
+
+64
+00:04:02,502 --> 00:04:06,058
+So as an alternative, what you can do is
+
+65
+00:04:06,224 --> 00:04:10,006
+you can do Kubectl get deployment for all
+
+66
+00:04:10,048 --> 00:04:13,374
+the deployments in the default namespace. And you can
+
+67
+00:04:13,412 --> 00:04:16,960
+add show labels option here.
+
+68
+00:04:17,730 --> 00:04:21,146
+And this will basically add labels column
+
+69
+00:04:21,178 --> 00:04:24,354
+here with the list of labels in the same
+
+70
+00:04:24,392 --> 00:04:28,354
+way you can do it for services.
+
+71
+00:04:28,552 --> 00:04:32,626
+Another useful usage of labels is that you
+
+72
+00:04:32,648 --> 00:04:36,666
+can actually select components using the label
+
+73
+00:04:36,798 --> 00:04:40,454
+instead of its name. So we can do Kubectl get
+
+74
+00:04:40,492 --> 00:04:43,766
+service and instead of providing the name of the service you
+
+75
+00:04:43,788 --> 00:04:47,570
+can actually give me all the services that have
+
+76
+00:04:47,740 --> 00:04:50,170
+this specific label.
+
+77
+00:04:53,790 --> 00:04:57,578
+Now this may be less interesting if you have just one service
+
+78
+00:04:57,744 --> 00:05:01,486
+with that label. However, it becomes very useful if
+
+79
+00:05:01,508 --> 00:05:05,630
+you're selecting pods. So if I had 100
+
+80
+00:05:05,700 --> 00:05:08,766
+pods in my default namespace and ten of
+
+81
+00:05:08,788 --> 00:05:12,126
+them were replicas of the same application, if I
+
+82
+00:05:12,148 --> 00:05:15,746
+wanted to display those ten replicas, I could use
+
+83
+00:05:15,848 --> 00:05:19,666
+the label that they share because their names will
+
+84
+00:05:19,688 --> 00:05:23,170
+be different. So again to
+
+85
+00:05:23,240 --> 00:05:26,714
+check the labels, you see app Enginex.
+
+86
+00:05:26,862 --> 00:05:30,566
+And again, if I had pods from other applications here and I
+
+87
+00:05:30,588 --> 00:05:34,546
+just wanted to select app Nginx pod replicas,
+
+88
+00:05:34,658 --> 00:05:38,794
+I could simply do that using the
+
+89
+00:05:38,832 --> 00:05:42,458
+label. Another cool usage of labels with
+
+90
+00:05:42,544 --> 00:05:46,326
+multiple pod replicas is if we want to check logs
+
+91
+00:05:46,358 --> 00:05:49,382
+of the application for a certain request,
+
+92
+00:05:49,526 --> 00:05:53,290
+but we don't know which pod replica actually handled
+
+93
+00:05:53,370 --> 00:05:57,402
+that request. So instead of logging each pod
+
+94
+00:05:57,466 --> 00:06:01,354
+individually using the pod name, we can show logs
+
+95
+00:06:01,482 --> 00:06:05,278
+of all pod replicas using their label.
+
+96
+00:06:05,454 --> 00:06:09,810
+So Kubectl logs and again,
+
+97
+00:06:09,880 --> 00:06:13,362
+instead of specifying the pod name, we're going to do
+
+98
+00:06:13,496 --> 00:06:17,254
+label and this will give us
+
+99
+00:06:17,292 --> 00:06:21,634
+logs of both pods in one output.
+
+100
+00:06:21,762 --> 00:06:25,154
+Again, this will be especially useful in a more crowded
+
+101
+00:06:25,202 --> 00:06:29,322
+cluster where we have hundreds of pods and maybe
+
+102
+00:06:29,456 --> 00:06:32,922
+tens of replicas of the same application. And we wanted
+
+103
+00:06:32,976 --> 00:06:37,114
+to address all the pod replicas of the same application
+
+104
+00:06:37,312 --> 00:06:38,650
+in one command.
+
+105
+00:06:41,250 --> 00:06:45,034
+So we've seen that we can assign labels to the components,
+
+106
+00:06:45,162 --> 00:06:48,814
+but Kubernetes applications like master and
+
+107
+00:06:48,852 --> 00:06:52,474
+work processes themselves use labels to
+
+108
+00:06:52,532 --> 00:06:56,578
+target and identify other components in the cluster. And for that,
+
+109
+00:06:56,664 --> 00:07:00,654
+Kubernetes actually assigns some of the components
+
+110
+00:07:00,782 --> 00:07:07,570
+labels automatically. To see that, let's actually check
+
+111
+00:07:07,640 --> 00:07:11,154
+the pods in Kube system namespace
+
+112
+00:07:11,282 --> 00:07:15,302
+which is running master and worker processes and do
+
+113
+00:07:15,356 --> 00:07:18,826
+show labels here. And as you see these
+
+114
+00:07:18,848 --> 00:07:22,806
+are pods that Kubernetes components that were deployed
+
+115
+00:07:22,838 --> 00:07:26,262
+by kubernetes. And all of them have labels
+
+116
+00:07:26,326 --> 00:07:29,954
+here which are used to group multiple pod replicas
+
+117
+00:07:30,022 --> 00:07:34,634
+together as well as identify specific applications
+
+118
+00:07:34,682 --> 00:07:38,478
+or pods from other components. In the same way,
+
+119
+00:07:38,644 --> 00:07:42,910
+our cluster nodes also have
+
+120
+00:07:43,060 --> 00:07:46,574
+labels. So these are our three nodes.
+
+121
+00:07:46,702 --> 00:07:50,382
+And in the labels section you see that the master
+
+122
+00:07:50,446 --> 00:07:54,258
+node has a bunch of labels assigned to it as well as
+
+123
+00:07:54,344 --> 00:07:58,178
+the worker nodes. And one of these labels is Kubernetes
+
+124
+00:07:58,274 --> 00:08:01,842
+iohostname that basically identifies
+
+125
+00:08:01,986 --> 00:08:05,382
+the name of the node as worker one,
+
+126
+00:08:05,516 --> 00:08:09,322
+worker two, and master as well as an empty label right
+
+127
+00:08:09,376 --> 00:08:12,794
+here that basically says that this node here,
+
+128
+00:08:12,832 --> 00:08:16,374
+the master node, has a role of a control plane
+
+129
+00:08:16,422 --> 00:08:20,206
+component. And we're going to see usage of the
+
+130
+00:08:20,228 --> 00:08:23,710
+node labels in one of the future lectures.
+
+131
+00:08:29,440 --> 00:08:33,464
+Now let's say we decide we want to scale our NgInX
+
+132
+00:08:33,512 --> 00:08:37,056
+application to four replicas instead of two.
+
+133
+00:08:37,158 --> 00:08:40,656
+Maybe because we want to test something or maybe we want to make the
+
+134
+00:08:40,678 --> 00:08:44,176
+application more available. One way to do it is to
+
+135
+00:08:44,278 --> 00:08:49,296
+adjust the replica count in
+
+136
+00:08:49,318 --> 00:08:52,756
+the deployment configuration file right here. But maybe we
+
+137
+00:08:52,778 --> 00:08:56,400
+just want to test something without actually changing
+
+138
+00:08:56,480 --> 00:09:00,240
+the main deployment file. So how can we scale our applications
+
+139
+00:09:00,320 --> 00:09:03,816
+up or scale them down directly using
+
+140
+00:09:03,918 --> 00:09:08,244
+Kubectl commands? Well for that there is a Kubectl
+
+141
+00:09:08,372 --> 00:09:13,064
+scale subcomment that
+
+142
+00:09:13,102 --> 00:09:16,780
+will help us do that. And if I do Kubectl scale
+
+143
+00:09:17,360 --> 00:09:21,400
+help, this will give us all the options and usage
+
+144
+00:09:21,560 --> 00:09:25,612
+of the scale command, which is actually pretty easy.
+
+145
+00:09:25,746 --> 00:09:28,960
+First of all we can use scale on deployments or
+
+146
+00:09:29,030 --> 00:09:33,148
+stateful sets. And with replicas attribute
+
+147
+00:09:33,244 --> 00:09:36,848
+we can set the number of replicas. So I'm going to copy that
+
+148
+00:09:36,934 --> 00:09:40,720
+and let's say we want to scale deployment called
+
+149
+00:09:40,790 --> 00:09:45,296
+NgInx deployment to four
+
+150
+00:09:45,398 --> 00:09:49,424
+replicas and let's execute that. We see it output deployment
+
+151
+00:09:49,472 --> 00:09:53,480
+scaled. So we should actually see two more pods running
+
+152
+00:09:53,630 --> 00:09:57,268
+and we know which ones are the newly created pods
+
+153
+00:09:57,364 --> 00:10:01,556
+by looking at their age. So these two started 6 seconds
+
+154
+00:10:01,588 --> 00:10:04,668
+ago. These two have been running for some time now.
+
+155
+00:10:04,754 --> 00:10:08,188
+And the same way we can scale it down
+
+156
+00:10:08,274 --> 00:10:10,140
+to three replicas.
+
+157
+00:10:12,080 --> 00:10:15,820
+And you see one pod is being terminated. So that's a way
+
+158
+00:10:15,890 --> 00:10:19,120
+to quickly scale your application if you want to test
+
+159
+00:10:19,190 --> 00:10:23,216
+something. Now if
+
+160
+00:10:23,238 --> 00:10:27,532
+you remember in one of the previous lectures I explained
+
+161
+00:10:27,596 --> 00:10:31,188
+that making changes to components using
+
+162
+00:10:31,274 --> 00:10:34,308
+Kubectl subcommands like create,
+
+163
+00:10:34,394 --> 00:10:38,000
+delete, or in this case scale
+
+164
+00:10:38,160 --> 00:10:41,896
+is an imperative way and the disadvantage of
+
+165
+00:10:41,918 --> 00:10:45,524
+it compared to working with Kubernetes manifest files
+
+166
+00:10:45,652 --> 00:10:49,832
+is that your team cannot review those
+
+167
+00:10:49,886 --> 00:10:53,496
+changes and you don't have a history of what
+
+168
+00:10:53,518 --> 00:10:57,372
+you did in the cluster or basically what changes were
+
+169
+00:10:57,426 --> 00:11:00,984
+made using the Kubectl subcommands
+
+170
+00:11:01,112 --> 00:11:04,556
+that resulted in the state that we have now in
+
+171
+00:11:04,578 --> 00:11:07,712
+the cluster. So we don't have a history of those changes.
+
+172
+00:11:07,846 --> 00:11:11,792
+So in this case no one knows how the current replica count
+
+173
+00:11:11,926 --> 00:11:15,520
+came to be, but we can overcome that issue
+
+174
+00:11:15,670 --> 00:11:19,584
+with the imperative commands and add an audit
+
+175
+00:11:19,632 --> 00:11:22,900
+trail to our changes using
+
+176
+00:11:22,970 --> 00:11:27,044
+a record option so we can record all the changes that
+
+177
+00:11:27,082 --> 00:11:30,676
+we make using these imperative commands. And if I
+
+178
+00:11:30,698 --> 00:11:33,432
+do scale help again,
+
+179
+00:11:33,566 --> 00:11:38,008
+I see one of the options here which says record
+
+180
+00:11:38,174 --> 00:11:41,704
+which is set to false by default, and we can basically
+
+181
+00:11:41,822 --> 00:11:45,260
+turn it on on the scale command to
+
+182
+00:11:45,410 --> 00:11:49,400
+record the change. The same goes for Kubectl
+
+183
+00:11:49,560 --> 00:11:53,052
+create command. For example, if you see here, we also
+
+184
+00:11:53,106 --> 00:11:56,488
+have the same record option.
+
+185
+00:11:56,674 --> 00:12:01,132
+So this option can be used with almost all Kubectl
+
+186
+00:12:01,196 --> 00:12:05,164
+subcommands and even the Kubectl apply command
+
+187
+00:12:05,292 --> 00:12:08,130
+can be recorded with this option.
+
+188
+00:12:08,680 --> 00:12:12,340
+So what adding this option will do is basically add
+
+189
+00:12:12,410 --> 00:12:16,112
+an annotation attribute called Kubernetes
+
+190
+00:12:16,256 --> 00:12:20,004
+IO change cause to
+
+191
+00:12:20,042 --> 00:12:23,744
+the component with the change cause being the command
+
+192
+00:12:23,792 --> 00:12:27,144
+you executed. So let's see that in action. I'm going to bring
+
+193
+00:12:27,182 --> 00:12:30,424
+up the scale command again and let's say
+
+194
+00:12:30,462 --> 00:12:33,716
+I want to scale it to five replicas now, but I want to
+
+195
+00:12:33,758 --> 00:12:37,260
+record the change using record
+
+196
+00:12:37,330 --> 00:12:41,480
+option which we can either specify like this or we can explicitly
+
+197
+00:12:41,560 --> 00:12:44,908
+set it to true. It's going to be the same.
+
+198
+00:12:44,994 --> 00:12:48,624
+So let's execute and let's do another
+
+199
+00:12:48,822 --> 00:12:52,320
+scaling. Let's scale it down to three again and record
+
+200
+00:12:52,390 --> 00:12:55,836
+that one too and execute. And let's
+
+201
+00:12:55,868 --> 00:12:59,444
+see that we have three pods that are running now.
+
+202
+00:12:59,482 --> 00:13:02,692
+How can we check that those two commands were
+
+203
+00:13:02,746 --> 00:13:06,596
+recorded? Or where is this history of changes?
+
+204
+00:13:06,778 --> 00:13:10,468
+We can check that using a subcommand called
+
+205
+00:13:10,634 --> 00:13:14,520
+rollout. Again, if we do help here,
+
+206
+00:13:14,670 --> 00:13:18,632
+we will see Kubectl rollout options right
+
+207
+00:13:18,686 --> 00:13:21,956
+here and one of them is a history. So let's
+
+208
+00:13:21,988 --> 00:13:24,430
+do Kubectl rollout history.
+
+209
+00:13:25,200 --> 00:13:29,896
+And again let's
+
+210
+00:13:29,928 --> 00:13:33,132
+see the usage and we have it right
+
+211
+00:13:33,186 --> 00:13:36,568
+here. So we can see a history of changes
+
+212
+00:13:36,674 --> 00:13:40,640
+of a specific deployment. We can see a history of changes of
+
+213
+00:13:40,710 --> 00:13:44,832
+a demon set or a stateful set. So changes
+
+214
+00:13:44,966 --> 00:13:48,624
+to these three components can be recorded as
+
+215
+00:13:48,662 --> 00:13:51,556
+a history using this record option.
+
+216
+00:13:51,738 --> 00:13:55,060
+So I'm going to copy
+
+217
+00:13:56,600 --> 00:14:00,372
+the command here and we're going to check
+
+218
+00:14:00,426 --> 00:14:04,040
+the history for our NgInX deployment.
+
+219
+00:14:04,620 --> 00:14:08,600
+Let's see. And the last command that was recorded is
+
+220
+00:14:08,670 --> 00:14:11,770
+recorded here as the cause of the change.
+
+221
+00:14:40,480 --> 00:14:43,920
+Now you understand how deployment can be scaled and also learn
+
+222
+00:14:43,990 --> 00:14:48,080
+a few useful Kubectl commands along the way and also
+
+223
+00:14:48,150 --> 00:14:51,616
+how to record Kubectl commands. As a next step,
+
+224
+00:14:51,718 --> 00:14:55,608
+let's actually test that NgInX application is really accessible
+
+225
+00:14:55,724 --> 00:14:59,252
+through its service and see how we can talk to it.
+
+226
+00:14:59,306 --> 00:15:03,296
+For that we're going to deploy another pod in the cluster and we're
+
+227
+00:15:03,328 --> 00:15:07,028
+going to do a simple curl to our Nginx
+
+228
+00:15:07,124 --> 00:15:11,208
+applications service. So this is going to be basically a test
+
+229
+00:15:11,294 --> 00:15:14,904
+pod that we're just going to deploy temporarily. In order
+
+230
+00:15:14,942 --> 00:15:18,904
+to test that, accessing Nginx application
+
+231
+00:15:19,102 --> 00:15:22,632
+through its service actually works. So we're going to do a simple curl
+
+232
+00:15:22,696 --> 00:15:26,076
+command from inside the pod. And this means we
+
+233
+00:15:26,098 --> 00:15:29,820
+don't need a deployment configuration file for it. We just want to quickly
+
+234
+00:15:29,890 --> 00:15:33,856
+create a pod, test it, and then we can remove it up to that.
+
+235
+00:15:33,958 --> 00:15:38,284
+So we're going to create that pod using an imperative kubectl
+
+236
+00:15:38,412 --> 00:15:42,416
+run commit. So let's do Kubectl run and
+
+237
+00:15:42,438 --> 00:15:45,856
+let's call this pod test Nginx
+
+238
+00:15:46,048 --> 00:15:49,652
+service. And we are going to need
+
+239
+00:15:49,706 --> 00:15:53,060
+an image which is a required attribute because each
+
+240
+00:15:53,130 --> 00:15:56,696
+pod has to have at least one container based on
+
+241
+00:15:56,798 --> 00:16:00,516
+some image. And we can actually use the same Nginx image
+
+242
+00:16:00,548 --> 00:16:04,536
+because Nginx image has curl preinstalled and
+
+243
+00:16:04,558 --> 00:16:08,580
+that's what we need. And let's execute. So this
+
+244
+00:16:08,670 --> 00:16:12,744
+should actually start a pod called test Nginx
+
+245
+00:16:12,792 --> 00:16:16,124
+service. And remember this doesn't have a deployment behind it,
+
+246
+00:16:16,162 --> 00:16:19,304
+it's purely a pod on its own. Now the pod
+
+247
+00:16:19,352 --> 00:16:23,088
+is running, but how do we execute commands from
+
+248
+00:16:23,174 --> 00:16:26,112
+inside the pod? Because that's what we want, right?
+
+249
+00:16:26,166 --> 00:16:29,504
+We don't want to execute a curl command from the node. We want
+
+250
+00:16:29,542 --> 00:16:33,884
+to enter the terminal of the pod or environment
+
+251
+00:16:33,932 --> 00:16:37,444
+of the pod because pod is part of the
+
+252
+00:16:37,482 --> 00:16:40,948
+pod network in the cluster. And the Nginx service that
+
+253
+00:16:40,954 --> 00:16:44,208
+we have can only be accessed from within the cluster.
+
+254
+00:16:44,304 --> 00:16:47,492
+So how do we get into the pod's terminal?
+
+255
+00:16:47,556 --> 00:16:51,476
+Well, there is an own command for that, which is Kubectl
+
+256
+00:16:51,588 --> 00:16:55,572
+exec command. And this lets us execute
+
+257
+00:16:55,716 --> 00:16:59,720
+commands inside the pod. And one option we have to specify
+
+258
+00:16:59,800 --> 00:17:03,352
+here is it, which stands for interactive
+
+259
+00:17:03,416 --> 00:17:07,240
+terminal. So we're getting an interactive terminal of the pod
+
+260
+00:17:07,400 --> 00:17:10,590
+with the name test Nginx service.
+
+261
+00:17:11,060 --> 00:17:15,404
+And then we have to pass that exit command,
+
+262
+00:17:15,532 --> 00:17:18,736
+a Linux command for the pod which is
+
+263
+00:17:18,758 --> 00:17:22,268
+going to be bash. So we are executing a bash command
+
+264
+00:17:22,364 --> 00:17:26,244
+inside this pod, which will give us an interactive terminal of
+
+265
+00:17:26,282 --> 00:17:30,352
+that pod. So if I execute this, you see it changed
+
+266
+00:17:30,416 --> 00:17:33,764
+to the pods environment. So I'm no longer on the
+
+267
+00:17:33,802 --> 00:17:37,112
+master node anymore. I am inside the test
+
+268
+00:17:37,166 --> 00:17:40,740
+NginX service pod as a root user,
+
+269
+00:17:40,820 --> 00:17:45,064
+as you see right here. And I'm seeing the
+
+270
+00:17:45,102 --> 00:17:49,276
+virtual file system of the pod. And this is actually a great way
+
+271
+00:17:49,378 --> 00:17:52,488
+to debug your applications by entering
+
+272
+00:17:52,504 --> 00:17:55,916
+the pod and accessing its file system. Maybe if
+
+273
+00:17:55,938 --> 00:17:59,512
+you want to check some configurations or execute
+
+274
+00:17:59,576 --> 00:18:03,424
+commands, et cetera. And if you want to leave the
+
+275
+00:18:03,462 --> 00:18:07,056
+pod environment and move back to the node, you can
+
+276
+00:18:07,078 --> 00:18:11,280
+simply do exit, and that's going to be it. So in this case,
+
+277
+00:18:11,430 --> 00:18:14,764
+we want to again enter the pod, test Nginx
+
+278
+00:18:14,812 --> 00:18:18,512
+service, and execute curl command to the Nginx
+
+279
+00:18:18,576 --> 00:18:21,904
+applications service. So first of all, let's do Kubectl
+
+280
+00:18:21,952 --> 00:18:25,688
+get service. This will give us the name of the service and its ip address,
+
+281
+00:18:25,854 --> 00:18:29,624
+and let's curl that from
+
+282
+00:18:29,662 --> 00:18:32,888
+within the pod. So first, what I'm going to do is I'm going
+
+283
+00:18:32,894 --> 00:18:37,320
+to use the IP address. So let's do HTTP
+
+284
+00:18:37,760 --> 00:18:41,544
+the IP address. And remember, we configured
+
+285
+00:18:41,592 --> 00:18:45,208
+the service to be accessible on port 80 80. So I'm
+
+286
+00:18:45,224 --> 00:18:49,164
+going to copy that and execute. And as you see,
+
+287
+00:18:49,362 --> 00:18:53,584
+the service is accessible at its IP address at the port.
+
+288
+00:18:53,702 --> 00:18:56,320
+And we get welcome to NginX.
+
+289
+00:18:57,540 --> 00:19:01,136
+And now let's check that the service is also accessible using
+
+290
+00:19:01,238 --> 00:19:04,148
+its name. Again,
+
+291
+00:19:04,234 --> 00:19:07,120
+copy the name of the service, execute.
+
+292
+00:19:07,280 --> 00:19:10,900
+And there you go. So we got the same
+
+293
+00:19:10,970 --> 00:19:14,772
+welcome to NgINX response when we
+
+294
+00:19:14,906 --> 00:19:18,456
+connected to Nginx using the service name.
+
+295
+00:19:18,558 --> 00:19:22,360
+And that means that the name of the service was
+
+296
+00:19:22,430 --> 00:19:25,704
+resolved to its IP address. Now how does that
+
+297
+00:19:25,742 --> 00:19:29,630
+actually work? So how does the pod know
+
+298
+00:19:30,000 --> 00:19:33,804
+that whenever it tries to connect to
+
+299
+00:19:33,842 --> 00:19:37,452
+this service, basically with this name, it should connect
+
+300
+00:19:37,506 --> 00:19:40,880
+to this IP address. So how does this resolution actually
+
+301
+00:19:40,950 --> 00:19:44,368
+work in kubernetes? And that's going to be the topic of
+
+302
+00:19:44,454 --> 00:19:46,240
+our next lecture.
+
+303
+00:19:48,660 --> 00:19:52,348
+You notice that the request to service is not resolving.
+
+304
+00:19:52,444 --> 00:19:55,700
+So pod is making a request to a service,
+
+305
+00:19:55,850 --> 00:19:59,684
+NgINX service, but it gets a message that the service with
+
+306
+00:19:59,722 --> 00:20:02,932
+the name Nginx service cannot be found.
+
+307
+00:20:03,066 --> 00:20:06,116
+So you check the cluster to troubleshoot this issue.
+
+308
+00:20:06,218 --> 00:20:09,496
+You see that service is there with the name.
+
+309
+00:20:09,678 --> 00:20:13,784
+The pods are running as service endpoints, so everything looks
+
+310
+00:20:13,902 --> 00:20:17,400
+fine and you don't know what's going on. This means you need to dig
+
+311
+00:20:17,470 --> 00:20:20,812
+in a little bit and really understand how services work
+
+312
+00:20:20,866 --> 00:20:24,056
+and how service names are resolved to their IP
+
+313
+00:20:24,088 --> 00:20:27,752
+addresses. And let's say you enter one of the pods
+
+314
+00:20:27,896 --> 00:20:31,112
+to debug or troubleshoot this issue a little bit,
+
+315
+00:20:31,186 --> 00:20:34,768
+just like we did in the previous lecture. And you
+
+316
+00:20:34,854 --> 00:20:38,220
+test that the service IP address is accessible
+
+317
+00:20:38,300 --> 00:20:42,096
+and gives you the right results. But when you try to
+
+318
+00:20:42,198 --> 00:20:46,004
+curl or access the service name, it tells you
+
+319
+00:20:46,122 --> 00:20:49,604
+that Nginx service could not be resolved. And that
+
+320
+00:20:49,642 --> 00:20:53,184
+means we have a DNS issue in the cluster,
+
+321
+00:20:53,312 --> 00:20:57,464
+which means the poll cannot find the IP address
+
+322
+00:20:57,662 --> 00:21:01,444
+of the service called Nginx service. Now let's
+
+323
+00:21:01,492 --> 00:21:04,552
+understand what that means and why
+
+324
+00:21:04,606 --> 00:21:08,504
+it's a DNS issue. To understand DNS in kubernetes,
+
+325
+00:21:08,632 --> 00:21:11,612
+we first need to understand DNS in general.
+
+326
+00:21:11,746 --> 00:21:13,630
+So let's start there.
+
+327
+00:21:20,830 --> 00:21:24,698
+Basically the thing that the whole networking relies on.
+
+328
+00:21:24,784 --> 00:21:28,734
+So let's see exactly what a DNS is. We know that every computer
+
+329
+00:21:28,852 --> 00:21:32,222
+on the network is uniquely identified by
+
+330
+00:21:32,276 --> 00:21:35,562
+its IP address. And we saw that every device
+
+331
+00:21:35,626 --> 00:21:38,990
+can talk to any other device using its IP address.
+
+332
+00:21:39,140 --> 00:21:42,914
+But when you visit Facebook application, do you type in
+
+333
+00:21:42,952 --> 00:21:46,194
+the IP address in the browser? Or when you visit any
+
+334
+00:21:46,232 --> 00:21:49,282
+other website? You never just type an IP address,
+
+335
+00:21:49,416 --> 00:21:53,238
+right? Why is that? Because facebook.com
+
+336
+00:21:53,324 --> 00:21:56,962
+application runs on many computers
+
+337
+00:21:57,106 --> 00:22:00,726
+which each have their own IP address. A website of
+
+338
+00:22:00,748 --> 00:22:04,058
+your favorite local restaurant is available on a specific
+
+339
+00:22:04,144 --> 00:22:08,170
+computer with an IP address. So every single
+
+340
+00:22:08,320 --> 00:22:11,942
+application that is running on a machine is accessible
+
+341
+00:22:12,006 --> 00:22:15,858
+by an IP address. So why do we use names
+
+342
+00:22:15,894 --> 00:22:19,518
+of the application instead of the IP addresses? Simply because
+
+343
+00:22:19,604 --> 00:22:23,550
+we're not computers. Humans remember words and names better
+
+344
+00:22:23,620 --> 00:22:27,054
+than IP addresses and numbers. So to make using
+
+345
+00:22:27,172 --> 00:22:31,246
+the web easier for humans, the concept of mapping
+
+346
+00:22:31,278 --> 00:22:34,814
+the IP addresses to names was introduced.
+
+347
+00:22:34,942 --> 00:22:38,354
+So we access every application by typing the name.
+
+348
+00:22:38,472 --> 00:22:41,986
+But the network, as we saw, doesn't understand the names,
+
+349
+00:22:42,018 --> 00:22:45,926
+it understands numbers and IP addresses. So under the
+
+350
+00:22:45,948 --> 00:22:49,366
+hood, that name gets translated into the
+
+351
+00:22:49,388 --> 00:22:53,094
+actual IP address where that application is
+
+352
+00:22:53,132 --> 00:22:56,570
+running, which then your computer can send the request to.
+
+353
+00:22:56,640 --> 00:23:00,230
+And the service that does this translation is DNS.
+
+354
+00:23:00,390 --> 00:23:03,738
+So using DNS, we can give a unique name
+
+355
+00:23:03,824 --> 00:23:07,242
+to any IP address. So you can think of a DNS
+
+356
+00:23:07,386 --> 00:23:11,086
+as an address book or yellow pages of Internet at the
+
+357
+00:23:11,108 --> 00:23:14,574
+beginning, before the Internet became so popular and so
+
+358
+00:23:14,612 --> 00:23:18,418
+many websites were created, the DNS entries or
+
+359
+00:23:18,504 --> 00:23:21,838
+name to IP address mappings were defined
+
+360
+00:23:21,934 --> 00:23:26,926
+locally on each computer in the etchosts
+
+361
+00:23:26,958 --> 00:23:31,266
+file. And even today, that's the first location where DNS
+
+362
+00:23:31,298 --> 00:23:34,962
+service would look to find the IP address of the requested
+
+363
+00:23:35,026 --> 00:23:38,706
+name. However, as Internet usage grew,
+
+364
+00:23:38,818 --> 00:23:43,134
+it was not possible to manage all the DNS entries locally
+
+365
+00:23:43,202 --> 00:23:46,902
+on each computer and a more centralized and scalable
+
+366
+00:23:46,966 --> 00:23:50,106
+solution was needed. So, considering there are so
+
+367
+00:23:50,128 --> 00:23:54,042
+many websites and applications in the world and new ones being
+
+368
+00:23:54,096 --> 00:23:57,994
+added daily. And so many servers in this world connected
+
+369
+00:23:58,042 --> 00:24:01,866
+to the Internet. How does DNS manage so many addresses
+
+370
+00:24:01,898 --> 00:24:06,010
+and their names? DNS uses a simple policy of dividing
+
+371
+00:24:06,090 --> 00:24:10,222
+all these names into different domains or groups. Domain names
+
+372
+00:24:10,286 --> 00:24:14,398
+follow a hierarchical structure. There are around 13
+
+373
+00:24:14,574 --> 00:24:18,402
+root domains across the globe, with names from
+
+374
+00:24:18,456 --> 00:24:22,054
+a to m. And under each root domain you have
+
+375
+00:24:22,092 --> 00:24:25,314
+a hierarchy of what's called top level domains,
+
+376
+00:24:25,362 --> 00:24:29,270
+or tlds. There are six original and most common
+
+377
+00:24:29,340 --> 00:24:32,690
+top level domains, and each domain has a specific
+
+378
+00:24:32,860 --> 00:24:36,202
+purpose. We have MIl, which is
+
+379
+00:24:36,256 --> 00:24:40,358
+for military applications. Then we have.
+
+380
+00:24:40,454 --> 00:24:44,726
+Or this is for educational institutions
+
+381
+00:24:44,758 --> 00:24:47,934
+and their websites. Then we have, which is more
+
+382
+00:24:47,972 --> 00:24:51,870
+general purpose and usually used for businesses because
+
+383
+00:24:51,940 --> 00:24:55,738
+stands for commercial. Then we have,
+
+384
+00:24:55,914 --> 00:24:59,634
+which is for nonprofit organizations. Usually the next
+
+385
+00:24:59,672 --> 00:25:02,754
+one is net, originally for
+
+386
+00:25:02,792 --> 00:25:05,954
+networking technologies like Internet service providers or
+
+387
+00:25:05,992 --> 00:25:09,794
+any other infrastructure provider companies. But today it's more
+
+388
+00:25:09,832 --> 00:25:13,778
+general purpose and can be used by all types of businesses.
+
+389
+00:25:13,954 --> 00:25:17,718
+And finally we have gov, which is for government.
+
+390
+00:25:17,884 --> 00:25:21,186
+Apart from these original top level domains,
+
+391
+00:25:21,298 --> 00:25:24,858
+there are geographical domains which were added later.
+
+392
+00:25:25,024 --> 00:25:29,130
+These are domains for each country. This is used to also
+
+393
+00:25:29,280 --> 00:25:32,874
+regulate domain names for companies that are registered in that
+
+394
+00:25:32,912 --> 00:25:36,654
+country. Examples would be de for
+
+395
+00:25:36,692 --> 00:25:40,090
+Germany, US for uS, UK,
+
+396
+00:25:40,250 --> 00:25:43,726
+fr for France, et cetera. This makes sense if your
+
+397
+00:25:43,748 --> 00:25:47,162
+website is in the local language and your visitors
+
+398
+00:25:47,226 --> 00:25:51,038
+are local from that country, like local restaurants,
+
+399
+00:25:51,134 --> 00:25:55,086
+shops, et cetera. And finally, a bunch of other domains
+
+400
+00:25:55,118 --> 00:25:58,402
+were also added, like bees int
+
+401
+00:25:58,536 --> 00:26:02,678
+dev, et cetera. So basically, whenever someone creates a website,
+
+402
+00:26:02,844 --> 00:26:06,946
+they can buy a domain name that belongs to one of these domains,
+
+403
+00:26:07,058 --> 00:26:10,550
+like mywebsite.com or mywebsite Uk.
+
+404
+00:26:10,890 --> 00:26:14,226
+And you may buy it for a year, and if you don't need it anymore,
+
+405
+00:26:14,258 --> 00:26:17,194
+someone else can buy the domain name later. Now,
+
+406
+00:26:17,312 --> 00:26:21,286
+who actually manages these names? Or who can sell those domain
+
+407
+00:26:21,318 --> 00:26:25,606
+names to you or keep track of which ones are already taken
+
+408
+00:26:25,728 --> 00:26:29,418
+and which ones are still available? Or who decides
+
+409
+00:26:29,514 --> 00:26:33,166
+how these domains are grouped or divided? Well, this is all
+
+410
+00:26:33,268 --> 00:26:37,274
+regulated by a dedicated organization called the Internet
+
+411
+00:26:37,322 --> 00:26:40,978
+Corporation for assigned names and numbers,
+
+412
+00:26:41,144 --> 00:26:44,226
+ICANN, which basically
+
+413
+00:26:44,328 --> 00:26:48,194
+manages all these domain name spaces. And it
+
+414
+00:26:48,232 --> 00:26:51,954
+also authorized domain name registrars through
+
+415
+00:26:51,992 --> 00:26:55,330
+which domain names may be registered and reassigned.
+
+416
+00:26:55,410 --> 00:26:59,366
+And obviously you don't have to remember this organization's name, but I
+
+417
+00:26:59,388 --> 00:27:03,074
+think it's interesting information to know that there is actually a
+
+418
+00:27:03,132 --> 00:27:06,630
+dedicated organization that manages all these domain names.
+
+419
+00:27:06,710 --> 00:27:10,470
+So, as I said, every domain name actually belongs to this root
+
+420
+00:27:10,630 --> 00:27:14,074
+and one of its top level domains or
+
+421
+00:27:14,112 --> 00:27:17,674
+geographic domains. Now suppose I want to create my own
+
+422
+00:27:17,712 --> 00:27:21,898
+website and let people visit it like tech World with Nana
+
+423
+00:27:21,914 --> 00:27:25,406
+website. First I select the top level domain that I want for
+
+424
+00:27:25,428 --> 00:27:28,970
+it in my case and create a domain
+
+425
+00:27:29,050 --> 00:27:32,962
+for techworldwithna.com. Now let's say I have three
+
+426
+00:27:33,016 --> 00:27:36,834
+servers with three different applications which all belong to my company,
+
+427
+00:27:36,952 --> 00:27:40,558
+so they are in the techrobena.com domain. I can
+
+428
+00:27:40,584 --> 00:27:44,822
+assign each one its own domain name using a concept called
+
+429
+00:27:44,956 --> 00:27:49,702
+subdomains like bootcamp techrobina.com
+
+430
+00:27:49,836 --> 00:27:53,906
+or workshops techrobina.com and then courses
+
+431
+00:27:54,098 --> 00:27:57,942
+techrobina.com. And many companies and many organizations
+
+432
+00:27:58,006 --> 00:28:02,186
+actually use these subdomains for different
+
+433
+00:28:02,288 --> 00:28:06,460
+applications that all belong to that organization. So each application
+
+434
+00:28:06,850 --> 00:28:10,410
+may run on its own dedicated server
+
+435
+00:28:10,490 --> 00:28:13,774
+and each server that has its own ip address will now have a
+
+436
+00:28:13,812 --> 00:28:17,598
+full domain name with which you can access it.
+
+437
+00:28:17,684 --> 00:28:21,458
+There's also a fully qualified domain name which will be
+
+438
+00:28:21,544 --> 00:28:25,586
+courses techworldwin.com where dot at
+
+439
+00:28:25,608 --> 00:28:29,234
+the end is for root domain, but we don't use the
+
+440
+00:28:29,272 --> 00:28:33,422
+fully qualified domain names. It works without dot at the end as well.
+
+441
+00:28:33,576 --> 00:28:37,110
+Great, so we understand what DNS is, but how does your computer
+
+442
+00:28:37,180 --> 00:28:40,422
+actually use the DNS service to map the domain name
+
+443
+00:28:40,476 --> 00:28:45,118
+to an IP address? Every computer has a DNS client preinstalled,
+
+444
+00:28:45,234 --> 00:28:48,842
+so when you open a browser and type in facebook.com,
+
+445
+00:28:48,976 --> 00:28:52,618
+your operating system will make a DNS query asking
+
+446
+00:28:52,704 --> 00:28:56,394
+DNS to resolve that facebook.com address or find
+
+447
+00:28:56,432 --> 00:28:59,598
+the IP address that maps to facebook.com.
+
+448
+00:28:59,764 --> 00:29:02,990
+The DNS request first goes to the recursive name
+
+449
+00:29:03,060 --> 00:29:06,958
+server, which is typically operated by your Internet service
+
+450
+00:29:07,044 --> 00:29:10,706
+provider, and your recursive name server might have the ip address
+
+451
+00:29:10,808 --> 00:29:14,226
+already stored, but if it doesn't, it will go to
+
+452
+00:29:14,328 --> 00:29:17,986
+one of the 13 root servers which manage
+
+453
+00:29:18,088 --> 00:29:21,666
+requests for top level domains. These root
+
+454
+00:29:21,698 --> 00:29:25,654
+servers are redundantly available all over the world so
+
+455
+00:29:25,692 --> 00:29:29,286
+that you get your response quickly. The root server will
+
+456
+00:29:29,308 --> 00:29:33,014
+then look at the address and see and
+
+457
+00:29:33,052 --> 00:29:36,506
+it sends a response back to the resolver saying, I don't know
+
+458
+00:29:36,528 --> 00:29:40,138
+what the address of facebook.com is, but here's the address
+
+459
+00:29:40,224 --> 00:29:43,914
+of the. Coms domain server which you can ask.
+
+460
+00:29:44,032 --> 00:29:47,446
+The resolver then asks the server
+
+461
+00:29:47,558 --> 00:29:50,798
+hey, can you give me the IP address of facebook.com?
+
+462
+00:29:50,964 --> 00:29:54,666
+The server sends a response I don't know the IP
+
+463
+00:29:54,698 --> 00:29:58,094
+address of facebook.com but here is a list of
+
+464
+00:29:58,132 --> 00:30:01,834
+the IP addresses of the authoritative name servers
+
+465
+00:30:01,962 --> 00:30:05,966
+for domain they will know Facebook Com's
+
+466
+00:30:05,998 --> 00:30:09,710
+IP address. So finally, resolver chooses
+
+467
+00:30:09,790 --> 00:30:13,810
+the IP address of one of the authoritative name servers
+
+468
+00:30:13,890 --> 00:30:17,746
+from the list, asking for Facebook. Com's IP
+
+469
+00:30:17,778 --> 00:30:21,990
+address, and this time the name server responds with the actual
+
+470
+00:30:22,060 --> 00:30:26,026
+IP address of facebook.com. So now your computer can send
+
+471
+00:30:26,048 --> 00:30:29,846
+the request to Facebook's IP address. Now imagine
+
+472
+00:30:29,878 --> 00:30:33,482
+this process happens every time you visit a website for the first
+
+473
+00:30:33,536 --> 00:30:37,658
+time. But to save time in the future and make things more efficient,
+
+474
+00:30:37,834 --> 00:30:41,246
+both the recursive name server and your computer
+
+475
+00:30:41,428 --> 00:30:44,894
+will cache the DNS entries for a while
+
+476
+00:30:45,012 --> 00:30:48,234
+so that the next time you want to visit the same address,
+
+477
+00:30:48,372 --> 00:30:50,820
+it won't have to go through this whole process.
+
+478
+00:30:59,220 --> 00:31:02,544
+Imagine we have two pods and two services with
+
+479
+00:31:02,582 --> 00:31:06,716
+their IP addresses, and we tell MyApp
+
+480
+00:31:06,828 --> 00:31:10,644
+pod to talk to MyDB service using the
+
+481
+00:31:10,682 --> 00:31:14,704
+service name. Applications can only send a request to an IP
+
+482
+00:31:14,752 --> 00:31:18,864
+address. So how do we tell the pod myapp
+
+483
+00:31:18,992 --> 00:31:22,724
+what the IP address of the service named MyDb
+
+484
+00:31:22,772 --> 00:31:27,640
+is? The simplest way would be to write it in its etc
+
+485
+00:31:28,300 --> 00:31:32,376
+hosts file. As you learned in the DNS prerequisites video,
+
+486
+00:31:32,558 --> 00:31:36,412
+this is the first place to look for a domain name
+
+487
+00:31:36,466 --> 00:31:40,296
+to IP address mapping. The same way when myDB pod
+
+488
+00:31:40,328 --> 00:31:43,724
+wants to talk to myApp service, we can tell it which
+
+489
+00:31:43,762 --> 00:31:47,324
+IP address myApp service has by
+
+490
+00:31:47,362 --> 00:31:51,440
+adding the mapping in mydbods etc
+
+491
+00:31:51,780 --> 00:31:55,644
+hosts file. Now of course, if we have hundreds
+
+492
+00:31:55,692 --> 00:31:58,980
+of services and all the pods are talking to
+
+493
+00:31:59,050 --> 00:32:02,964
+all the services, this will be a lot of DNS mappings to
+
+494
+00:32:03,002 --> 00:32:06,260
+manage per pod. So instead it makes
+
+495
+00:32:06,330 --> 00:32:10,756
+much more sense to have all these mappings of service domain
+
+496
+00:32:10,788 --> 00:32:14,468
+names to their ip addresses in a centralized
+
+497
+00:32:14,564 --> 00:32:18,472
+place instead of each pod having its own huge list
+
+498
+00:32:18,526 --> 00:32:22,192
+of them. And that centralized place is the DNS
+
+499
+00:32:22,276 --> 00:32:26,072
+server. So now instead of listing all the mappings in each pod
+
+500
+00:32:26,136 --> 00:32:29,560
+in the etc hosts file,
+
+501
+00:32:29,640 --> 00:32:32,652
+you can simply point the pods to
+
+502
+00:32:32,706 --> 00:32:36,064
+the name server which has all the records. You can
+
+503
+00:32:36,102 --> 00:32:39,632
+do that by specifying the address of the domain name
+
+504
+00:32:39,686 --> 00:32:44,252
+server in the etc resolve
+
+505
+00:32:44,396 --> 00:32:47,836
+confile in each pod. So we have a name server
+
+506
+00:32:47,868 --> 00:32:51,376
+in the cluster that keeps track of and manages
+
+507
+00:32:51,488 --> 00:32:55,444
+the list of all the service names and their ip addresses in the
+
+508
+00:32:55,482 --> 00:32:58,884
+cluster, and all the pods point to it to
+
+509
+00:32:58,922 --> 00:33:02,580
+resolve service names whenever they want to make requests
+
+510
+00:33:02,660 --> 00:33:06,392
+to them. And the DNS server in Kubernetes cluster is
+
+511
+00:33:06,526 --> 00:33:10,084
+core DNS. Remember when we installed the cluster
+
+512
+00:33:10,132 --> 00:33:13,704
+with kubeadm init command? We saw that two add
+
+513
+00:33:13,742 --> 00:33:17,352
+ons were deployed in the cluster in addition to the master
+
+514
+00:33:17,416 --> 00:33:21,288
+and worker processes. There was one of the last phases
+
+515
+00:33:21,384 --> 00:33:25,136
+of the Kubeadm init command execution, and one
+
+516
+00:33:25,158 --> 00:33:29,036
+of these addons was core DNS application. And note
+
+517
+00:33:29,068 --> 00:33:32,560
+that the DNS server used in Kubernetes before
+
+518
+00:33:32,630 --> 00:33:36,652
+version one point twelve was actually Kubedns
+
+519
+00:33:36,796 --> 00:33:40,084
+starting from Kubernetes version 112, it was
+
+520
+00:33:40,122 --> 00:33:43,744
+replaced by core DNS as a recommended DNS
+
+521
+00:33:43,792 --> 00:33:46,612
+server. And as you probably also remember,
+
+522
+00:33:46,746 --> 00:33:50,980
+core DNS is running inside the Kube system namespace
+
+523
+00:33:51,060 --> 00:33:54,344
+and we have two replicas of it. And that is necessary for
+
+524
+00:33:54,382 --> 00:33:58,696
+redundancy because as you just learned, it is an important
+
+525
+00:33:58,878 --> 00:34:02,436
+service. And if core DNS application crashed
+
+526
+00:34:02,468 --> 00:34:06,376
+and it was not available, pods will not be able to resolve
+
+527
+00:34:06,408 --> 00:34:10,236
+service names and the whole communication in the cluster between the
+
+528
+00:34:10,258 --> 00:34:13,736
+applications will be broken. So in a production cluster,
+
+529
+00:34:13,848 --> 00:34:17,388
+you should have minimum of two core
+
+530
+00:34:17,404 --> 00:34:20,608
+DNS pod replicas, preferably even more.
+
+531
+00:34:20,694 --> 00:34:24,480
+And this also means that when developers come to you
+
+532
+00:34:24,550 --> 00:34:27,632
+saying that service name doesn't resolve, you could
+
+533
+00:34:27,686 --> 00:34:31,728
+first check that the core DNS pods are running and accessible.
+
+534
+00:34:31,824 --> 00:34:35,428
+And as one way of debugging, you can also check the logs of
+
+535
+00:34:35,434 --> 00:34:39,316
+the core DNS pods. In fact, let's actually go ahead and check
+
+536
+00:34:39,338 --> 00:34:43,320
+the logs of core DNS pods. And we actually want to log
+
+537
+00:34:43,470 --> 00:34:47,812
+both pods at once. So for that let's use the labels
+
+538
+00:34:47,876 --> 00:34:51,396
+as we learned. Right? So both core DNS pods
+
+539
+00:34:51,428 --> 00:34:55,128
+have a shared label, this one right here. So we're
+
+540
+00:34:55,144 --> 00:34:58,572
+going to do kubectl logs in a Kube system
+
+541
+00:34:58,706 --> 00:35:02,808
+namespace and label of core
+
+542
+00:35:02,824 --> 00:35:06,908
+DNS doesn't say much right here, but you could check the logs
+
+543
+00:35:07,004 --> 00:35:10,416
+in case of some issues to troubleshoot the
+
+544
+00:35:10,438 --> 00:35:13,968
+DNS resolution in your cluster. So the way it works
+
+545
+00:35:14,054 --> 00:35:18,000
+is that whenever we create a service in the cluster,
+
+546
+00:35:18,160 --> 00:35:21,510
+core DNS creates a record for that service.
+
+547
+00:35:21,960 --> 00:35:26,150
+The record maps the name of the service to its IP address.
+
+548
+00:35:26,520 --> 00:35:30,532
+So using this record, any pod within the cluster can now
+
+549
+00:35:30,586 --> 00:35:34,216
+reach the service using its name, which we already saw in
+
+550
+00:35:34,238 --> 00:35:38,056
+the Nginx pod, where we curled the Nginx service
+
+551
+00:35:38,158 --> 00:35:41,224
+from a test pod. So now as a final step,
+
+552
+00:35:41,342 --> 00:35:45,872
+let's also check the etcresolve
+
+553
+00:35:45,956 --> 00:35:50,092
+confile in the pod. We still have the
+
+554
+00:35:50,146 --> 00:35:54,892
+test pod running in the cluster, and same
+
+555
+00:35:54,946 --> 00:35:59,016
+way as before, let's actually enter the pod environment using Kubectl
+
+556
+00:35:59,048 --> 00:36:02,860
+exec command. And inside that we have the virtual
+
+557
+00:36:02,940 --> 00:36:07,720
+file system of the pod. So let's check etc
+
+558
+00:36:07,900 --> 00:36:11,924
+resolveconf, which is a file so
+
+559
+00:36:11,962 --> 00:36:15,236
+we can print the contents. And as you see right here,
+
+560
+00:36:15,338 --> 00:36:18,772
+it says name server pointing to our
+
+561
+00:36:18,826 --> 00:36:22,632
+core DNS's ip address. Now let's clarify two
+
+562
+00:36:22,686 --> 00:36:26,456
+things right here. First of all, how is this
+
+563
+00:36:26,558 --> 00:36:29,364
+entry configured here? So who tells pod,
+
+564
+00:36:29,412 --> 00:36:33,388
+basically that the name server in the cluster is
+
+565
+00:36:33,474 --> 00:36:37,068
+core DNS. The first one is that
+
+566
+00:36:37,154 --> 00:36:40,936
+this IP address is not a pod IP address of core DNS.
+
+567
+00:36:41,048 --> 00:36:45,216
+This is actually an IP address of core DNS's service.
+
+568
+00:36:45,398 --> 00:36:49,344
+So if I exit the pod and
+
+569
+00:36:49,382 --> 00:36:53,232
+let's check kubectl, get service in
+
+570
+00:36:53,286 --> 00:36:56,912
+Kubesystem namespace and let's filter it on
+
+571
+00:36:56,966 --> 00:37:00,210
+DNS using
+
+572
+00:37:00,980 --> 00:37:04,224
+gorep. And this is a core DNS
+
+573
+00:37:04,272 --> 00:37:07,728
+service which is actually called kubedns and not core
+
+574
+00:37:07,744 --> 00:37:10,836
+DNS. That's the name of the service. And this is the
+
+575
+00:37:10,858 --> 00:37:14,056
+IP address that is specified right here. So we
+
+576
+00:37:14,078 --> 00:37:17,496
+have one mapping that tells the pod if you want to
+
+577
+00:37:17,518 --> 00:37:21,016
+resolve any domain name then go and talk to
+
+578
+00:37:21,198 --> 00:37:24,800
+the name server at this IP address, which is cord
+
+579
+00:37:24,820 --> 00:37:28,620
+DNS as we learned. So that's the first thing. The second one
+
+580
+00:37:28,690 --> 00:37:32,312
+is how is this actually configured? So who tells
+
+581
+00:37:32,376 --> 00:37:35,984
+pod that this is the name server that they
+
+582
+00:37:36,022 --> 00:37:39,420
+should use to resolve domain names?
+
+583
+00:37:39,580 --> 00:37:43,036
+That's actually Kubelet's job. So whenever Kubelet
+
+584
+00:37:43,148 --> 00:37:47,192
+schedules a pod, it automatically generates
+
+585
+00:37:47,276 --> 00:37:51,204
+this file inside with these contents. And we can
+
+586
+00:37:51,242 --> 00:37:55,056
+also check that in Kubelet's configuration
+
+587
+00:37:55,168 --> 00:37:59,372
+which is located in varleep Kubelet
+
+588
+00:37:59,536 --> 00:38:02,120
+and config yaml file.
+
+589
+00:38:05,820 --> 00:38:09,604
+And we need pseudo permission here. And right here you see cluster
+
+590
+00:38:09,652 --> 00:38:12,796
+DNS and the IP address
+
+591
+00:38:12,898 --> 00:38:15,020
+of the Kubedns,
+
+592
+00:38:18,010 --> 00:38:21,606
+the same IP address as configured here. So Kubelet actually has
+
+593
+00:38:21,628 --> 00:38:24,742
+this information and inserts that
+
+594
+00:38:24,796 --> 00:38:28,394
+into every pod and that is configured right here.
+
+595
+00:38:28,512 --> 00:38:32,342
+So that's how resolving service names to their IP addresses
+
+596
+00:38:32,406 --> 00:38:34,730
+is configured in kubernetes.
+
+597
+00:38:37,630 --> 00:38:41,118
+Now what happens if I create a test
+
+598
+00:38:41,204 --> 00:38:45,194
+pod in a different namespace than the Nginx
+
+599
+00:38:45,242 --> 00:38:48,542
+application and its service? Can I still access the
+
+600
+00:38:48,596 --> 00:38:51,858
+service by using its name? Well, let's try.
+
+601
+00:38:52,024 --> 00:38:55,394
+Right now we have our test service running in
+
+602
+00:38:55,432 --> 00:38:59,326
+the same namespace, which is the default namespace
+
+603
+00:38:59,438 --> 00:39:03,962
+as the Nginx deployment pods as well as Nginx
+
+604
+00:39:04,126 --> 00:39:07,894
+service. So what we're going to do is we're going to create the
+
+605
+00:39:07,932 --> 00:39:11,426
+same test pod in a different namespace
+
+606
+00:39:11,538 --> 00:39:15,334
+and then we'll try to access Nginx service from
+
+607
+00:39:15,372 --> 00:39:18,778
+there. Right now let's get all the
+
+608
+00:39:18,784 --> 00:39:22,714
+namespaces that we have right here
+
+609
+00:39:22,832 --> 00:39:27,370
+and I'm simply going to create a new one using
+
+610
+00:39:27,520 --> 00:39:31,166
+Kubectl. Create namespace and let's just
+
+611
+00:39:31,188 --> 00:39:35,258
+call it test namespace. And then I'm
+
+612
+00:39:35,274 --> 00:39:39,550
+going to create a pod called test
+
+613
+00:39:39,620 --> 00:39:43,202
+Nginx service. So the pod with the same
+
+614
+00:39:43,256 --> 00:39:45,650
+name but in a different namespace.
+
+615
+00:39:47,270 --> 00:39:50,750
+So namespace will be test ns
+
+616
+00:39:50,910 --> 00:39:55,406
+and not a default. And of course we need the image which is Nginx.
+
+617
+00:39:55,518 --> 00:39:58,806
+Now remember we were not allowed to create a
+
+618
+00:39:58,828 --> 00:40:02,006
+pod with the same name in the same namespace, but we
+
+619
+00:40:02,028 --> 00:40:06,094
+can create pod with the same name in a different namespace.
+
+620
+00:40:06,242 --> 00:40:11,014
+So let's run this and let's
+
+621
+00:40:11,062 --> 00:40:14,442
+check that our pod is running. And now
+
+622
+00:40:14,496 --> 00:40:19,006
+let's actually enter this pod right here and
+
+623
+00:40:19,188 --> 00:40:24,030
+try to access the service again.
+
+624
+00:40:24,100 --> 00:40:27,386
+Remember Kubectl exec command
+
+625
+00:40:27,578 --> 00:40:30,630
+that lets us get an interactive terminal
+
+626
+00:40:30,810 --> 00:40:34,226
+of any pod. And when
+
+627
+00:40:34,248 --> 00:40:37,602
+we are working with a non default namespace, remember we always
+
+628
+00:40:37,656 --> 00:40:41,202
+have to specify the namespace option here
+
+629
+00:40:41,336 --> 00:40:46,726
+with every command. So this
+
+630
+00:40:46,828 --> 00:40:50,550
+will let us enter the test Nginx service
+
+631
+00:40:50,700 --> 00:40:54,726
+running in the test namespace. And let's connect to
+
+632
+00:40:54,748 --> 00:40:59,066
+the service. First I'm going to use the IP address of
+
+633
+00:40:59,088 --> 00:41:02,806
+the service and port 80 80
+
+634
+00:41:02,838 --> 00:41:06,806
+to connect. And let's see we get a reply
+
+635
+00:41:06,838 --> 00:41:10,238
+back, right, so IP address and port, not a problem.
+
+636
+00:41:10,404 --> 00:41:14,334
+Now let's use the service name
+
+637
+00:41:14,372 --> 00:41:16,400
+instead. Nginx service,
+
+638
+00:41:19,250 --> 00:41:22,020
+which is the name of the service and port.
+
+639
+00:41:22,790 --> 00:41:26,834
+And as you see, after a couple of seconds we got
+
+640
+00:41:26,952 --> 00:41:30,494
+a response here that says could not resolve host,
+
+641
+00:41:30,622 --> 00:41:34,262
+so it's not able to find a service with this
+
+642
+00:41:34,316 --> 00:41:37,990
+specific name. So why is that? What's happening
+
+643
+00:41:38,060 --> 00:41:41,842
+here? For each namespace, a DNS server,
+
+644
+00:41:41,986 --> 00:41:45,266
+which is core DNS in Kubernetes, as we've
+
+645
+00:41:45,298 --> 00:41:49,014
+learned. So core DNS creates a subdomain.
+
+646
+00:41:49,142 --> 00:41:53,322
+So all the pods and services are grouped together in
+
+647
+00:41:53,376 --> 00:41:57,580
+the subdomain of the namespace. So the services
+
+648
+00:41:57,950 --> 00:42:01,550
+in default namespace actually have
+
+649
+00:42:01,620 --> 00:42:06,282
+an address of nginxservice default.
+
+650
+00:42:06,426 --> 00:42:10,510
+In addition to that, all the services of all the namespaces
+
+651
+00:42:10,870 --> 00:42:14,174
+are grouped together in another subdomain
+
+652
+00:42:14,302 --> 00:42:17,762
+called service or SVC. So each
+
+653
+00:42:17,896 --> 00:42:22,018
+service can actually be addressed with service
+
+654
+00:42:22,104 --> 00:42:26,790
+name namespacename SvC
+
+655
+00:42:27,130 --> 00:42:30,594
+and finally, Kubernetes DNS created a root
+
+656
+00:42:30,642 --> 00:42:34,950
+domain for the cluster, which is cluster local.
+
+657
+00:42:35,100 --> 00:42:38,586
+So the full name of any service in a cluster would be
+
+658
+00:42:38,688 --> 00:42:42,714
+servicename, the namespace name in
+
+659
+00:42:42,752 --> 00:42:47,446
+which the service was created, SVC cluster
+
+660
+00:42:47,638 --> 00:42:50,734
+local, and that's also called a
+
+661
+00:42:50,772 --> 00:42:54,990
+fully qualified domain name of any service or
+
+662
+00:42:55,060 --> 00:42:58,734
+FQDN. But conveniently, as you saw,
+
+663
+00:42:58,852 --> 00:43:02,070
+we don't have to specify the fully qualified domain
+
+664
+00:43:02,090 --> 00:43:05,154
+name for services when we connect to them.
+
+665
+00:43:05,272 --> 00:43:08,418
+That's why we were able to connect to the service
+
+666
+00:43:08,584 --> 00:43:12,434
+from this pod right here, just using the
+
+667
+00:43:12,472 --> 00:43:15,622
+name of the service. However, if the service is
+
+668
+00:43:15,676 --> 00:43:19,270
+in a different namespace, we can't just address
+
+669
+00:43:19,340 --> 00:43:23,030
+it with only a name. We actually need the service name
+
+670
+00:43:23,100 --> 00:43:26,774
+and namespace name. So the way it works is that when a pod
+
+671
+00:43:26,822 --> 00:43:31,018
+tries to connect to a service using the name of the service,
+
+672
+00:43:31,184 --> 00:43:34,522
+Kubernetes will actually try to resolve this and
+
+673
+00:43:34,576 --> 00:43:38,442
+it will try to find NgInX service in the same
+
+674
+00:43:38,496 --> 00:43:42,366
+namespace as the pod that is trying to send a request to
+
+675
+00:43:42,388 --> 00:43:46,206
+it. So in the test NS namespace there is
+
+676
+00:43:46,228 --> 00:43:49,694
+no NgINX service, and that's why we get could not
+
+677
+00:43:49,732 --> 00:43:53,218
+resolve host. So if we want to access
+
+678
+00:43:53,304 --> 00:43:57,086
+services from another namespace, we have to explicitly
+
+679
+00:43:57,198 --> 00:44:01,022
+tell the domain server the subdomain
+
+680
+00:44:01,166 --> 00:44:04,694
+of namespace name as well. So instead
+
+681
+00:44:04,732 --> 00:44:09,030
+of NgInX service, we're going to do nginxservice default
+
+682
+00:44:10,010 --> 00:44:12,822
+and let's try again. And there you go.
+
+683
+00:44:12,956 --> 00:44:16,854
+So again, whenever we're talking to services in
+
+684
+00:44:16,892 --> 00:44:20,666
+the same namespace, we can use just the name of the service.
+
+685
+00:44:20,848 --> 00:44:24,102
+Whenever we want to talk to services from other namespaces,
+
+686
+00:44:24,166 --> 00:44:27,626
+we have to specify the name of that namespace as well,
+
+687
+00:44:27,728 --> 00:44:31,278
+and that's going to be the domain name of the service.
+
+688
+00:44:31,444 --> 00:44:35,210
+So this is still a short form of a fully qualified
+
+689
+00:44:35,370 --> 00:44:39,578
+domain name of the service, which would be NginxService
+
+690
+00:44:39,674 --> 00:44:43,650
+default SBC cluster
+
+691
+00:44:44,150 --> 00:44:47,346
+local. So if we execute this,
+
+692
+00:44:47,528 --> 00:44:50,980
+this should work as well. And as you see, it does.
+
+693
+00:44:51,350 --> 00:44:55,414
+Now why is that? That we don't have to specify the
+
+694
+00:44:55,452 --> 00:44:59,254
+whole name and we can actually just use a shortcut which
+
+695
+00:44:59,292 --> 00:45:02,774
+is either service name and namespace name
+
+696
+00:45:02,892 --> 00:45:06,338
+or just the service name. So how does that
+
+697
+00:45:06,524 --> 00:45:10,246
+resolve to the services fully
+
+698
+00:45:10,278 --> 00:45:13,802
+qualified name? Well, that's because of an
+
+699
+00:45:13,856 --> 00:45:18,042
+entry in the resolve confile right here which
+
+700
+00:45:18,096 --> 00:45:22,154
+says search and then a list of subdomains
+
+701
+00:45:22,282 --> 00:45:25,722
+in which a domain name will be searched,
+
+702
+00:45:25,786 --> 00:45:29,726
+basically. So this means whenever pod sends a request to a
+
+703
+00:45:29,748 --> 00:45:33,306
+service name, the domain name server will try to resolve
+
+704
+00:45:33,338 --> 00:45:37,106
+the service name in one of those domains. And that's the
+
+705
+00:45:37,128 --> 00:45:40,546
+reason why we don't have to specify the whole path, because that will
+
+706
+00:45:40,568 --> 00:45:43,826
+be automatically appended, so to say, whenever you do
+
+707
+00:45:43,848 --> 00:45:48,006
+a search. So if the NgInX service was in the same namespace as
+
+708
+00:45:48,028 --> 00:45:51,714
+the pod, we would not have to specify the namespace
+
+709
+00:45:51,842 --> 00:45:56,182
+because the core DNS will then search for this service in
+
+710
+00:45:56,236 --> 00:46:00,154
+test NS domain. So in this domain right
+
+711
+00:46:00,192 --> 00:46:03,562
+here, it will find one and it will give us a result.
+
+712
+00:46:03,696 --> 00:46:07,610
+And that's why when the service is not in the same namespace,
+
+713
+00:46:08,130 --> 00:46:11,760
+it's not going to be found here, and we need to
+
+714
+00:46:12,450 --> 00:46:15,726
+specify a namespace name so it can
+
+715
+00:46:15,748 --> 00:46:18,906
+be found in the next domain. So that's
+
+716
+00:46:18,938 --> 00:46:20,640
+basically how it works.
+
+717
+00:46:22,230 --> 00:46:26,894
+So if I enter the test NginX
+
+718
+00:46:26,942 --> 00:46:32,542
+service in the default namespace and print
+
+719
+00:46:32,606 --> 00:46:36,706
+the resolve contents you see instead of test namespace
+
+720
+00:46:36,818 --> 00:46:40,434
+here, one of the domains in the search is default
+
+721
+00:46:40,482 --> 00:46:43,926
+namespace. So as a troubleshooting tip, if you have an
+
+722
+00:46:43,948 --> 00:46:48,074
+issue where accessing a service using just the
+
+723
+00:46:48,112 --> 00:46:50,906
+name and the namespace does not work,
+
+724
+00:46:51,008 --> 00:46:54,858
+but specifying a fully qualified name does work.
+
+725
+00:46:54,944 --> 00:46:58,326
+It means your cluster has an issue resolving the
+
+726
+00:46:58,368 --> 00:47:03,742
+service names and you would know where to debug that service
+
+727
+00:47:03,796 --> 00:47:07,038
+names are mapped to service's ip address
+
+728
+00:47:07,204 --> 00:47:09,710
+and how it's resolved in the cluster.
+
+729
+00:47:12,710 --> 00:47:16,706
+So where do these IP addresses of the services come from?
+
+730
+00:47:16,808 --> 00:47:20,206
+Because this is not same as the pod IP
+
+731
+00:47:20,238 --> 00:47:23,266
+addresses which we can see right here.
+
+732
+00:47:23,368 --> 00:47:27,046
+This is in the completely different range. So where is it
+
+733
+00:47:27,068 --> 00:47:30,566
+defined and can we change it if we wanted to?
+
+734
+00:47:30,668 --> 00:47:34,054
+Well, let's see. As you see, the Kubernetes services here
+
+735
+00:47:34,092 --> 00:47:37,914
+have a type of cluster IP. So they get a
+
+736
+00:47:37,952 --> 00:47:41,242
+cluster internal IP address which
+
+737
+00:47:41,296 --> 00:47:45,050
+makes them accessible to the applications and pods running
+
+738
+00:47:45,120 --> 00:47:48,842
+inside the cluster. And this IP address range
+
+739
+00:47:48,906 --> 00:47:52,554
+is defined in the Kube API server configuration.
+
+740
+00:47:52,682 --> 00:47:56,286
+If you remember, the Kube API server which is one of
+
+741
+00:47:56,308 --> 00:48:00,170
+the control plane processes has a static pod
+
+742
+00:48:00,250 --> 00:48:03,554
+manifest that Kubeadm generates, right?
+
+743
+00:48:03,672 --> 00:48:10,206
+And they are located in manifests
+
+744
+00:48:10,318 --> 00:48:13,666
+folder. So if I check the Kube API
+
+745
+00:48:13,698 --> 00:48:17,218
+server manifest file
+
+746
+00:48:17,314 --> 00:48:20,886
+and we have lots of different options here when starting up the
+
+747
+00:48:20,908 --> 00:48:24,518
+Kube API server application and one of them
+
+748
+00:48:24,684 --> 00:48:28,662
+is service cluster IP range.
+
+749
+00:48:28,806 --> 00:48:32,762
+So this is actually a parameter that is passed on
+
+750
+00:48:32,816 --> 00:48:36,502
+to the API server and this is the cider
+
+751
+00:48:36,566 --> 00:48:39,526
+block of the service IP addresses.
+
+752
+00:48:39,638 --> 00:48:43,598
+Again, remember these are internal service IP addresses that
+
+753
+00:48:43,684 --> 00:48:47,262
+only the applications in the cluster can use to access the services.
+
+754
+00:48:47,396 --> 00:48:51,550
+And as you see it is in the range of 10960
+
+755
+00:48:51,700 --> 00:48:55,482
+zero, which is exactly the range
+
+756
+00:48:55,546 --> 00:48:58,234
+from which we have these two IP addresses.
+
+757
+00:48:58,362 --> 00:49:01,706
+So that's where the service cider block
+
+758
+00:49:01,738 --> 00:49:06,402
+is defined. But as we know KubeadM provisions
+
+759
+00:49:06,466 --> 00:49:10,786
+and creates the Kube API server configuration.
+
+760
+00:49:10,898 --> 00:49:14,534
+So how does KubeaDm actually get that? Well, if we look
+
+761
+00:49:14,572 --> 00:49:17,834
+at the KubeadM init command and
+
+762
+00:49:17,872 --> 00:49:20,954
+its options, one of the options that we
+
+763
+00:49:20,992 --> 00:49:24,794
+see here is service cider. So this is where
+
+764
+00:49:24,832 --> 00:49:28,086
+you can actually specify an alternative
+
+765
+00:49:28,198 --> 00:49:32,250
+IP address of service virtual IP addresses.
+
+766
+00:49:32,410 --> 00:49:35,966
+And the cider block that we saw is actually a default that
+
+767
+00:49:35,988 --> 00:49:38,798
+is used when you do not specify a different one,
+
+768
+00:49:38,884 --> 00:49:44,050
+which is again a range from 10960 zero.
+
+769
+00:49:44,200 --> 00:49:47,700
+Alternatively, you can also check
+
+770
+00:49:48,070 --> 00:49:51,582
+the KubeaDM default configuration values
+
+771
+00:49:51,726 --> 00:49:55,594
+by printing Kubeadm config emit
+
+772
+00:49:55,662 --> 00:49:57,350
+command defaults.
+
+773
+00:49:58,970 --> 00:50:02,662
+And I misspelled the print and there you go. This actually
+
+774
+00:50:02,716 --> 00:50:06,306
+gives you a nice list of all the default values
+
+775
+00:50:06,338 --> 00:50:09,562
+that Kubeadm will initialize your
+
+776
+00:50:09,616 --> 00:50:13,306
+cluster with. One of them, as you see is the DNS type which is
+
+777
+00:50:13,328 --> 00:50:17,334
+set to core DNS, the ETCD data directory.
+
+778
+00:50:17,462 --> 00:50:21,034
+And you have the networking configuration here which defines
+
+779
+00:50:21,082 --> 00:50:24,286
+the DNS, the roots domain of Kubernetes cluster which
+
+780
+00:50:24,308 --> 00:50:28,110
+is cluster local and the service subnet again
+
+781
+00:50:28,180 --> 00:50:32,370
+which we saw is the default service IP range.
+
+782
+00:50:35,220 --> 00:50:39,004
+So if you needed to change that value you could specify
+
+783
+00:50:39,052 --> 00:50:42,496
+it on init command as
+
+784
+00:50:42,518 --> 00:50:46,132
+a parameter service cider. But what if you wanted
+
+785
+00:50:46,186 --> 00:50:49,700
+to change the service cider block after you have
+
+786
+00:50:49,770 --> 00:50:53,156
+initialized the cluster? Well for that you
+
+787
+00:50:53,178 --> 00:50:57,072
+can actually adjust the Kube API server manifest
+
+788
+00:50:57,136 --> 00:51:00,808
+file and specify a different cider block there.
+
+789
+00:51:00,894 --> 00:51:04,536
+And let's actually do that. So one thing to note about
+
+790
+00:51:04,718 --> 00:51:08,376
+static pods is that whenever I make a change in
+
+791
+00:51:08,398 --> 00:51:12,344
+the manifests folder to one of the existing files
+
+792
+00:51:12,472 --> 00:51:16,824
+or I create a new file, a new pod manifest file,
+
+793
+00:51:16,952 --> 00:51:21,716
+Kubelet will actually automatically detect the change and reload
+
+794
+00:51:21,848 --> 00:51:25,772
+all the pods that got updated or basically all the configuration
+
+795
+00:51:25,836 --> 00:51:30,156
+that got changed. So going inside let's
+
+796
+00:51:30,188 --> 00:51:33,836
+actually adjust the service cluster IP range and let's
+
+797
+00:51:33,868 --> 00:51:38,804
+set it to 20960
+
+798
+00:51:38,922 --> 00:51:43,444
+and let's save the change. And now if
+
+799
+00:51:43,482 --> 00:51:46,928
+I do Kubectl pod in the Kube system
+
+800
+00:51:47,034 --> 00:51:50,724
+namespace, you see that the connection refused.
+
+801
+00:51:50,852 --> 00:51:55,172
+Why? Because we just changed the API server configuration.
+
+802
+00:51:55,316 --> 00:51:58,964
+So API server is actually restarting so we can't
+
+803
+00:51:59,012 --> 00:52:02,424
+connect to the cluster. This is going to take some time till
+
+804
+00:52:02,472 --> 00:52:06,124
+the API server is fully restarted and
+
+805
+00:52:06,162 --> 00:52:09,884
+after that we can try to connect again. And there you go.
+
+806
+00:52:10,002 --> 00:52:13,804
+After a couple of seconds we're connected to the cluster and Kube
+
+807
+00:52:13,852 --> 00:52:16,588
+API server got restarted.
+
+808
+00:52:16,684 --> 00:52:20,240
+Right age is 11 seconds. So it was just
+
+809
+00:52:20,310 --> 00:52:24,124
+started. Now the question is what happens
+
+810
+00:52:24,262 --> 00:52:27,828
+to the services that have been created in the
+
+811
+00:52:27,834 --> 00:52:31,590
+cluster before we made the update? Let's actually check that.
+
+812
+00:52:32,280 --> 00:52:35,796
+I'm going to do Kubectl get service and as you
+
+813
+00:52:35,818 --> 00:52:39,224
+see they have the same IP addresses as
+
+814
+00:52:39,262 --> 00:52:43,124
+before. Nothing changed here. So the new cider block
+
+815
+00:52:43,172 --> 00:52:46,792
+actually applies to the services that get created after
+
+816
+00:52:46,846 --> 00:52:50,392
+we made the change. So all the previous services will keep their
+
+817
+00:52:50,446 --> 00:52:54,236
+old IP addresses. So to test a new cider block for
+
+818
+00:52:54,258 --> 00:52:56,860
+the services, let's actually create a new service.
+
+819
+00:52:57,010 --> 00:53:00,220
+And again when we want to test something quickly
+
+820
+00:53:00,370 --> 00:53:03,980
+we can do that using Kubectl's imperative commands.
+
+821
+00:53:04,060 --> 00:53:07,490
+So let's see how we can create a service
+
+822
+00:53:07,940 --> 00:53:11,440
+using Kubectl create service command. Let's get
+
+823
+00:53:11,510 --> 00:53:14,816
+help here. And as you see the
+
+824
+00:53:14,838 --> 00:53:18,948
+first thing we need to specify is the type of the service which
+
+825
+00:53:19,034 --> 00:53:22,132
+is the cluster IP. That's an internal service.
+
+826
+00:53:22,266 --> 00:53:26,164
+You see the type right here. Again, let's get help. And we see
+
+827
+00:53:26,202 --> 00:53:29,576
+usage here. Cluster IP, we need
+
+828
+00:53:29,598 --> 00:53:32,890
+the name of the service. Let's call these test
+
+829
+00:53:33,340 --> 00:53:37,492
+new cider and we're going to have to specify
+
+830
+00:53:37,636 --> 00:53:41,288
+at least one port. So let's do 80.
+
+831
+00:53:41,464 --> 00:53:44,620
+80 service was created,
+
+832
+00:53:46,560 --> 00:53:50,556
+let's do Kubectl get service again. And as you
+
+833
+00:53:50,578 --> 00:53:54,944
+see the new service got an IP address from
+
+834
+00:53:55,062 --> 00:54:01,696
+the updated service IP range with
+
+835
+00:54:01,798 --> 00:54:05,424
+kubernetes and specifically with Kubectl command,
+
+836
+00:54:05,552 --> 00:54:07,060
+much more efficient.
+
+837
+00:54:09,960 --> 00:54:14,016
+As you see, we work a lot with Kubectl command for configuring
+
+838
+00:54:14,048 --> 00:54:17,924
+the cluster, creating components, debugging, troubleshooting and
+
+839
+00:54:17,962 --> 00:54:21,576
+so on. So we're using this command a lot and it could be
+
+840
+00:54:21,598 --> 00:54:24,760
+annoying to type Kubectl command all the time.
+
+841
+00:54:24,910 --> 00:54:28,552
+So as a quick optimization, I suggest you use
+
+842
+00:54:28,606 --> 00:54:32,572
+an alias for that command that is much
+
+843
+00:54:32,626 --> 00:54:36,716
+simpler and faster to type. So one common alias for
+
+844
+00:54:36,738 --> 00:54:41,304
+Kubectl could be K. So we said Kubectl
+
+845
+00:54:41,352 --> 00:54:44,976
+command alias to K and this will create an alias in
+
+846
+00:54:44,998 --> 00:54:48,176
+your current session. So it's not going to change it in the
+
+847
+00:54:48,198 --> 00:54:51,676
+whole system. This will be just temporary for that active
+
+848
+00:54:51,708 --> 00:54:55,524
+session that you're in. So it doesn't make this change
+
+849
+00:54:55,642 --> 00:54:59,620
+permanent. And if I execute this, I can now use K
+
+850
+00:54:59,690 --> 00:55:02,916
+instead of kubectl to interact with the
+
+851
+00:55:02,938 --> 00:55:06,276
+cluster, right? So kgetpod and
+
+852
+00:55:06,298 --> 00:55:10,024
+so on. And this small optimization can actually make your
+
+853
+00:55:10,062 --> 00:55:13,432
+work more efficient. So that's the first quick
+
+854
+00:55:13,486 --> 00:55:17,268
+tip. A second one is related to creating Kubernetes
+
+855
+00:55:17,364 --> 00:55:21,244
+manifest files in an efficient way. We said that when testing and
+
+856
+00:55:21,282 --> 00:55:24,908
+creating pods or services to just try something out,
+
+857
+00:55:24,994 --> 00:55:28,684
+we use imperative commands. However, if you want to create
+
+858
+00:55:28,802 --> 00:55:31,992
+permanent components that will stay in the cluster,
+
+859
+00:55:32,136 --> 00:55:35,088
+we prefer configuration files for that,
+
+860
+00:55:35,174 --> 00:55:38,384
+especially because we want to have a history of what
+
+861
+00:55:38,422 --> 00:55:41,744
+components we created with what configuration, and they
+
+862
+00:55:41,782 --> 00:55:45,140
+may end up in a git repository that the whole team
+
+863
+00:55:45,210 --> 00:55:48,404
+can work on. So one way that I
+
+864
+00:55:48,442 --> 00:55:51,716
+showed you to create configuration files was going
+
+865
+00:55:51,738 --> 00:55:55,124
+to the Kubernetes documentation and basically grabbing a
+
+866
+00:55:55,162 --> 00:55:59,064
+service example or deployment example and
+
+867
+00:55:59,102 --> 00:56:02,520
+so on. Now this may be time consuming and
+
+868
+00:56:02,590 --> 00:56:06,052
+you may not want to scroll through the Kubernetes documentation
+
+869
+00:56:06,196 --> 00:56:10,020
+every time you want to find an example of one of
+
+870
+00:56:10,030 --> 00:56:13,644
+the components. Plus you may not want to have to copy and
+
+871
+00:56:13,682 --> 00:56:17,676
+paste the contents from here to your
+
+872
+00:56:17,778 --> 00:56:22,072
+terminal session, et cetera. So a more efficient way of creating
+
+873
+00:56:22,216 --> 00:56:26,480
+Kubernetes configuration files for different components is
+
+874
+00:56:26,550 --> 00:56:30,144
+actually using Kubectl command. So let's see how
+
+875
+00:56:30,182 --> 00:56:33,456
+that works. What I'm going to do is I'm going to bring up one
+
+876
+00:56:33,478 --> 00:56:37,792
+of the previous commands where we created a service of
+
+877
+00:56:37,846 --> 00:56:41,480
+cluster IP type called Testnew cider
+
+878
+00:56:41,660 --> 00:56:44,928
+with this configuration in the cluster.
+
+879
+00:56:45,024 --> 00:56:48,776
+And this is an imperative way of creating a service. And it just gave
+
+880
+00:56:48,798 --> 00:56:52,516
+us a service in the cluster. That's it. Now instead of creating
+
+881
+00:56:52,548 --> 00:56:56,520
+a service with this command, we can actually forward
+
+882
+00:56:56,670 --> 00:56:59,796
+the results into a configuration file.
+
+883
+00:56:59,828 --> 00:57:03,576
+So we can actually generate a Kubernetes configuration file
+
+884
+00:57:03,688 --> 00:57:07,132
+from the imperative commands. And the way we do that
+
+885
+00:57:07,186 --> 00:57:11,004
+is we tell kubernetes do not actually execute this.
+
+886
+00:57:11,042 --> 00:57:14,380
+And we do that by using dry run
+
+887
+00:57:14,530 --> 00:57:18,748
+option. And it has a couple of values. One of them is a client.
+
+888
+00:57:18,844 --> 00:57:22,912
+So we are saying do not create a service. We are just
+
+889
+00:57:22,966 --> 00:57:26,324
+trying to do a preview here. So that's one option.
+
+890
+00:57:26,442 --> 00:57:29,844
+The second one is the preview that we're getting
+
+891
+00:57:29,962 --> 00:57:33,844
+by not actually executing the command. We want
+
+892
+00:57:33,882 --> 00:57:37,704
+that preview in a yaml output. So give
+
+893
+00:57:37,742 --> 00:57:41,736
+me a yaml output of this command's preview and
+
+894
+00:57:41,758 --> 00:57:45,480
+I want to save that yaml file into a file called
+
+895
+00:57:45,630 --> 00:57:48,804
+my service yaml.
+
+896
+00:57:48,932 --> 00:57:52,524
+So let's see what happens. First of all, kubernetes did not try
+
+897
+00:57:52,562 --> 00:57:55,772
+to create service because we already have a service
+
+898
+00:57:55,826 --> 00:57:59,468
+with this name in a cluster and if it did we would
+
+899
+00:57:59,554 --> 00:58:04,016
+have gotten an error. Instead we don't get any output because
+
+900
+00:58:04,118 --> 00:58:07,852
+everything was forwarded or redirected
+
+901
+00:58:07,916 --> 00:58:12,000
+to this file here. So if I do ls I have
+
+902
+00:58:12,150 --> 00:58:16,036
+my service yaml and let's actually see
+
+903
+00:58:16,138 --> 00:58:19,764
+what's inside. And there you go. We have an
+
+904
+00:58:19,802 --> 00:58:23,908
+example service file that we just generated by
+
+905
+00:58:23,994 --> 00:58:28,244
+using an imperative Kubectl command. And once
+
+906
+00:58:28,282 --> 00:58:31,864
+you have that blueprint, so to say you can then go ahead and
+
+907
+00:58:31,982 --> 00:58:35,624
+set and change all those values. You have a couple
+
+908
+00:58:35,662 --> 00:58:39,348
+of redundant attributes that get generated that you
+
+909
+00:58:39,374 --> 00:58:42,920
+can actually get rid of them, like creation, timestamp,
+
+910
+00:58:43,080 --> 00:58:46,748
+maybe labels and status which
+
+911
+00:58:46,834 --> 00:58:50,268
+gets generated and edited by kubernetes. So actually you
+
+912
+00:58:50,274 --> 00:58:53,356
+don't need that. So you can get rid of them as well. So you can
+
+913
+00:58:53,378 --> 00:58:56,736
+clean up all this stuff and then set the values that you want.
+
+914
+00:58:56,838 --> 00:59:00,368
+And by the way, in vim editor, if you want to
+
+915
+00:59:00,454 --> 00:59:04,508
+delete lines instead of characters one by one,
+
+916
+00:59:04,614 --> 00:59:08,864
+you can go from insert mode or from edit mode to command
+
+917
+00:59:08,912 --> 00:59:12,276
+mode by hitting escape and then
+
+918
+00:59:12,378 --> 00:59:16,020
+two times the key d. So DD
+
+919
+00:59:16,760 --> 00:59:20,072
+will remove one line from the file and
+
+920
+00:59:20,126 --> 00:59:23,864
+back to the insert mode. As I said, you can
+
+921
+00:59:23,902 --> 00:59:27,924
+change all the values here and the port that we set, port and target
+
+922
+00:59:27,972 --> 00:59:31,532
+port are already set here. So you have that already
+
+923
+00:59:31,586 --> 00:59:34,984
+configured. Let's actually try to do the same for a deployment
+
+924
+00:59:35,032 --> 00:59:38,856
+file. So I'm going to exit
+
+925
+00:59:38,888 --> 00:59:42,748
+here and let's do Kubectl create
+
+926
+00:59:42,914 --> 00:59:46,204
+deployment again? Let's use
+
+927
+00:59:46,242 --> 00:59:50,776
+help to navigate here so we have deployment
+
+928
+00:59:50,968 --> 00:59:54,620
+name of the deployment let's call this my deployment
+
+929
+00:59:57,160 --> 00:59:59,920
+image of the pod in the deployment.
+

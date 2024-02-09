@@ -1,0 +1,320 @@
+1
+00:00:00,650 --> 00:00:03,902
+Kubernetes is one of the most popular tools in
+
+2
+00:00:03,956 --> 00:00:07,178
+cloud computing and is becoming more and more popular
+
+3
+00:00:07,274 --> 00:00:10,778
+every day. All the projects are migrating to Kubernetes
+
+4
+00:00:10,874 --> 00:00:14,334
+and it is already becoming the standard in most companies
+
+5
+00:00:14,532 --> 00:00:18,506
+as a result. Of course, the need for IT professionals
+
+6
+00:00:18,618 --> 00:00:22,250
+who know Kubernetes is higher than ever and is increasing
+
+7
+00:00:22,330 --> 00:00:25,942
+every year. But the demand for Kubernetes professionals is
+
+8
+00:00:25,996 --> 00:00:30,098
+way higher than the number of people who actually know Kubernetes.
+
+9
+00:00:30,274 --> 00:00:33,554
+This means if you invest time in learning Kubernetes
+
+10
+00:00:33,602 --> 00:00:37,106
+and getting certified as a Kubernetes administrator,
+
+11
+00:00:37,218 --> 00:00:41,178
+you'll have an incredible advantage and a head start in your IT
+
+12
+00:00:41,264 --> 00:00:44,890
+career. Now, Kubernetes is not the easiest tool
+
+13
+00:00:44,960 --> 00:00:48,890
+to learn, set up and manage, so if you want to become
+
+14
+00:00:48,960 --> 00:00:52,186
+a Kubernetes administrator you will need to learn a bunch
+
+15
+00:00:52,218 --> 00:00:56,238
+of stuff. I have taught hundreds of thousands of people
+
+16
+00:00:56,404 --> 00:00:59,902
+Kubernetes through my videos and now I have created this
+
+17
+00:00:59,956 --> 00:01:03,882
+full course to teach you everything necessary to get started
+
+18
+00:01:03,956 --> 00:01:07,506
+with kubernetes from zero and become an expert in
+
+19
+00:01:07,528 --> 00:01:11,934
+it. You will be prepared to handle any issues in the cluster.
+
+20
+00:01:12,062 --> 00:01:15,334
+You will know exactly how Kubernetes works and be able
+
+21
+00:01:15,372 --> 00:01:19,730
+to support teams in your company to use kubernetes properly
+
+22
+00:01:19,810 --> 00:01:23,942
+after completing this course. This course is mostly demo
+
+23
+00:01:24,076 --> 00:01:27,462
+led projects where you work hands on along
+
+24
+00:01:27,516 --> 00:01:31,002
+with me, to practically apply all the concepts you learn,
+
+25
+00:01:31,136 --> 00:01:35,034
+but also understand the use cases of each concept and
+
+26
+00:01:35,072 --> 00:01:38,154
+really know why and how to use it. And to make
+
+27
+00:01:38,192 --> 00:01:41,694
+understanding the theoretical concepts easier. We have
+
+28
+00:01:41,812 --> 00:01:45,774
+animated videos and real world examples to understand how
+
+29
+00:01:45,812 --> 00:01:49,534
+it all applies in the real world projects. Now you
+
+30
+00:01:49,572 --> 00:01:53,406
+also know how important it is to prove your knowledge in
+
+31
+00:01:53,428 --> 00:01:56,914
+the it world and a certification is a great way to
+
+32
+00:01:56,952 --> 00:02:00,754
+show your skills and this course prepares you completely
+
+33
+00:02:00,952 --> 00:02:05,178
+for the CKA exam so that you can become a certified
+
+34
+00:02:05,294 --> 00:02:09,698
+Kubernetes administrator. So let's go through the course contents
+
+35
+00:02:09,794 --> 00:02:13,714
+and see what you will learn from our Kubernetes administrator
+
+36
+00:02:13,762 --> 00:02:17,282
+course. We will start with the main Kubernetes concepts
+
+37
+00:02:17,346 --> 00:02:20,666
+and understand how Kubernetes architecture works,
+
+38
+00:02:20,768 --> 00:02:24,982
+what Kubernetes resources are, learn about Kubernetes configuration
+
+39
+00:02:25,046 --> 00:02:28,406
+files and generally how to work with Kubernetes.
+
+40
+00:02:28,598 --> 00:02:31,710
+We will then install a Kubernetes cluster from
+
+41
+00:02:31,780 --> 00:02:35,486
+scratch on virtual machines. For that we will use a
+
+42
+00:02:35,508 --> 00:02:38,766
+Kubeadm tool and learn and understand all the
+
+43
+00:02:38,788 --> 00:02:42,286
+concepts about control plane processes, how they work,
+
+44
+00:02:42,388 --> 00:02:46,290
+how they get configured and so on. You will also learn about
+
+45
+00:02:46,360 --> 00:02:49,906
+container runtime interface in Kubernetes and how is
+
+46
+00:02:49,928 --> 00:02:53,314
+it possible to use different container runtime technologies with
+
+47
+00:02:53,352 --> 00:02:57,334
+Kubernetes. We will also look at a very interesting topic which
+
+48
+00:02:57,372 --> 00:03:01,330
+is networking in Kubernetes and container
+
+49
+00:03:01,410 --> 00:03:04,674
+networking interface. We will learn about how pod
+
+50
+00:03:04,722 --> 00:03:08,826
+networking works and how it is configured, as well as install a
+
+51
+00:03:08,848 --> 00:03:13,190
+networking plugin to create a networking layer in our Kubernetes
+
+52
+00:03:13,270 --> 00:03:16,918
+cluster. We will also learn how DNS works in Kubernetes
+
+53
+00:03:17,014 --> 00:03:20,798
+and learn about core DNS which is the DNS service
+
+54
+00:03:20,884 --> 00:03:23,982
+in Kubernetes. We will also take a look at how
+
+55
+00:03:24,036 --> 00:03:27,662
+certificates work in Kubernetes, what certificates get
+
+56
+00:03:27,716 --> 00:03:31,818
+automatically created, and how you as a Kubernetes administrator
+
+57
+00:03:31,914 --> 00:03:35,346
+can manage that. In the same section we will also learn
+
+58
+00:03:35,448 --> 00:03:39,390
+about very important Kubernetes concepts like namespaces,
+
+59
+00:03:39,550 --> 00:03:42,962
+how to work with Kubectl which is a Kubernetes command line
+
+60
+00:03:43,016 --> 00:03:46,114
+tool. You will learn about Kubeconfig file and
+
+61
+00:03:46,152 --> 00:03:49,414
+how to use that to connect to the cluster, as well as how to
+
+62
+00:03:49,452 --> 00:03:52,786
+configure and modify that and also using Kubeadm
+
+63
+00:03:52,818 --> 00:03:56,134
+tool you will learn how to join any worker nodes to
+
+64
+00:03:56,172 --> 00:04:00,006
+the cluster. Once you have installed and configured the cluster,
+
+65
+00:04:00,118 --> 00:04:03,450
+of course you want to start deploying your applications in it
+
+66
+00:04:03,520 --> 00:04:07,206
+and make it accessible externally. So we will learn how to deploy
+
+67
+00:04:07,238 --> 00:04:11,642
+applications inside the cluster using deployments
+
+68
+00:04:11,786 --> 00:04:15,310
+and how to make them accessible with services.
+
+69
+00:04:15,460 --> 00:04:19,034
+You will also learn about different types of services in kubernetes,
+
+70
+00:04:19,162 --> 00:04:22,622
+how to use each one, and more importantly, how they
+
+71
+00:04:22,676 --> 00:04:26,782
+compare to each other. One of the common ways of configuring external
+
+72
+00:04:26,846 --> 00:04:31,090
+access to our applications running in Kubernetes is
+
+73
+00:04:31,160 --> 00:04:34,594
+ingress. So you will learn what ingress controller is and
+
+74
+00:04:34,632 --> 00:04:38,178
+how to create ingress resources to configure
+
+75
+00:04:38,274 --> 00:04:41,666
+routing in a cluster. And since we will be installing
+
+76
+00:04:41,698 --> 00:04:45,622
+the ingress controller application using Helm, you will also learn
+
+77
+00:04:45,676 --> 00:04:49,094
+what helm is, how it works, and how to use it to
+
+78
+00:04:49,132 --> 00:04:52,802
+easily install different applications in Kubernetes.
+
+79
+00:04:52,946 --> 00:04:56,790
+Now of course, you won't be the only one working with the cluster because
+
+80
+00:04:56,860 --> 00:04:59,860
+developer teams and other people will also need access.
+

@@ -1,0 +1,3780 @@
+1
+00:00:00,650 --> 00:00:04,270
+Kubernetes is one of the most popular tools in cloud
+
+2
+00:00:04,340 --> 00:00:08,222
+computing and is becoming more and more popular every day.
+
+3
+00:00:08,356 --> 00:00:11,406
+All the projects are migrating to Kubernetes and it is
+
+4
+00:00:11,428 --> 00:00:14,846
+already becoming the standard in most companies as
+
+5
+00:00:14,868 --> 00:00:18,506
+a result. Of course, the need for IT professionals
+
+6
+00:00:18,618 --> 00:00:22,250
+who know Kubernetes is higher than ever and is increasing
+
+7
+00:00:22,330 --> 00:00:26,310
+every year. But the demand for Kubernetes professionals is way
+
+8
+00:00:26,380 --> 00:00:30,098
+higher than the number of people who actually know Kubernetes.
+
+9
+00:00:30,274 --> 00:00:33,862
+This means if you invest time in learning Kubernetes and
+
+10
+00:00:33,916 --> 00:00:37,106
+getting certified as a Kubernetes administrator,
+
+11
+00:00:37,218 --> 00:00:40,538
+you'll have an incredible advantage and a head start in
+
+12
+00:00:40,544 --> 00:00:43,594
+your IT career. Now, Kubernetes is
+
+13
+00:00:43,632 --> 00:00:47,450
+not the easiest tool to learn, set up and manage,
+
+14
+00:00:47,600 --> 00:00:51,066
+so if you want to become a Kubernetes administrator you will
+
+15
+00:00:51,088 --> 00:00:54,974
+need to learn a bunch of stuff. I have taught hundreds of
+
+16
+00:00:55,012 --> 00:00:59,006
+thousands of people Kubernetes through my videos and now I
+
+17
+00:00:59,028 --> 00:01:03,082
+have created this full course to teach you everything necessary
+
+18
+00:01:03,146 --> 00:01:06,562
+to get started with kubernetes from zero and become
+
+19
+00:01:06,616 --> 00:01:10,402
+an expert in it. You will be prepared to handle any
+
+20
+00:01:10,456 --> 00:01:14,062
+issues in the cluster. You will know exactly how Kubernetes
+
+21
+00:01:14,126 --> 00:01:18,166
+works and be able to support teams in your company to
+
+22
+00:01:18,188 --> 00:01:21,670
+use kubernetes properly after completing this course.
+
+23
+00:01:21,820 --> 00:01:26,134
+This course is mostly demo led projects where you work
+
+24
+00:01:26,252 --> 00:01:30,214
+hands on along with me, to practically apply all the concepts
+
+25
+00:01:30,262 --> 00:01:33,882
+you learn, but also understand the use cases of each
+
+26
+00:01:33,936 --> 00:01:37,498
+concept and really know why and how to use it.
+
+27
+00:01:37,584 --> 00:01:41,694
+And to make understanding the theoretical concepts easier. We have
+
+28
+00:01:41,812 --> 00:01:45,374
+animated videos and real world examples to understand
+
+29
+00:01:45,492 --> 00:01:48,810
+how it all applies in the real world projects.
+
+30
+00:01:48,970 --> 00:01:53,066
+Now you also know how important it is to prove your knowledge
+
+31
+00:01:53,178 --> 00:01:57,154
+in the it world and a certification is a great way to show
+
+32
+00:01:57,192 --> 00:02:00,754
+your skills and this course prepares you completely
+
+33
+00:02:00,952 --> 00:02:04,210
+for the CKA exam so that you can become
+
+34
+00:02:04,280 --> 00:02:07,974
+a certified Kubernetes administrator. So let's go
+
+35
+00:02:08,012 --> 00:02:11,478
+through the course contents and see what you will learn
+
+36
+00:02:11,564 --> 00:02:14,934
+from our Kubernetes administrator course. We will
+
+37
+00:02:14,972 --> 00:02:18,282
+start with the main Kubernetes concepts and understand
+
+38
+00:02:18,416 --> 00:02:22,262
+how Kubernetes architecture works, what Kubernetes resources
+
+39
+00:02:22,326 --> 00:02:25,558
+are, learn about Kubernetes configuration files
+
+40
+00:02:25,654 --> 00:02:29,738
+and generally how to work with Kubernetes. We will then install
+
+41
+00:02:29,824 --> 00:02:33,354
+a Kubernetes cluster from scratch on virtual
+
+42
+00:02:33,402 --> 00:02:36,718
+machines. For that we will use a Kubeadm tool
+
+43
+00:02:36,804 --> 00:02:40,346
+and learn and understand all the concepts about control plane
+
+44
+00:02:40,378 --> 00:02:43,906
+processes, how they work, how they get configured and
+
+45
+00:02:43,928 --> 00:02:48,254
+so on. You will also learn about container runtime interface
+
+46
+00:02:48,302 --> 00:02:51,966
+in Kubernetes and how is it possible to use different container
+
+47
+00:02:51,998 --> 00:02:55,206
+runtime technologies with Kubernetes. We will also look
+
+48
+00:02:55,228 --> 00:02:59,922
+at a very interesting topic which is networking in Kubernetes
+
+49
+00:03:00,066 --> 00:03:03,734
+and container networking interface. We will learn
+
+50
+00:03:03,772 --> 00:03:07,574
+about how pod networking works and how it is configured as well
+
+51
+00:03:07,612 --> 00:03:11,334
+as install a networking plugin to create a networking
+
+52
+00:03:11,382 --> 00:03:14,682
+layer in our Kubernetes cluster. We will also learn
+
+53
+00:03:14,736 --> 00:03:18,026
+how DNS works in Kubernetes and learn about
+
+54
+00:03:18,128 --> 00:03:21,882
+core DNS which is the DNS service in Kubernetes.
+
+55
+00:03:22,026 --> 00:03:25,962
+We will also take a look at how certificates work in Kubernetes,
+
+56
+00:03:26,106 --> 00:03:29,342
+what certificates get automatically created and
+
+57
+00:03:29,396 --> 00:03:33,006
+how you as a Kubernetes administrator can manage that.
+
+58
+00:03:33,108 --> 00:03:37,262
+In the same section we will also learn about very important Kubernetes
+
+59
+00:03:37,326 --> 00:03:41,214
+concepts like namespaces, how to work with Kubectl
+
+60
+00:03:41,262 --> 00:03:44,578
+which is a Kubernetes command line tool. You will learn about
+
+61
+00:03:44,664 --> 00:03:47,846
+Kubeconfig file and how to use that to connect to the
+
+62
+00:03:47,868 --> 00:03:51,670
+cluster, as well as how to configure and modify that and also
+
+63
+00:03:51,740 --> 00:03:55,842
+using Kubeadm tool you will learn how to join any worker nodes
+
+64
+00:03:55,906 --> 00:03:59,386
+to the cluster. Once you have installed and configured the
+
+65
+00:03:59,408 --> 00:04:03,114
+cluster, of course you want to start deploying your applications in
+
+66
+00:04:03,152 --> 00:04:06,554
+it and make it accessible externally. So we will learn
+
+67
+00:04:06,592 --> 00:04:10,550
+how to deploy applications inside the cluster using
+
+68
+00:04:10,720 --> 00:04:14,638
+deployments and how to make them accessible with
+
+69
+00:04:14,724 --> 00:04:17,998
+services. You will also learn about different types of services
+
+70
+00:04:18,084 --> 00:04:21,946
+in Kubernetes, how to use each one, and more importantly,
+
+71
+00:04:22,058 --> 00:04:25,554
+how they compare to each other. One of the common ways of
+
+72
+00:04:25,592 --> 00:04:29,458
+configuring external access to our applications running
+
+73
+00:04:29,544 --> 00:04:32,914
+in Kubernetes is ingress. So you will learn
+
+74
+00:04:32,952 --> 00:04:37,106
+what ingress controller is and how to create ingress resources
+
+75
+00:04:37,218 --> 00:04:40,742
+to configure routing in a cluster. And since
+
+76
+00:04:40,796 --> 00:04:44,466
+we will be installing the ingress controller application using helm,
+
+77
+00:04:44,578 --> 00:04:47,622
+you will also learn what helm is, how it works,
+
+78
+00:04:47,676 --> 00:04:51,734
+and how to use it to easily install different applications
+
+79
+00:04:51,782 --> 00:04:55,114
+in Kubernetes. Now of course you won't be the only one
+
+80
+00:04:55,152 --> 00:04:58,698
+working with the cluster because developer teams and other people
+
+81
+00:04:58,784 --> 00:05:02,478
+will also need access. But you can't just give everyone
+
+82
+00:05:02,564 --> 00:05:05,646
+admin access to the cluster. So we will
+
+83
+00:05:05,668 --> 00:05:09,614
+learn about the concept of users and permissions in Kubernetes. We will
+
+84
+00:05:09,652 --> 00:05:12,958
+learn about RBEC or role based access control.
+
+85
+00:05:13,124 --> 00:05:16,986
+We will also learn how client certificates work in Kubernetes
+
+86
+00:05:17,098 --> 00:05:20,494
+and we'll create a client certificate for a new cluster
+
+87
+00:05:20,542 --> 00:05:23,646
+user. Since DevOps is all about automation,
+
+88
+00:05:23,758 --> 00:05:27,502
+you will have to automate processes like deploying applications
+
+89
+00:05:27,646 --> 00:05:31,254
+from the CI CD pipeline to Kubernetes. For such
+
+90
+00:05:31,292 --> 00:05:34,578
+integrations you also need users and permissions.
+
+91
+00:05:34,674 --> 00:05:38,982
+So we will learn how to create non human users for different tools
+
+92
+00:05:39,046 --> 00:05:42,902
+that interact with Kubernetes. When working with Kubernetes
+
+93
+00:05:43,046 --> 00:05:46,730
+things will go wrong. So everyone using Kubernetes should
+
+94
+00:05:46,800 --> 00:05:50,410
+learn how to properly debug and troubleshoot the cluster.
+
+95
+00:05:50,490 --> 00:05:54,074
+So you will learn about different ways of troubleshooting and debugging
+
+96
+00:05:54,122 --> 00:05:57,130
+in Kubernetes using temporary pods,
+
+97
+00:05:57,210 --> 00:06:01,114
+Kubectl formatting and also how to debug and fix Kubelet
+
+98
+00:06:01,162 --> 00:06:05,122
+service issues, et cetera. A very common use case is running
+
+99
+00:06:05,176 --> 00:06:08,638
+multiple containers in a Kubernetes pod,
+
+100
+00:06:08,734 --> 00:06:12,338
+so you will learn about such use cases and how to implement that
+
+101
+00:06:12,424 --> 00:06:15,698
+using init containers and multicontainer pods.
+
+102
+00:06:15,794 --> 00:06:19,734
+When deploying databases or other stateful applications in
+
+103
+00:06:19,772 --> 00:06:23,894
+kubernetes, you need to take care of persisting the data.
+
+104
+00:06:24,012 --> 00:06:27,250
+For that we will learn about volumes, what different types
+
+105
+00:06:27,330 --> 00:06:30,986
+of volumes are available for different use cases, and how
+
+106
+00:06:31,008 --> 00:06:34,618
+to configure each one of them. We will also see how to
+
+107
+00:06:34,624 --> 00:06:38,810
+create external configuration for our applications with
+
+108
+00:06:38,960 --> 00:06:42,954
+config, map and secret components. Now when you have hundreds
+
+109
+00:06:43,002 --> 00:06:46,606
+or thousands of pods running in your cluster, you want to
+
+110
+00:06:46,628 --> 00:06:50,222
+make sure each pod has enough resources to
+
+111
+00:06:50,276 --> 00:06:53,578
+run and also that one pod doesn't take up all
+
+112
+00:06:53,604 --> 00:06:57,186
+the resources on the server. For that we will learn how
+
+113
+00:06:57,208 --> 00:07:00,910
+to configure resource requests and limits in pods.
+
+114
+00:07:00,990 --> 00:07:04,702
+Next we will learn about concepts of taints and tolerations
+
+115
+00:07:04,846 --> 00:07:08,502
+as well as node selectors, node affinity and
+
+116
+00:07:08,556 --> 00:07:12,422
+interpod affinity in kubernetes and what role they
+
+117
+00:07:12,476 --> 00:07:15,538
+play in scheduling pods in the cluster.
+
+118
+00:07:15,634 --> 00:07:19,062
+You will also learn how to configure health status
+
+119
+00:07:19,126 --> 00:07:22,778
+checks for containers inside the pods using
+
+120
+00:07:22,864 --> 00:07:26,346
+liveness and readiness probes. When deploying new application
+
+121
+00:07:26,448 --> 00:07:29,834
+releases in a cluster, it's important to understand how
+
+122
+00:07:29,872 --> 00:07:33,466
+the pods get upgraded to the new application version.
+
+123
+00:07:33,578 --> 00:07:37,466
+So for that we will learn about deployment strategies in kubernetes
+
+124
+00:07:37,658 --> 00:07:41,342
+such as rolling updates and how all this
+
+125
+00:07:41,396 --> 00:07:44,430
+works. One of the important tasks of the Kubernetes
+
+126
+00:07:44,510 --> 00:07:48,062
+administrator is to prepare for any disaster
+
+127
+00:07:48,126 --> 00:07:52,206
+scenarios and make it possible to easily recover cluster
+
+128
+00:07:52,318 --> 00:07:55,902
+in such cases. For that we will learn how to backup
+
+129
+00:07:55,966 --> 00:07:59,526
+and restore eTCD data and also learn the
+
+130
+00:07:59,548 --> 00:08:03,366
+theoretic concepts behind in many cases you may need
+
+131
+00:08:03,388 --> 00:08:06,706
+to automate your tasks with Kubernetes and for that it's
+
+132
+00:08:06,738 --> 00:08:10,102
+important to learn how Kubernetes rest API
+
+133
+00:08:10,166 --> 00:08:13,926
+works and how to use it to get information from the cluster
+
+134
+00:08:14,038 --> 00:08:17,414
+as well as make changes to it. Another very common task
+
+135
+00:08:17,462 --> 00:08:21,402
+for a Kubernetes administrator is making sure the cluster
+
+136
+00:08:21,466 --> 00:08:25,754
+is always up to date using the latest Kubernetes version
+
+137
+00:08:25,882 --> 00:08:29,354
+so you will learn step by step how to upgrade
+
+138
+00:08:29,402 --> 00:08:32,542
+Kubernetes cluster on control plane nodes as well as
+
+139
+00:08:32,596 --> 00:08:36,082
+worker nodes. As a cluster admin, you will often
+
+140
+00:08:36,136 --> 00:08:39,954
+have to manage multiple Kubernetes clusters, and for
+
+141
+00:08:39,992 --> 00:08:43,634
+that it's important to know the concept of contexts and
+
+142
+00:08:43,672 --> 00:08:47,462
+how to use contexts to switch between clusters when
+
+143
+00:08:47,516 --> 00:08:50,802
+administering them. As part of the Kubernetes
+
+144
+00:08:50,866 --> 00:08:54,690
+administrator job, you will also learn how to check expiration
+
+145
+00:08:54,770 --> 00:08:58,926
+of Kubernetes certificates and how to renew them. When configuring
+
+146
+00:08:58,978 --> 00:09:02,122
+Kubernetes clusters, you will have to also take care
+
+147
+00:09:02,176 --> 00:09:05,882
+of securing your cluster in different ways. One of the ways
+
+148
+00:09:05,936 --> 00:09:10,214
+of securing the cluster is by restricting the communication between
+
+149
+00:09:10,352 --> 00:09:14,042
+the applications within the cluster to minimize
+
+150
+00:09:14,106 --> 00:09:17,886
+the attack surface. And for that we will learn about the
+
+151
+00:09:17,908 --> 00:09:21,674
+network policies and how to configure them in Kubernetes.
+
+152
+00:09:21,802 --> 00:09:25,474
+And finally, if you want to take the CKA exam,
+
+153
+00:09:25,592 --> 00:09:29,342
+I prepared some useful tips that will help you totally
+
+154
+00:09:29,406 --> 00:09:32,434
+ace the exam. Now, equipped with all this
+
+155
+00:09:32,472 --> 00:09:36,850
+knowledge, you'll be prepared to pass the Kubernetes administrator
+
+156
+00:09:36,930 --> 00:09:40,550
+exam, but more importantly, be able to actually
+
+157
+00:09:40,620 --> 00:09:44,402
+set up and administer Kubernetes clusters in your projects.
+
+158
+00:09:44,546 --> 00:09:47,998
+The course is accompanied with a git repository including
+
+159
+00:09:48,034 --> 00:09:51,962
+all the relevant links, commands and examples I'm using
+
+160
+00:09:52,016 --> 00:09:55,066
+in the demos so you can easily work along.
+
+161
+00:09:55,248 --> 00:09:58,854
+I'm super excited to teach you all this, so let's
+
+162
+00:09:58,902 --> 00:10:02,490
+get started right into the definition. What is Kubernetes?
+
+163
+00:10:02,650 --> 00:10:06,058
+So Kubernetes is an open source container orchestration
+
+164
+00:10:06,154 --> 00:10:10,266
+framework which was originally developed by Google. So on the foundation
+
+165
+00:10:10,378 --> 00:10:13,826
+it manages containers, be docker containers, or from
+
+166
+00:10:13,848 --> 00:10:17,678
+some other technology, which basically means that Kubernetes
+
+167
+00:10:17,774 --> 00:10:21,010
+helps you manage applications that are made up
+
+168
+00:10:21,080 --> 00:10:24,906
+of hundreds or maybe thousands of containers,
+
+169
+00:10:25,038 --> 00:10:28,354
+and it helps you manage them in different environments
+
+170
+00:10:28,482 --> 00:10:31,750
+like physical machines, virtual machines or cloud
+
+171
+00:10:31,820 --> 00:10:35,430
+environments, or even hybrid deployment environments.
+
+172
+00:10:38,430 --> 00:10:41,994
+So what problems does Kubernetes solve and what are
+
+173
+00:10:42,032 --> 00:10:45,578
+the tasks of a container orchestration tool actually?
+
+174
+00:10:45,744 --> 00:10:49,594
+So to go through this chronologically, the rise of
+
+175
+00:10:49,632 --> 00:10:53,786
+microservices caused increased usage of container technologies
+
+176
+00:10:53,898 --> 00:10:58,510
+because the containers actually offered the perfect host for small
+
+177
+00:10:58,660 --> 00:11:02,110
+independent applications like microservices.
+
+178
+00:11:02,630 --> 00:11:06,098
+And the rise of containers and the microservice technology
+
+179
+00:11:06,264 --> 00:11:09,474
+actually resulted in applications. They're now
+
+180
+00:11:09,512 --> 00:11:12,994
+comprised of hundreds, or sometimes maybe even thousands of
+
+181
+00:11:13,032 --> 00:11:17,410
+containers. Managing those loads of containers across multiple
+
+182
+00:11:17,490 --> 00:11:21,446
+environments using scripts and self made tools can
+
+183
+00:11:21,468 --> 00:11:25,266
+be really complex and sometimes even impossible.
+
+184
+00:11:25,378 --> 00:11:29,002
+So that specific scenario actually caused the need
+
+185
+00:11:29,056 --> 00:11:32,970
+for having container orchestration technologies.
+
+186
+00:11:35,790 --> 00:11:39,482
+So what those orchestration tools like Kubernetes do
+
+187
+00:11:39,536 --> 00:11:43,822
+is actually guarantee following features. One is
+
+188
+00:11:43,876 --> 00:11:48,026
+high availability in simple words, high availability
+
+189
+00:11:48,138 --> 00:11:52,030
+means that the application has no downtime, so it's always
+
+190
+00:11:52,180 --> 00:11:56,686
+accessible by the users. A second one is scalability,
+
+191
+00:11:56,878 --> 00:12:00,626
+which means you can scale your applications fast when
+
+192
+00:12:00,648 --> 00:12:04,946
+you have more load on it and more users are trying to access it.
+
+193
+00:12:05,048 --> 00:12:08,482
+And the same way you can easily scale it down when the load
+
+194
+00:12:08,546 --> 00:12:12,130
+goes down. So it makes your application more flexible
+
+195
+00:12:12,210 --> 00:12:16,114
+to adjust to the increasing or decreasing load.
+
+196
+00:12:16,242 --> 00:12:19,814
+And the third one is disaster recovery, which basically means
+
+197
+00:12:19,852 --> 00:12:23,050
+that if an infrastructure has some problems like data
+
+198
+00:12:23,120 --> 00:12:27,082
+is lost, or the servers explode or something bad happens with the server center,
+
+199
+00:12:27,216 --> 00:12:30,454
+the infrastructure has to have some kind of mechanism to backup
+
+200
+00:12:30,502 --> 00:12:33,822
+the data and to restore it to the latest state so that
+
+201
+00:12:33,876 --> 00:12:37,402
+application doesn't actually lose any data and the containerized
+
+202
+00:12:37,466 --> 00:12:40,734
+application can run from the latest state after
+
+203
+00:12:40,772 --> 00:12:44,562
+the recovery. And all of these are functionalities that
+
+204
+00:12:44,696 --> 00:12:48,500
+container orchestration technologies like Kubernetes offer
+
+205
+00:12:52,220 --> 00:12:55,844
+that we as Kubernetes administrators or users
+
+206
+00:12:55,892 --> 00:12:59,436
+will be working with most of the time to make it easier to
+
+207
+00:12:59,458 --> 00:13:03,596
+understand all these components. I'm going to build a simple use case of
+
+208
+00:13:03,618 --> 00:13:07,048
+a web application with a simple database, and I'm
+
+209
+00:13:07,064 --> 00:13:11,052
+going to show you step by step how each component in Kubernetes
+
+210
+00:13:11,196 --> 00:13:14,816
+helps you deploy such an application setup and what is the
+
+211
+00:13:14,838 --> 00:13:17,120
+role of each of these components?
+
+212
+00:13:19,700 --> 00:13:23,424
+So let's start with the basic setup of a worker node,
+
+213
+00:13:23,552 --> 00:13:27,364
+or in Kubernetes terms a node which is a
+
+214
+00:13:27,402 --> 00:13:31,312
+simple server, a physical or virtual machine. And the basic
+
+215
+00:13:31,376 --> 00:13:35,544
+component, or the smallest unit of kubernetes is a
+
+216
+00:13:35,582 --> 00:13:39,400
+pod. So what pod is, is basically an abstraction over
+
+217
+00:13:39,470 --> 00:13:43,592
+a container. So if you're familiar with docker containers or
+
+218
+00:13:43,646 --> 00:13:46,860
+container images. So basically what pod does is
+
+219
+00:13:46,930 --> 00:13:50,236
+it creates this running environment or a
+
+220
+00:13:50,258 --> 00:13:53,692
+layer on top of the container. And the reason is because
+
+221
+00:13:53,746 --> 00:13:57,144
+kubernetes wants to abstract away the container
+
+222
+00:13:57,192 --> 00:14:00,480
+runtime or container technologies so that
+
+223
+00:14:00,550 --> 00:14:03,968
+you can replace them if you want to. And also because you
+
+224
+00:14:03,974 --> 00:14:07,244
+don't have to directly work with Docker
+
+225
+00:14:07,292 --> 00:14:10,656
+or whatever container technology you use in
+
+226
+00:14:10,678 --> 00:14:14,180
+a Kubernetes. So you only interact with a Kubernetes layer. So we have
+
+227
+00:14:14,250 --> 00:14:18,084
+an application pod which is our own application, and that
+
+228
+00:14:18,122 --> 00:14:22,032
+will maybe use a database pod with its own container.
+
+229
+00:14:22,096 --> 00:14:25,296
+And this is also an important concept here. Pod is
+
+230
+00:14:25,338 --> 00:14:29,156
+usually meant to run one application container
+
+231
+00:14:29,268 --> 00:14:33,156
+inside of it. You can run multiple containers inside one pod,
+
+232
+00:14:33,268 --> 00:14:37,204
+but usually it's only the case if you have one main application container
+
+233
+00:14:37,252 --> 00:14:41,052
+and a helper container or some side service
+
+234
+00:14:41,186 --> 00:14:45,036
+that has to run inside of that pod. And as you
+
+235
+00:14:45,058 --> 00:14:48,504
+see, this is nothing special, you just have one server and two containers
+
+236
+00:14:48,552 --> 00:14:52,496
+running on it with an abstraction layer on top of it. So now let's see
+
+237
+00:14:52,518 --> 00:14:56,252
+how they communicate with each other in Kubernetes world. So kubernetes
+
+238
+00:14:56,316 --> 00:15:00,812
+offers out of the box a virtual network, which means that each pod
+
+239
+00:15:00,956 --> 00:15:04,884
+gets its own IP address, not the container, the pod gets
+
+240
+00:15:04,922 --> 00:15:08,576
+the IP address and each pod can communicate
+
+241
+00:15:08,608 --> 00:15:12,308
+with each other using that IP address, which is an internal IP address.
+
+242
+00:15:12,394 --> 00:15:15,800
+Obviously it's not the public one. So my
+
+243
+00:15:15,870 --> 00:15:20,376
+application container can communicate with database using the IP address.
+
+244
+00:15:20,558 --> 00:15:24,296
+However, pod components in kubernetes also an
+
+245
+00:15:24,318 --> 00:15:28,680
+important concept, are ephemeral, which means that they can die
+
+246
+00:15:28,840 --> 00:15:32,476
+very easily. And when that happens, for example, if I
+
+247
+00:15:32,498 --> 00:15:36,776
+lose a database container because the container crashed,
+
+248
+00:15:36,808 --> 00:15:40,072
+because the application crashed inside, or because
+
+249
+00:15:40,226 --> 00:15:44,396
+the node, the server that I'm running them on ran
+
+250
+00:15:44,428 --> 00:15:47,984
+out resources, the pod will die and a new
+
+251
+00:15:48,022 --> 00:15:51,456
+one will get created in its place. And when that happens,
+
+252
+00:15:51,558 --> 00:15:55,060
+it will get assigned a new IP address, which obviously
+
+253
+00:15:55,130 --> 00:15:58,644
+is inconvenient if you are communicating with the database using
+
+254
+00:15:58,682 --> 00:16:03,120
+the IP address, because now you have to adjust it every time pod restarts.
+
+255
+00:16:03,200 --> 00:16:07,592
+And because of that, another component of kubernetes called service
+
+256
+00:16:07,726 --> 00:16:08,650
+is used.
+
+257
+00:16:11,260 --> 00:16:14,984
+So service is basically a static IP address or
+
+258
+00:16:15,022 --> 00:16:18,732
+permanent IP address that can be attached, so to say,
+
+259
+00:16:18,786 --> 00:16:21,964
+to each pod. So my app will have its own
+
+260
+00:16:22,002 --> 00:16:25,148
+service and database pod will have its own service.
+
+261
+00:16:25,314 --> 00:16:28,664
+And the good thing here is that the lifecycles
+
+262
+00:16:28,712 --> 00:16:31,692
+of service and the pod are not connected.
+
+263
+00:16:31,756 --> 00:16:35,584
+So even if the pod dies, the service and its
+
+264
+00:16:35,622 --> 00:16:39,424
+IP address will stay. So you don't have to
+
+265
+00:16:39,542 --> 00:16:43,232
+change that endpoint anymore. So now
+
+266
+00:16:43,286 --> 00:16:46,592
+obviously you would want your application to be accessible
+
+267
+00:16:46,656 --> 00:16:50,624
+through a browser, right? And for this you would have to create an external
+
+268
+00:16:50,672 --> 00:16:54,616
+service. So external service is a service that opens the
+
+269
+00:16:54,638 --> 00:16:58,616
+communication from external sources, but obviously you
+
+270
+00:16:58,638 --> 00:17:02,788
+wouldn't want your database to be open to the public requests
+
+271
+00:17:02,884 --> 00:17:06,484
+and for that you would create something called an internal service.
+
+272
+00:17:06,622 --> 00:17:10,408
+So this is a type of a service that you specify
+
+273
+00:17:10,504 --> 00:17:14,856
+when creating one. However, if you notice, the URL
+
+274
+00:17:14,968 --> 00:17:18,204
+of the external service is not
+
+275
+00:17:18,242 --> 00:17:22,496
+very practical. So basically what you have is an
+
+276
+00:17:22,518 --> 00:17:26,080
+HTP protocol with a node IP address,
+
+277
+00:17:26,230 --> 00:17:29,808
+so of the node, not the service, and the port number
+
+278
+00:17:29,894 --> 00:17:33,648
+of the service, which is good for test purposes if
+
+279
+00:17:33,654 --> 00:17:37,028
+you want to test something very fast, but not for the end product.
+
+280
+00:17:37,114 --> 00:17:40,276
+So usually you would want your URL to look like this if
+
+281
+00:17:40,298 --> 00:17:44,592
+you want to talk to your application with a secure protocol
+
+282
+00:17:44,736 --> 00:17:48,440
+and a domain name. And for that there is another
+
+283
+00:17:48,510 --> 00:17:51,864
+component of kubernetes called ingress. So instead
+
+284
+00:17:51,902 --> 00:17:55,924
+of service the request goes first to ingress and it does the forwarding,
+
+285
+00:17:55,972 --> 00:17:59,896
+then to the service. So now we saw some of the very basic
+
+286
+00:17:59,928 --> 00:18:03,660
+components of kubernetes. And as you see, this is a very simple
+
+287
+00:18:03,730 --> 00:18:07,560
+setup. We just have a one server and a couple of containers
+
+288
+00:18:07,640 --> 00:18:11,952
+running and some services, nothing really special where
+
+289
+00:18:12,006 --> 00:18:16,096
+Kubernetes advantages or the actual cool features really
+
+290
+00:18:16,198 --> 00:18:19,884
+come forward, but we're going to get there step by step. So let's
+
+291
+00:18:19,932 --> 00:18:20,530
+continue.
+
+292
+00:18:23,780 --> 00:18:27,232
+So as we said, pods communicate with each other using
+
+293
+00:18:27,286 --> 00:18:30,972
+a service. So my application will have a database
+
+294
+00:18:31,116 --> 00:18:34,784
+endpoint, let's say called MongoDB service that
+
+295
+00:18:34,822 --> 00:18:38,404
+it uses to communicate with the database. But where do
+
+296
+00:18:38,442 --> 00:18:42,128
+you configure usually this database URL or endpoint?
+
+297
+00:18:42,224 --> 00:18:46,256
+Usually you would do it in application properties file
+
+298
+00:18:46,368 --> 00:18:49,956
+or as some kind of external environmental variable,
+
+299
+00:18:50,068 --> 00:18:53,656
+but usually it's inside of the built image of the
+
+300
+00:18:53,678 --> 00:18:57,224
+application. So for example, if the endpoint of
+
+301
+00:18:57,262 --> 00:19:00,472
+the service or service name in this case changed to
+
+302
+00:19:00,526 --> 00:19:04,430
+MongoDB, you would have to adjust that URL in the application.
+
+303
+00:19:04,800 --> 00:19:08,124
+So usually you'd have to rebuild the application with
+
+304
+00:19:08,162 --> 00:19:11,884
+a new version and you have to push it to the repository and
+
+305
+00:19:11,922 --> 00:19:15,632
+now you'll have to pull that new image in your
+
+306
+00:19:15,686 --> 00:19:19,596
+pod and restart the whole thing. So a little bit tedious
+
+307
+00:19:19,708 --> 00:19:23,456
+for a small change like database URL. So for
+
+308
+00:19:23,478 --> 00:19:26,868
+that purpose, Kubernetes has a component called
+
+309
+00:19:26,954 --> 00:19:30,752
+config map. So what it does is it's basically your external
+
+310
+00:19:30,816 --> 00:19:34,192
+configuration to your application. So config map
+
+311
+00:19:34,256 --> 00:19:37,428
+would usually contain configuration data like
+
+312
+00:19:37,514 --> 00:19:41,096
+URLs of a database or some other services that you use.
+
+313
+00:19:41,198 --> 00:19:44,884
+And in Kubernetes you just connect it to the pod
+
+314
+00:19:45,012 --> 00:19:48,484
+so that pod actually gets the data that config map
+
+315
+00:19:48,532 --> 00:19:51,576
+contains. And now if you change the name of the
+
+316
+00:19:51,598 --> 00:19:54,844
+service, the endpoint of the service, you just adjust the
+
+317
+00:19:54,882 --> 00:19:58,296
+config map and that's it. You don't have to build a new image, you don't
+
+318
+00:19:58,328 --> 00:20:01,580
+have to go through this whole cycle. Now part
+
+319
+00:20:01,650 --> 00:20:05,404
+of the external configuration can also be database
+
+320
+00:20:05,452 --> 00:20:09,376
+username and password, right, which may also change
+
+321
+00:20:09,478 --> 00:20:12,736
+in the application deployment process. But putting a
+
+322
+00:20:12,758 --> 00:20:16,416
+password or other credentials in a config map in a plain
+
+323
+00:20:16,448 --> 00:20:20,224
+text format would be insecure, even though it's an external
+
+324
+00:20:20,272 --> 00:20:23,972
+configuration. So for this purpose, Kubernetes has
+
+325
+00:20:24,026 --> 00:20:26,496
+another component called secret.
+
+326
+00:20:26,688 --> 00:20:30,664
+So secret is just like config map, but the difference is that
+
+327
+00:20:30,702 --> 00:20:34,116
+it's used to store secret data credentials,
+
+328
+00:20:34,148 --> 00:20:38,136
+for example, and it's stored not in a plain text format of
+
+329
+00:20:38,158 --> 00:20:41,636
+course, but in base 64 encoded format.
+
+330
+00:20:41,748 --> 00:20:45,384
+But of course base 64 encoding a secret doesn't make it automatically
+
+331
+00:20:45,432 --> 00:20:48,648
+secure. The secret components are meant
+
+332
+00:20:48,664 --> 00:20:52,396
+to be encrypted using third party tools in
+
+333
+00:20:52,418 --> 00:20:56,050
+Kubernetes, because Kubernetes doesn't encrypt them out of the box.
+
+334
+00:20:56,420 --> 00:20:59,808
+And there are tools for that from cloud providers or
+
+335
+00:20:59,894 --> 00:21:03,660
+separate third party tools that you can deploy on Kubernetes
+
+336
+00:21:03,740 --> 00:21:08,100
+to encrypt your secrets and that will make secrets secure.
+
+337
+00:21:08,440 --> 00:21:12,116
+So secret would contain things like credentials and
+
+338
+00:21:12,138 --> 00:21:15,632
+of course I'm in database user. You could also put in config map,
+
+339
+00:21:15,696 --> 00:21:19,232
+but what's important is the passwords, certificates,
+
+340
+00:21:19,376 --> 00:21:22,760
+things that you don't want other people to have access to
+
+341
+00:21:22,830 --> 00:21:26,712
+would go in the secret. And just like config map, you just connect
+
+342
+00:21:26,766 --> 00:21:30,344
+it to your pod so that pod can actually see those data
+
+343
+00:21:30,462 --> 00:21:33,960
+and read from the secret. You can actually use the data
+
+344
+00:21:34,030 --> 00:21:37,848
+from configmap or secret inside of your application pod
+
+345
+00:21:37,944 --> 00:21:41,836
+using for example, environmental variables or even as a
+
+346
+00:21:41,858 --> 00:21:45,648
+properties file. So now let's see another very important
+
+347
+00:21:45,814 --> 00:21:49,424
+concept generally, which is data storage and
+
+348
+00:21:49,462 --> 00:21:52,956
+how it works in Kubernetes. So we have this database pod
+
+349
+00:21:52,988 --> 00:21:56,900
+that our application uses, and it has some data or it generates some data
+
+350
+00:21:56,970 --> 00:22:00,976
+with this setup that you see now if the database container
+
+351
+00:22:01,008 --> 00:22:04,644
+or the pod gets restarted, the data would
+
+352
+00:22:04,682 --> 00:22:08,532
+be gone. And that's problematic and inconvenient,
+
+353
+00:22:08,596 --> 00:22:11,864
+obviously, because you want your database data or
+
+354
+00:22:11,902 --> 00:22:16,116
+log data to be persisted reliably long term.
+
+355
+00:22:16,308 --> 00:22:19,800
+And the way you can do it in Kubernetes is using another
+
+356
+00:22:19,870 --> 00:22:22,780
+component of Kubernetes called volumes.
+
+357
+00:22:23,120 --> 00:22:26,584
+And how it works is that it basically attaches
+
+358
+00:22:26,712 --> 00:22:30,280
+a physical storage on a hard drive to your pod.
+
+359
+00:22:30,360 --> 00:22:33,916
+And that storage could be either on a local machine, meaning on the
+
+360
+00:22:33,938 --> 00:22:37,536
+same server node where the pod is running, or it could
+
+361
+00:22:37,558 --> 00:22:41,372
+be on a remote storage, meaning outside of the Kubernetes cluster.
+
+362
+00:22:41,436 --> 00:22:45,452
+It could be cloud storage, or it could be your own premise
+
+363
+00:22:45,516 --> 00:22:49,008
+storage, which is not part of the Kubernetes cluster,
+
+364
+00:22:49,104 --> 00:22:52,676
+so you just have an external reference on it. So now when the
+
+365
+00:22:52,698 --> 00:22:56,884
+database pod or container gets restarted, all the data will
+
+366
+00:22:56,922 --> 00:23:00,308
+be there, persisted. It's important to understand the distinction
+
+367
+00:23:00,404 --> 00:23:03,432
+between the Kubernetes cluster and all of its
+
+368
+00:23:03,486 --> 00:23:07,192
+components and the storage, regardless of whether
+
+369
+00:23:07,246 --> 00:23:10,956
+it's a local or remote storage. Think of a storage as
+
+370
+00:23:10,978 --> 00:23:14,552
+an external hard drive plugged in into the Kubernetes
+
+371
+00:23:14,616 --> 00:23:18,200
+cluster. Because the point is, Kubernetes cluster
+
+372
+00:23:18,280 --> 00:23:21,864
+explicitly doesn't manage any data persistence,
+
+373
+00:23:21,992 --> 00:23:25,788
+which means that you as a Kubernetes user or an administrator
+
+374
+00:23:25,884 --> 00:23:29,376
+are responsible for backing up the data, replicating and
+
+375
+00:23:29,398 --> 00:23:33,244
+managing it and making sure that it's kept on a proper hardware,
+
+376
+00:23:33,372 --> 00:23:37,300
+et cetera, because it's not taking care of kubernetes.
+
+377
+00:23:40,680 --> 00:23:44,260
+So now let's see, everything is running perfectly and a user can access
+
+378
+00:23:44,330 --> 00:23:47,936
+our application through a browser. Now with this
+
+379
+00:23:47,978 --> 00:23:51,508
+setup, what happens if my application pod
+
+380
+00:23:51,684 --> 00:23:55,960
+dies, right, crushes or I have to restart the
+
+381
+00:23:56,030 --> 00:24:00,020
+pod because I built a new container image.
+
+382
+00:24:00,180 --> 00:24:03,704
+Basically I would have a downtime where a user
+
+383
+00:24:03,752 --> 00:24:08,156
+can reach my application, which is obviously a very bad thing
+
+384
+00:24:08,338 --> 00:24:11,884
+if it happens in production. And this is exactly the
+
+385
+00:24:11,922 --> 00:24:16,016
+advantage of distributed systems and containers. So instead of
+
+386
+00:24:16,038 --> 00:24:19,932
+relying on just one application pod and one database
+
+387
+00:24:19,996 --> 00:24:23,890
+pod, et cetera, we are replicating everything
+
+388
+00:24:24,500 --> 00:24:27,860
+on multiple servers. So we would have
+
+389
+00:24:27,930 --> 00:24:31,284
+another node where a replica or clone of our
+
+390
+00:24:31,322 --> 00:24:34,820
+application would run, which will also be
+
+391
+00:24:34,890 --> 00:24:39,032
+connected to the service. So remember previously we said the service is like
+
+392
+00:24:39,086 --> 00:24:42,296
+an persistent static IP address with
+
+393
+00:24:42,318 --> 00:24:45,860
+a DNS name, so that you don't have to constantly
+
+394
+00:24:45,940 --> 00:24:49,092
+adjust the endpoint when a pod dies.
+
+395
+00:24:49,236 --> 00:24:53,292
+But service is also a load balancer, which means that the service will
+
+396
+00:24:53,346 --> 00:24:56,604
+actually catch the request and forward it to whichever pod is
+
+397
+00:24:56,642 --> 00:25:00,088
+list busy. So it has both of these functionalities.
+
+398
+00:25:00,264 --> 00:25:04,144
+But in order to create this second replica of the my application
+
+399
+00:25:04,262 --> 00:25:07,936
+pod, you wouldn't create a second pod, but instead
+
+400
+00:25:08,038 --> 00:25:12,112
+you would define a blueprint for a my application pod and
+
+401
+00:25:12,166 --> 00:25:15,536
+specify how many replicas of that pod you would
+
+402
+00:25:15,558 --> 00:25:18,964
+like to run. And that component, or that blueprint is
+
+403
+00:25:19,002 --> 00:25:22,864
+called deployment, which is another component of kubernetes.
+
+404
+00:25:22,992 --> 00:25:26,336
+And in practice you would not be working with pods
+
+405
+00:25:26,368 --> 00:25:30,100
+or you would not be creating pods, you would be creating deployments
+
+406
+00:25:30,260 --> 00:25:33,976
+because there you can specify how many replicas and you can
+
+407
+00:25:33,998 --> 00:25:38,100
+also scale up or scale down number of replicas
+
+408
+00:25:38,180 --> 00:25:41,804
+of pods that you need. So with pod, we said that pod is a
+
+409
+00:25:41,842 --> 00:25:45,240
+layer of abstraction on top of containers,
+
+410
+00:25:45,400 --> 00:25:48,556
+and deployment is another abstraction on top of
+
+411
+00:25:48,578 --> 00:25:52,232
+pods, which makes it more convenient to interact with the pods,
+
+412
+00:25:52,296 --> 00:25:55,676
+replicate them and do some other configuration.
+
+413
+00:25:55,868 --> 00:25:59,532
+So in practice you would mostly work with deployments
+
+414
+00:25:59,596 --> 00:26:03,196
+and not with pods. So now if one of the replicas
+
+415
+00:26:03,228 --> 00:26:07,464
+of your application pod would die, the service will forward the request
+
+416
+00:26:07,612 --> 00:26:10,916
+to another one. So your application would still be
+
+417
+00:26:10,938 --> 00:26:14,912
+accessible for the user. So now you're probably wondering, what about the database
+
+418
+00:26:14,976 --> 00:26:18,552
+pod? Because if the database pod died, your application
+
+419
+00:26:18,686 --> 00:26:22,660
+also wouldn't be accessible. So we need a database
+
+420
+00:26:22,740 --> 00:26:26,820
+replica as well. However, we can't replicate database
+
+421
+00:26:26,900 --> 00:26:30,420
+using a deployment. And the reason for that is because
+
+422
+00:26:30,590 --> 00:26:34,028
+database has a state, which is its data,
+
+423
+00:26:34,194 --> 00:26:37,516
+meaning that if we have clones or replicas of
+
+424
+00:26:37,538 --> 00:26:40,748
+the database, they would all need to access
+
+425
+00:26:40,834 --> 00:26:44,544
+the same shared data storage, and there
+
+426
+00:26:44,582 --> 00:26:48,044
+you would need some kind of mechanism that manages
+
+427
+00:26:48,172 --> 00:26:51,872
+which pods are currently writing to that storage or
+
+428
+00:26:51,926 --> 00:26:55,808
+which pods are reading from that storage in order to avoid
+
+429
+00:26:55,904 --> 00:27:00,256
+data inconsistencies. And that mechanism,
+
+430
+00:27:00,448 --> 00:27:03,700
+in addition to replicating feature is
+
+431
+00:27:03,770 --> 00:27:07,472
+offered by another Kubernetes component called stateful
+
+432
+00:27:07,536 --> 00:27:11,400
+set. So this component is meant specifically for
+
+433
+00:27:11,470 --> 00:27:15,380
+applications like databases. So MySQL,
+
+434
+00:27:15,460 --> 00:27:19,540
+MongoDB, Elasticsearch or any other stateful
+
+435
+00:27:19,620 --> 00:27:23,468
+applications or databases should be created using
+
+436
+00:27:23,554 --> 00:27:26,716
+stateful sets and not deployments. It's a
+
+437
+00:27:26,738 --> 00:27:29,724
+very important distinction. And stateful set,
+
+438
+00:27:29,762 --> 00:27:33,564
+just like deployment, would take care of replicating
+
+439
+00:27:33,612 --> 00:27:37,376
+the pods and scaling them up or scaling them down,
+
+440
+00:27:37,478 --> 00:27:41,404
+but making sure that database reads and writes are synchronized
+
+441
+00:27:41,532 --> 00:27:45,304
+so that no database inconsistencies are offered.
+
+442
+00:27:45,452 --> 00:27:49,312
+However, I must mention here that deploying database
+
+443
+00:27:49,376 --> 00:27:53,552
+applications using stateful set in Kubernetes cluster
+
+444
+00:27:53,696 --> 00:27:57,600
+can be somewhat tedious. So it's definitely more
+
+445
+00:27:57,690 --> 00:28:01,496
+difficult than working with deployments where you don't have all
+
+446
+00:28:01,518 --> 00:28:04,836
+these challenges. That's why it's also a common practice
+
+447
+00:28:04,948 --> 00:28:08,248
+to host database applications outside
+
+448
+00:28:08,334 --> 00:28:12,172
+of the Kubernetes cluster and just have the deployments or
+
+449
+00:28:12,226 --> 00:28:15,624
+stateless applications that replicate and scale
+
+450
+00:28:15,672 --> 00:28:19,864
+with no problem inside of the Kubernetes cluster and communicate
+
+451
+00:28:19,912 --> 00:28:23,596
+with the external database. So now that we have two replicas of
+
+452
+00:28:23,618 --> 00:28:27,196
+my application pod and two replicas of the database, and they're
+
+453
+00:28:27,228 --> 00:28:30,668
+both load balanced, our setup is more robust,
+
+454
+00:28:30,764 --> 00:28:34,860
+which means that now even if node one, the whole node server
+
+455
+00:28:34,940 --> 00:28:38,324
+was actually rebooted or crashed and
+
+456
+00:28:38,362 --> 00:28:42,308
+nothing could run on it, we would still have a second node with
+
+457
+00:28:42,394 --> 00:28:45,412
+application and database pods running on it,
+
+458
+00:28:45,466 --> 00:28:49,352
+and the application would still be accessible by the user until
+
+459
+00:28:49,486 --> 00:28:52,776
+these two replicas get recreated. So you can
+
+460
+00:28:52,798 --> 00:28:54,200
+avoid downtime.
+
+461
+00:28:56,940 --> 00:29:01,084
+Now let's say we want to collect logs in our cluster from each
+
+462
+00:29:01,202 --> 00:29:04,284
+pod. So we need an application that
+
+463
+00:29:04,322 --> 00:29:08,124
+will run on each node and collect all
+
+464
+00:29:08,162 --> 00:29:11,500
+the logs that pods are generating there.
+
+465
+00:29:11,650 --> 00:29:15,036
+Or think about kubeproxy, which as you learned,
+
+466
+00:29:15,148 --> 00:29:18,796
+needs to run on each and every cluster node.
+
+467
+00:29:18,908 --> 00:29:22,412
+So let's say for these two applications,
+
+468
+00:29:22,556 --> 00:29:26,944
+a log collector and kubeproxy, we create a deployment
+
+469
+00:29:27,072 --> 00:29:30,420
+and we set the replica count to the number
+
+470
+00:29:30,490 --> 00:29:33,716
+of nodes. Now what happens if after a
+
+471
+00:29:33,738 --> 00:29:37,280
+couple of days we add two new nodes to the cluster?
+
+472
+00:29:37,440 --> 00:29:40,916
+Now we need to adjust the replica number so that
+
+473
+00:29:41,018 --> 00:29:44,520
+qproxy or a log collector pod will also
+
+474
+00:29:44,590 --> 00:29:47,956
+run on those two new nodes. Now the next day let's
+
+475
+00:29:47,988 --> 00:29:51,800
+say we delete one of the nodes. Now we need to remove that one
+
+476
+00:29:51,870 --> 00:29:55,556
+replica again, because otherwise we're going to have two cube
+
+477
+00:29:55,588 --> 00:29:59,036
+proxies or log collector pods running on one of the
+
+478
+00:29:59,058 --> 00:30:02,396
+nodes. Also, we can't make sure that each node will
+
+479
+00:30:02,418 --> 00:30:06,256
+get just one pod of the application and
+
+480
+00:30:06,278 --> 00:30:09,612
+the pods will be equally distributed among the nodes.
+
+481
+00:30:09,756 --> 00:30:13,536
+So how can we solve all these issues for such
+
+482
+00:30:13,638 --> 00:30:16,820
+applications? Well, these are all the things that another
+
+483
+00:30:16,890 --> 00:30:20,676
+Kubernetes component automatically manages for you,
+
+484
+00:30:20,778 --> 00:30:23,220
+and that's a demon set component.
+
+485
+00:30:23,640 --> 00:30:27,316
+Demon set is basically a Kubernetes component, just like a
+
+486
+00:30:27,338 --> 00:30:30,744
+deployment or stateful set with the difference that
+
+487
+00:30:30,782 --> 00:30:34,504
+it automatically calculates how many
+
+488
+00:30:34,622 --> 00:30:38,584
+replicas of the application it should deploy, depending on
+
+489
+00:30:38,622 --> 00:30:42,240
+how many nodes you have in the cluster. And it also deploys
+
+490
+00:30:42,340 --> 00:30:46,024
+just one pod or one replica on each node
+
+491
+00:30:46,072 --> 00:30:49,544
+in the cluster. So when you add a new node to the cluster,
+
+492
+00:30:49,592 --> 00:30:52,668
+it will automatically start a pod replica there.
+
+493
+00:30:52,754 --> 00:30:56,124
+And when you remove a node, it will basically just remove that pod
+
+494
+00:30:56,172 --> 00:30:59,488
+replica. So you don't have to define replica count
+
+495
+00:30:59,574 --> 00:31:03,724
+with demon set component because it will automatically scale
+
+496
+00:31:03,772 --> 00:31:07,104
+down or scale up the replica count depending
+
+497
+00:31:07,152 --> 00:31:10,852
+on the number of nodes, and also guarantee only
+
+498
+00:31:10,906 --> 00:31:13,140
+one replica per pod.
+
+499
+00:31:15,960 --> 00:31:19,524
+So to summarize, we have looked at the
+
+500
+00:31:19,562 --> 00:31:23,176
+most used Kubernetes components. We started with the pods and the
+
+501
+00:31:23,198 --> 00:31:26,536
+services in order to communicate between the pods and the
+
+502
+00:31:26,558 --> 00:31:30,304
+ingress component, which is used to route traffic
+
+503
+00:31:30,372 --> 00:31:33,800
+into the cluster. We've also looked at external configuration
+
+504
+00:31:33,880 --> 00:31:37,416
+using config maps and secrets, and data persistence
+
+505
+00:31:37,528 --> 00:31:41,052
+using volumes. And finally, we've looked
+
+506
+00:31:41,106 --> 00:31:44,924
+at pod blueprints with replicating mechanisms
+
+507
+00:31:45,052 --> 00:31:48,524
+like deployments and stateful sets, where stateful
+
+508
+00:31:48,572 --> 00:31:52,032
+set is used specifically for stateful applications like
+
+509
+00:31:52,086 --> 00:31:55,720
+databases. Just using these core components,
+
+510
+00:31:55,820 --> 00:32:27,588
+you can actually build pretty powerful Kubernetes clusters worker
+
+511
+00:32:27,604 --> 00:32:30,744
+node, and we're going to see what is the difference between those and
+
+512
+00:32:30,782 --> 00:32:34,864
+which role each one of them has inside of the cluster.
+
+513
+00:32:35,012 --> 00:32:38,680
+And we're going to go through the basic concepts of how kubernetes
+
+514
+00:32:38,760 --> 00:32:42,764
+does what it does, and how the cluster is self managed and
+
+515
+00:32:42,802 --> 00:32:46,448
+self healing and automated, and how you as an
+
+516
+00:32:46,534 --> 00:32:50,608
+operator of the Kubernetes cluster should end up having much less
+
+517
+00:32:50,694 --> 00:32:51,840
+manual effort.
+
+518
+00:32:54,420 --> 00:32:57,824
+And we're going to start with this basic setup of one
+
+519
+00:32:57,862 --> 00:33:01,428
+node with two application pods running on it.
+
+520
+00:33:01,514 --> 00:33:04,576
+So one of the main components of a Kubernetes architecture
+
+521
+00:33:04,688 --> 00:33:07,568
+are its worker servers or nodes.
+
+522
+00:33:07,664 --> 00:33:11,464
+And each node will have multiple application pods with
+
+523
+00:33:11,502 --> 00:33:14,552
+containers running on that node. And the way
+
+524
+00:33:14,606 --> 00:33:18,232
+Kubernetes does it is using three processes that
+
+525
+00:33:18,286 --> 00:33:22,612
+must be installed on every node that are used to schedule
+
+526
+00:33:22,676 --> 00:33:26,104
+and manage those pods. So nodes are the cluster servers
+
+527
+00:33:26,152 --> 00:33:29,724
+that actually do the work. That's why sometimes also
+
+528
+00:33:29,762 --> 00:33:33,628
+called worker nodes. So the first process that
+
+529
+00:33:33,714 --> 00:33:36,940
+needs to run on every node is the container runtime.
+
+530
+00:33:37,020 --> 00:33:40,592
+Some of the container runtimes are docker, container D
+
+531
+00:33:40,646 --> 00:33:43,804
+and cryo. The most popular container runtime
+
+532
+00:33:43,852 --> 00:33:47,424
+today, used in most of the Kubernetes clusters and by
+
+533
+00:33:47,462 --> 00:33:50,644
+most major cloud providers, is container D,
+
+534
+00:33:50,762 --> 00:33:54,388
+which is much more lightweight than Docker, for example.
+
+535
+00:33:54,554 --> 00:33:57,968
+However, as you see in my pods, I have docker icons,
+
+536
+00:33:58,064 --> 00:34:01,668
+because you can run docker images on any container runtime.
+
+537
+00:34:01,764 --> 00:34:05,208
+So because application pods have containers running inside
+
+538
+00:34:05,294 --> 00:34:08,680
+a container, runtime needs to be installed on every
+
+539
+00:34:08,750 --> 00:34:12,724
+node. But the process that actually schedules those pods
+
+540
+00:34:12,772 --> 00:34:16,136
+and the containers then underneath is Kubelet,
+
+541
+00:34:16,248 --> 00:34:19,084
+which is a process of Kubernetes itself.
+
+542
+00:34:19,282 --> 00:34:23,404
+Unlike container runtime that has interface with
+
+543
+00:34:23,522 --> 00:34:27,156
+both container runtime and the machine, the node
+
+544
+00:34:27,208 --> 00:34:31,328
+itself. Because at the end of the day, Kubelet is responsible for
+
+545
+00:34:31,414 --> 00:34:34,764
+taking that configuration and actually running a pod,
+
+546
+00:34:34,812 --> 00:34:38,896
+or starting a pod with a container inside, and then assigning
+
+547
+00:34:39,008 --> 00:34:42,564
+resources from that node to that container like
+
+548
+00:34:42,602 --> 00:34:45,860
+cpu, ram and storage resources. So usually
+
+549
+00:34:45,930 --> 00:34:49,652
+Kubernetes cluster is made up of multiple nodes which
+
+550
+00:34:49,706 --> 00:34:53,304
+also must have container runtime and Kubelet services
+
+551
+00:34:53,422 --> 00:34:56,904
+installed. And you can have hundreds of those worker nodes which
+
+552
+00:34:56,942 --> 00:35:00,616
+will run other pods and containers and replicas of the
+
+553
+00:35:00,638 --> 00:35:04,476
+existing pods, like my app and database pods in
+
+554
+00:35:04,498 --> 00:35:08,588
+this example. And the way that communication between them works is
+
+555
+00:35:08,674 --> 00:35:12,888
+using services, which is sort of a load balancer
+
+556
+00:35:12,984 --> 00:35:16,572
+that basically catches the request directed to the pod
+
+557
+00:35:16,636 --> 00:35:20,784
+or the application like database, for example, and then forwards it
+
+558
+00:35:20,822 --> 00:35:24,144
+to the respective pod. And the third process that
+
+559
+00:35:24,182 --> 00:35:27,868
+is responsible for forwarding requests from services
+
+560
+00:35:27,974 --> 00:35:31,300
+to pods is actually Kubeproxy that also
+
+561
+00:35:31,370 --> 00:35:35,264
+must be installed on every node. And Kubeproxy
+
+562
+00:35:35,312 --> 00:35:39,412
+has actually intelligent forwarding logic inside that
+
+563
+00:35:39,466 --> 00:35:42,696
+makes sure that the communication also works in
+
+564
+00:35:42,718 --> 00:35:45,880
+a performant way with low overhead. For example,
+
+565
+00:35:46,030 --> 00:35:49,592
+if an application my app replica is making
+
+566
+00:35:49,646 --> 00:35:53,460
+a request to the database, instead of service just randomly
+
+567
+00:35:53,540 --> 00:35:56,988
+forwarding the request to any replica, it will actually
+
+568
+00:35:57,074 --> 00:36:00,172
+forward it to the replica that is running on the same
+
+569
+00:36:00,226 --> 00:36:03,576
+node as the pod that initiated the request,
+
+570
+00:36:03,688 --> 00:36:07,196
+this way avoiding the network overhead of sending
+
+571
+00:36:07,228 --> 00:36:11,292
+the request to another machine. So to summarize,
+
+572
+00:36:11,436 --> 00:36:16,316
+two Kubernetes processes, Kubelet and kubeproxy
+
+573
+00:36:16,428 --> 00:36:20,532
+must be installed on every Kubernetes worker node along
+
+574
+00:36:20,586 --> 00:36:23,764
+with an independent container runtime in order for
+
+575
+00:36:23,802 --> 00:36:27,668
+Kubernetes cluster to function properly. But now the question is
+
+576
+00:36:27,754 --> 00:36:31,512
+how do you interact with this cluster? Or do you decide on
+
+577
+00:36:31,566 --> 00:36:35,524
+which node a new application pod or database pod
+
+578
+00:36:35,572 --> 00:36:39,092
+should be scheduled? Or if a replica pod
+
+579
+00:36:39,156 --> 00:36:43,144
+dies, what process actually monitors it and then reschedules it
+
+580
+00:36:43,182 --> 00:36:46,472
+or restarts it again? Or when we add another server,
+
+581
+00:36:46,536 --> 00:36:50,364
+how does it join the cluster to become another node and get
+
+582
+00:36:50,402 --> 00:36:54,284
+pods and other components created on it? And the answer is all
+
+583
+00:36:54,322 --> 00:36:58,240
+these managing processes are done by master nodes.
+
+584
+00:37:00,980 --> 00:37:04,816
+So master servers or master nodes have completely different
+
+585
+00:37:04,918 --> 00:37:08,684
+processes running inside, and these are four processes
+
+586
+00:37:08,732 --> 00:37:12,660
+that run on every master node that control the cluster state
+
+587
+00:37:12,810 --> 00:37:16,836
+and the worker nodes as well. So the first service
+
+588
+00:37:16,938 --> 00:37:20,516
+is API server. So when you as a user want
+
+589
+00:37:20,538 --> 00:37:24,724
+to deploy a new application in a Kubernetes cluster,
+
+590
+00:37:24,852 --> 00:37:28,084
+you interact with the API server using some client.
+
+591
+00:37:28,132 --> 00:37:31,396
+It could be a UI like Kubernetes dashboard, could be command
+
+592
+00:37:31,428 --> 00:37:34,568
+line tool like kubelet or a Kubernetes API.
+
+593
+00:37:34,664 --> 00:37:39,368
+So API server is like a cluster gateway
+
+594
+00:37:39,544 --> 00:37:42,652
+which gets the initial requests of any
+
+595
+00:37:42,706 --> 00:37:45,984
+updates into the cluster or even the queries from
+
+596
+00:37:46,022 --> 00:37:49,596
+the cluster. And it also acts as a gatekeeper
+
+597
+00:37:49,708 --> 00:37:53,532
+for authentication to make sure that only authenticated
+
+598
+00:37:53,596 --> 00:37:57,356
+and authorized requests get through to the cluster.
+
+599
+00:37:57,468 --> 00:38:01,124
+That means whenever you want to schedule new pods, deploy new
+
+600
+00:38:01,162 --> 00:38:04,448
+applications, create new service, or any other components,
+
+601
+00:38:04,544 --> 00:38:08,480
+you have to talk to the API server on the master node
+
+602
+00:38:08,560 --> 00:38:12,516
+and the API server, then validate your request.
+
+603
+00:38:12,628 --> 00:38:16,872
+And if everything is fine, then it will forward your request to
+
+604
+00:38:16,926 --> 00:38:20,772
+other processes in order to schedule
+
+605
+00:38:20,836 --> 00:38:24,536
+the pod or create this component that you requested. And also if
+
+606
+00:38:24,558 --> 00:38:27,864
+you want to query the status of your deployment or
+
+607
+00:38:27,902 --> 00:38:31,800
+the cluster health, et cetera, you make a request to the API server
+
+608
+00:38:31,880 --> 00:38:35,404
+and it gives you the response, which is good for security because
+
+609
+00:38:35,442 --> 00:38:38,892
+you just have one entry point into the cluster. Another master
+
+610
+00:38:38,956 --> 00:38:42,944
+process is a scheduler. So as I mentioned, if you send
+
+611
+00:38:42,982 --> 00:38:46,112
+an API server a request to schedule a new
+
+612
+00:38:46,166 --> 00:38:50,348
+pod, API server after it validates your request
+
+613
+00:38:50,444 --> 00:38:54,612
+will actually hand it over to the scheduler in order to start
+
+614
+00:38:54,666 --> 00:38:58,276
+that application pod on one of the worker nodes. And of
+
+615
+00:38:58,298 --> 00:39:01,412
+course, instead of just randomly assigning it to any node,
+
+616
+00:39:01,556 --> 00:39:05,192
+schedule has this whole intelligent way
+
+617
+00:39:05,246 --> 00:39:09,272
+of deciding on which specific worker node the
+
+618
+00:39:09,326 --> 00:39:13,336
+next pod will be scheduled or next component will
+
+619
+00:39:13,358 --> 00:39:17,532
+be scheduled. So first it will look at your request and see
+
+620
+00:39:17,666 --> 00:39:21,704
+how much resources the application that you want to schedule
+
+621
+00:39:21,752 --> 00:39:25,084
+will need, how much cpu, how much ram, and it's going to go
+
+622
+00:39:25,122 --> 00:39:28,700
+through the worker nodes and see the available resources
+
+623
+00:39:28,780 --> 00:39:32,672
+on each one of them. And if it sees that one
+
+624
+00:39:32,726 --> 00:39:36,044
+node is the least busy
+
+625
+00:39:36,092 --> 00:39:39,764
+or has the most resources available, it will schedule the
+
+626
+00:39:39,802 --> 00:39:43,252
+new pod on that node. An important point here is that
+
+627
+00:39:43,306 --> 00:39:46,688
+scheduler just decides on which node
+
+628
+00:39:46,784 --> 00:39:50,864
+a new pod will be scheduled. The process that actually does.
+
+629
+00:39:50,922 --> 00:39:54,724
+The scheduling that actually starts that pod with a container
+
+630
+00:39:54,772 --> 00:39:58,548
+is the kubelet. So it gets the request from the scheduler
+
+631
+00:39:58,644 --> 00:40:01,864
+and executes that request on that
+
+632
+00:40:01,902 --> 00:40:06,076
+node. The next component is controller manager, which is
+
+633
+00:40:06,178 --> 00:40:10,264
+another crucial component, because what happens when pods
+
+634
+00:40:10,312 --> 00:40:14,488
+die on any node, there must be a way to detect
+
+635
+00:40:14,584 --> 00:40:18,204
+that the nodes died and then reschedule those pods
+
+636
+00:40:18,252 --> 00:40:21,970
+as soon as possible. So what controller manager does is
+
+637
+00:40:22,420 --> 00:40:25,964
+detect state changes, like crashing
+
+638
+00:40:26,012 --> 00:40:29,248
+of pods for example. So when pods die,
+
+639
+00:40:29,344 --> 00:40:33,380
+controller manager detects that and tries to recover
+
+640
+00:40:33,880 --> 00:40:37,380
+the cluster state as soon as possible. And for that
+
+641
+00:40:37,450 --> 00:40:41,332
+it makes a request to the scheduler to reschedule those dead pods.
+
+642
+00:40:41,396 --> 00:40:45,252
+And the same cycle happens here where the scheduler decides,
+
+643
+00:40:45,396 --> 00:40:48,916
+based on the resource calculation, which worker
+
+644
+00:40:48,948 --> 00:40:53,044
+nodes should restart those pods again, and makes
+
+645
+00:40:53,102 --> 00:40:56,776
+requests to the corresponding kubelets on those worker
+
+646
+00:40:56,808 --> 00:40:59,996
+nodes to actually restart the pods. And finally,
+
+647
+00:41:00,098 --> 00:41:03,448
+the last master process is Etsy,
+
+648
+00:41:03,544 --> 00:41:07,096
+which is a key value store of a cluster state.
+
+649
+00:41:07,218 --> 00:41:10,480
+You can think of it as a cluster brain actually,
+
+650
+00:41:10,630 --> 00:41:14,320
+which means that every change in the cluster, for example
+
+651
+00:41:14,390 --> 00:41:17,436
+when a new pod gets scheduled, when a pod dies,
+
+652
+00:41:17,548 --> 00:41:21,220
+all of these changes get saved or updated into
+
+653
+00:41:21,290 --> 00:41:24,992
+this key value store of etCD. And the reason why ETCD
+
+654
+00:41:25,056 --> 00:41:28,468
+store is a cluster brain is because all of
+
+655
+00:41:28,474 --> 00:41:32,164
+this mechanism with scheduler, controller manager, et cetera,
+
+656
+00:41:32,292 --> 00:41:36,648
+works because of its data. So for example,
+
+657
+00:41:36,814 --> 00:41:40,648
+how does scheduler know what resources are available
+
+658
+00:41:40,814 --> 00:41:44,276
+on each worker node? Or how does controller manager
+
+659
+00:41:44,308 --> 00:41:48,216
+know that a cluster state changed in some way? For example pods
+
+660
+00:41:48,248 --> 00:41:52,344
+died? Or that Kubelet restarted new pods upon the request
+
+661
+00:41:52,392 --> 00:41:55,816
+of a scheduler? Or when you make a query request
+
+662
+00:41:55,848 --> 00:41:59,360
+to API server about the cluster health, or for example
+
+663
+00:41:59,430 --> 00:42:03,360
+your application deployment state, where does API server get
+
+664
+00:42:03,430 --> 00:42:07,152
+all this state information from? So all of this information
+
+665
+00:42:07,286 --> 00:42:10,916
+is stored in ETCD cluster. What is not stored in
+
+666
+00:42:10,938 --> 00:42:15,012
+the ETCD key value store is the actual application
+
+667
+00:42:15,146 --> 00:42:18,964
+data. For example, if you have a database application running
+
+668
+00:42:19,082 --> 00:42:22,116
+inside of the cluster, the data will
+
+669
+00:42:22,138 --> 00:42:26,404
+be stored somewhere else, not in the eTCD. This is just cluster
+
+670
+00:42:26,452 --> 00:42:30,324
+state information which is used for master processes
+
+671
+00:42:30,372 --> 00:42:33,784
+to communicate with the work processes and vice
+
+672
+00:42:33,832 --> 00:42:37,160
+versa. So now you probably already see that master
+
+673
+00:42:37,240 --> 00:42:40,984
+processes are absolutely crucial for the cluster operation.
+
+674
+00:42:41,112 --> 00:42:44,860
+Especially the ETCD store which contains some data
+
+675
+00:42:44,930 --> 00:42:48,956
+must be reliably stored or replicated. So in practice,
+
+676
+00:42:49,068 --> 00:42:53,084
+Kubernetes cluster is usually made up of multiple masters
+
+677
+00:42:53,212 --> 00:42:57,148
+where each master node runs its master processes,
+
+678
+00:42:57,244 --> 00:43:00,756
+where of course the API server is load balanced and
+
+679
+00:43:00,778 --> 00:43:04,212
+the ETCD store forms a distributed storage across
+
+680
+00:43:04,346 --> 00:43:06,020
+all the master nodes.
+
+681
+00:43:08,600 --> 00:43:12,020
+So now that we saw what processes run
+
+682
+00:43:12,090 --> 00:43:15,752
+on worker nodes and master nodes. Let's actually have a look
+
+683
+00:43:15,806 --> 00:43:18,964
+at a realistic example of a cluster setup.
+
+684
+00:43:19,012 --> 00:43:23,328
+So in a very small cluster you'd probably have two master nodes
+
+685
+00:43:23,444 --> 00:43:26,952
+and three worker nodes. Also to note here, the hardware
+
+686
+00:43:27,016 --> 00:43:30,908
+resources of master and node servers actually differ.
+
+687
+00:43:30,994 --> 00:43:34,972
+The master processes are more important, but they actually have less
+
+688
+00:43:35,106 --> 00:43:38,684
+load of work, so they need less resources like cpu,
+
+689
+00:43:38,732 --> 00:43:42,752
+ram and storage, whereas the worker nodes do the actual job of
+
+690
+00:43:42,806 --> 00:43:46,384
+running those pods with containers inside. Therefore they
+
+691
+00:43:46,422 --> 00:43:49,840
+need more resources. And as your application complexity
+
+692
+00:43:49,920 --> 00:43:53,716
+and its demand of resources increases, you may actually
+
+693
+00:43:53,818 --> 00:43:57,252
+add more master and node servers to your
+
+694
+00:43:57,306 --> 00:44:00,980
+cluster and thus forming a more powerful
+
+695
+00:44:01,060 --> 00:44:05,332
+and robust cluster to meet your application resource
+
+696
+00:44:05,396 --> 00:44:08,564
+requirements. So in an existing Kubernetes cluster
+
+697
+00:44:08,612 --> 00:44:12,548
+you can actually add new master or node servers pretty easily.
+
+698
+00:44:12,644 --> 00:44:16,072
+So if you want to add a master server, you just get a new bare
+
+699
+00:44:16,136 --> 00:44:19,756
+server, you install all the master processes on it and add
+
+700
+00:44:19,778 --> 00:44:23,528
+it to the Kubernetes cluster. Same way if you need two worker
+
+701
+00:44:23,544 --> 00:44:27,548
+nodes, you get bare servers, you install all the worker
+
+702
+00:44:27,644 --> 00:44:31,676
+node processes like container runtime, kubelet and Kubeproxy
+
+703
+00:44:31,708 --> 00:44:34,720
+on it and add it to the Kubernetes cluster. That's it.
+
+704
+00:44:34,790 --> 00:44:38,660
+And this way you can infinitely increase the power
+
+705
+00:44:38,730 --> 00:44:41,844
+and resources of your Kubernetes cluster as your
+
+706
+00:44:41,882 --> 00:44:45,460
+application complexity and its resource demand increases.
+
+707
+00:44:59,340 --> 00:45:02,764
+And what is a use case for each of
+
+708
+00:45:02,802 --> 00:45:06,188
+these components? Now how do you create
+
+709
+00:45:06,274 --> 00:45:09,532
+all these components in Kubernetes? There are two
+
+710
+00:45:09,586 --> 00:45:13,196
+options for that. The first and simple option
+
+711
+00:45:13,378 --> 00:45:16,976
+is using a Kubernetes command line tool
+
+712
+00:45:17,078 --> 00:45:20,988
+called Kubectl. Some people also call it kubecontrol
+
+713
+00:45:21,084 --> 00:45:24,716
+or kubectl. I prefer to call it kubectl.
+
+714
+00:45:24,828 --> 00:45:27,940
+With Kubectl we can create a deployment,
+
+715
+00:45:28,440 --> 00:45:32,196
+stateful set service or any other
+
+716
+00:45:32,298 --> 00:45:35,952
+Kubernetes component as well as delete
+
+717
+00:45:36,016 --> 00:45:40,176
+or update them. Later we will see how to install Kubectl
+
+718
+00:45:40,288 --> 00:45:43,800
+and connect it to the cluster and use it to create,
+
+719
+00:45:43,870 --> 00:45:47,732
+update and delete components. It is a very powerful
+
+720
+00:45:47,876 --> 00:45:51,492
+command line tool that lets you work with the Kubernetes
+
+721
+00:45:51,556 --> 00:45:55,336
+cluster, get information from the cluster about any resource
+
+722
+00:45:55,448 --> 00:45:58,796
+as well as create resources inside. However,
+
+723
+00:45:58,898 --> 00:46:02,204
+there is a limitation with this approach when
+
+724
+00:46:02,322 --> 00:46:05,824
+creating different resources, and that
+
+725
+00:46:05,862 --> 00:46:09,276
+is if we want to configure a more complex
+
+726
+00:46:09,388 --> 00:46:12,880
+stuff for our Kubernetes resources. For example,
+
+727
+00:46:12,950 --> 00:46:16,984
+if we want to configure multiple ports in a service or maybe multiple
+
+728
+00:46:17,052 --> 00:46:21,220
+containers in a deployment and so on. And this can become
+
+729
+00:46:21,290 --> 00:46:25,856
+very difficult and impractical to do with Kubectl
+
+730
+00:46:25,968 --> 00:46:29,940
+because you would have to pass in a bunch of parameters,
+
+731
+00:46:30,100 --> 00:46:33,896
+and sometimes it's not even possible to fully configure what
+
+732
+00:46:33,918 --> 00:46:37,876
+you want. So we need an alternative to Kubectl
+
+733
+00:46:37,988 --> 00:46:41,684
+where we can define more complex configurations for
+
+734
+00:46:41,742 --> 00:46:45,304
+deployments, services or any other components.
+
+735
+00:46:45,432 --> 00:46:49,310
+And that's where Kubernetes configuration files are used.
+
+736
+00:46:49,760 --> 00:46:53,052
+With Kubernetes configuration files you just
+
+737
+00:46:53,106 --> 00:46:56,700
+write the whole configuration of a component in a file.
+
+738
+00:46:56,780 --> 00:47:00,352
+In a nice editor you have a nice overview of
+
+739
+00:47:00,406 --> 00:47:03,836
+all the containers you are creating, all the configuration of ports,
+
+740
+00:47:03,868 --> 00:47:07,524
+et cetera. And once your configuration file is
+
+741
+00:47:07,562 --> 00:47:11,652
+done, you can simply apply what's in that file using
+
+742
+00:47:11,706 --> 00:47:15,472
+Kubectl apply command. You can even have multiple
+
+743
+00:47:15,536 --> 00:47:18,800
+components configured in one Kubernetes
+
+744
+00:47:18,880 --> 00:47:22,900
+configuration file and create them all with one apply
+
+745
+00:47:22,970 --> 00:47:26,308
+comment. If you want to update a component,
+
+746
+00:47:26,404 --> 00:47:30,344
+you can simply edit your configuration file and apply those
+
+747
+00:47:30,382 --> 00:47:33,960
+changes as well. And same way using a configuration
+
+748
+00:47:34,040 --> 00:47:37,544
+file, you can delete all the components
+
+749
+00:47:37,592 --> 00:47:41,128
+configured there using Kubectl delete command.
+
+750
+00:47:41,304 --> 00:47:45,008
+And just to get our technical terms right, note that
+
+751
+00:47:45,094 --> 00:47:48,924
+Kubernetes configuration files are also called Kubernetes
+
+752
+00:47:49,052 --> 00:47:50,320
+manifests.
+
+753
+00:47:53,220 --> 00:47:56,780
+So you saw two approaches of how to create,
+
+754
+00:47:56,870 --> 00:48:00,864
+update and delete components in Kubernetes cluster.
+
+755
+00:48:00,992 --> 00:48:05,284
+These two approaches also have their names. The first way
+
+756
+00:48:05,402 --> 00:48:08,932
+of creating, updating and deleting components using
+
+757
+00:48:09,066 --> 00:48:13,032
+Kubectl commands is called an imperative way
+
+758
+00:48:13,166 --> 00:48:17,512
+because we're telling Kubernetes what to do, create this
+
+759
+00:48:17,566 --> 00:48:20,708
+component, delete this resource,
+
+760
+00:48:20,804 --> 00:48:24,072
+update this attribute of an existing component,
+
+761
+00:48:24,136 --> 00:48:27,864
+et cetera. The approach with Kubernetes configuration files
+
+762
+00:48:27,912 --> 00:48:31,692
+is called a declarative way, which means we
+
+763
+00:48:31,746 --> 00:48:35,408
+simply declare what we want as a result
+
+764
+00:48:35,574 --> 00:48:39,436
+in the configuration file and we let Kubernetes
+
+765
+00:48:39,548 --> 00:48:43,024
+figure out what it needs to do to get us
+
+766
+00:48:43,062 --> 00:48:46,416
+that desired state. Which one is the
+
+767
+00:48:46,438 --> 00:48:50,340
+right one? You may be wondering. Well, to have a proper history of
+
+768
+00:48:50,410 --> 00:48:53,956
+what has been created, deleted and updated in the
+
+769
+00:48:53,978 --> 00:48:57,904
+cluster, it's better to use the Kubernetes configuration
+
+770
+00:48:57,952 --> 00:49:01,432
+files for any changes. This also ties into
+
+771
+00:49:01,486 --> 00:49:04,904
+the infrastructure as code practice, where you will put
+
+772
+00:49:04,942 --> 00:49:09,112
+all your config files as code in a code repository where
+
+773
+00:49:09,166 --> 00:49:13,052
+everyone in the team can access it and make changes that
+
+774
+00:49:13,106 --> 00:49:17,260
+are more transparent to the whole team, rather than everyone just
+
+775
+00:49:17,330 --> 00:49:21,016
+executing some commands from their laptops.
+
+776
+00:49:21,128 --> 00:49:25,248
+To make changes in a cluster. But imperative way
+
+777
+00:49:25,334 --> 00:49:29,200
+can be practical and useful when testing things
+
+778
+00:49:29,270 --> 00:49:32,864
+and making quick changes. So this could be
+
+779
+00:49:32,902 --> 00:49:36,464
+a use case for imperative approach. And as
+
+780
+00:49:36,502 --> 00:49:40,036
+I said, we're going to see both of these in practice in
+
+781
+00:49:40,058 --> 00:49:43,520
+the upcoming lectures. Now let's see examples
+
+782
+00:49:43,600 --> 00:49:47,300
+of how Kubernetes manifest files actually
+
+783
+00:49:47,370 --> 00:49:54,024
+look like for different components and
+
+784
+00:49:54,062 --> 00:49:57,624
+the contents of Kubernetes configuration file, which is the
+
+785
+00:49:57,662 --> 00:50:00,936
+main tool for creating and configuring components in
+
+786
+00:50:00,958 --> 00:50:04,584
+Kubernetes cluster. If you've seen large configuration files,
+
+787
+00:50:04,632 --> 00:50:08,300
+it might seem overwhelming, but in reality it's pretty simple
+
+788
+00:50:08,370 --> 00:50:11,592
+and intuitive and also very logically structured.
+
+789
+00:50:11,736 --> 00:50:13,870
+So let's go through it step by step.
+
+790
+00:50:17,320 --> 00:50:21,064
+So here I have examples of a deployment and service
+
+791
+00:50:21,182 --> 00:50:24,536
+configuration files side by side. So the
+
+792
+00:50:24,558 --> 00:50:28,136
+first thing is that every configuration file in
+
+793
+00:50:28,158 --> 00:50:32,140
+Kubernetes has three parts. The first part is
+
+794
+00:50:32,210 --> 00:50:36,664
+where the metadata of that component that you're creating resides.
+
+795
+00:50:36,792 --> 00:50:40,956
+And one of the metadata is obviously name of the component itself.
+
+796
+00:50:41,138 --> 00:50:46,012
+The second part in the configuration file is specification.
+
+797
+00:50:46,156 --> 00:50:49,344
+So each component's configuration file will have a
+
+798
+00:50:49,382 --> 00:50:53,104
+specification where you basically put every kind of
+
+799
+00:50:53,142 --> 00:50:57,232
+configuration that you want to apply for that component.
+
+800
+00:50:57,376 --> 00:51:01,024
+The first two lines here as you see is just declaring
+
+801
+00:51:01,152 --> 00:51:04,884
+what you want to create. Here we are creating deployment and
+
+802
+00:51:04,922 --> 00:51:08,696
+here we're creating a service. And this is basically you
+
+803
+00:51:08,718 --> 00:51:12,388
+have to look up for each component, there's a different API version.
+
+804
+00:51:12,564 --> 00:51:17,240
+So now inside of the specification part, obviously the
+
+805
+00:51:17,310 --> 00:51:21,212
+attributes will be specific to
+
+806
+00:51:21,266 --> 00:51:24,984
+the kind of a component that you're creating. So deployment
+
+807
+00:51:25,032 --> 00:51:28,860
+will have its own attributes that only apply
+
+808
+00:51:28,930 --> 00:51:32,776
+for deployment and the service will have its own stuff. But I
+
+809
+00:51:32,818 --> 00:51:36,816
+said there are three parts of a configuration file and
+
+810
+00:51:36,998 --> 00:51:40,716
+we just see metadata and the specification. So where's
+
+811
+00:51:40,748 --> 00:51:44,780
+the third part? So the third part will be a status,
+
+812
+00:51:44,940 --> 00:51:48,352
+but it's going to be automatically generated and edit
+
+813
+00:51:48,416 --> 00:51:51,700
+by Kubernetes. So the way it works is that
+
+814
+00:51:51,770 --> 00:51:55,588
+kubernetes will always compare what is the desired state
+
+815
+00:51:55,674 --> 00:51:59,296
+and what is the actual state or the status of that component.
+
+816
+00:51:59,408 --> 00:52:02,872
+And if the status and desired state do not match,
+
+817
+00:52:03,006 --> 00:52:06,968
+then kubernetes knows there's something to be fixed there, so it's going
+
+818
+00:52:06,974 --> 00:52:10,344
+to try to fix it. And this is the basis of
+
+819
+00:52:10,382 --> 00:52:13,640
+the self healing feature that Kubernetes provides.
+
+820
+00:52:13,720 --> 00:52:17,560
+For example, here you specify you want two replicas
+
+821
+00:52:17,640 --> 00:52:21,692
+of Nginx deployment. So when you apply this,
+
+822
+00:52:21,826 --> 00:52:25,744
+when you actually create the deployment using this configuration file, that's what
+
+823
+00:52:25,782 --> 00:52:29,744
+apply means. Kubernetes will add here the status of
+
+824
+00:52:29,782 --> 00:52:34,236
+your deployment and it will update that state continuously.
+
+825
+00:52:34,348 --> 00:52:38,052
+So for example, if a status at some point will say just
+
+826
+00:52:38,106 --> 00:52:42,084
+one replica is running, then Kubernetes will compare that
+
+827
+00:52:42,122 --> 00:52:45,732
+status with the specification and will know there is
+
+828
+00:52:45,786 --> 00:52:49,364
+a problem there. Another replica needs to be created. SAP.
+
+829
+00:52:49,492 --> 00:52:53,572
+Now another interesting question here is where does Kubernetes
+
+830
+00:52:53,636 --> 00:52:57,192
+actually get the status data to automatically add
+
+831
+00:52:57,246 --> 00:53:00,680
+here or update continuously. That information comes
+
+832
+00:53:00,750 --> 00:53:03,944
+from the itsyd. Remember the cluster brain,
+
+833
+00:53:04,072 --> 00:53:07,532
+one of the master processes that actually stores the
+
+834
+00:53:07,586 --> 00:53:11,564
+cluster data. So itsyd holds at any time
+
+835
+00:53:11,682 --> 00:53:15,644
+the current status of any Kubernetes component,
+
+836
+00:53:15,772 --> 00:53:19,650
+and that's where the status information comes from.
+
+837
+00:53:23,100 --> 00:53:26,788
+So as you see, the format of the configuration files is
+
+838
+00:53:26,894 --> 00:53:29,612
+Yaml. That's why the extension here,
+
+839
+00:53:29,746 --> 00:53:33,132
+and generally it's pretty straightforward to understand.
+
+840
+00:53:33,266 --> 00:53:36,792
+It's a very simple format, but YaML is very strict
+
+841
+00:53:36,856 --> 00:53:40,376
+about the indentations. So for example, if you have
+
+842
+00:53:40,498 --> 00:53:43,856
+something wrongly indented here, your file will be
+
+843
+00:53:43,878 --> 00:53:47,564
+invalid. So what I do, especially if I have a configuration
+
+844
+00:53:47,612 --> 00:53:50,770
+file that has 200 lines, it's pretty long.
+
+845
+00:53:51,140 --> 00:53:54,896
+I usually use some YAML online validator
+
+846
+00:53:55,008 --> 00:53:58,804
+to see where I need to fix that, but other than
+
+847
+00:53:58,842 --> 00:54:02,372
+that it's pretty simple. Another thing is where do you
+
+848
+00:54:02,426 --> 00:54:06,340
+actually store those configuration files? A usual practice
+
+849
+00:54:06,420 --> 00:54:09,864
+is to store them with your code, because since
+
+850
+00:54:09,902 --> 00:54:13,064
+the deployment and service is going to be applied to
+
+851
+00:54:13,102 --> 00:54:16,504
+your application, it's a good practice to store these
+
+852
+00:54:16,542 --> 00:54:20,156
+configuration files in your application code. So usually it
+
+853
+00:54:20,178 --> 00:54:23,612
+will be part of the whole infrastructure as a code
+
+854
+00:54:23,746 --> 00:54:27,768
+concept, or you can also have its own git repository
+
+855
+00:54:27,864 --> 00:54:29,820
+just for the configuration files.
+
+856
+00:54:32,700 --> 00:54:36,244
+Explain all about YAMl. We will see what YAML
+
+857
+00:54:36,292 --> 00:54:39,784
+is used for, and we'll go through the syntax of how to
+
+858
+00:54:39,822 --> 00:54:43,172
+write a valid YAML file. Generally speaking,
+
+859
+00:54:43,246 --> 00:54:46,888
+YAML is a serialization language, just like XML
+
+860
+00:54:46,984 --> 00:54:51,848
+and JSON. Serialization language basically means that applications
+
+861
+00:54:51,944 --> 00:54:54,792
+written with different technologies, languages,
+
+862
+00:54:54,936 --> 00:54:58,448
+et cetera, which have different data structures, can transfer
+
+863
+00:54:58,534 --> 00:55:01,888
+data to each other using a common agreed on or
+
+864
+00:55:01,974 --> 00:55:06,556
+standard format. And the most popular such formats are YAML,
+
+865
+00:55:06,668 --> 00:55:10,500
+JSON and XML. And the name YaML actually
+
+866
+00:55:10,570 --> 00:55:14,196
+stands for Yaml ain't markup language. And you can
+
+867
+00:55:14,218 --> 00:55:18,112
+create YAML file with one of those two extensions.
+
+868
+00:55:18,256 --> 00:55:21,512
+They're the same. One of the main reasons of why
+
+869
+00:55:21,566 --> 00:55:25,848
+YAmL's popularity has increased so much over the past years
+
+870
+00:55:26,014 --> 00:55:29,140
+is that it's super human, readable and intuitive,
+
+871
+00:55:29,220 --> 00:55:32,820
+which makes it a great fit for writing configuration files
+
+872
+00:55:32,900 --> 00:55:36,136
+for all those recent DevOps tools, like I
+
+873
+00:55:36,158 --> 00:55:39,836
+mentioned, Docker, kubernetes, etc. So to show
+
+874
+00:55:39,858 --> 00:55:43,432
+you an example, and also comparison between YAML,
+
+875
+00:55:43,576 --> 00:55:46,828
+XML and JSON formats, let's consider
+
+876
+00:55:46,914 --> 00:55:50,224
+this example. So this is how Yaml file would
+
+877
+00:55:50,262 --> 00:55:54,288
+look like. It's very straightforward, it's pretty clean. This is
+
+878
+00:55:54,374 --> 00:55:58,176
+the same data in XML format where
+
+879
+00:55:58,198 --> 00:56:01,604
+you have these so called tags, and then you have the
+
+880
+00:56:01,642 --> 00:56:05,280
+JSON format. And as you see, in XML and JSON,
+
+881
+00:56:05,440 --> 00:56:08,804
+data structures are defined using special characters in
+
+882
+00:56:08,842 --> 00:56:12,976
+XML. You have so called text with angle brackets. In JSon
+
+883
+00:56:13,008 --> 00:56:16,440
+you have curly brackets, and in Yaml you don't have those special
+
+884
+00:56:16,510 --> 00:56:20,132
+characters. So how data structure is defined in YAML
+
+885
+00:56:20,196 --> 00:56:23,860
+is through line separations and spaces
+
+886
+00:56:23,940 --> 00:56:27,384
+with indentations. That's why you can indent
+
+887
+00:56:27,432 --> 00:56:31,800
+and space in XML and JSOn as you wish. But in Yaml
+
+888
+00:56:31,880 --> 00:56:35,372
+you get a validation error if you have one single space and data
+
+889
+00:56:35,426 --> 00:56:38,544
+structure wrong, which may be a little bit annoying, but it
+
+890
+00:56:38,582 --> 00:56:41,932
+makes YAmL format the cleanest, most human readable
+
+891
+00:56:41,996 --> 00:56:45,392
+format of all three. So what are some of Yaml's use
+
+892
+00:56:45,446 --> 00:56:49,440
+cases to count a few? Yaml format is used for docker compose
+
+893
+00:56:49,520 --> 00:56:52,016
+files, for Ansible, Prometheus,
+
+894
+00:56:52,128 --> 00:56:55,072
+kubernetes, and many more tools.
+
+895
+00:56:55,216 --> 00:56:58,548
+Okay, so now that you know what Yaml is and where it's used,
+
+896
+00:56:58,634 --> 00:57:01,816
+let's dive into its syntax. So let's start with
+
+897
+00:57:01,838 --> 00:57:05,352
+the basic syntax, which is simple key value
+
+898
+00:57:05,406 --> 00:57:08,552
+pairs. So let's take an example that I just showed you,
+
+899
+00:57:08,606 --> 00:57:12,740
+and let's write key value pairs like app,
+
+900
+00:57:12,910 --> 00:57:15,500
+and let's call it user authentication.
+
+901
+00:57:18,480 --> 00:57:21,916
+And we have a port, let's put it
+
+902
+00:57:21,938 --> 00:57:25,964
+at 9000 and version of the app at
+
+903
+00:57:26,002 --> 00:57:29,280
+1.7. Just an example. So these are
+
+904
+00:57:29,350 --> 00:57:32,700
+simple key value pairs. This is how YaMl file is written,
+
+905
+00:57:32,780 --> 00:57:36,604
+and you have different data types. Here we have a string which notes
+
+906
+00:57:36,652 --> 00:57:39,868
+that we don't have to enclose it with quotes.
+
+907
+00:57:40,044 --> 00:57:43,552
+You can if you want to. So you can use either double quotes
+
+908
+00:57:43,616 --> 00:57:47,044
+or single quotes or no quotes at all.
+
+909
+00:57:47,082 --> 00:57:50,116
+And you have the number representations as well. If you need
+
+910
+00:57:50,138 --> 00:57:53,524
+to use some special character like line carriage
+
+911
+00:57:53,572 --> 00:57:56,692
+for example, then you have to enclose it in strings,
+
+912
+00:57:56,756 --> 00:58:00,184
+otherwise Yaml cannot recognize it. But other than that
+
+913
+00:58:00,222 --> 00:58:03,576
+you don't need quotes. So I'm going to mention here that in Yaml
+
+914
+00:58:03,608 --> 00:58:07,932
+you also have comments. So everything that starts with this sign
+
+915
+00:58:07,986 --> 00:58:11,608
+or with this character, basically YAml interprets as a comment.
+
+916
+00:58:11,704 --> 00:58:14,508
+So I can write comment here,
+
+917
+00:58:14,674 --> 00:58:18,172
+and basically I can use this comment between the
+
+918
+00:58:18,226 --> 00:58:22,336
+attributes anywhere in Yaml file where I want to make my file even
+
+919
+00:58:22,358 --> 00:58:25,712
+more readable and understandable. So this is a simple list
+
+920
+00:58:25,766 --> 00:58:29,008
+of key value pairs. What you can do is you can group them inside of
+
+921
+00:58:29,014 --> 00:58:32,324
+an object, so you can create an object in YAml, and you can do that
+
+922
+00:58:32,362 --> 00:58:36,528
+by indenting this individual key value pairs
+
+923
+00:58:36,704 --> 00:58:40,048
+and enclosing it in an object. And let's
+
+924
+00:58:40,064 --> 00:58:43,992
+call it a microservice like this.
+
+925
+00:58:44,126 --> 00:58:47,284
+And this becomes an object with microservice
+
+926
+00:58:47,332 --> 00:58:51,064
+with its attributes. And note that the space has
+
+927
+00:58:51,102 --> 00:58:54,920
+to be exactly same for each attribute
+
+928
+00:58:55,000 --> 00:58:58,844
+within the object. And also note that because YAML is so
+
+929
+00:58:58,882 --> 00:59:02,492
+sensitive about the spaces and indentation it's always a good idea
+
+930
+00:59:02,546 --> 00:59:06,664
+to use a YAML validator before you for example execute
+
+931
+00:59:06,712 --> 00:59:10,800
+a configuration file in Kubernetes or you apply that
+
+932
+00:59:10,870 --> 00:59:13,984
+or use that file to be sure that your
+
+933
+00:59:14,022 --> 00:59:17,296
+indentations are right and there are online tools for that.
+
+934
+00:59:17,398 --> 00:59:21,072
+One of them which I use is this one here but there are some other
+
+935
+00:59:21,126 --> 00:59:24,628
+online tools as well. I can link them in description. So what you
+
+936
+00:59:24,634 --> 00:59:28,224
+can do is you can just copy that and it tells you that it's
+
+937
+00:59:28,352 --> 00:59:31,680
+valid. If I for example did this it's going to
+
+938
+00:59:31,690 --> 00:59:36,008
+scream bad indentation. So you can check your validity here.
+
+939
+00:59:36,174 --> 00:59:39,524
+So let's go back in Yaml. You can also have lists.
+
+940
+00:59:39,572 --> 00:59:43,064
+So for example if I have multiple microservices like
+
+941
+00:59:43,102 --> 00:59:47,380
+this I can create a list of those microservices
+
+942
+00:59:47,540 --> 00:59:50,872
+simply by using dash. So like this.
+
+943
+00:59:50,926 --> 00:59:54,164
+And again important thing that those attributes
+
+944
+00:59:54,212 --> 00:59:57,504
+stay at the same level and the dash is right
+
+945
+00:59:57,542 --> 00:59:59,980
+here and you can also have boolean.
+

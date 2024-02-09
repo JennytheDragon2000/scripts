@@ -1,0 +1,3748 @@
+1
+00:00:00,330 --> 00:00:04,030
+Values. So for example, if we have deployed
+
+2
+00:00:05,330 --> 00:00:08,906
+attributes, you can say true or false.
+
+3
+00:00:09,018 --> 00:00:13,002
+And in yaml you can also express boolean expressions
+
+4
+00:00:13,066 --> 00:00:16,910
+with yes or no. So let's say deployed yes and
+
+5
+00:00:16,980 --> 00:00:20,206
+also with on and off. So all these three pairs of
+
+6
+00:00:20,228 --> 00:00:23,630
+values are expressions of boolean values.
+
+7
+00:00:24,890 --> 00:00:27,480
+And you also see the syntax highlighting is different.
+
+8
+00:00:28,010 --> 00:00:31,174
+So this is a list and these are the items of the
+
+9
+00:00:31,212 --> 00:00:34,978
+list. And I can add second item
+
+10
+00:00:35,074 --> 00:00:38,914
+app, let's say shopping cart,
+
+11
+00:00:39,042 --> 00:00:39,720
+whatever.
+
+12
+00:00:42,510 --> 00:00:46,438
+Let's say port is 9002. Then we have version,
+
+13
+00:00:46,614 --> 00:00:49,690
+which is 1.9.
+
+14
+00:00:49,840 --> 00:00:53,306
+And this way you can define lists of objects,
+
+15
+00:00:53,418 --> 00:00:56,750
+but you can also define lists of simple values. So for example,
+
+16
+00:00:56,900 --> 00:01:00,010
+if you had a list of just the microservice names,
+
+17
+00:01:00,090 --> 00:01:07,406
+you could do like this and
+
+18
+00:01:07,428 --> 00:01:10,862
+it, and that would be fine as well. And you can also use lists inside
+
+19
+00:01:10,916 --> 00:01:14,426
+of a list item. So for example, if you have multiple versions
+
+20
+00:01:14,538 --> 00:01:18,246
+of shopping cart, for example, that you want to list here for some
+
+21
+00:01:18,268 --> 00:01:21,510
+reason, I don't know, you can actually list them
+
+22
+00:01:21,580 --> 00:01:26,006
+here. So I can do versions. Let's say you have 2.0
+
+23
+00:01:26,108 --> 00:01:28,970
+and then you have 2.1, et cetera.
+
+24
+00:01:29,310 --> 00:01:32,746
+And I'm going to copy that also in the
+
+25
+00:01:32,768 --> 00:01:36,870
+validator. And here you see that the dash
+
+26
+00:01:36,950 --> 00:01:40,426
+position, you can actually use different indentations for
+
+27
+00:01:40,448 --> 00:01:43,786
+that. So I have an indentation here but I don't have here, so that's
+
+28
+00:01:43,818 --> 00:01:47,914
+fine as well. I could do like this, or I can align
+
+29
+00:01:47,962 --> 00:01:51,514
+it on the parent attribute. So don't be confused.
+
+30
+00:01:51,562 --> 00:01:54,942
+If you see different alignments of the lists,
+
+31
+00:01:55,086 --> 00:01:58,530
+both work because Yaml recognizes that
+
+32
+00:01:58,600 --> 00:02:02,574
+it's a list item. What will not work is if you don't align
+
+33
+00:02:02,702 --> 00:02:05,926
+the list items using indentations. So for
+
+34
+00:02:05,948 --> 00:02:08,726
+example, if it was one space off,
+
+35
+00:02:08,828 --> 00:02:11,734
+then the validator will be red.
+
+36
+00:02:11,852 --> 00:02:15,414
+So some small details there also know that if you
+
+37
+00:02:15,452 --> 00:02:19,078
+have primitive items in the list, like this one for example,
+
+38
+00:02:19,164 --> 00:02:22,934
+so not the object items but the primitive ones, you can also express
+
+39
+00:02:22,982 --> 00:02:27,238
+it in a different way. And this is how with the different syntax,
+
+40
+00:02:27,334 --> 00:02:30,646
+you have square brackets and you can put those values
+
+41
+00:02:30,678 --> 00:02:34,414
+inside like a list, which makes it actually more
+
+42
+00:02:34,452 --> 00:02:37,802
+readable if you have just simple data types and not objects.
+
+43
+00:02:37,866 --> 00:02:41,374
+Let's validate that as well, to make sure you can have
+
+44
+00:02:41,492 --> 00:02:44,370
+strings here as well, or a mix of them.
+
+45
+00:02:44,440 --> 00:02:48,738
+Doesn't matter. Now this is really some of the basics of
+
+46
+00:02:48,824 --> 00:02:52,098
+Yaml syntax, so to make it more
+
+47
+00:02:52,184 --> 00:02:56,074
+practical and realistic, let's actually look at a real Kubernetes
+
+48
+00:02:56,142 --> 00:02:59,782
+Yaml example to see how this basic syntax is
+
+49
+00:02:59,836 --> 00:03:03,586
+expressed there. So I'm going to clean this up and let's
+
+50
+00:03:03,618 --> 00:03:07,446
+look at a pod configuration. So this is basically the
+
+51
+00:03:07,468 --> 00:03:10,250
+main part where the metadata and kind,
+
+52
+00:03:10,320 --> 00:03:14,298
+et cetera, is defined as you see, these are super simple
+
+53
+00:03:14,384 --> 00:03:17,670
+key value pairs. And then you have these objects
+
+54
+00:03:17,750 --> 00:03:21,118
+that we just saw with hierarchy, with indentations. So you
+
+55
+00:03:21,124 --> 00:03:24,318
+have a metadata object and inside that you have another
+
+56
+00:03:24,404 --> 00:03:28,510
+labels object. And here you have the specification
+
+57
+00:03:29,650 --> 00:03:33,234
+and containers. Maybe you are familiar with this already.
+
+58
+00:03:33,432 --> 00:03:36,434
+And in containers is a list.
+
+59
+00:03:36,632 --> 00:03:39,550
+So each container item,
+
+60
+00:03:39,630 --> 00:03:43,870
+so to say, has to start with dash and indentation.
+
+61
+00:03:44,030 --> 00:03:47,110
+And there we have the name of the container,
+
+62
+00:03:48,650 --> 00:03:51,910
+have the image. Let's use Nginx.
+
+63
+00:03:52,970 --> 00:03:56,678
+Then you have ports, which is another list.
+
+64
+00:03:56,844 --> 00:04:00,682
+So again we start with dash to
+
+65
+00:04:00,736 --> 00:04:03,958
+list the ports. And then you have the attribute
+
+66
+00:04:04,054 --> 00:04:07,818
+which is container port value.
+
+67
+00:04:07,904 --> 00:04:11,962
+There inside container you also can have volume
+
+68
+00:04:12,026 --> 00:04:16,078
+mounts, which is another list.
+
+69
+00:04:16,164 --> 00:04:19,550
+So here you list all your volumes and this is a list of
+
+70
+00:04:19,620 --> 00:04:23,922
+objects, again, where you have key value pairs. Let's use,
+
+71
+00:04:24,056 --> 00:04:28,130
+I don't know, Nginx volume and
+
+72
+00:04:28,200 --> 00:04:29,330
+mount path.
+
+73
+00:04:37,290 --> 00:04:40,726
+And this is how a pod configuration will
+
+74
+00:04:40,748 --> 00:04:44,146
+look like. So you have again basic building blocks,
+
+75
+00:04:44,258 --> 00:04:47,926
+key value pairs, objects and lists, and then lists
+
+76
+00:04:47,958 --> 00:04:51,590
+inside of that list item. And since containers
+
+77
+00:04:51,670 --> 00:04:55,014
+is also a list, you can have multiple
+
+78
+00:04:55,062 --> 00:04:58,650
+containers inside. And for example, if I were to
+
+79
+00:04:58,720 --> 00:05:02,640
+define a sidecar container, I would have another
+
+80
+00:05:03,010 --> 00:05:06,846
+item expression. And here I would say this
+
+81
+00:05:06,868 --> 00:05:09,150
+is my sidecar container.
+
+82
+00:05:11,730 --> 00:05:15,310
+And again image some image, et cetera.
+
+83
+00:05:15,470 --> 00:05:19,106
+Also another example that I also showed in one
+
+84
+00:05:19,128 --> 00:05:22,478
+of my videos is where we deployed a curl
+
+85
+00:05:22,574 --> 00:05:26,390
+image as a sidecar. And inside
+
+86
+00:05:26,460 --> 00:05:30,226
+of that container configuration we also had these two lines.
+
+87
+00:05:30,338 --> 00:05:34,102
+I'm actually going to copy them. And here you see that
+
+88
+00:05:34,156 --> 00:05:38,710
+this is this alternative syntax of defining lists.
+
+89
+00:05:38,790 --> 00:05:42,620
+So arguments is a list and we use it like this.
+
+90
+00:05:43,710 --> 00:05:46,922
+And then we have the two items here,
+
+91
+00:05:47,056 --> 00:05:50,878
+one and two. So knowing how YAml syntax works
+
+92
+00:05:50,964 --> 00:05:54,314
+should make it easier to understand the Kubernetes
+
+93
+00:05:54,442 --> 00:05:58,030
+configuration file structure better. Another important
+
+94
+00:05:58,100 --> 00:06:01,662
+concept of YAml syntax is when you have
+
+95
+00:06:01,796 --> 00:06:04,770
+multiline strings. So for example,
+
+96
+00:06:04,920 --> 00:06:09,582
+file contents, multiline string,
+
+97
+00:06:09,726 --> 00:06:13,182
+let's call it the attribute. And instead of writing
+
+98
+00:06:13,246 --> 00:06:16,550
+this multiline string here with the carriage,
+
+99
+00:06:17,370 --> 00:06:20,822
+I can write it actually on multiple lines like
+
+100
+00:06:20,876 --> 00:06:25,074
+this. So I don't need that thing anymore.
+
+101
+00:06:25,202 --> 00:06:28,922
+So this is a
+
+102
+00:06:28,976 --> 00:06:33,130
+multiline string and this
+
+103
+00:06:33,280 --> 00:06:37,302
+is the next line, et cetera,
+
+104
+00:06:37,446 --> 00:06:41,422
+right? And the way I can do that is using the
+
+105
+00:06:41,476 --> 00:06:45,614
+pipe symbol. So Yaml will see that character and
+
+106
+00:06:45,652 --> 00:06:49,754
+will interpret everything here as a multi line text. So these line breaks
+
+107
+00:06:49,802 --> 00:06:53,154
+will actually stay. Another case could be if you
+
+108
+00:06:53,192 --> 00:06:56,962
+have this super long string, which has to be on a single
+
+109
+00:06:57,016 --> 00:07:00,674
+line. So for example this is a single line
+
+110
+00:07:00,872 --> 00:07:04,514
+string that should be all on
+
+111
+00:07:04,632 --> 00:07:08,598
+one line. And some
+
+112
+00:07:08,684 --> 00:07:12,582
+other stuff, let's put dots here.
+
+113
+00:07:12,636 --> 00:07:15,942
+And in that case obviously you don't want the line carriages here,
+
+114
+00:07:15,996 --> 00:07:19,766
+but you also don't want to write this all out on one line because it's
+
+115
+00:07:19,798 --> 00:07:23,366
+just not very readable and that's
+
+116
+00:07:23,398 --> 00:07:27,334
+why you want to, for readability you still want to display
+
+117
+00:07:27,382 --> 00:07:31,094
+that here in the Yaml file itself, but you want Yaml
+
+118
+00:07:31,142 --> 00:07:34,494
+to interpret it as a single line. In this case instead
+
+119
+00:07:34,532 --> 00:07:38,254
+of pipe you actually replace it with a greater than
+
+120
+00:07:38,292 --> 00:07:41,806
+sign or with this angle bracket and this
+
+121
+00:07:41,828 --> 00:07:45,938
+will be interpreted as single line. Now this is just some
+
+122
+00:07:46,024 --> 00:07:49,170
+random example. So let's actually see some real
+
+123
+00:07:49,320 --> 00:07:52,882
+use cases. I have a config file Yaml here
+
+124
+00:07:52,936 --> 00:07:56,610
+from kubernetes which I have used in one of my tutorial videos.
+
+125
+00:07:56,760 --> 00:08:00,422
+And here you see the basic key value stuff
+
+126
+00:08:00,556 --> 00:08:04,214
+and here you have the name of the attribute, you can call it
+
+127
+00:08:04,252 --> 00:08:08,582
+whatever you want. And here we use that pipe and
+
+128
+00:08:08,636 --> 00:08:12,730
+these are actually the contents of the file. This is going to be displayed exactly
+
+129
+00:08:12,800 --> 00:08:16,842
+like this with line carriages because this has to be each one on
+
+130
+00:08:16,896 --> 00:08:20,122
+its own line. And this way you can actually write
+
+131
+00:08:20,176 --> 00:08:24,206
+configuration files for different applications. Like this
+
+132
+00:08:24,228 --> 00:08:28,558
+one is for mosquito. You also have maybe fluenty and
+
+133
+00:08:28,644 --> 00:08:32,526
+they have their own different formats and you can write the whole thing as
+
+134
+00:08:32,548 --> 00:08:36,206
+a file represented by multiline string
+
+135
+00:08:36,318 --> 00:08:39,902
+in Yaml. Another example of using this multiline
+
+136
+00:08:39,966 --> 00:08:43,822
+string that you may actually encounter in Kubernetes configuration
+
+137
+00:08:43,886 --> 00:08:47,526
+files is this one right here. So this
+
+138
+00:08:47,548 --> 00:08:51,750
+is part of configuration of a pod. So you have this command attribute and
+
+139
+00:08:51,820 --> 00:08:54,758
+here you see the familiar list.
+
+140
+00:08:54,924 --> 00:08:58,898
+And here again you have this pipe that is followed
+
+141
+00:08:58,914 --> 00:09:02,218
+by multiline string. And this is an example of kibana that I found.
+
+142
+00:09:02,304 --> 00:09:05,894
+So basically what it does is that it executes a shell command
+
+143
+00:09:05,942 --> 00:09:09,946
+and this is a shell script. So you can actually put the whole contents of
+
+144
+00:09:09,968 --> 00:09:14,010
+a shell script as you would have that as a shell script file.
+
+145
+00:09:14,090 --> 00:09:17,486
+After that pipe symbol as a multiline text and
+
+146
+00:09:17,508 --> 00:09:21,534
+this will execute as a shell script. Basically one
+
+147
+00:09:21,572 --> 00:09:25,010
+thing that I've also needed to use in Yaml was
+
+148
+00:09:25,080 --> 00:09:28,610
+environmental variables. So for example you have a pod that has
+
+149
+00:09:28,680 --> 00:09:32,226
+environmental variables defined inside and you have to
+
+150
+00:09:32,248 --> 00:09:35,554
+use one of those inside the pod configuration. You can
+
+151
+00:09:35,592 --> 00:09:38,742
+actually access them using a dollar sign inside
+
+152
+00:09:38,796 --> 00:09:42,774
+your Yaml configuration. So this is an example of a
+
+153
+00:09:42,812 --> 00:09:46,534
+Mysql pod and here the same thing that I
+
+154
+00:09:46,572 --> 00:09:50,154
+showed you before. So you have the command and here in
+
+155
+00:09:50,192 --> 00:09:54,566
+this line we're executing a Mysql command and I am accessing
+
+156
+00:09:54,678 --> 00:09:58,170
+the environmental variable that is available inside
+
+157
+00:09:58,240 --> 00:10:01,646
+the pod using the name of the environmental variable and
+
+158
+00:10:01,668 --> 00:10:05,294
+the dollar sign before that, which if you need
+
+159
+00:10:05,332 --> 00:10:09,054
+that might come in handy because I believe this specific concept of
+
+160
+00:10:09,092 --> 00:10:13,178
+using environmental variables in Yaml isn't very well documented.
+
+161
+00:10:13,274 --> 00:10:16,462
+Yaml also has a concept of placeholders.
+
+162
+00:10:16,606 --> 00:10:20,306
+One of its use cases is in helm, for example, and this
+
+163
+00:10:20,328 --> 00:10:24,274
+is how it looks like. So basically, instead of directly writing the
+
+164
+00:10:24,312 --> 00:10:27,794
+values inside, you define placeholders and the syntax
+
+165
+00:10:27,842 --> 00:10:32,102
+for using placeholders is double curly braces around
+
+166
+00:10:32,156 --> 00:10:35,942
+that placeholder and this value gets replaced using
+
+167
+00:10:36,076 --> 00:10:39,586
+template generator. And I believe the same concept
+
+168
+00:10:39,618 --> 00:10:43,222
+is used in ansible as well. So again, if you use helm
+
+169
+00:10:43,286 --> 00:10:46,986
+or ansible for example, and you see the syntax, you should know what
+
+170
+00:10:47,008 --> 00:10:49,462
+it stands for. And lastly,
+
+171
+00:10:49,606 --> 00:10:53,354
+inside one yaml file you can actually define multiple
+
+172
+00:10:53,482 --> 00:10:57,280
+components and you can separate these components using
+
+173
+00:10:57,890 --> 00:11:01,246
+three dashes like this. So for example, if I
+
+174
+00:11:01,268 --> 00:11:05,458
+have a yAml file where I want to put all my configurations, I can
+
+175
+00:11:05,544 --> 00:11:09,634
+separate them using these three dashes and
+
+176
+00:11:09,672 --> 00:11:13,182
+this will be a valid yaml. And this can be very handy in kubernetes,
+
+177
+00:11:13,246 --> 00:11:17,222
+especially where you have multiple components, maybe for one service,
+
+178
+00:11:17,356 --> 00:11:20,934
+and you want to group them in a single Yaml file. So for that
+
+179
+00:11:20,972 --> 00:11:23,160
+use case, this is the way to go.
+
+180
+00:11:29,030 --> 00:11:32,194
+You have learned theoretically what Kubernetes is
+
+181
+00:11:32,312 --> 00:11:36,054
+its architecture and components, as well as how
+
+182
+00:11:36,092 --> 00:11:39,858
+to create these components. But to see that all in action,
+
+183
+00:11:39,954 --> 00:11:43,746
+we first need to create a Kubernetes cluster. So let's
+
+184
+00:11:43,778 --> 00:11:47,382
+see what options we have for creating a Kubernetes
+
+185
+00:11:47,446 --> 00:11:51,574
+cluster and how the process of moving to Kubernetes
+
+186
+00:11:51,702 --> 00:11:54,780
+for it teams actually looks like.
+
+187
+00:11:55,390 --> 00:11:57,600
+Here is our background story.
+
+188
+00:11:58,370 --> 00:12:02,014
+Your team has decided to move their application to
+
+189
+00:12:02,052 --> 00:12:05,406
+Kubernetes cluster. So you all gather in a
+
+190
+00:12:05,428 --> 00:12:09,200
+meeting room to consider different options you have available.
+
+191
+00:12:09,730 --> 00:12:13,234
+You discuss whether to use managed Kubernetes solution from
+
+192
+00:12:13,272 --> 00:12:16,862
+one of the clouds or go for a self managed Kubernetes
+
+193
+00:12:16,926 --> 00:12:20,670
+cluster. Finally, you decide to go for a self managed Kubernetes
+
+194
+00:12:20,750 --> 00:12:24,306
+cluster because of more control and flexibility.
+
+195
+00:12:24,498 --> 00:12:27,734
+So now your task is to
+
+196
+00:12:27,772 --> 00:12:31,922
+set up Kubernetes cluster from scratch on bare servers.
+
+197
+00:12:32,066 --> 00:12:35,418
+Cool. As a next step, you also go through
+
+198
+00:12:35,504 --> 00:12:38,460
+cluster size and configuration options.
+
+199
+00:12:38,910 --> 00:12:42,838
+You decide to start with one master and two worker nodes
+
+200
+00:12:42,934 --> 00:12:46,706
+to set up the development environment where you can start deploying
+
+201
+00:12:46,758 --> 00:12:51,194
+your applications. Once that setup is completed,
+
+202
+00:12:51,322 --> 00:12:54,494
+your plan is to then replicate the
+
+203
+00:12:54,532 --> 00:12:58,522
+cluster for test and production environments with more master
+
+204
+00:12:58,586 --> 00:13:01,650
+nodes and worker nodes for high availability.
+
+205
+00:13:02,070 --> 00:13:05,746
+So this is your chance to test around and learn all the
+
+206
+00:13:05,768 --> 00:13:09,762
+things without any fear of destroying something. You also
+
+207
+00:13:09,816 --> 00:13:14,178
+decide that you will install Kubernetes cluster on Ubuntu servers.
+
+208
+00:13:14,354 --> 00:13:17,894
+Now what about the size of the servers? How much
+
+209
+00:13:17,932 --> 00:13:21,910
+cpu or ram should each server have
+
+210
+00:13:22,060 --> 00:13:25,334
+so that we can use them as Kubernetes cluster nodes?
+
+211
+00:13:25,462 --> 00:13:29,194
+You check out the Kubernetes documentation page and see
+
+212
+00:13:29,232 --> 00:13:33,002
+the minimum requirement of server resources is at least
+
+213
+00:13:33,136 --> 00:13:36,810
+2gb of ram and two cpus per
+
+214
+00:13:36,880 --> 00:13:40,446
+node. So that's going to be the minimum size of your
+
+215
+00:13:40,548 --> 00:13:44,266
+servers. Once you have defined all these criteria,
+
+216
+00:13:44,378 --> 00:13:48,494
+you ask your IT operations team to make these servers available
+
+217
+00:13:48,612 --> 00:13:52,210
+for your project so you can get started. It team
+
+218
+00:13:52,280 --> 00:13:55,998
+gives you three Ubuntu servers with the requested
+
+219
+00:13:56,094 --> 00:13:59,602
+resource sizes together with the list of their
+
+220
+00:13:59,656 --> 00:14:03,038
+public IP addresses. Plus your users access
+
+221
+00:14:03,144 --> 00:14:06,578
+to the servers is already configured so you can ssh
+
+222
+00:14:06,674 --> 00:14:09,750
+into them and get started right away.
+
+223
+00:14:09,900 --> 00:14:13,542
+Now of course, for this course, since we don't have an IT
+
+224
+00:14:13,596 --> 00:14:16,906
+operations team, we're going to spin up these servers with
+
+225
+00:14:16,928 --> 00:14:20,122
+the right resource requirements ourselves very
+
+226
+00:14:20,176 --> 00:14:23,930
+easily on AWS platform. And I want to make
+
+227
+00:14:24,000 --> 00:14:27,514
+two notes here. First, this exact setup
+
+228
+00:14:27,562 --> 00:14:31,502
+of creating a self managed Kubernetes cluster from scratch on
+
+229
+00:14:31,556 --> 00:14:35,646
+AWS instances is very common and many companies
+
+230
+00:14:35,748 --> 00:14:39,526
+and projects actually use it, so you might actually encounter
+
+231
+00:14:39,578 --> 00:14:42,820
+this in practice very often. And second,
+
+232
+00:14:43,190 --> 00:14:46,626
+this course is not AWS specific. So if
+
+233
+00:14:46,648 --> 00:14:50,014
+you have Ubuntu machines already or want to use virtual
+
+234
+00:14:50,062 --> 00:14:53,990
+machines from another platform, that's absolutely fine too.
+
+235
+00:14:54,140 --> 00:14:58,018
+So setting up those virtual machines is going to be our first task.
+
+236
+00:14:58,114 --> 00:15:00,280
+So let's go ahead and do it.
+
+237
+00:15:05,270 --> 00:15:08,398
+Who will set up the cluster on AWS servers?
+
+238
+00:15:08,494 --> 00:15:11,910
+Like I show you in the demo, you will need to open
+
+239
+00:15:11,980 --> 00:15:15,702
+an AWS account and also understand some really
+
+240
+00:15:15,756 --> 00:15:19,122
+basic concepts of AWS and how to configure
+
+241
+00:15:19,186 --> 00:15:22,982
+servers on it. So in this video we will cover all the basics
+
+242
+00:15:23,126 --> 00:15:26,826
+that you need to get started on AWS. If you
+
+243
+00:15:26,848 --> 00:15:30,058
+are already familiar with AWS, or if you
+
+244
+00:15:30,064 --> 00:15:33,546
+will be installing the cluster somewhere else, you can skip
+
+245
+00:15:33,578 --> 00:15:34,400
+this video.
+
+246
+00:15:38,640 --> 00:15:42,504
+In order to create an account, you basically just have to fill out some forms,
+
+247
+00:15:42,552 --> 00:15:46,396
+including your address information, credit card information and
+
+248
+00:15:46,418 --> 00:15:50,048
+so on. Because AWS wants to make sure that
+
+249
+00:15:50,134 --> 00:15:53,648
+people who are creating accounts are verified and
+
+250
+00:15:53,734 --> 00:15:58,240
+are registering with valid data. And I will put a link below
+
+251
+00:15:58,390 --> 00:16:01,764
+for a guide of how to create an account that you can follow.
+
+252
+00:16:01,882 --> 00:16:05,204
+And once you have an account, you get a
+
+253
+00:16:05,242 --> 00:16:09,092
+free tier offer from AWS. So what does that actually
+
+254
+00:16:09,146 --> 00:16:12,692
+mean? On AWS documentation
+
+255
+00:16:12,756 --> 00:16:16,776
+you have this free tier page that basically lists all the
+
+256
+00:16:16,878 --> 00:16:20,536
+components, all the services of AWS that you
+
+257
+00:16:20,558 --> 00:16:24,404
+can use for free for one year after registering
+
+258
+00:16:24,452 --> 00:16:28,300
+an account. And some of them or some of the most important ones are
+
+259
+00:16:28,370 --> 00:16:32,412
+the EC two instance, which is the virtual server which
+
+260
+00:16:32,466 --> 00:16:35,996
+we are going to be creating on AWS as well as
+
+261
+00:16:36,098 --> 00:16:39,804
+some storage and so on. So you can take advantage
+
+262
+00:16:39,852 --> 00:16:42,960
+of that free tier account on AWS.
+
+263
+00:16:43,300 --> 00:16:47,660
+Now by default when you create an account on AWS,
+
+264
+00:16:47,820 --> 00:16:51,172
+you have a root user. This user gets
+
+265
+00:16:51,226 --> 00:16:54,708
+created automatically and this user has access
+
+266
+00:16:54,794 --> 00:16:57,792
+to all the services and all the features.
+
+267
+00:16:57,936 --> 00:17:01,680
+So it has unlimited privileges to do whatever you want
+
+268
+00:17:01,770 --> 00:17:05,256
+in your account, including the billing part,
+
+269
+00:17:05,438 --> 00:17:09,560
+account settings and so on. So the first thing we want to do
+
+270
+00:17:09,710 --> 00:17:12,904
+when the account is registered is create an
+
+271
+00:17:12,942 --> 00:17:16,696
+admin user that has less privileges than root
+
+272
+00:17:16,728 --> 00:17:19,852
+user, but it will have all the privileges that we need
+
+273
+00:17:19,906 --> 00:17:24,076
+to create EC two instance, deploy some applications on that.
+
+274
+00:17:24,178 --> 00:17:27,732
+And this is the first thing that AWS also advises
+
+275
+00:17:27,816 --> 00:17:31,056
+to do for security reasons. So if you
+
+276
+00:17:31,078 --> 00:17:34,960
+go inside the IAM service, you will see
+
+277
+00:17:35,030 --> 00:17:38,572
+the configuration dashboard. So we can create users
+
+278
+00:17:38,716 --> 00:17:42,116
+groups and permissions here and manage all
+
+279
+00:17:42,138 --> 00:17:45,812
+the stuff here. Now admin user can also have
+
+280
+00:17:45,866 --> 00:17:48,660
+permission to create users,
+
+281
+00:17:49,400 --> 00:17:53,148
+assign roles to them and so on. So you can have one admin user
+
+282
+00:17:53,184 --> 00:17:56,984
+to manage and administer the whole AWS account,
+
+283
+00:17:57,182 --> 00:18:00,868
+but it will still have less privileges than the root user.
+
+284
+00:18:00,964 --> 00:18:04,572
+For example, it will not be able to access the billing and
+
+285
+00:18:04,626 --> 00:18:08,072
+credit card information. And then using that admin
+
+286
+00:18:08,136 --> 00:18:11,964
+user you can actually create other users and give them other
+
+287
+00:18:12,002 --> 00:18:15,756
+permissions for team members. For example,
+
+288
+00:18:15,858 --> 00:18:20,044
+if you have a DevOps team that all use AWS
+
+289
+00:18:20,092 --> 00:18:23,360
+and configure stuff on there, obviously you need to give them
+
+290
+00:18:23,430 --> 00:18:27,440
+all permissions and access to EC two
+
+291
+00:18:27,510 --> 00:18:30,596
+and maybe some other services. So the admin user can
+
+292
+00:18:30,618 --> 00:18:33,430
+be the one that administers all of this.
+
+293
+00:18:37,930 --> 00:18:41,410
+So now let's create a user admin
+
+294
+00:18:41,570 --> 00:18:45,190
+that has admin privileges to do stuff
+
+295
+00:18:45,260 --> 00:18:49,258
+on AWS services. We don't need a group for that because
+
+296
+00:18:49,344 --> 00:18:53,580
+it's just going to be one user and the only one with admin access.
+
+297
+00:18:53,950 --> 00:18:57,900
+So let's create it. So here we have an add user button,
+
+298
+00:18:58,430 --> 00:19:01,566
+let's call it admin. And we can give a
+
+299
+00:19:01,588 --> 00:19:05,118
+user two types of access. It could be either access
+
+300
+00:19:05,204 --> 00:19:08,654
+through the console in the UI. So basically you can
+
+301
+00:19:08,692 --> 00:19:12,674
+log in on the UI and then do stuff
+
+302
+00:19:12,792 --> 00:19:16,370
+through the UI, like configure stuff, change stuff and so on.
+
+303
+00:19:16,520 --> 00:19:19,666
+And you can also have a programmatic access.
+
+304
+00:19:19,848 --> 00:19:23,534
+This is when you can execute different tasks
+
+305
+00:19:23,582 --> 00:19:27,282
+from your command line, and this can be either through AWS
+
+306
+00:19:27,346 --> 00:19:30,742
+command line interface or in our case, we're going to use
+
+307
+00:19:30,796 --> 00:19:34,254
+terraform commands to access AWS. So we need programmatic
+
+308
+00:19:34,322 --> 00:19:38,342
+access for the admin user to execute terraform
+
+309
+00:19:38,406 --> 00:19:41,894
+commands. And you can decide whether a user
+
+310
+00:19:41,942 --> 00:19:45,014
+has one of those access types
+
+311
+00:19:45,062 --> 00:19:49,138
+or maybe both. In this case we can give admin both types
+
+312
+00:19:49,174 --> 00:19:52,910
+of access because we want to be able to access the
+
+313
+00:19:52,980 --> 00:19:56,574
+UI console with it. So we want to be able to log in with
+
+314
+00:19:56,612 --> 00:19:59,982
+this user, but also execute things from
+
+315
+00:20:00,036 --> 00:20:03,298
+command line. And as you see, the management console access
+
+316
+00:20:03,464 --> 00:20:07,218
+displays some other options. Because if we
+
+317
+00:20:07,384 --> 00:20:10,638
+are going to log in with this user, we need a password
+
+318
+00:20:10,734 --> 00:20:14,214
+for the user as well and we can let it auto generate a
+
+319
+00:20:14,252 --> 00:20:17,894
+password. And with this option we can
+
+320
+00:20:18,092 --> 00:20:22,018
+force the user, the admin user on the first login
+
+321
+00:20:22,114 --> 00:20:25,994
+to reset their password. So the UI access
+
+322
+00:20:26,192 --> 00:20:30,330
+will basically be through username and password username here
+
+323
+00:20:30,400 --> 00:20:33,782
+password auto generated and the programmatic
+
+324
+00:20:33,846 --> 00:20:37,046
+access will be the keys. So from the command
+
+325
+00:20:37,078 --> 00:20:40,602
+line we're gonna need access keys or secret
+
+326
+00:20:40,666 --> 00:20:44,474
+access key to log into AWS and then execute
+
+327
+00:20:44,522 --> 00:20:47,342
+some commands. Let's go to next.
+
+328
+00:20:47,476 --> 00:20:51,498
+Now here we can create a group that the user can be
+
+329
+00:20:51,524 --> 00:20:55,262
+part of. It is actually the best practice to have all the users
+
+330
+00:20:55,326 --> 00:20:58,914
+in a group and then to assign the permissions to
+
+331
+00:20:58,952 --> 00:21:02,654
+the group rather than directly to user. But the admin
+
+332
+00:21:02,702 --> 00:21:05,430
+user is going to be the only one in the group. So we can actually
+
+333
+00:21:05,500 --> 00:21:08,854
+skip creation of group. So we can assign a
+
+334
+00:21:08,892 --> 00:21:12,902
+permission to the user directly. And for that we are going to
+
+335
+00:21:13,036 --> 00:21:16,090
+go to attach existing policies directly.
+
+336
+00:21:16,830 --> 00:21:20,426
+And this is a list of all the permissions or all
+
+337
+00:21:20,448 --> 00:21:23,834
+the policies that we can choose from.
+
+338
+00:21:24,032 --> 00:21:27,470
+And this is a pretty long list because you have
+
+339
+00:21:27,540 --> 00:21:30,910
+granular permission policies in AWS.
+
+340
+00:21:31,250 --> 00:21:34,810
+So you can basically decide
+
+341
+00:21:34,970 --> 00:21:38,558
+for each single service what type of access
+
+342
+00:21:38,644 --> 00:21:42,514
+you want to grant a user. And this actually is
+
+343
+00:21:42,552 --> 00:21:45,842
+good because it supports the best practice of
+
+344
+00:21:45,896 --> 00:21:50,018
+giving the user the least privilege they need. So if a user needs
+
+345
+00:21:50,184 --> 00:21:54,558
+the read only permission for a service, you can give a user
+
+346
+00:21:54,654 --> 00:21:58,802
+read only permission rather than full access. So admin
+
+347
+00:21:58,866 --> 00:22:01,720
+user is going to get administrator access,
+
+348
+00:22:02,330 --> 00:22:05,622
+which basically includes all the policies
+
+349
+00:22:05,686 --> 00:22:09,260
+and all the permissions that are needed
+
+350
+00:22:09,790 --> 00:22:13,260
+for administering your AWS account.
+
+351
+00:22:13,630 --> 00:22:18,094
+So we're going to choose administrator access policy and
+
+352
+00:22:18,292 --> 00:22:20,400
+go to the next page.
+
+353
+00:22:21,570 --> 00:22:24,714
+You can also add tags to the user,
+
+354
+00:22:24,762 --> 00:22:27,882
+which is basically additional information like metadata
+
+355
+00:22:27,946 --> 00:22:31,618
+about the user. If these are individual team members in
+
+356
+00:22:31,624 --> 00:22:35,390
+your organization, this could be an email address description
+
+357
+00:22:35,470 --> 00:22:39,150
+or job title, name, surname, et cetera.
+
+358
+00:22:39,310 --> 00:22:42,950
+It's optional though. And we're going to skip this for admin user.
+
+359
+00:22:43,370 --> 00:22:47,702
+And next. And this is our summary page.
+
+360
+00:22:47,836 --> 00:22:51,174
+So we have created an admin user. We're giving it
+
+361
+00:22:51,212 --> 00:22:55,142
+access to login through a web console. The password
+
+362
+00:22:55,206 --> 00:22:59,098
+will be generated as well as programmatic access
+
+363
+00:22:59,264 --> 00:23:01,930
+from the command line interface.
+
+364
+00:23:02,510 --> 00:23:05,930
+And it has administrator access privileges,
+
+365
+00:23:06,850 --> 00:23:10,254
+so all the permissions it needs to administer the
+
+366
+00:23:10,292 --> 00:23:13,070
+AWS account. Let's create the user.
+
+367
+00:23:15,170 --> 00:23:18,240
+And here you have all the information, all the secret information
+
+368
+00:23:18,690 --> 00:23:21,966
+as well for the user. So password,
+
+369
+00:23:22,158 --> 00:23:26,126
+you're going to need this one to log in to the console.
+
+370
+00:23:26,318 --> 00:23:30,260
+And these two are the keys to access
+
+371
+00:23:30,710 --> 00:23:34,502
+the AWS account and the services from
+
+372
+00:23:34,556 --> 00:23:38,360
+admin user from your command line. So save all this information
+
+373
+00:23:38,730 --> 00:23:41,778
+and those keys securely.
+
+374
+00:23:41,954 --> 00:23:45,820
+So download this file and we're going to reference that later.
+
+375
+00:23:46,270 --> 00:23:50,310
+And as a next step, we're going to log into Ui using this password
+
+376
+00:23:50,470 --> 00:23:54,220
+and change the password because we have configured it this way.
+
+377
+00:23:56,350 --> 00:24:00,126
+So let's sign out as a root user and log in with the
+
+378
+00:24:00,148 --> 00:24:01,520
+admin user. Again,
+
+379
+00:24:04,450 --> 00:24:08,174
+log back in, and in the sign in page you
+
+380
+00:24:08,212 --> 00:24:11,774
+have selection between root user and IAM user.
+
+381
+00:24:11,822 --> 00:24:15,954
+Let's choose this one. The id or account id of
+
+382
+00:24:15,992 --> 00:24:19,506
+your user is also in this downloaded file. If you
+
+383
+00:24:19,528 --> 00:24:22,854
+open it in the console login link, you have this
+
+384
+00:24:22,892 --> 00:24:26,166
+id here, you can use a link directly to go to the
+
+385
+00:24:26,188 --> 00:24:30,118
+login page like this.
+
+386
+00:24:30,284 --> 00:24:34,698
+And this id is going to be filled automatically. So this is the
+
+387
+00:24:34,784 --> 00:24:39,526
+account id. And here you have the username,
+
+388
+00:24:39,638 --> 00:24:43,514
+we called it admin and the password which is also in this
+
+389
+00:24:43,552 --> 00:24:44,330
+file.
+
+390
+00:24:47,970 --> 00:24:51,950
+And since we've configured it, we have to change the password.
+
+391
+00:25:00,460 --> 00:25:03,940
+And as you see, we are logged in as admin user
+
+392
+00:25:04,100 --> 00:25:08,004
+and we can configure services and do stuff now with admin
+
+393
+00:25:08,052 --> 00:25:08,840
+user.
+
+394
+00:25:15,470 --> 00:25:19,690
+Now whenever you create an account in each region,
+
+395
+00:25:19,850 --> 00:25:23,210
+you will have something called a VPC.
+
+396
+00:25:23,370 --> 00:25:27,242
+So VPC actually stands for virtual private
+
+397
+00:25:27,306 --> 00:25:31,202
+cloud. So if you go through the services here, all services
+
+398
+00:25:31,336 --> 00:25:34,786
+list in the networking and
+
+399
+00:25:34,808 --> 00:25:38,820
+content delivery part, we have this VPC service.
+
+400
+00:25:39,670 --> 00:25:43,218
+And right now I'm in the Frankfurt region.
+
+401
+00:25:43,394 --> 00:25:46,854
+And here you see I have a VPC, a default one that
+
+402
+00:25:46,892 --> 00:25:50,326
+gets created with some other configuration as
+
+403
+00:25:50,348 --> 00:25:53,990
+well. And if I switch to another
+
+404
+00:25:54,060 --> 00:25:56,730
+region, for example Europe, Paris,
+
+405
+00:25:58,110 --> 00:26:01,946
+here I also see a VPC. So I haven't created any of
+
+406
+00:26:01,968 --> 00:26:05,658
+this. This is out of the box by default in each
+
+407
+00:26:05,744 --> 00:26:09,246
+region. So VPC in AWS is
+
+408
+00:26:09,268 --> 00:26:12,686
+basically your private network, right? When you
+
+409
+00:26:12,708 --> 00:26:15,742
+create resources, virtual servers and so on,
+
+410
+00:26:15,796 --> 00:26:19,546
+on AWS, you obviously don't want other AWS users
+
+411
+00:26:19,578 --> 00:26:23,314
+or other AWS accounts to have access to
+
+412
+00:26:23,352 --> 00:26:26,882
+your resources, right? You want to protect them and you want
+
+413
+00:26:27,016 --> 00:26:30,786
+only you to have access to them. So because of that you can create
+
+414
+00:26:30,888 --> 00:26:35,426
+this virtual private cloud on AWS infrastructure
+
+415
+00:26:35,538 --> 00:26:39,458
+that only you have access to, and you create this VPC
+
+416
+00:26:39,634 --> 00:26:43,142
+in a specific AWS region. So again,
+
+417
+00:26:43,276 --> 00:26:46,426
+region is basically one of
+
+418
+00:26:46,528 --> 00:26:50,550
+those regions in a list. So for example in Paris
+
+419
+00:26:50,630 --> 00:26:54,554
+region in EUS three, I can create as
+
+420
+00:26:54,592 --> 00:26:57,302
+many vpcs as I want. However,
+
+421
+00:26:57,456 --> 00:27:01,338
+region in AWS consists of multiple
+
+422
+00:27:01,434 --> 00:27:05,210
+availability zones. Availability zone,
+
+423
+00:27:05,370 --> 00:27:08,894
+in very simple words, is basically a data center of
+
+424
+00:27:08,932 --> 00:27:12,206
+AWS with all those servers that runs
+
+425
+00:27:12,238 --> 00:27:16,462
+the whole infrastructure. So the virtual machines
+
+426
+00:27:16,526 --> 00:27:20,082
+that you spin up in your AWS will actually run in
+
+427
+00:27:20,136 --> 00:27:23,430
+one of those AZ because these are the actual
+
+428
+00:27:23,500 --> 00:27:27,762
+physical locations where the servers will run. So VPC
+
+429
+00:27:27,826 --> 00:27:31,974
+will actually span all the availability zones in
+
+430
+00:27:32,012 --> 00:27:35,734
+that specific region. So here you see Paris
+
+431
+00:27:35,782 --> 00:27:39,514
+has three zones and VPC actually spends all
+
+432
+00:27:39,552 --> 00:27:43,030
+these three zones. So in each region,
+
+433
+00:27:43,110 --> 00:27:47,066
+basically VPC isolates a space where you are
+
+434
+00:27:47,088 --> 00:27:50,202
+creating your virtual instances, your servers,
+
+435
+00:27:50,266 --> 00:27:53,710
+maybe database instance, some other components from different
+
+436
+00:27:53,780 --> 00:27:57,838
+services, because obviously this is a data center
+
+437
+00:27:57,924 --> 00:28:01,086
+where others also rent virtual servers,
+
+438
+00:28:01,198 --> 00:28:05,678
+create components. So they might actually be running on the same physical
+
+439
+00:28:05,774 --> 00:28:09,154
+machine, same computer, but they will be
+
+440
+00:28:09,192 --> 00:28:12,410
+isolated in private networks
+
+441
+00:28:12,590 --> 00:28:14,470
+with vpcs.
+
+442
+00:28:15,290 --> 00:28:19,078
+And for bigger corporations that have
+
+443
+00:28:19,244 --> 00:28:22,726
+much more complex application setups, they can
+
+444
+00:28:22,748 --> 00:28:26,426
+actually use multiple vpcs and manage multiple of
+
+445
+00:28:26,448 --> 00:28:29,610
+these private networks in different regions.
+
+446
+00:28:30,030 --> 00:28:33,210
+Now what does this VPC include?
+
+447
+00:28:33,710 --> 00:28:37,290
+Here you see we are in the VPC dashboard
+
+448
+00:28:38,370 --> 00:28:41,440
+and we have a bunch of other stuff in here.
+
+449
+00:28:41,810 --> 00:28:45,758
+It is basically a virtual representation of
+
+450
+00:28:45,844 --> 00:28:49,694
+network infrastructure. When you have servers physically in your
+
+451
+00:28:49,732 --> 00:28:53,198
+company, which was a traditional way of hosting
+
+452
+00:28:53,294 --> 00:28:57,630
+servers and applications before cloud, you have Sys administrators
+
+453
+00:28:57,710 --> 00:29:01,634
+that set up, configure and manage this whole network. They set
+
+454
+00:29:01,672 --> 00:29:05,110
+up the router, they do all the network configuration,
+
+455
+00:29:05,450 --> 00:29:09,206
+configure, firewall and so on. So all of this
+
+456
+00:29:09,308 --> 00:29:13,142
+physical network infrastructure is basically now
+
+457
+00:29:13,196 --> 00:29:16,986
+moved in cloud, and VPC is the representation of
+
+458
+00:29:17,008 --> 00:29:20,106
+this. And the reason why you have this
+
+459
+00:29:20,128 --> 00:29:23,690
+default VPC in each region is that whenever you create an
+
+460
+00:29:23,760 --> 00:29:27,794
+EC two instance, it has to run inside a VPC
+
+461
+00:29:27,942 --> 00:29:31,886
+or whatever component you're launching. It has to run, it has to start
+
+462
+00:29:31,988 --> 00:29:35,518
+inside a VPC. Another thing you see here
+
+463
+00:29:35,604 --> 00:29:39,358
+is subnets. So we have three
+
+464
+00:29:39,444 --> 00:29:42,706
+subnets, and subnets are
+
+465
+00:29:42,888 --> 00:29:46,786
+subnetworks. So VPC is the whole private network, and subnets are
+
+466
+00:29:46,808 --> 00:29:50,626
+basically components or subnetworks of
+
+467
+00:29:50,648 --> 00:29:54,390
+the VPC. While VPC spans the whole region,
+
+468
+00:29:54,730 --> 00:29:57,618
+all the availability zones,
+
+469
+00:29:57,794 --> 00:30:01,986
+subnets span individual availability
+
+470
+00:30:02,098 --> 00:30:05,770
+zones. So for each three zones you'll have
+
+471
+00:30:05,840 --> 00:30:09,706
+their own subnet. So it's like a private network inside
+
+472
+00:30:09,808 --> 00:30:13,114
+a network. Another interesting thing
+
+473
+00:30:13,232 --> 00:30:16,762
+in the VPC part is that
+
+474
+00:30:16,896 --> 00:30:20,314
+obviously whenever you create a virtual server,
+
+475
+00:30:20,362 --> 00:30:23,806
+it has to get an IP address. And in
+
+476
+00:30:23,828 --> 00:30:27,834
+VPC you have a range of private or internal
+
+477
+00:30:27,882 --> 00:30:31,602
+IP addresses. And that range is actually also
+
+478
+00:30:31,656 --> 00:30:35,314
+defined by default and you can even change it.
+
+479
+00:30:35,352 --> 00:30:39,042
+So if I go inside VPC, here you have
+
+480
+00:30:39,096 --> 00:30:42,286
+a range of IP addresses. So whenever you
+
+481
+00:30:42,328 --> 00:30:46,034
+create a new instance, a new EC two instance,
+
+482
+00:30:46,162 --> 00:30:49,702
+an IP address will be assigned to it from this
+
+483
+00:30:49,756 --> 00:30:53,334
+range. So internal or private IP address
+
+484
+00:30:53,452 --> 00:30:56,922
+is not for Internet traffic, but rather
+
+485
+00:30:56,976 --> 00:31:00,362
+for traffic inside the VPC. So when you have
+
+486
+00:31:00,416 --> 00:31:03,930
+multiple servers, multiple components inside
+
+487
+00:31:04,000 --> 00:31:07,582
+the VPC, they need to communicate with each other, right? So you have
+
+488
+00:31:07,636 --> 00:31:11,674
+an instance with web application, another instance with database
+
+489
+00:31:11,722 --> 00:31:14,734
+application, maybe a third one with some other service,
+
+490
+00:31:14,852 --> 00:31:18,814
+they all need to communicate. So private IP address is
+
+491
+00:31:18,852 --> 00:31:21,346
+what allows them to talk to each other.
+
+492
+00:31:21,528 --> 00:31:25,422
+So the IP address range is defined on a VPC
+
+493
+00:31:25,486 --> 00:31:29,378
+level and then each subnet then gets its own
+
+494
+00:31:29,544 --> 00:31:33,314
+IP address range. The private IP address range
+
+495
+00:31:33,442 --> 00:31:37,474
+from that total range, right, gets like a sub range.
+
+496
+00:31:37,522 --> 00:31:41,186
+So to say here you see those sub ranges defined.
+
+497
+00:31:41,298 --> 00:31:44,950
+Now obviously when we deploy our web application
+
+498
+00:31:45,100 --> 00:31:48,982
+on EC two instance, we want it to be accessible from Internet,
+
+499
+00:31:49,046 --> 00:31:53,430
+right, from outside. And for that, in addition to private
+
+500
+00:31:53,510 --> 00:31:57,378
+IP address, we need to assign it a public IP
+
+501
+00:31:57,414 --> 00:32:00,570
+address. And this is also configured
+
+502
+00:32:00,730 --> 00:32:04,094
+in VPC service. So when we create
+
+503
+00:32:04,132 --> 00:32:08,078
+an EC two instance, it will get a private IP address
+
+504
+00:32:08,244 --> 00:32:12,162
+from the range of the subnet inside which that
+
+505
+00:32:12,216 --> 00:32:15,634
+instance will start. And it will also get a
+
+506
+00:32:15,672 --> 00:32:19,390
+public IP address, internal one for internal communication
+
+507
+00:32:19,470 --> 00:32:22,598
+inside the VPC and a public IP address
+
+508
+00:32:22,684 --> 00:32:26,386
+for accessing it through the browser. For allowing
+
+509
+00:32:26,498 --> 00:32:29,922
+Internet connectivity with your VPC,
+
+510
+00:32:30,066 --> 00:32:33,266
+you also have an Internet gateway component.
+
+511
+00:32:33,378 --> 00:32:37,178
+So this basically connects VPC to
+
+512
+00:32:37,264 --> 00:32:40,630
+Internet to the outside world so that you can get traffic
+
+513
+00:32:40,710 --> 00:32:44,186
+inside your VPC to your web servers, for example. And then
+
+514
+00:32:44,208 --> 00:32:47,486
+you can also send traffic outside if
+
+515
+00:32:47,508 --> 00:32:50,926
+you want to download some stuff from Internet on
+
+516
+00:32:50,948 --> 00:32:54,206
+your components, et cetera. Now obviously in
+
+517
+00:32:54,228 --> 00:32:57,242
+addition to all of this network configuration,
+
+518
+00:32:57,386 --> 00:33:00,946
+you need to secure your components, right? So for
+
+519
+00:33:00,968 --> 00:33:04,094
+example, you want to control what traffic
+
+520
+00:33:04,222 --> 00:33:08,370
+enters your VPC or what traffic reaches individual
+
+521
+00:33:08,520 --> 00:33:11,746
+instances and components in your VPC or in
+
+522
+00:33:11,768 --> 00:33:16,182
+your subnets, and you want to control what traffic goes out, right? So this is
+
+523
+00:33:16,316 --> 00:33:20,214
+a firewall configuration basically for your VPC and
+
+524
+00:33:20,252 --> 00:33:24,280
+for individual instances. Now you can configure that security
+
+525
+00:33:24,750 --> 00:33:28,710
+control on multiple levels in VPC
+
+526
+00:33:28,870 --> 00:33:32,438
+and AWS makes it actually pretty flexible
+
+527
+00:33:32,614 --> 00:33:36,586
+and granular of how you can configure all
+
+528
+00:33:36,608 --> 00:33:40,474
+of this stuff, not just security, but the IP address ranges,
+
+529
+00:33:40,602 --> 00:33:44,334
+the route tables and so on. And that's why you
+
+530
+00:33:44,372 --> 00:33:48,074
+have this pretty big list of things that you can configure.
+
+531
+00:33:48,202 --> 00:33:52,450
+However, in many cases you will not need some
+
+532
+00:33:52,520 --> 00:33:56,802
+advanced network configuration. Most of this stuff is
+
+533
+00:33:56,856 --> 00:34:00,514
+configured by default as you see here because you have these
+
+534
+00:34:00,552 --> 00:34:04,994
+components already created and configured with some default configuration.
+
+535
+00:34:05,122 --> 00:34:09,190
+And in most simple applications you will not need
+
+536
+00:34:09,260 --> 00:34:12,678
+to do any crazy configurations here.
+
+537
+00:34:12,844 --> 00:34:16,554
+And since this whole network is private and
+
+538
+00:34:16,592 --> 00:34:20,282
+by default closed to the outside world so no
+
+539
+00:34:20,336 --> 00:34:24,474
+access from Internet. Of course for your web applications you
+
+540
+00:34:24,512 --> 00:34:28,046
+want to configure some Internet access, right? As well as you want
+
+541
+00:34:28,068 --> 00:34:31,306
+to ssh into your servers from your laptop.
+
+542
+00:34:31,418 --> 00:34:35,482
+So you want to configure some kind of external
+
+543
+00:34:35,546 --> 00:34:40,830
+access. And for that you have components
+
+544
+00:34:40,990 --> 00:34:46,126
+inside that VPC service called network acls
+
+545
+00:34:46,318 --> 00:34:49,838
+which are basically firewalls or firewall rules
+
+546
+00:34:49,934 --> 00:34:53,842
+for subnets so you can configure this per subnet
+
+547
+00:34:53,986 --> 00:34:57,846
+and in addition to that you have security
+
+548
+00:34:57,948 --> 00:35:02,038
+groups which are again firewall rules but on a
+
+549
+00:35:02,204 --> 00:35:05,814
+virtual machine level. So inside the VPC
+
+550
+00:35:05,862 --> 00:35:09,002
+we have the subnet and inside subnets we're going to have
+
+551
+00:35:09,136 --> 00:35:13,126
+EC two instances which are basically the virtual servers
+
+552
+00:35:13,318 --> 00:35:17,002
+and we can configure firewall rules on that
+
+553
+00:35:17,056 --> 00:35:21,114
+virtual server level using security groups.
+
+554
+00:35:21,242 --> 00:35:24,846
+So you create both of these components on a VPC level and
+
+555
+00:35:24,868 --> 00:35:28,990
+then you assign the necklace to individual subnets
+
+556
+00:35:29,330 --> 00:35:33,362
+and assign security groups to individual instances or
+
+557
+00:35:33,416 --> 00:35:35,890
+components inside that VPC.
+
+558
+00:35:46,510 --> 00:35:49,690
+We're going to provision infrastructure where
+
+559
+00:35:49,760 --> 00:35:53,322
+we will install and set up a Kubernetes cluster.
+
+560
+00:35:53,466 --> 00:35:58,282
+And as I said, we're going to go through a simple process of provisioning instances.
+
+561
+00:35:58,426 --> 00:36:01,806
+So basic virtual machines on AWS platform,
+
+562
+00:36:01,988 --> 00:36:05,474
+one server for a master node and two servers for
+
+563
+00:36:05,592 --> 00:36:09,058
+two worker nodes. So what I'm going to do is I'm going
+
+564
+00:36:09,064 --> 00:36:12,450
+to go to EC two service. So these are the instances
+
+565
+00:36:14,390 --> 00:36:17,734
+I'm in the region which is closest to me. So you
+
+566
+00:36:17,772 --> 00:36:21,250
+should actually choose a region which is closest to your physical location.
+
+567
+00:36:21,410 --> 00:36:25,222
+And then basically we're going to create instances for
+
+568
+00:36:25,276 --> 00:36:29,354
+our cluster. So launch instances and we
+
+569
+00:36:29,392 --> 00:36:33,674
+are going to go with Ubuntu and I'm going to choose the latest version which
+
+570
+00:36:33,712 --> 00:36:37,660
+is 2004. Select this one.
+
+571
+00:36:38,910 --> 00:36:42,026
+And now we have to choose the size. And as
+
+572
+00:36:42,048 --> 00:36:45,934
+we saw in the Kubernetes documentation, the cluster nodes have
+
+573
+00:36:45,972 --> 00:36:49,514
+a minimum resource requirement so it has to be minimum
+
+574
+00:36:49,562 --> 00:36:53,326
+of 2gb of ram and two cpus. So that's the
+
+575
+00:36:53,348 --> 00:36:56,446
+criteria we're going to use to choose server.
+
+576
+00:36:56,638 --> 00:37:00,670
+So right here I have a virtual machine with two cpus
+
+577
+00:37:00,750 --> 00:37:04,274
+and 4gb of ram. So this looks like a
+
+578
+00:37:04,392 --> 00:37:08,246
+good fit for cluster node. So I'm going to choose t
+
+579
+00:37:08,268 --> 00:37:11,794
+two medium. And also as I explained
+
+580
+00:37:11,842 --> 00:37:15,266
+in the video about Kubernetes architecture, master nodes
+
+581
+00:37:15,298 --> 00:37:18,350
+usually need less resources than worker nodes,
+
+582
+00:37:18,450 --> 00:37:21,706
+which is logical because worker nodes are the ones where
+
+583
+00:37:21,808 --> 00:37:25,286
+the actual applications, our microservices
+
+584
+00:37:25,398 --> 00:37:28,986
+or databases or whatever services we need are going to
+
+585
+00:37:29,008 --> 00:37:33,666
+be running. Master nodes will only have the control plane
+
+586
+00:37:33,798 --> 00:37:37,866
+applications running on them, which is just a handful of applications.
+
+587
+00:37:37,978 --> 00:37:41,326
+So what we're going to do is we're going to choose the smaller one which
+
+588
+00:37:41,348 --> 00:37:44,778
+is t two medium with the minimum requirement
+
+589
+00:37:44,874 --> 00:37:47,982
+for a master node. And for the two worker nodes
+
+590
+00:37:48,046 --> 00:37:51,822
+we're going to use servers which are a bit larger,
+
+591
+00:37:51,966 --> 00:37:55,282
+which is going to be t two large. If you want for
+
+592
+00:37:55,336 --> 00:37:59,214
+this course specifically you can actually select t two medium for all
+
+593
+00:37:59,272 --> 00:38:03,154
+three nodes. But just so you know, this is going to be a more realistic
+
+594
+00:38:03,202 --> 00:38:06,902
+setup where you have one smaller master node and the work
+
+595
+00:38:06,956 --> 00:38:10,226
+nodes will be larger. So once that's selected I'm
+
+596
+00:38:10,258 --> 00:38:13,674
+going to click on next and here you have a bunch of
+
+597
+00:38:13,712 --> 00:38:17,818
+configuration which we don't actually care about right now. And we have
+
+598
+00:38:17,904 --> 00:38:21,514
+one instance, right, so we are launching one master node with this
+
+599
+00:38:21,552 --> 00:38:25,422
+size. So it's going to be one here. And actually
+
+600
+00:38:25,476 --> 00:38:29,262
+I'm not going to change any of the default configurations. So I'm going to click
+
+601
+00:38:29,316 --> 00:38:32,910
+review and launch directly without
+
+602
+00:38:32,980 --> 00:38:36,466
+going through all the steps. And this will give us a
+
+603
+00:38:36,488 --> 00:38:40,418
+review of our instance which is the operating system image. We're using
+
+604
+00:38:40,504 --> 00:38:44,510
+the instance type security group which by default
+
+605
+00:38:44,590 --> 00:38:48,182
+has ssh port enabled so we can access it from
+
+606
+00:38:48,236 --> 00:38:52,066
+anywhere. And some other stuff I'm going to do launch
+
+607
+00:38:52,178 --> 00:38:56,102
+and this will prompt me to create a key pair or
+
+608
+00:38:56,156 --> 00:38:58,834
+ssh key pair for the server.
+
+609
+00:38:58,962 --> 00:39:02,326
+And this basically means that using this ssh key I'm
+
+610
+00:39:02,358 --> 00:39:05,914
+going to be able to ssh into the server from
+
+611
+00:39:05,952 --> 00:39:09,606
+my machine. So we're going to create a new key pair
+
+612
+00:39:09,718 --> 00:39:13,998
+and we're going to call this Kubernetes node and very important
+
+613
+00:39:14,164 --> 00:39:17,694
+to download this key pair, right. We need this
+
+614
+00:39:17,812 --> 00:39:21,294
+key locally on our laptop so that we can use it
+
+615
+00:39:21,332 --> 00:39:24,578
+when connecting to the server through
+
+616
+00:39:24,664 --> 00:39:28,046
+ssh. So I'm going to download this key pair.
+
+617
+00:39:28,238 --> 00:39:32,194
+There you go. So key pair was created on
+
+618
+00:39:32,232 --> 00:39:36,082
+AWS and I got a copy of that key,
+
+619
+00:39:36,136 --> 00:39:39,734
+the private key on my laptop, so I can use that key
+
+620
+00:39:39,852 --> 00:39:43,862
+to connect to the server, which means anybody who does not have this
+
+621
+00:39:43,916 --> 00:39:47,506
+key will not be able to connect to the server.
+
+622
+00:39:47,698 --> 00:39:49,850
+And we're going to launch the instance.
+
+623
+00:39:51,550 --> 00:39:54,634
+This is the instance id that has been launched and is being
+
+624
+00:39:54,672 --> 00:39:58,486
+initiated. So if I click on it, you see it's
+
+625
+00:39:58,518 --> 00:40:01,962
+in a running state and still initializing. So that's
+
+626
+00:40:02,026 --> 00:40:05,550
+one server that we just provisioned with t two,
+
+627
+00:40:05,620 --> 00:40:09,002
+medium size and this is going to be our master node
+
+628
+00:40:09,066 --> 00:40:13,150
+and we can actually call this master node
+
+629
+00:40:15,110 --> 00:40:19,122
+in the name and now we can provision the
+
+630
+00:40:19,176 --> 00:40:23,170
+two worker nodes again. Launch instances,
+
+631
+00:40:23,590 --> 00:40:28,114
+same operating system ubuntu as
+
+632
+00:40:28,152 --> 00:40:31,874
+I said, I'm going to choose t two large, you can actually choose medium
+
+633
+00:40:31,922 --> 00:40:35,526
+because we're not going to be deploying so many applications on the
+
+634
+00:40:35,548 --> 00:40:39,034
+worker nodes, but this will actually be the
+
+635
+00:40:39,072 --> 00:40:42,438
+realistic setup. So with t two large I'm
+
+636
+00:40:42,454 --> 00:40:46,262
+going to click on next because we need two instances
+
+637
+00:40:46,326 --> 00:40:50,394
+of this server, not just one for
+
+638
+00:40:50,432 --> 00:40:54,334
+two worker nodes. Again I'm going to leave everything at
+
+639
+00:40:54,372 --> 00:40:58,714
+defaults and do review and launch same default
+
+640
+00:40:58,762 --> 00:41:03,006
+configuration and launch. Now I can
+
+641
+00:41:03,188 --> 00:41:06,622
+create new ssh key pair for these two
+
+642
+00:41:06,676 --> 00:41:10,594
+servers or I can reuse the one that I created for the
+
+643
+00:41:10,632 --> 00:41:14,414
+master node which means I would be able to connect all three servers
+
+644
+00:41:14,462 --> 00:41:17,378
+with the same key, which is going to be practical. So that's what we're going
+
+645
+00:41:17,384 --> 00:41:21,458
+to do. Choose an existing key pair and I'm going to choose Kubernetes
+
+646
+00:41:21,554 --> 00:41:24,370
+node and click on this acknowledgment.
+
+647
+00:41:24,530 --> 00:41:28,338
+And obviously I don't have to download this because I already have that
+
+648
+00:41:28,524 --> 00:41:33,226
+locally and launch instance and
+
+649
+00:41:33,248 --> 00:41:36,858
+now two instances are being launched. Let's click on one of those.
+
+650
+00:41:37,024 --> 00:41:40,586
+I'm going to remove the filter and there you go.
+
+651
+00:41:40,688 --> 00:41:44,110
+And we can actually call them worker nodes.
+
+652
+00:41:51,300 --> 00:41:54,736
+The name doesn't have to be unique or for more differentiation we
+
+653
+00:41:54,758 --> 00:41:56,950
+can also do worker node one,
+
+654
+00:41:59,640 --> 00:42:01,270
+worker node two,
+
+655
+00:42:03,640 --> 00:42:07,152
+and after a couple of minutes all the servers are fully
+
+656
+00:42:07,216 --> 00:42:11,112
+initialized and ready to go. So basically we just
+
+657
+00:42:11,246 --> 00:42:14,552
+created or provisioned infrastructure of three
+
+658
+00:42:14,686 --> 00:42:18,136
+servers, three Ubuntu servers that we're going to
+
+659
+00:42:18,158 --> 00:42:21,848
+use to install and create cluster from scratch.
+
+660
+00:42:22,024 --> 00:42:25,964
+Now these are just bare servers. There is nothing on them that
+
+661
+00:42:26,082 --> 00:42:29,644
+related to Kubernetes. So we're going to have to install
+
+662
+00:42:29,762 --> 00:42:33,484
+everything needed step by step. Node that we're going to work
+
+663
+00:42:33,522 --> 00:42:37,616
+with is going to be master node. So in a Kubernetes cluster we
+
+664
+00:42:37,718 --> 00:42:41,936
+first have to set up and configure a master node which
+
+665
+00:42:41,958 --> 00:42:45,764
+will give us a Kubernetes cluster and then we can connect or
+
+666
+00:42:45,802 --> 00:42:50,000
+join any additional nodes to that configured
+
+667
+00:42:50,080 --> 00:42:54,164
+cluster. So we have these three servers which are
+
+668
+00:42:54,202 --> 00:42:57,316
+all empty. There is nothing Kubernetes related on them and
+
+669
+00:42:57,338 --> 00:43:00,836
+we just name them master node, worker node,
+
+670
+00:43:00,948 --> 00:43:04,132
+because we're going to turn this instance into a master node
+
+671
+00:43:04,196 --> 00:43:06,840
+and these two instances into worker nodes.
+
+672
+00:43:10,060 --> 00:43:13,976
+So as a final step of our infrastructure setup we're
+
+673
+00:43:14,008 --> 00:43:17,404
+going to test connecting to one of the servers. Let's actually
+
+674
+00:43:17,442 --> 00:43:20,828
+choose the masternode server and connect to it
+
+675
+00:43:20,914 --> 00:43:24,236
+with this key that we downloaded from AWS.
+
+676
+00:43:24,348 --> 00:43:27,772
+So I'm going to go to the terminal, the key has been downloaded
+
+677
+00:43:27,836 --> 00:43:32,464
+in downloads folder and
+
+678
+00:43:32,502 --> 00:43:35,876
+kubernetes node. And what
+
+679
+00:43:35,898 --> 00:43:39,670
+I'm going to do first is I'm going to move that file into
+
+680
+00:43:40,680 --> 00:43:43,760
+my SSH folder
+
+681
+00:43:43,920 --> 00:43:47,708
+because that's where the private ssh keys
+
+682
+00:43:47,824 --> 00:43:50,890
+should be located by standard.
+
+683
+00:43:51,260 --> 00:43:54,472
+And once I have moved it there one more thing
+
+684
+00:43:54,526 --> 00:43:58,356
+I need to do is I need to restrict
+
+685
+00:43:58,548 --> 00:44:02,284
+permissions on that key. So right now
+
+686
+00:44:02,482 --> 00:44:06,156
+if I do ls minus l, you see
+
+687
+00:44:06,178 --> 00:44:09,484
+that I have a read write permission as an owner and
+
+688
+00:44:09,522 --> 00:44:13,296
+it has read permission for other groups. And if I
+
+689
+00:44:13,318 --> 00:44:17,452
+try to use this key to connect to the server on aws
+
+690
+00:44:17,596 --> 00:44:21,564
+I'll get a warning that the file is not protected
+
+691
+00:44:21,692 --> 00:44:25,036
+because it has two broad permissions.
+
+692
+00:44:25,148 --> 00:44:29,190
+So we have to restrict that and we're going to do that using
+
+693
+00:44:29,560 --> 00:44:33,684
+change mod command and we're going to set the permission to 400
+
+694
+00:44:33,802 --> 00:44:37,316
+which will translate to read permission for
+
+695
+00:44:37,338 --> 00:44:40,904
+the owner, zero permissions. So basically no
+
+696
+00:44:40,942 --> 00:44:44,264
+permissions here for the group and no
+
+697
+00:44:44,302 --> 00:44:46,410
+permissions for anybody else.
+
+698
+00:44:51,340 --> 00:44:54,824
+It and let's execute. And let's see again.
+
+699
+00:44:55,022 --> 00:44:59,304
+There you go. So now I will be allowed to use this
+
+700
+00:44:59,502 --> 00:45:02,848
+private key to connect to the server. How do we
+
+701
+00:45:02,894 --> 00:45:06,432
+connect to the server? Very easy actually we go and grab the public
+
+702
+00:45:06,486 --> 00:45:10,192
+key of the server first of all because we need that to connect
+
+703
+00:45:10,246 --> 00:45:13,836
+to it. And right here we have the public IP
+
+704
+00:45:13,868 --> 00:45:17,556
+address. You can also see that in the list view right here you
+
+705
+00:45:17,578 --> 00:45:20,624
+have the public IP addresses of all the servers.
+
+706
+00:45:20,752 --> 00:45:24,724
+So I'm going to copy it and
+
+707
+00:45:24,762 --> 00:45:29,976
+we're going to do ssh the
+
+708
+00:45:29,998 --> 00:45:33,224
+public IP address of the server. And before the
+
+709
+00:45:33,262 --> 00:45:36,100
+server we need to specify a user.
+
+710
+00:45:36,260 --> 00:45:40,104
+If I leave it like this by default Linux will
+
+711
+00:45:40,222 --> 00:45:44,104
+attach my current user as a username and
+
+712
+00:45:44,142 --> 00:45:47,564
+will try to connect like this. But obviously there
+
+713
+00:45:47,602 --> 00:45:51,870
+is no this user on the server right.
+
+714
+00:45:52,240 --> 00:45:56,060
+So I have to specify the user which AWS
+
+715
+00:45:56,140 --> 00:45:59,564
+actually creates on that instance when it's provisioned.
+
+716
+00:45:59,692 --> 00:46:03,244
+And on Ubuntu instances the default user
+
+717
+00:46:03,292 --> 00:46:06,316
+is ubuntu and I know that from the documentation.
+
+718
+00:46:06,508 --> 00:46:10,004
+So for each instance you can actually find out what the default user is
+
+719
+00:46:10,042 --> 00:46:13,152
+that you connect with. So we're connecting to the server
+
+720
+00:46:13,296 --> 00:46:16,848
+with a default user which already exists on the server
+
+721
+00:46:16,944 --> 00:46:20,756
+and obviously we are going to need the private
+
+722
+00:46:20,788 --> 00:46:24,904
+key to connect to it, which is this
+
+723
+00:46:24,942 --> 00:46:28,744
+one right here. So basically we're connecting to this server with
+
+724
+00:46:28,862 --> 00:46:32,190
+credentials which is username and
+
+725
+00:46:32,640 --> 00:46:36,792
+the private ssh key. So if I execute this command
+
+726
+00:46:36,936 --> 00:46:41,020
+on the very first connection we get this authenticity check
+
+727
+00:46:41,170 --> 00:46:44,688
+that we need to confirm. That basically means that we're going
+
+728
+00:46:44,694 --> 00:46:47,884
+to save this server with this IP address as a known
+
+729
+00:46:47,932 --> 00:46:52,512
+host on our laptop, on our local machine saying
+
+730
+00:46:52,566 --> 00:46:55,892
+we can actually trust this server. And as you see,
+
+731
+00:46:55,946 --> 00:46:59,504
+we have connected to the AWS
+
+732
+00:46:59,552 --> 00:47:03,520
+instance. We are inside the terminal with Ubuntu user
+
+733
+00:47:03,600 --> 00:47:07,604
+and this is basically the private, the internal IP address of
+
+734
+00:47:07,642 --> 00:47:11,396
+that instance, which you can also see in the UI. So it starts
+
+735
+00:47:11,428 --> 00:47:14,984
+with 172 and going back
+
+736
+00:47:15,022 --> 00:47:18,824
+here, right here you see the private IP address
+
+737
+00:47:19,022 --> 00:47:22,444
+172, et cetera. And since we are going to be
+
+738
+00:47:22,482 --> 00:47:26,108
+administering all these servers, obviously we're going
+
+739
+00:47:26,114 --> 00:47:29,800
+to need root privileges, right? To install different packages,
+
+740
+00:47:29,880 --> 00:47:34,524
+to install different applications and binaries for kubernetes,
+
+741
+00:47:34,652 --> 00:47:38,368
+like kubernetes, binaries, the container runtime, et cetera. We're going to
+
+742
+00:47:38,374 --> 00:47:41,872
+need root privileges. So for those commands we can actually
+
+743
+00:47:41,926 --> 00:47:45,824
+execute them using pseudo because our ubuntu, the default
+
+744
+00:47:45,872 --> 00:47:49,604
+Ubuntu user, has permission to
+
+745
+00:47:49,642 --> 00:47:52,916
+execute pseudo commands like this.
+
+746
+00:47:53,098 --> 00:47:57,140
+Or you can actually switch to the root user
+
+747
+00:47:57,560 --> 00:48:00,996
+inside the terminal and then basically work as a root
+
+748
+00:48:01,028 --> 00:48:03,560
+user. And we can do that by pseudo.
+
+749
+00:48:03,980 --> 00:48:06,888
+I if I enter.
+
+750
+00:48:07,054 --> 00:48:10,392
+There you go. Now we are actually logged in
+
+751
+00:48:10,446 --> 00:48:14,204
+as a root user to the server. So you can administer the
+
+752
+00:48:14,242 --> 00:48:17,592
+server as a root user. So the servers
+
+753
+00:48:17,656 --> 00:48:21,068
+are set up, we check the connectivity. Now let's actually
+
+754
+00:48:21,154 --> 00:48:24,704
+log out from root user, then log out as
+
+755
+00:48:24,742 --> 00:48:28,464
+Ubuntu user back to our terminal. And in the
+
+756
+00:48:28,502 --> 00:48:32,140
+next lectures we're going to set up and configure
+
+757
+00:48:32,220 --> 00:48:33,520
+a master node.
+
+758
+00:48:42,190 --> 00:48:46,362
+This lecture you will learn the basics of TLS certificates
+
+759
+00:48:46,506 --> 00:48:50,250
+so that you're able to understand how certificates in kubernetes
+
+760
+00:48:50,330 --> 00:48:53,758
+work. So how do certificates work in general?
+
+761
+00:48:53,924 --> 00:48:57,730
+Now at the very basic level, TLS certificate is
+
+762
+00:48:57,800 --> 00:49:01,390
+a way to establish trust and enable
+
+763
+00:49:01,470 --> 00:49:05,618
+secure communication between client and server or
+
+764
+00:49:05,704 --> 00:49:08,806
+user and the application to get the terms right.
+
+765
+00:49:08,908 --> 00:49:12,166
+In any communication one party is always
+
+766
+00:49:12,268 --> 00:49:15,890
+initiating the request, so the user or client
+
+767
+00:49:15,970 --> 00:49:19,366
+is the one that initiates the communication. And on
+
+768
+00:49:19,388 --> 00:49:23,210
+the other side there is a server or an application or
+
+769
+00:49:23,280 --> 00:49:27,146
+some kind of service that gets that request and replies to
+
+770
+00:49:27,168 --> 00:49:30,342
+it. An Internet is used to exchange
+
+771
+00:49:30,406 --> 00:49:34,814
+all kinds of data, like user accessing their banking application and
+
+772
+00:49:34,852 --> 00:49:38,666
+their bank details, or a web application requesting
+
+773
+00:49:38,778 --> 00:49:42,106
+credit card information from a payment service, et cetera.
+
+774
+00:49:42,218 --> 00:49:46,382
+So anytime personal and sensitive data is exchanged,
+
+775
+00:49:46,526 --> 00:49:50,142
+this communication has to be secure. Now, what does secure
+
+776
+00:49:50,206 --> 00:49:53,554
+communication actually mean? Well, let's say an example of a
+
+777
+00:49:53,592 --> 00:49:57,150
+user accessing their online banking website.
+
+778
+00:49:57,320 --> 00:50:01,206
+To access their account, the user must first log into the account,
+
+779
+00:50:01,308 --> 00:50:04,258
+right. Without unencrypted communication,
+
+780
+00:50:04,434 --> 00:50:08,402
+users login credentials will be sent to the server
+
+781
+00:50:08,466 --> 00:50:12,326
+in plain text. If a hacker intercepts the traffic,
+
+782
+00:50:12,438 --> 00:50:15,594
+they will simply see the credentials in plain text and
+
+783
+00:50:15,632 --> 00:50:19,260
+be able to use it to log in to the user's account.
+
+784
+00:50:22,370 --> 00:50:25,418
+So, first step for securing
+
+785
+00:50:25,594 --> 00:50:29,214
+the communication between client and the server is to
+
+786
+00:50:29,252 --> 00:50:32,670
+encrypt the data so that hackers can
+
+787
+00:50:32,740 --> 00:50:36,494
+see that in plain text. And encryption is a
+
+788
+00:50:36,532 --> 00:50:39,922
+concept that has been around for thousands of years.
+
+789
+00:50:40,056 --> 00:50:43,422
+And at its core, you basically just take a random
+
+790
+00:50:43,486 --> 00:50:46,946
+string and use it to change the plain text into an
+
+791
+00:50:46,968 --> 00:50:50,902
+encrypted, non human readable text. And that
+
+792
+00:50:50,956 --> 00:50:55,382
+random string is called an encryption key. Encryption is
+
+793
+00:50:55,436 --> 00:50:59,014
+its own subject in computer security, so we won't go
+
+794
+00:50:59,052 --> 00:51:02,186
+into too much detail of how that works exactly,
+
+795
+00:51:02,368 --> 00:51:06,394
+but it's enough to know that a randomly generated encryption key
+
+796
+00:51:06,512 --> 00:51:10,886
+is used to encrypt plaintext data so that hackers
+
+797
+00:51:10,998 --> 00:51:14,678
+cannot read it. And that same key is then used to
+
+798
+00:51:14,784 --> 00:51:18,314
+decrypt the encrypted data as well. This kind of encryption,
+
+799
+00:51:18,362 --> 00:51:21,614
+when you use the same key to encrypt and decrypt the data,
+
+800
+00:51:21,732 --> 00:51:25,486
+is called asymmetric encryption. Now, when a user logs
+
+801
+00:51:25,518 --> 00:51:28,994
+into their account, the credentials are sent to
+
+802
+00:51:29,032 --> 00:51:32,958
+the server, encrypted, so that hacker that is sniffing
+
+803
+00:51:32,974 --> 00:51:36,434
+the traffic cannot actually read it. The problem is,
+
+804
+00:51:36,472 --> 00:51:39,494
+though, the server cannot read it either,
+
+805
+00:51:39,612 --> 00:51:42,934
+because it can't decrypt the data without the
+
+806
+00:51:42,972 --> 00:51:46,214
+key of the client. So the client needs to send the
+
+807
+00:51:46,252 --> 00:51:49,874
+encryption key to the server as well. The problem is
+
+808
+00:51:50,012 --> 00:51:54,010
+that the hacker can also get the copy of that key sent
+
+809
+00:51:54,080 --> 00:51:57,558
+to the server, and that's where an asymmetric
+
+810
+00:51:57,654 --> 00:51:59,820
+encryption comes into play.
+
+811
+00:52:02,610 --> 00:52:05,966
+So instead of having the same key to encrypt and
+
+812
+00:52:05,988 --> 00:52:09,614
+decrypt the data, we have separate encryption and
+
+813
+00:52:09,652 --> 00:52:13,210
+decryption keys, also called a key pair.
+
+814
+00:52:13,290 --> 00:52:16,642
+So you encrypt the data with one key, and you can only
+
+815
+00:52:16,776 --> 00:52:20,434
+decrypt it with its pair key. So let's see how
+
+816
+00:52:20,472 --> 00:52:23,874
+this is used to solve the issue of hackers stealing the
+
+817
+00:52:23,912 --> 00:52:27,446
+client's symmetric key and decrypting the
+
+818
+00:52:27,468 --> 00:52:31,478
+data. We use asymmetric encryption to securely send
+
+819
+00:52:31,564 --> 00:52:34,850
+the client's symmetric key to the server.
+
+820
+00:52:34,930 --> 00:52:38,114
+So the client has a symmetric key for encrypting
+
+821
+00:52:38,162 --> 00:52:41,706
+its data when sending it to the server. Right on
+
+822
+00:52:41,728 --> 00:52:44,954
+the other side, we generate an asymmetric key
+
+823
+00:52:44,992 --> 00:52:48,490
+pair on the server. The server sends one
+
+824
+00:52:48,560 --> 00:52:52,214
+key to the client. Hackers sniffing the traffic will
+
+825
+00:52:52,272 --> 00:52:55,482
+also get that key. Client then encrypts
+
+826
+00:52:55,546 --> 00:52:59,402
+its own symmetric key with the key that server
+
+827
+00:52:59,466 --> 00:53:03,642
+sent it and sends its own encrypted symmetric
+
+828
+00:53:03,706 --> 00:53:07,378
+key to the server. Server will then use the other key
+
+829
+00:53:07,464 --> 00:53:11,742
+to decrypt the data that client sent and extract
+
+830
+00:53:11,806 --> 00:53:15,362
+the client's symmetric key. Again, Hacker also gets
+
+831
+00:53:15,416 --> 00:53:18,786
+the client's key, but it can't decrypt it because it
+
+832
+00:53:18,808 --> 00:53:22,662
+doesn't have the other key that the server has. This way
+
+833
+00:53:22,716 --> 00:53:26,146
+client was able to send its key to the server securely
+
+834
+00:53:26,258 --> 00:53:30,246
+and after the exchange the further communication can be encrypted with
+
+835
+00:53:30,268 --> 00:53:33,914
+a client's symmetric key without hacker being able
+
+836
+00:53:33,952 --> 00:53:37,914
+to read any of the traffic. And the key that server sends all the
+
+837
+00:53:37,952 --> 00:53:41,754
+clients and which hacker will be able to get
+
+838
+00:53:41,872 --> 00:53:45,550
+is also called the public key because it is for public
+
+839
+00:53:45,620 --> 00:53:49,870
+access. Even hackers can obtain it without any security issues.
+
+840
+00:53:50,020 --> 00:53:53,502
+And the key that server only leaves for itself to
+
+841
+00:53:53,556 --> 00:53:56,834
+decrypt the client's data and is not
+
+842
+00:53:56,872 --> 00:54:00,430
+shared with any client or anyone outside the server
+
+843
+00:54:00,510 --> 00:54:03,794
+is called a private key because it must stay private and
+
+844
+00:54:03,832 --> 00:54:07,026
+protected on the server. So the asymmetric key
+
+845
+00:54:07,048 --> 00:54:11,270
+pair is also called private and public key pair.
+
+846
+00:54:13,850 --> 00:54:18,114
+Now the hacker is not able to see the data between client and server
+
+847
+00:54:18,242 --> 00:54:21,734
+and is not able to impersonate the client.
+
+848
+00:54:21,862 --> 00:54:25,658
+So the only option they have to get your personal data
+
+849
+00:54:25,744 --> 00:54:28,794
+like login credentials or credit card information
+
+850
+00:54:28,992 --> 00:54:32,686
+is impersonating the server. So when you
+
+851
+00:54:32,708 --> 00:54:36,590
+visit your social media page or your banking account
+
+852
+00:54:36,740 --> 00:54:40,106
+to log in, the hacker manages to route
+
+853
+00:54:40,138 --> 00:54:44,142
+your request to their own website or application, which looks
+
+854
+00:54:44,196 --> 00:54:47,426
+exactly the way as the valid website and has a
+
+855
+00:54:47,448 --> 00:54:51,038
+secure protocol, htps for communication.
+
+856
+00:54:51,214 --> 00:54:54,690
+So just by looking at the website you don't know whether
+
+857
+00:54:54,760 --> 00:54:58,166
+it's a fake or a real website. And this way
+
+858
+00:54:58,268 --> 00:55:01,654
+hacker will act as the real server. It will have
+
+859
+00:55:01,692 --> 00:55:05,542
+its own asymmetric key pair generated. It will then send
+
+860
+00:55:05,676 --> 00:55:09,238
+client its public key. Client will encrypt its
+
+861
+00:55:09,324 --> 00:55:12,682
+symmetric key with Hacker's public key
+
+862
+00:55:12,816 --> 00:55:16,118
+and send it back, establishing a secure connection
+
+863
+00:55:16,214 --> 00:55:19,734
+with the hacker's server and any data user
+
+864
+00:55:19,782 --> 00:55:23,158
+enters like credentials, personal data will end up
+
+865
+00:55:23,184 --> 00:55:26,746
+on the hacker's computer. So what is a way to avoid
+
+866
+00:55:26,778 --> 00:55:30,122
+that? Or how can a client validate
+
+867
+00:55:30,186 --> 00:55:34,250
+that? The public key which server sent it really belongs
+
+868
+00:55:34,330 --> 00:55:38,130
+to its online banking website or its social media website,
+
+869
+00:55:38,200 --> 00:55:42,110
+and not a fake hacker website. That's where certificates
+
+870
+00:55:42,190 --> 00:55:45,794
+come in. The admins of the real website can
+
+871
+00:55:45,832 --> 00:55:49,862
+get the public key signed and certified by
+
+872
+00:55:49,916 --> 00:55:53,766
+what's called a certificate authority, or also called
+
+873
+00:55:53,868 --> 00:55:57,922
+CA is an entity that gives website owners
+
+874
+00:55:58,066 --> 00:56:01,734
+a digital certificate that certifies the ownership
+
+875
+00:56:01,862 --> 00:56:05,418
+of that specific website and its domain. So basically,
+
+876
+00:56:05,504 --> 00:56:09,034
+the owner of the real website and its domain asks an
+
+877
+00:56:09,072 --> 00:56:12,826
+authorized party to sign their certificate as a proof
+
+878
+00:56:12,938 --> 00:56:16,430
+that their public key is really for the website,
+
+879
+00:56:16,580 --> 00:56:19,866
+mybank.com or facebook.com etc.
+
+880
+00:56:19,978 --> 00:56:24,142
+And this authorized party or certificate authority will
+
+881
+00:56:24,196 --> 00:56:27,918
+issue a certificate which has a public key embedded
+
+882
+00:56:28,014 --> 00:56:31,582
+and includes the name of the real website and its domain,
+
+883
+00:56:31,726 --> 00:56:35,714
+and a signature of the CA. So it has to be
+
+884
+00:56:35,832 --> 00:56:39,590
+signed by the certificate authority. If the website has
+
+885
+00:56:39,660 --> 00:56:43,814
+subdomains or any other domains, including the language domains for their
+
+886
+00:56:43,852 --> 00:56:47,538
+website, all of them should be included in their certificate
+
+887
+00:56:47,634 --> 00:56:50,682
+for a client to validate them. So when you access
+
+888
+00:56:50,736 --> 00:56:54,646
+the real website in your browser, the browser which is the client
+
+889
+00:56:54,758 --> 00:56:58,390
+will check the certificate, make sure the certificate
+
+890
+00:56:58,470 --> 00:57:01,994
+is valid and issued for this domain name,
+
+891
+00:57:02,032 --> 00:57:05,770
+and that the signature is from a valid
+
+892
+00:57:05,850 --> 00:57:07,600
+or authorized ca.
+
+893
+00:57:10,770 --> 00:57:14,286
+The same way, servers need to also protect themselves from
+
+894
+00:57:14,308 --> 00:57:18,462
+the hackers, just like clients. So the server can also request
+
+895
+00:57:18,526 --> 00:57:22,334
+a certificate from the client to verify that it's
+
+896
+00:57:22,382 --> 00:57:26,274
+talking to the legit client and not a hacker. These are the
+
+897
+00:57:26,312 --> 00:57:29,846
+client certificates which work pretty much the same way they get
+
+898
+00:57:29,868 --> 00:57:33,174
+signed by trusted CA, which server can
+
+899
+00:57:33,212 --> 00:57:36,930
+validate. Now you may be thinking you have never generated
+
+900
+00:57:37,010 --> 00:57:40,422
+a client certificate for connecting to websites, right?
+
+901
+00:57:40,556 --> 00:57:44,346
+Well, it actually happens in the background so you don't have to do
+
+902
+00:57:44,368 --> 00:57:48,090
+it yourself. Otherwise it will be very inconvenient for the website
+
+903
+00:57:48,160 --> 00:57:51,386
+users if they had to somehow do this themselves.
+
+904
+00:57:51,568 --> 00:57:55,594
+However, we will see how to generate client certificate
+
+905
+00:57:55,642 --> 00:57:58,926
+to connect to the Kubernetes API server in
+
+906
+00:57:58,948 --> 00:58:00,350
+the following lectures.
+
+907
+00:58:03,330 --> 00:58:06,942
+Now I mentioned that when a server gets a certificate
+
+908
+00:58:07,006 --> 00:58:10,690
+signed by CA, client will validate and see
+
+909
+00:58:10,760 --> 00:58:14,194
+that the signature is valid. But how
+
+910
+00:58:14,232 --> 00:58:18,394
+does the browser know that the CA that signed the certificate
+
+911
+00:58:18,462 --> 00:58:21,766
+is a legitimate one? Because the hacker could have
+
+912
+00:58:21,788 --> 00:58:25,430
+created their own CA and issued the certificate for
+
+913
+00:58:25,500 --> 00:58:28,994
+their public key. So how is client able to validate
+
+914
+00:58:29,122 --> 00:58:32,650
+that the signature is valid? Well,
+
+915
+00:58:32,720 --> 00:58:36,790
+there is actually an official list of all authorized
+
+916
+00:58:36,870 --> 00:58:41,046
+and acknowledged cas, and these cas are trusted
+
+917
+00:58:41,078 --> 00:58:44,314
+organizations that issue digital certificates,
+
+918
+00:58:44,442 --> 00:58:48,142
+and each modern operating system has a list of
+
+919
+00:58:48,196 --> 00:58:52,254
+such cas already packaged inside. That's where browsers can
+
+920
+00:58:52,292 --> 00:58:56,202
+verify whether the CA is trusted or
+
+921
+00:58:56,276 --> 00:58:59,586
+not. So when you see the hacker's website, it will have
+
+922
+00:58:59,608 --> 00:59:03,218
+a certificate that certifies the ownership of the website,
+
+923
+00:59:03,384 --> 00:59:06,882
+but it won't be signed by the trusted CA.
+
+924
+00:59:07,016 --> 00:59:10,406
+And when the browser sees that most browsers will
+
+925
+00:59:10,428 --> 00:59:14,214
+give you a warning saying insecure certificate, meaning it was
+
+926
+00:59:14,252 --> 00:59:17,766
+not signed by a known or trusted CA one of
+
+927
+00:59:17,788 --> 00:59:21,654
+the CAS on that official list. It was signed by an unknown source,
+
+928
+00:59:21,702 --> 00:59:24,966
+which can be hacker's own CA that hacker
+
+929
+00:59:24,998 --> 00:59:28,746
+generated and used to issue the certificate. This is
+
+930
+00:59:28,768 --> 00:59:32,346
+also called a self signed certificate. Now, how do we
+
+931
+00:59:32,368 --> 00:59:36,090
+actually create this key for the server for our
+
+932
+00:59:36,160 --> 00:59:39,770
+application and get a certificate from a CA?
+
+933
+00:59:39,920 --> 00:59:44,390
+Well, there are actually simple command line tools such as openssl
+
+934
+00:59:44,470 --> 00:59:48,354
+a that give you commands to do it. Using this tool we can
+
+935
+00:59:48,392 --> 00:59:52,494
+generate a private key, and then using that key, we can generate
+
+936
+00:59:52,622 --> 00:59:56,274
+a certificate signing request with a public key
+
+937
+00:59:56,312 --> 00:59:59,790
+inside, which we will then send to the CA for signing.
+

@@ -1,0 +1,3400 @@
+1
+00:00:00,810 --> 00:00:04,746
+Nodes name. And this is the simplest way to define a specific node
+
+2
+00:00:04,778 --> 00:00:08,240
+to schedule the pod. So let's see an example of that.
+
+3
+00:00:09,410 --> 00:00:13,054
+First, let's see our nodes and their
+
+4
+00:00:13,092 --> 00:00:16,558
+names. We have master worker one and worker two. So I'm going
+
+5
+00:00:16,564 --> 00:00:20,106
+to create a pod definition file
+
+6
+00:00:20,218 --> 00:00:24,000
+to be scheduled on worker one
+
+7
+00:00:24,610 --> 00:00:28,630
+and it and this is the pod configuration
+
+8
+00:00:28,970 --> 00:00:32,706
+where inside the specification we're going to define
+
+9
+00:00:32,818 --> 00:00:38,106
+node name attributes on
+
+10
+00:00:38,128 --> 00:00:41,434
+the same level as containers and we basically just
+
+11
+00:00:41,472 --> 00:00:46,234
+give it name of the node and
+
+12
+00:00:46,352 --> 00:00:50,530
+create the pod. So now if I do get pod
+
+13
+00:00:50,710 --> 00:00:54,654
+nginx with
+
+14
+00:00:54,692 --> 00:00:58,862
+the white output, you will see that it was scheduled on the worker one
+
+15
+00:00:58,996 --> 00:01:02,720
+because we explicitly told the scheduler to do that.
+
+16
+00:01:05,430 --> 00:01:09,394
+But what if the node names in your cluster are dynamic so
+
+17
+00:01:09,432 --> 00:01:13,758
+you don't know exactly what the name is going to be beforehand?
+
+18
+00:01:13,934 --> 00:01:17,762
+This is actually very common in cloud environments where you get dynamically
+
+19
+00:01:17,826 --> 00:01:21,830
+provisioned cluster nodes. Or what if the node doesn't have enough
+
+20
+00:01:21,900 --> 00:01:25,766
+resources to run the pod? In that case, pod will
+
+21
+00:01:25,788 --> 00:01:29,062
+simply not be scheduled anywhere. So how can we specify
+
+22
+00:01:29,126 --> 00:01:32,838
+a node selector that allows more dynamic values?
+
+23
+00:01:32,934 --> 00:01:37,014
+For that we can use a node selector attribute which allows
+
+24
+00:01:37,062 --> 00:01:40,842
+specifying nodes using labels.
+
+25
+00:01:40,986 --> 00:01:44,714
+So you can label your nodes that are for development
+
+26
+00:01:44,762 --> 00:01:48,750
+environment. Maybe you can label nodes that have high cpu or
+
+27
+00:01:48,820 --> 00:01:52,946
+ram resources and schedule pods selectively on
+
+28
+00:01:52,968 --> 00:01:55,300
+them. Let's see an example of that as well.
+
+29
+00:01:56,790 --> 00:02:00,386
+So first I'm going to print all
+
+30
+00:02:00,408 --> 00:02:04,274
+the nodes with their labels and you see that
+
+31
+00:02:04,312 --> 00:02:07,718
+they have some auto generated labels already set on them.
+
+32
+00:02:07,804 --> 00:02:11,366
+However, we can give our own custom labels in addition to
+
+33
+00:02:11,388 --> 00:02:15,138
+that. And let's say worker two has a lot of cpu
+
+34
+00:02:15,234 --> 00:02:18,874
+resources and we want to schedule our pod, which is
+
+35
+00:02:18,912 --> 00:02:23,254
+cpu intensive on a node that has enough resources.
+
+36
+00:02:23,382 --> 00:02:26,586
+So to label a component in
+
+37
+00:02:26,608 --> 00:02:30,494
+kubernetes we can use Kubectl label command and let's see
+
+38
+00:02:30,532 --> 00:02:33,998
+help here. And as you see
+
+39
+00:02:34,084 --> 00:02:37,646
+we can label any component using Kubectl label and
+
+40
+00:02:37,668 --> 00:02:41,694
+the component name and
+
+41
+00:02:41,812 --> 00:02:49,486
+the label key value pair. So let's
+
+42
+00:02:49,518 --> 00:02:53,326
+change the values here. Kubectl label node because that's
+
+43
+00:02:53,358 --> 00:02:57,126
+what we want to label node. And let's say we want to
+
+44
+00:02:57,148 --> 00:03:01,000
+label node worker two and
+
+45
+00:03:01,370 --> 00:03:05,910
+let's give it a label. Type equals cpu.
+
+46
+00:03:06,330 --> 00:03:10,474
+Let's execute, check the labels again.
+
+47
+00:03:10,672 --> 00:03:14,166
+And there you go, type equals cpu. That's the label
+
+48
+00:03:14,198 --> 00:03:18,134
+we gave. And now let's create a pod definition
+
+49
+00:03:18,182 --> 00:03:21,360
+that will run on worker two.
+
+50
+00:03:23,330 --> 00:03:27,086
+And again, I'm going to just paste in a super simple
+
+51
+00:03:27,268 --> 00:03:31,422
+pod configuration and instead
+
+52
+00:03:31,476 --> 00:03:35,134
+of node name this time we have a node selector
+
+53
+00:03:35,182 --> 00:03:38,594
+attribute and
+
+54
+00:03:38,712 --> 00:03:42,206
+the value of node selector is a key value pair
+
+55
+00:03:42,318 --> 00:03:45,494
+of the label that a node has. In our case,
+
+56
+00:03:45,532 --> 00:03:49,254
+that's type cpu. That's what we labeled it.
+
+57
+00:03:49,372 --> 00:03:52,680
+And now if I apply this,
+
+58
+00:03:56,730 --> 00:04:00,038
+well, we get an error because we already have a pod
+
+59
+00:04:00,134 --> 00:04:03,770
+called Nginx in the cluster.
+
+60
+00:04:04,590 --> 00:04:11,674
+So let's try again and let's
+
+61
+00:04:11,802 --> 00:04:15,470
+print out nginx two
+
+62
+00:04:15,540 --> 00:04:19,070
+pod definition, and as you see it is running on
+
+63
+00:04:19,140 --> 00:04:22,914
+worker two, which we selected using
+
+64
+00:04:23,032 --> 00:04:26,974
+its unique label with node selector
+
+65
+00:04:27,022 --> 00:04:27,810
+attribute.
+
+66
+00:04:30,150 --> 00:04:34,286
+So the node selector attribute gives you a little bit more flexibility
+
+67
+00:04:34,398 --> 00:04:37,202
+over node name. But again,
+
+68
+00:04:37,336 --> 00:04:41,698
+if none of the nodes with a label have enough resources,
+
+69
+00:04:41,874 --> 00:04:45,574
+pod will not be scheduled at all. Also, let's say you want
+
+70
+00:04:45,612 --> 00:04:48,870
+to use more flexible expressions to select
+
+71
+00:04:48,940 --> 00:04:52,234
+the proper nodes. Again, this will be very useful in
+
+72
+00:04:52,272 --> 00:04:55,814
+cases where you have thousands of nodes in your cluster
+
+73
+00:04:55,862 --> 00:04:59,094
+and not just three, where they run in different regions,
+
+74
+00:04:59,222 --> 00:05:03,130
+different availability zones, they may have different operating
+
+75
+00:05:03,210 --> 00:05:06,394
+systems on them or have different tools installed.
+
+76
+00:05:06,522 --> 00:05:10,458
+Some of them may have specifically intel cpus,
+
+77
+00:05:10,554 --> 00:05:13,586
+etc. And it would make sense that you will
+
+78
+00:05:13,608 --> 00:05:17,218
+want to schedule pods on specific nodes for different
+
+79
+00:05:17,304 --> 00:05:21,982
+purposes. And that's where the third and last way of specifying
+
+80
+00:05:22,046 --> 00:05:25,654
+nodes in a pod definition comes in, which is
+
+81
+00:05:25,772 --> 00:05:29,414
+node affinity. The affinity language is
+
+82
+00:05:29,532 --> 00:05:33,154
+more expressive and allows you to match rules
+
+83
+00:05:33,202 --> 00:05:36,114
+more flexibly with logical operators,
+
+84
+00:05:36,242 --> 00:05:40,266
+not just the exact matches with node name or labels that
+
+85
+00:05:40,288 --> 00:05:43,514
+we saw. And not surprisingly, its syntax is
+
+86
+00:05:43,632 --> 00:05:47,334
+a bit more complex and looks like this. So inside the pod
+
+87
+00:05:47,382 --> 00:05:51,550
+definition we have affinity attribute instead of
+
+88
+00:05:51,620 --> 00:05:55,166
+node selector or node name. And inside the
+
+89
+00:05:55,188 --> 00:05:58,762
+affinity attribute we have the node affinity configuration.
+
+90
+00:05:58,906 --> 00:06:03,262
+And under node affinity you can define multiple rules
+
+91
+00:06:03,326 --> 00:06:06,498
+or expressions to select
+
+92
+00:06:06,584 --> 00:06:10,066
+a node where this pod will be scheduled on. First of
+
+93
+00:06:10,088 --> 00:06:13,938
+all, for each rule, like these two, for example,
+
+94
+00:06:14,104 --> 00:06:17,350
+you can indicate whether it is a soft
+
+95
+00:06:17,500 --> 00:06:21,890
+or a preferred rule, or it's rather a hard requirement,
+
+96
+00:06:22,050 --> 00:06:25,826
+as you see in the required and preferred
+
+97
+00:06:25,938 --> 00:06:29,394
+prefix. So this basically means that this rule,
+
+98
+00:06:29,442 --> 00:06:32,570
+whatever is defined here, has to absolutely match
+
+99
+00:06:32,720 --> 00:06:35,606
+for the pod to be scheduled on a node.
+
+100
+00:06:35,718 --> 00:06:39,722
+A preferred rule on the other hand, or a soft rule is try
+
+101
+00:06:39,776 --> 00:06:42,954
+to find a node that matches this expression.
+
+102
+00:06:43,082 --> 00:06:46,122
+But if you don't find such a node, then schedule
+
+103
+00:06:46,186 --> 00:06:50,058
+pod somewhere else. So this way we can allow fallback rule
+
+104
+00:06:50,154 --> 00:06:53,646
+so that pod still be scheduled somewhere. Now you don't have
+
+105
+00:06:53,668 --> 00:06:56,706
+to memorize the syntax here by heart, of course,
+
+106
+00:06:56,808 --> 00:07:00,462
+because if you need it, you can refer to the documentation.
+
+107
+00:07:00,606 --> 00:07:04,578
+However, it's important to understand what exactly you define here
+
+108
+00:07:04,664 --> 00:07:08,274
+and what this logic means. These node affinity rules
+
+109
+00:07:08,402 --> 00:07:11,926
+say that pod can only be placed on a
+
+110
+00:07:11,948 --> 00:07:15,190
+node with a label key equal to this
+
+111
+00:07:15,340 --> 00:07:18,502
+which has a value either e two
+
+112
+00:07:18,556 --> 00:07:22,006
+E-A-Z one or e two e az
+
+113
+00:07:22,038 --> 00:07:26,198
+two. So one of these values for this key, that's what the operator
+
+114
+00:07:26,294 --> 00:07:29,782
+in actually means. Among nodes that meet this
+
+115
+00:07:29,936 --> 00:07:33,642
+criteria, try to find nodes with a label,
+
+116
+00:07:33,786 --> 00:07:37,230
+another node label key which has a value,
+
+117
+00:07:37,380 --> 00:07:41,278
+another node label value. So among all the nodes that match
+
+118
+00:07:41,364 --> 00:07:45,282
+this criteria, those nodes should be preferred which
+
+119
+00:07:45,336 --> 00:07:49,314
+have this second label key value pair. So if
+
+120
+00:07:49,352 --> 00:07:53,234
+nodes with this preferred rule cannot be found or they
+
+121
+00:07:53,272 --> 00:07:56,418
+don't have enough resources, pod will be scheduled
+
+122
+00:07:56,514 --> 00:08:00,418
+somewhere else. And the node affinity syntax actually supports
+
+123
+00:08:00,514 --> 00:08:04,278
+a couple of different operators. One of them is in as we saw here
+
+124
+00:08:04,364 --> 00:08:08,134
+it also supports an operator exists, which means
+
+125
+00:08:08,172 --> 00:08:11,946
+we can say match all the nodes that have this
+
+126
+00:08:12,048 --> 00:08:15,322
+label. Doesn't matter what the value of that label is,
+
+127
+00:08:15,456 --> 00:08:19,734
+it should have that label. So in that case we would have operator exists.
+
+128
+00:08:19,862 --> 00:08:23,406
+We also have greater than or less than this
+
+129
+00:08:23,428 --> 00:08:27,214
+could be used for example to select nodes that have cpu or
+
+130
+00:08:27,252 --> 00:08:31,374
+memory greater than or less than a specific amount.
+
+131
+00:08:31,572 --> 00:08:35,282
+Now what if you have an application that you don't want to schedule on
+
+132
+00:08:35,336 --> 00:08:39,134
+specific nodes, but instead you want to avoid scheduling
+
+133
+00:08:39,182 --> 00:08:42,594
+it on certain nodes? So for example you don't care where
+
+134
+00:08:42,632 --> 00:08:45,806
+they go except not on nodes that have an Ubuntu
+
+135
+00:08:45,838 --> 00:08:49,222
+version 16.4.
+
+136
+00:08:49,356 --> 00:08:53,350
+Or let's say you don't want to schedule the pod on any node that has
+
+137
+00:08:53,420 --> 00:08:57,090
+one of the following labels. So we kind of need a negative
+
+138
+00:08:57,170 --> 00:09:01,462
+affinity, right? In that case you can use an operator
+
+139
+00:09:01,606 --> 00:09:05,062
+called not in or does not exist.
+
+140
+00:09:05,206 --> 00:09:09,270
+Again, not in will be to define nodes
+
+141
+00:09:09,350 --> 00:09:12,542
+and labels where the value is not
+
+142
+00:09:12,676 --> 00:09:15,918
+any of the defined here does not exist will be
+
+143
+00:09:16,004 --> 00:09:19,742
+nodes that do not have this specific label. And again,
+
+144
+00:09:19,796 --> 00:09:21,310
+let's see that in action.
+
+145
+00:09:24,450 --> 00:09:27,982
+First let's print out the nodes label values
+
+146
+00:09:28,046 --> 00:09:31,938
+again. And you see that worker one and
+
+147
+00:09:32,024 --> 00:09:35,346
+worker two have some of the same labels, right?
+
+148
+00:09:35,448 --> 00:09:39,126
+For example, the operating system is Linux on both
+
+149
+00:09:39,148 --> 00:09:42,614
+of them as well as the architecture is the same and
+
+150
+00:09:42,652 --> 00:09:47,094
+so on. So let's actually define using node affinity that
+
+151
+00:09:47,132 --> 00:09:50,970
+we want to schedule our pod on one of the nodes that has
+
+152
+00:09:51,120 --> 00:09:55,062
+Linux operating system. So if we had some other ones in the cluster
+
+153
+00:09:55,206 --> 00:09:59,014
+only the Linux nodes will be chosen. And among those Linux
+
+154
+00:09:59,062 --> 00:10:02,334
+nodes we would prefer to schedule our
+
+155
+00:10:02,372 --> 00:10:05,914
+pod on a node that has label
+
+156
+00:10:06,042 --> 00:10:09,434
+type ecpu. So let's see how we express
+
+157
+00:10:09,482 --> 00:10:13,540
+that with node affinity rule. So let's create
+
+158
+00:10:14,310 --> 00:10:18,530
+a third definition of the pod and let's call it node affinity.
+
+159
+00:10:19,430 --> 00:10:23,300
+So we don't know on which host it's going to be scheduled. Exactly.
+
+160
+00:10:29,370 --> 00:10:33,974
+And let's call our pod with node affinity and
+
+161
+00:10:34,012 --> 00:10:37,586
+this is the basic configuration. Now let's add
+
+162
+00:10:37,628 --> 00:10:40,906
+an affinity rule here. So first we
+
+163
+00:10:40,928 --> 00:10:44,410
+have the affinity, then we have node affinity
+
+164
+00:10:45,950 --> 00:10:49,194
+and under that we define all the rules or
+
+165
+00:10:49,232 --> 00:10:53,054
+all the expressions that should be used to
+
+166
+00:10:53,092 --> 00:10:56,414
+find a node to schedule this pod. So first we have
+
+167
+00:10:56,452 --> 00:11:00,400
+this required or hard rule, so to say
+
+168
+00:11:05,090 --> 00:11:09,186
+it's. And I'm just going to copy the whole expression here and
+
+169
+00:11:09,208 --> 00:11:12,766
+we're going to adjust the values. So first of all we have the node selector
+
+170
+00:11:12,798 --> 00:11:16,198
+terms match expressions and this is where
+
+171
+00:11:16,364 --> 00:11:20,806
+the values are defined. So we have the key and
+
+172
+00:11:20,908 --> 00:11:24,438
+values and the label that we want to use
+
+173
+00:11:24,524 --> 00:11:28,410
+is Kubernetes IO
+
+174
+00:11:28,750 --> 00:11:35,850
+Os. So I want the operating system to be Linux
+
+175
+00:11:36,270 --> 00:11:39,514
+let's define that here like this. And then we
+
+176
+00:11:39,552 --> 00:11:43,054
+have among those Linux servers we
+
+177
+00:11:43,092 --> 00:11:46,894
+want to define a soft rule again, I'm going to copy it here.
+
+178
+00:11:47,092 --> 00:11:51,390
+And in the soft rule we have another key value pair
+
+179
+00:11:54,150 --> 00:11:57,566
+of a label type equals
+
+180
+00:11:57,678 --> 00:12:01,026
+cpu or one of the values of the type is
+
+181
+00:12:01,128 --> 00:12:04,894
+cpu. And when these rules
+
+182
+00:12:04,942 --> 00:12:09,042
+get evaluated it should actually choose both of the worker nodes
+
+183
+00:12:09,106 --> 00:12:12,934
+because they have Linux operating system. And from those two
+
+184
+00:12:12,972 --> 00:12:16,886
+worker nodes it should then choose worker two because
+
+185
+00:12:17,068 --> 00:12:20,522
+that one has type cpu and because it's a soft
+
+186
+00:12:20,576 --> 00:12:23,946
+rule or preferred rule. If scheduler could
+
+187
+00:12:23,968 --> 00:12:27,590
+not find any node among those Linux nodes
+
+188
+00:12:27,670 --> 00:12:31,422
+that has this label or if it found one but it didn't have enough
+
+189
+00:12:31,476 --> 00:12:35,162
+resources to schedule the pod then it will be scheduled
+
+190
+00:12:35,226 --> 00:12:39,086
+on one of the other Linux nodes. And I'm going to
+
+191
+00:12:39,268 --> 00:12:42,758
+change this to an nginx image because busybox image
+
+192
+00:12:42,794 --> 00:12:46,258
+does not actually execute any process so
+
+193
+00:12:46,344 --> 00:12:50,642
+it's going to exit right away and
+
+194
+00:12:50,696 --> 00:12:54,846
+let's execute and let's check that
+
+195
+00:12:54,968 --> 00:12:58,226
+our pod with node affinity
+
+196
+00:12:58,338 --> 00:13:01,720
+was scheduled on worker two. And there you go.
+
+197
+00:13:11,760 --> 00:13:15,052
+We have seen a way to prevent pods from being
+
+198
+00:13:15,106 --> 00:13:18,380
+scheduled on specific nodes by configuring
+
+199
+00:13:18,460 --> 00:13:22,012
+pod itself. But what if we want to configure nodes
+
+200
+00:13:22,076 --> 00:13:25,344
+with such logic? So basically we want to tell
+
+201
+00:13:25,462 --> 00:13:28,576
+nodes which pods they should let be scheduled
+
+202
+00:13:28,608 --> 00:13:31,764
+on them and which not. For example, instead of
+
+203
+00:13:31,802 --> 00:13:35,376
+specifying that pod my app cannot be scheduled
+
+204
+00:13:35,408 --> 00:13:39,568
+on nodes with specific labels we can say nodes
+
+205
+00:13:39,664 --> 00:13:43,648
+worker one and worker two should not allow pods
+
+206
+00:13:43,744 --> 00:13:47,316
+with label app equals my app to be scheduled
+
+207
+00:13:47,348 --> 00:13:50,788
+on them. And these rules that we define on nodes to prevent
+
+208
+00:13:50,884 --> 00:13:54,252
+specific pods from being scheduled on them is
+
+209
+00:13:54,306 --> 00:13:57,452
+called a taint. And that's exactly the reason why
+
+210
+00:13:57,506 --> 00:14:01,292
+we can't schedule regular pods on master nodes because
+
+211
+00:14:01,346 --> 00:14:04,904
+they have taints that repel any pods
+
+212
+00:14:04,952 --> 00:14:08,364
+from being put there and we can see the taint on a master
+
+213
+00:14:08,412 --> 00:14:12,224
+node. If we do describe on
+
+214
+00:14:12,262 --> 00:14:16,192
+the master node, and right here you see the taints attribute which
+
+215
+00:14:16,246 --> 00:14:19,780
+says node role master, no schedule.
+
+216
+00:14:20,280 --> 00:14:24,384
+And we can also check taints
+
+217
+00:14:24,432 --> 00:14:29,524
+on all the nodes to
+
+218
+00:14:29,562 --> 00:14:32,976
+see that only master has that taint and not the worker
+
+219
+00:14:33,008 --> 00:14:36,136
+nodes. And there you go. So these are the three nodes that
+
+220
+00:14:36,158 --> 00:14:39,556
+we have in the cluster, and only master node has this taint,
+
+221
+00:14:39,668 --> 00:14:42,904
+the others don't have any. So who set or
+
+222
+00:14:42,942 --> 00:14:46,456
+defined that taint on a master node? Actually, well that's
+
+223
+00:14:46,488 --> 00:14:50,024
+done by Kubeadm when initiating the cluster.
+
+224
+00:14:50,152 --> 00:14:54,104
+So tainting the master node is one of the tasks
+
+225
+00:14:54,232 --> 00:14:58,016
+on the list of Kubeadm when bootstrapping the
+
+226
+00:14:58,038 --> 00:15:02,012
+cluster. So just like pods repel certain nodes,
+
+227
+00:15:02,156 --> 00:15:05,744
+nodes can also repel certain pods. But as you
+
+228
+00:15:05,782 --> 00:15:09,580
+also know, we actually have some pods
+
+229
+00:15:09,740 --> 00:15:12,844
+scheduled on the master node, like ECD,
+
+230
+00:15:12,972 --> 00:15:16,640
+kubeproxy, even the network plugin pod.
+
+231
+00:15:16,720 --> 00:15:20,132
+So they are all running on master. So how did the other
+
+232
+00:15:20,186 --> 00:15:23,704
+pods get scheduled there? This means there must be
+
+233
+00:15:23,742 --> 00:15:27,112
+a way to work around this taint so that some
+
+234
+00:15:27,166 --> 00:15:31,304
+pods get scheduled, right? Well that's done using what's called a
+
+235
+00:15:31,342 --> 00:15:34,792
+toleration. We can define in the pod configuration
+
+236
+00:15:34,936 --> 00:15:38,732
+a toleration for the taint, which is basically saying
+
+237
+00:15:38,866 --> 00:15:42,696
+we know that masternode has a taint that says no scheduling
+
+238
+00:15:42,728 --> 00:15:46,224
+of pods, but we want to configure pods to
+
+239
+00:15:46,262 --> 00:15:50,016
+tolerate that limitation, to still allow scheduling it
+
+240
+00:15:50,038 --> 00:15:53,164
+there by saying tolerate no schedule
+
+241
+00:15:53,212 --> 00:15:56,400
+taint. And we can see that in the configuration of
+
+242
+00:15:56,470 --> 00:15:57,840
+the masterpods.
+
+243
+00:15:59,720 --> 00:16:03,140
+So let's do describe pod.
+
+244
+00:16:08,040 --> 00:16:11,920
+So I'm going to do Kubectl describe on itScD
+
+245
+00:16:12,000 --> 00:16:15,240
+master pod. And right here you see
+
+246
+00:16:15,310 --> 00:16:19,188
+toleration for no execute taint.
+
+247
+00:16:19,364 --> 00:16:23,664
+And again we can check the toleration of all the pods kubectl
+
+248
+00:16:23,732 --> 00:16:27,500
+get with
+
+249
+00:16:27,570 --> 00:16:29,710
+JSON output first.
+
+250
+00:16:32,240 --> 00:16:35,692
+And right here we have the tolerations object which
+
+251
+00:16:35,746 --> 00:16:40,156
+has two values. The effect is the taint, the actual taint
+
+252
+00:16:40,268 --> 00:16:43,616
+set on the node which is called now execute and
+
+253
+00:16:43,638 --> 00:16:47,420
+the operator exists. So if this taint exists
+
+254
+00:16:47,500 --> 00:16:51,300
+on a node, we want to tolerate it. And we can also get
+
+255
+00:16:51,450 --> 00:16:55,872
+a list of all the tolerations for the pods in Kube system namespace
+
+256
+00:16:56,016 --> 00:16:59,440
+using a custom columns output
+
+257
+00:16:59,520 --> 00:17:03,284
+like this. So we have pod name and tolerations
+
+258
+00:17:03,332 --> 00:17:06,484
+columns which is in spec tolerations.
+
+259
+00:17:06,612 --> 00:17:10,040
+And if I execute, you see a bunch of output. Here we have
+
+260
+00:17:10,110 --> 00:17:13,364
+pod name and for each pod toleration.
+
+261
+00:17:13,492 --> 00:17:17,464
+And you see that the master pods actually
+
+262
+00:17:17,582 --> 00:17:21,912
+all have this no execute taint
+
+263
+00:17:21,976 --> 00:17:25,644
+toleration. And that's the reason why they were able
+
+264
+00:17:25,682 --> 00:17:28,460
+to still get scheduled on master node.
+
+265
+00:17:31,460 --> 00:17:35,804
+Now let's say we have a pod that we want to schedule on Masternode
+
+266
+00:17:35,852 --> 00:17:39,332
+specifically, and let's say it collects logs of all
+
+267
+00:17:39,386 --> 00:17:43,028
+control plane applications, so it has to be scheduled there.
+
+268
+00:17:43,194 --> 00:17:46,832
+We can configure our pod to tolerate the taint
+
+269
+00:17:46,896 --> 00:17:50,052
+of master node like this. So again,
+
+270
+00:17:50,106 --> 00:17:54,148
+let's create a pod definition and let's call it podwith
+
+271
+00:17:54,244 --> 00:18:01,192
+toleration and
+
+272
+00:18:01,246 --> 00:18:05,032
+paste in a simple pod configuration. And we're calling
+
+273
+00:18:05,086 --> 00:18:08,476
+this pod podwith toleration. And we're going to
+
+274
+00:18:08,498 --> 00:18:11,544
+make this pod tolerate the taint that master
+
+275
+00:18:11,592 --> 00:18:16,244
+node has. And it's actually super easy to configure. We have a tolerations
+
+276
+00:18:16,392 --> 00:18:20,076
+attribute, which is a list. So we can define multiple
+
+277
+00:18:20,108 --> 00:18:23,504
+tolerations here. And for each item we have
+
+278
+00:18:23,542 --> 00:18:26,896
+an effect, which is the actual taint that
+
+279
+00:18:26,918 --> 00:18:30,704
+a node has and its value, which for master node
+
+280
+00:18:30,752 --> 00:18:34,196
+is no execute, as we saw, and the
+
+281
+00:18:34,218 --> 00:18:37,684
+operator is exists. So if
+
+282
+00:18:37,722 --> 00:18:41,152
+this effect or this taint exists
+
+283
+00:18:41,216 --> 00:18:44,804
+on a node, we want to tolerate it for this pod.
+
+284
+00:18:44,932 --> 00:18:48,532
+Now our pod may tolerate the master taint,
+
+285
+00:18:48,676 --> 00:18:52,680
+but it doesn't mean that scheduler will actually put it there
+
+286
+00:18:52,830 --> 00:18:55,964
+because other nodes can run this pod as well.
+
+287
+00:18:56,002 --> 00:18:59,464
+Right? So now basically this pod tolerates all the nodes,
+
+288
+00:18:59,512 --> 00:19:03,116
+including the master. So schedule will just select between
+
+289
+00:19:03,218 --> 00:19:06,784
+all the nodes. So how to make sure that this
+
+290
+00:19:06,822 --> 00:19:10,108
+pod tolerates the master nodes taint
+
+291
+00:19:10,284 --> 00:19:14,256
+and also gets scheduled there? Well, for that we're going to
+
+292
+00:19:14,358 --> 00:19:18,236
+add a node selector or node name attribute
+
+293
+00:19:18,348 --> 00:19:22,244
+and let's actually go for an easier option and define node name
+
+294
+00:19:22,442 --> 00:19:25,844
+master. And the combination of these two will
+
+295
+00:19:25,882 --> 00:19:29,344
+now guarantee that the pod will be put on the master
+
+296
+00:19:29,392 --> 00:19:31,290
+node. And let's see that.
+
+297
+00:19:32,860 --> 00:19:34,250
+I'm going to apply.
+
+298
+00:19:38,700 --> 00:19:42,756
+And now if I do get pod podwidth
+
+299
+00:19:42,788 --> 00:19:46,760
+toleration with white output,
+
+300
+00:19:46,920 --> 00:19:50,728
+we should see that the pod is actually running on the master node.
+
+301
+00:19:50,824 --> 00:19:54,252
+And there you go, you see that it was actually
+
+302
+00:19:54,306 --> 00:19:55,740
+scheduled on the master.
+
+303
+00:19:57,860 --> 00:20:01,836
+Let's say we have a dynamic infrastructure, so nodes
+
+304
+00:20:01,868 --> 00:20:05,228
+get added and removed based on the application load.
+
+305
+00:20:05,404 --> 00:20:09,420
+And we want to schedule this pod that collects
+
+306
+00:20:09,500 --> 00:20:12,772
+master node application logs on up to
+
+307
+00:20:12,826 --> 00:20:16,912
+four additional master nodes that may be added to the cluster.
+
+308
+00:20:17,056 --> 00:20:20,740
+So we specify five replicas in total and
+
+309
+00:20:20,810 --> 00:20:23,620
+a node selector for all the master nodes.
+
+310
+00:20:23,780 --> 00:20:27,748
+However, the node selector only finds one master node.
+
+311
+00:20:27,844 --> 00:20:31,300
+So what will happen to the other four replicas we defined?
+
+312
+00:20:31,460 --> 00:20:35,240
+Well, they will all be scheduled on that one master node.
+
+313
+00:20:35,320 --> 00:20:39,372
+And this may be okay, but we actually want just one
+
+314
+00:20:39,426 --> 00:20:43,116
+application replica per master node. We don't want five of
+
+315
+00:20:43,138 --> 00:20:47,036
+them running on a single node. Plus, if new master nodes get
+
+316
+00:20:47,058 --> 00:20:50,624
+added, they won't get any pod replicas because they are all
+
+317
+00:20:50,662 --> 00:20:54,624
+scheduled on one node. So how should we solve that? For this
+
+318
+00:20:54,662 --> 00:20:58,960
+specific purpose? There is what's called an interpod
+
+319
+00:20:59,320 --> 00:21:03,332
+antiaffinity rule, which basically lets you
+
+320
+00:21:03,466 --> 00:21:07,376
+decide that your pod should only be scheduled
+
+321
+00:21:07,408 --> 00:21:11,088
+on nodes that do not have a specific pod
+
+322
+00:21:11,184 --> 00:21:15,564
+already running on them. Now where there is an antiaffinity
+
+323
+00:21:15,632 --> 00:21:19,064
+rule, there should be an affinity rule as well, right?
+
+324
+00:21:19,182 --> 00:21:23,124
+So what's an interpod affinity for? Well, let's say
+
+325
+00:21:23,182 --> 00:21:27,112
+our application that we want to run on the master nodes is configured
+
+326
+00:21:27,176 --> 00:21:30,872
+to work with an ECD application specifically.
+
+327
+00:21:31,016 --> 00:21:35,020
+And let's say Etsy replicate does not run on
+
+328
+00:21:35,090 --> 00:21:38,976
+every master node, it only runs on some of them. So we don't need to
+
+329
+00:21:38,998 --> 00:21:43,084
+run this application on those master nodes that don't have an ECD
+
+330
+00:21:43,132 --> 00:21:47,052
+pod. In other words, we only want to schedule our application pod
+
+331
+00:21:47,116 --> 00:21:51,104
+replica on those master nodes that have etcd
+
+332
+00:21:51,152 --> 00:21:54,912
+pod running on them. And that's where we can use the interpod
+
+333
+00:21:54,976 --> 00:21:58,576
+affinity rule. With a combination of these two rules,
+
+334
+00:21:58,688 --> 00:22:02,948
+interpod affinity and anti affinity rules. We can decide
+
+335
+00:22:03,044 --> 00:22:06,664
+to schedule our pods only on those nodes that
+
+336
+00:22:06,702 --> 00:22:10,424
+have itsdp pod running on them and which do
+
+337
+00:22:10,462 --> 00:22:14,472
+not have another replica of myApp
+
+338
+00:22:14,536 --> 00:22:18,584
+application already running on them. So let's see how the configuration
+
+339
+00:22:18,632 --> 00:22:23,772
+of that looks like again.
+
+340
+00:22:23,826 --> 00:22:28,800
+I'm going to create a pod definition file for interpod
+
+341
+00:22:29,140 --> 00:22:30,160
+affinity.
+
+342
+00:22:32,820 --> 00:22:36,960
+So first, let's paste in a basic configuration.
+
+343
+00:22:37,540 --> 00:22:41,124
+So we have five replicas defined in total. And also we
+
+344
+00:22:41,162 --> 00:22:45,956
+have a node selector which
+
+345
+00:22:46,058 --> 00:22:49,540
+defines a label, type master, or whatever
+
+346
+00:22:49,690 --> 00:22:53,224
+shared label all the master nodes have, basically so
+
+347
+00:22:53,262 --> 00:22:57,124
+that we can target master nodes and it also has a toleration
+
+348
+00:22:57,252 --> 00:23:01,268
+for master nodes. No execute taint.
+
+349
+00:23:01,444 --> 00:23:04,956
+So this is the same configuration as we saw before, but now
+
+350
+00:23:04,978 --> 00:23:09,068
+we have to add additional rules here to make sure
+
+351
+00:23:09,234 --> 00:23:12,456
+that myApp pod replicas
+
+352
+00:23:12,568 --> 00:23:16,860
+only run with the itsyb pod and no
+
+353
+00:23:16,930 --> 00:23:20,876
+two replicas of myApp end up on the same node.
+
+354
+00:23:20,988 --> 00:23:24,844
+And we're going to write pod affinity and anti affinity
+
+355
+00:23:24,892 --> 00:23:29,316
+rules for that. And note the comparison between
+
+356
+00:23:29,498 --> 00:23:33,460
+node affinity rules and pod affinity rules.
+
+357
+00:23:34,200 --> 00:23:37,924
+On the high level, we have the same affinity attribute. And instead
+
+358
+00:23:37,962 --> 00:23:41,352
+of node affinity, we're going to define pod affinity here.
+
+359
+00:23:41,486 --> 00:23:44,916
+And same way we have hard and soft rules
+
+360
+00:23:44,948 --> 00:23:48,664
+here. So this is a required rule. And this
+
+361
+00:23:48,702 --> 00:23:53,040
+basically means schedule this pod on those master
+
+362
+00:23:53,140 --> 00:23:56,924
+nodes that have a pod running on them with
+
+363
+00:23:56,962 --> 00:24:00,024
+a label app equals its CD. In addition
+
+364
+00:24:00,072 --> 00:24:04,028
+to that, we want to make sure. No two replicas of
+
+365
+00:24:04,114 --> 00:24:07,856
+myApp pod run on the same node, and we
+
+366
+00:24:07,878 --> 00:24:12,188
+do that using pod anti affinity rule, which is also required.
+
+367
+00:24:12,364 --> 00:24:16,236
+And this has the same exact label selector
+
+368
+00:24:16,348 --> 00:24:21,060
+that matches all the pods which have label app equals myApp,
+
+369
+00:24:21,640 --> 00:24:25,044
+like this one here. And since it's an
+
+370
+00:24:25,082 --> 00:24:28,388
+anti affinity, it will basically repel itself
+
+371
+00:24:28,474 --> 00:24:32,248
+from those nodes that have this pod running on them.
+
+372
+00:24:32,334 --> 00:24:35,752
+So combination of these two will actually give us
+
+373
+00:24:35,806 --> 00:24:39,448
+the desired outcome. And finally, the topology key
+
+374
+00:24:39,534 --> 00:24:43,264
+attribute here basically defines label
+
+375
+00:24:43,332 --> 00:24:46,844
+key for a unit that this
+
+376
+00:24:46,882 --> 00:24:50,552
+expression is meant for. And this could be a cluster node,
+
+377
+00:24:50,616 --> 00:24:54,808
+this could be an entire zone, this could be cloud provider's
+
+378
+00:24:54,984 --> 00:24:58,236
+region, et cetera. In our case, this is a cluster
+
+379
+00:24:58,268 --> 00:25:02,096
+node, which will be probably the most common value for the
+
+380
+00:25:02,118 --> 00:25:03,250
+topology key.
+
+381
+00:25:06,180 --> 00:25:09,120
+So to compare it with node affinity,
+
+382
+00:25:09,620 --> 00:25:13,332
+interpod affinity or antiaffinity works with
+
+383
+00:25:13,466 --> 00:25:16,464
+pod labels rather than node labels.
+
+384
+00:25:16,592 --> 00:25:20,064
+And also, just to note here, maybe you already noticed
+
+385
+00:25:20,112 --> 00:25:23,832
+that this is pretty similar to what a demon set actually
+
+386
+00:25:23,886 --> 00:25:27,224
+does, scheduling exactly one replica on each
+
+387
+00:25:27,342 --> 00:25:32,036
+worker node. And finally, I want to emphasize here that explicitly
+
+388
+00:25:32,148 --> 00:25:35,804
+defining where the pods should be scheduled should
+
+389
+00:25:35,842 --> 00:25:39,800
+not be used too often, because the main benefit of kubernetes
+
+390
+00:25:39,880 --> 00:25:42,840
+is the automatic scheduling, rescheduling, et cetera.
+
+391
+00:25:42,920 --> 00:25:46,336
+So we want to interfere as little as possible
+
+392
+00:25:46,438 --> 00:25:52,672
+with such constraints that
+
+393
+00:25:52,726 --> 00:25:56,496
+sometimes the pod starts but one of the containers inside
+
+394
+00:25:56,678 --> 00:25:59,916
+crashes and fails to run. However, they don't
+
+395
+00:25:59,948 --> 00:26:03,492
+actually notice that because the pod is in a running state
+
+396
+00:26:03,626 --> 00:26:07,044
+and everything looks fine, even though the container inside
+
+397
+00:26:07,162 --> 00:26:10,844
+and the application inside is not running, so it's not accessible
+
+398
+00:26:10,912 --> 00:26:14,644
+from other pods. Also, when pod crashes,
+
+399
+00:26:14,772 --> 00:26:17,732
+Kubernetes restarts the pod automatically.
+
+400
+00:26:17,876 --> 00:26:20,884
+But if container inside the pod crashes,
+
+401
+00:26:21,012 --> 00:26:24,888
+the developers have to manually restart it after
+
+402
+00:26:24,974 --> 00:26:28,412
+detecting the issue in the first place. So they
+
+403
+00:26:28,466 --> 00:26:31,692
+ask you whether it is possible to know right away
+
+404
+00:26:31,746 --> 00:26:35,436
+that the container is not running, even though pod is in
+
+405
+00:26:35,458 --> 00:26:39,564
+a running state, and maybe even have Kubernetes restart
+
+406
+00:26:39,612 --> 00:26:42,860
+the container automatically when the container stops,
+
+407
+00:26:42,940 --> 00:26:46,832
+just like it restarts the pods. So how can we fix that issue?
+
+408
+00:26:46,966 --> 00:26:50,710
+Again? You go and research how to implement this.
+
+409
+00:26:56,680 --> 00:27:00,132
+Generally we know that Kubernetes has an intelligent way of
+
+410
+00:27:00,186 --> 00:27:03,776
+managing all of its resources, like it knows the pod
+
+411
+00:27:03,808 --> 00:27:07,476
+status. So when the pod dies, it automatically restarts.
+
+412
+00:27:07,588 --> 00:27:11,096
+So we don't need to worry about that. But what about when the
+
+413
+00:27:11,118 --> 00:27:14,644
+application inside the pod dies, like the container
+
+414
+00:27:14,772 --> 00:27:18,364
+that is running inside the pod. So the pod is still running.
+
+415
+00:27:18,482 --> 00:27:22,204
+So Kubernetes thinks that everything is fine here, nothing to do.
+
+416
+00:27:22,242 --> 00:27:26,124
+But in reality that application is not accessible because the
+
+417
+00:27:26,162 --> 00:27:29,836
+container inside the pod crashed or maybe stuck
+
+418
+00:27:29,868 --> 00:27:33,564
+in a loop because of a bug so it can't accept
+
+419
+00:27:33,612 --> 00:27:37,616
+any traffic. How do we let Kubernetes know in this
+
+420
+00:27:37,638 --> 00:27:41,484
+case whether the application inside the pod
+
+421
+00:27:41,612 --> 00:27:45,072
+is running successfully, or maybe it crashed
+
+422
+00:27:45,136 --> 00:27:48,388
+or has some issue, even if the pod itself
+
+423
+00:27:48,474 --> 00:27:52,160
+is running and in a healthy state, so that Kubernetes
+
+424
+00:27:52,240 --> 00:27:55,352
+automatically restarts the application in it.
+
+425
+00:27:55,486 --> 00:27:59,416
+Well, we tell Kubernetes exactly that information
+
+426
+00:27:59,598 --> 00:28:03,348
+using liveness probe. With liveness probe defined,
+
+427
+00:28:03,444 --> 00:28:07,364
+Kubernetes will automatically restart the pod when the application
+
+428
+00:28:07,502 --> 00:28:10,876
+is crashing or is having an issue. So how
+
+429
+00:28:10,898 --> 00:28:15,052
+do we define a liveness probe in our container? It's actually
+
+430
+00:28:15,186 --> 00:28:19,292
+a very simple script or a tiny program that just
+
+431
+00:28:19,346 --> 00:28:23,340
+pings the application endpoint every 5 seconds
+
+432
+00:28:23,420 --> 00:28:27,376
+or 10 seconds to check that the application responds so
+
+433
+00:28:27,398 --> 00:28:31,200
+it's running successfully. And this can be defined in three different
+
+434
+00:28:31,270 --> 00:28:34,900
+ways. So this is the liveness probe attribute,
+
+435
+00:28:35,400 --> 00:28:38,884
+and inside that we configure the health check.
+
+436
+00:28:39,002 --> 00:28:42,880
+First, we have the check with a simple command execution.
+
+437
+00:28:43,040 --> 00:28:46,356
+This could be for example a command to run a simple script
+
+438
+00:28:46,388 --> 00:28:49,928
+that checks the application's health status. And of course
+
+439
+00:28:50,014 --> 00:28:53,924
+we need to define how often this check will be made with period
+
+440
+00:28:53,972 --> 00:28:57,424
+seconds attribute like execute the defined
+
+441
+00:28:57,492 --> 00:29:01,116
+liveness check every 5 seconds. Second, we have
+
+442
+00:29:01,138 --> 00:29:04,924
+a TCP socket attribute with the port where
+
+443
+00:29:04,962 --> 00:29:08,264
+the application is running. So with this configuration,
+
+444
+00:29:08,392 --> 00:29:11,824
+Kubelet will attempt to open the socket to
+
+445
+00:29:11,862 --> 00:29:15,264
+your container on the configured port. If it
+
+446
+00:29:15,302 --> 00:29:18,352
+succeeds to establish a connection on this port,
+
+447
+00:29:18,486 --> 00:29:22,448
+the container is considered to be healthy, so the application inside
+
+448
+00:29:22,534 --> 00:29:26,064
+is running and is reachable. If it cannot establish
+
+449
+00:29:26,112 --> 00:29:29,972
+a connection, the probe will fail. And finally we have
+
+450
+00:29:30,026 --> 00:29:33,796
+the third way, which is checking the application health on
+
+451
+00:29:33,818 --> 00:29:38,280
+the HTTP endpoint. For example, if the application itself
+
+452
+00:29:38,430 --> 00:29:41,768
+had an endpoint that exposes the health status of
+
+453
+00:29:41,774 --> 00:29:45,560
+the application, we could hit that endpoint to check whether
+
+454
+00:29:45,630 --> 00:29:49,144
+the application is healthy or not. It is configured
+
+455
+00:29:49,192 --> 00:29:53,244
+with an HTTP get attribute which defines the
+
+456
+00:29:53,282 --> 00:29:56,748
+path and the port of the application's health
+
+457
+00:29:56,834 --> 00:30:00,108
+endpoint. So this configuration will tell Kubelet
+
+458
+00:30:00,204 --> 00:30:04,032
+there is an HTTP endpoint in the application on
+
+459
+00:30:04,086 --> 00:30:07,856
+path health port 3000
+
+460
+00:30:08,038 --> 00:30:12,610
+where you can check whether the application is healthy or not.
+
+461
+00:30:15,080 --> 00:30:18,288
+We said that Kubernetes knows the pod state, but it doesn't
+
+462
+00:30:18,304 --> 00:30:22,436
+know the application state inside the pod. And we solve this problem
+
+463
+00:30:22,538 --> 00:30:26,036
+with a liveness probe. Right, but liveness probe helps
+
+464
+00:30:26,068 --> 00:30:29,960
+Kubernetes see that the application is running successfully only
+
+465
+00:30:30,030 --> 00:30:33,816
+after the application actually started. But what
+
+466
+00:30:33,838 --> 00:30:37,050
+about the starting up process itself of the application?
+
+467
+00:30:37,580 --> 00:30:40,876
+So pod was created and now the application inside
+
+468
+00:30:41,058 --> 00:30:44,636
+is actually starting up. How does Kubernetes know that the
+
+469
+00:30:44,658 --> 00:30:48,284
+application is fully initiated and started and ready
+
+470
+00:30:48,322 --> 00:30:52,348
+to receive the request? That's where readiness probe helps.
+
+471
+00:30:52,444 --> 00:30:57,036
+It lets Kubernetes know that the application is ready to receive traffic.
+
+472
+00:30:57,148 --> 00:31:00,704
+And this is important because if your application needs two minutes to
+
+473
+00:31:00,742 --> 00:31:04,188
+start without readiness probe, all the requests to
+
+474
+00:31:04,214 --> 00:31:07,316
+it will fail during those two minutes and you will have a bunch of
+
+475
+00:31:07,338 --> 00:31:10,564
+errors in your applications. So how do we
+
+476
+00:31:10,602 --> 00:31:14,224
+configure a readiness probe? Actually very similarly
+
+477
+00:31:14,272 --> 00:31:17,592
+to the liveness probe because they both basically check
+
+478
+00:31:17,646 --> 00:31:21,012
+the application availability. Readiness probe
+
+479
+00:31:21,076 --> 00:31:24,776
+does it during the application startup process while liveness probe does
+
+480
+00:31:24,798 --> 00:31:27,870
+it while the application is already running.
+
+481
+00:31:31,440 --> 00:31:34,264
+And again, to quickly see that in action,
+
+482
+00:31:34,392 --> 00:31:38,220
+let's create a pod definition with health probes.
+
+483
+00:31:42,260 --> 00:31:45,772
+So first let's paste in some basic configuration
+
+484
+00:31:45,836 --> 00:31:49,468
+of NgInX. Let's actually call the pod MyApp
+
+485
+00:31:49,564 --> 00:31:52,816
+health probes. And right here we're going to define the
+
+486
+00:31:52,838 --> 00:31:56,870
+health probes. So first of all, we want to check the readiness of the application
+
+487
+00:31:59,880 --> 00:32:03,412
+to make sure the application has actually started and
+
+488
+00:32:03,466 --> 00:32:06,596
+is running before sending any requests to it.
+
+489
+00:32:06,698 --> 00:32:10,596
+And as I said, you can have own endpoints in your applications
+
+490
+00:32:10,708 --> 00:32:14,296
+that give you some health data that expose the
+
+491
+00:32:14,318 --> 00:32:17,256
+health data of the application, whether it's available or not.
+
+492
+00:32:17,358 --> 00:32:21,624
+So in readiness or liveness probes, you can just hit that endpoint
+
+493
+00:32:21,752 --> 00:32:25,788
+or you can just use a simple command or
+
+494
+00:32:25,874 --> 00:32:29,052
+a TCP socket configuration to check
+
+495
+00:32:29,106 --> 00:32:33,136
+that the application is available at port 80. So in
+
+496
+00:32:33,158 --> 00:32:37,392
+our case, let's do simple TCP socket check on
+
+497
+00:32:37,446 --> 00:32:40,716
+port 80 because that's
+
+498
+00:32:40,748 --> 00:32:44,336
+where the container is running. And let's say we
+
+499
+00:32:44,358 --> 00:32:48,452
+know that our application, our web application takes
+
+500
+00:32:48,506 --> 00:32:52,516
+some time to start because there are some tasks that it executes on
+
+501
+00:32:52,538 --> 00:32:56,240
+a startup. So we are actually going to give it some time before
+
+502
+00:32:56,330 --> 00:32:59,528
+we execute a readiness probe check. So we're going
+
+503
+00:32:59,534 --> 00:33:03,480
+to do initial delay seconds
+
+504
+00:33:05,420 --> 00:33:09,456
+ten, and then once we start the readiness checks
+
+505
+00:33:09,588 --> 00:33:12,536
+we're going to do it every 5 seconds.
+
+506
+00:33:12,648 --> 00:33:16,604
+So period seconds is
+
+507
+00:33:16,642 --> 00:33:20,620
+going to be five. And this will take care of making
+
+508
+00:33:20,690 --> 00:33:23,804
+sure that the application is fully started before it receives
+
+509
+00:33:23,852 --> 00:33:27,744
+any requests. Now once the readiness probe is done
+
+510
+00:33:27,862 --> 00:33:31,216
+and we have made sure application is started,
+
+511
+00:33:31,398 --> 00:33:34,768
+then readiness probe's job is done, so to say.
+
+512
+00:33:34,854 --> 00:33:38,192
+And now the liveness probe can take over. So liveness
+
+513
+00:33:38,256 --> 00:33:41,524
+probe, and it is actually going to be the same
+
+514
+00:33:41,562 --> 00:33:45,092
+configuration where we just check that port 80 is
+
+515
+00:33:45,146 --> 00:33:48,356
+open and accessible and we can define
+
+516
+00:33:48,388 --> 00:33:52,296
+the same initial delay for
+
+517
+00:33:52,318 --> 00:33:55,624
+the liveness probe to take over. So let's say application
+
+518
+00:33:55,742 --> 00:33:59,196
+started. So after 5 seconds we start the
+
+519
+00:33:59,218 --> 00:34:03,470
+liveness probe and after the initial one we're going to do it every
+
+520
+00:34:04,800 --> 00:34:08,892
+15 seconds. So every 15 seconds this
+
+521
+00:34:08,946 --> 00:34:12,816
+will check whether the container is still running, whether the
+
+522
+00:34:12,918 --> 00:34:16,960
+application inside is still running and accessible on port
+
+523
+00:34:17,030 --> 00:34:20,768
+80. And if at some point it crashes and
+
+524
+00:34:20,934 --> 00:34:24,064
+liveness probe doesn't get an answer from the application,
+
+525
+00:34:24,262 --> 00:34:27,796
+it will notify Kubernetes and say this
+
+526
+00:34:27,818 --> 00:34:31,044
+container actually crashed so we need to restart it.
+
+527
+00:34:31,162 --> 00:34:34,356
+And if the application fails to run even after the
+
+528
+00:34:34,378 --> 00:34:37,616
+restart you will see the status directly.
+
+529
+00:34:37,648 --> 00:34:41,416
+When you do Kubectl get pod. So it's going to be more visible to you
+
+530
+00:34:41,518 --> 00:34:45,080
+that something is wrong with that pod. So let's save this configuration
+
+531
+00:34:47,020 --> 00:34:50,824
+and let's deploy our pod with health probes.
+
+532
+00:34:50,952 --> 00:34:54,524
+And if I do Kubectl get
+
+533
+00:34:54,562 --> 00:34:58,364
+pod, you will see that the readiness probe kicked in in
+
+534
+00:34:58,402 --> 00:35:02,592
+about 10 seconds. So the first 10 seconds we had
+
+535
+00:35:02,726 --> 00:35:06,304
+ready zero here and after that
+
+536
+00:35:06,422 --> 00:35:10,016
+readiness probe was successful and we have one container out
+
+537
+00:35:10,038 --> 00:35:13,312
+of one running. And now every 15 minutes
+
+538
+00:35:13,446 --> 00:35:16,564
+the liveness probe will actually check whether application is
+
+539
+00:35:16,602 --> 00:35:20,132
+still running or not. And if it isn't it will show
+
+540
+00:35:20,186 --> 00:35:21,910
+us the issue right away.
+
+541
+00:35:31,850 --> 00:35:35,942
+Have set up a pipeline to update their web application running
+
+542
+00:35:35,996 --> 00:35:39,334
+in a cluster. So whenever they release a new version
+
+543
+00:35:39,382 --> 00:35:43,510
+and build a new image, it should be deployed in Kubernetes.
+
+544
+00:35:43,670 --> 00:35:47,482
+They however aren't sure how the update works
+
+545
+00:35:47,536 --> 00:35:51,262
+in Kubernetes. So you have the old application version running
+
+546
+00:35:51,316 --> 00:35:54,474
+in the cluster. When you update the image version,
+
+547
+00:35:54,522 --> 00:35:58,426
+what happens to the deployment? Does it remove all the old pods
+
+548
+00:35:58,458 --> 00:36:02,514
+and restart new ones with a new image? In that case the application
+
+549
+00:36:02,632 --> 00:36:06,322
+will not be accessible for users while the old
+
+550
+00:36:06,376 --> 00:36:09,742
+pods get terminated and new ones are being created.
+
+551
+00:36:09,806 --> 00:36:13,198
+Right? So will there be an application downtime?
+
+552
+00:36:13,374 --> 00:36:17,362
+This could be a problem when they deploy the application in a production environment.
+
+553
+00:36:17,506 --> 00:36:21,078
+Also, what if the new image version has some issues?
+
+554
+00:36:21,244 --> 00:36:25,026
+How can they roll back the application to the previous image
+
+555
+00:36:25,058 --> 00:36:28,982
+version? Is there a proper way to do it with deployments
+
+556
+00:36:29,126 --> 00:36:32,506
+so they ask you for your input? And finally,
+
+557
+00:36:32,608 --> 00:36:36,234
+in addition to all of that, developers notice that when they
+
+558
+00:36:36,272 --> 00:36:39,402
+print all components in a default namespace
+
+559
+00:36:39,546 --> 00:36:43,406
+with Kubectl getall there is
+
+560
+00:36:43,428 --> 00:36:47,038
+a Kubernetes component called replica set on the list
+
+561
+00:36:47,204 --> 00:36:50,974
+and there are actually few of them with Nginx deployment
+
+562
+00:36:51,022 --> 00:36:54,770
+prefix with zero in the state.
+
+563
+00:36:54,920 --> 00:36:58,226
+So what is this component and what does it have to
+
+564
+00:36:58,248 --> 00:37:00,770
+do with deployments or pods?
+
+565
+00:37:04,140 --> 00:37:08,440
+Deployment. It creates what's called an application rollout
+
+566
+00:37:08,780 --> 00:37:12,616
+and for that it uses a component called replica set.
+
+567
+00:37:12,718 --> 00:37:15,916
+Replica set gets created automatically when we create a
+
+568
+00:37:15,938 --> 00:37:20,296
+deployment and is responsible for creating the replicas
+
+569
+00:37:20,408 --> 00:37:24,460
+and making sure the right number of pod replicas run
+
+570
+00:37:24,530 --> 00:37:28,352
+at all times. So to visualize the hierarchy we
+
+571
+00:37:28,406 --> 00:37:32,192
+work with deployment resources. We configure and
+
+572
+00:37:32,246 --> 00:37:36,332
+create them using Kubernetes configuration files.
+
+573
+00:37:36,476 --> 00:37:40,172
+And under the hood Kubernetes creates a replica set
+
+574
+00:37:40,326 --> 00:37:44,368
+for the deployment and replica set, then creates pods
+
+575
+00:37:44,464 --> 00:37:47,616
+so we don't have to directly interact with replica sets
+
+576
+00:37:47,648 --> 00:37:50,900
+or pods as long as we are working with deployments.
+
+577
+00:37:53,260 --> 00:37:56,644
+A deployment with new version of the container
+
+578
+00:37:56,692 --> 00:37:59,960
+image what happens is that a new replica set
+
+579
+00:38:00,030 --> 00:38:03,384
+gets created that is responsible for starting new
+
+580
+00:38:03,422 --> 00:38:07,336
+pods with the new image version while old replica
+
+581
+00:38:07,368 --> 00:38:11,564
+set remains and is responsible for removing pods with
+
+582
+00:38:11,602 --> 00:38:14,824
+the old image version. Now how does this update
+
+583
+00:38:14,872 --> 00:38:18,604
+actually happen? In which order do pods get removed
+
+584
+00:38:18,652 --> 00:38:22,220
+and new ones created? This is called a deployment
+
+585
+00:38:22,300 --> 00:38:25,760
+update strategy. The first strategy is pretty
+
+586
+00:38:25,830 --> 00:38:30,200
+simple. When deployment gets updated, Replica set removes
+
+587
+00:38:30,300 --> 00:38:33,812
+all the pods and the new replica set then
+
+588
+00:38:33,866 --> 00:38:37,888
+creates new pods. It's called a recreate strategy
+
+589
+00:38:37,984 --> 00:38:41,456
+and this one will result in an application downtime
+
+590
+00:38:41,568 --> 00:38:45,832
+because application will be unavailable between the removal of
+
+591
+00:38:45,966 --> 00:38:49,592
+old and creation of new pods. That's where the second
+
+592
+00:38:49,646 --> 00:38:53,124
+strategy comes in to prevent the application downtime.
+
+593
+00:38:53,252 --> 00:38:57,244
+So instead of removing all the pods at once and then creating new
+
+594
+00:38:57,282 --> 00:39:01,432
+ones, it deletes one old pod and creates
+
+595
+00:39:01,496 --> 00:39:05,356
+one new one, then removes the second old pod and creates a
+
+596
+00:39:05,378 --> 00:39:09,472
+second new one and so on until all old pods are gone
+
+597
+00:39:09,606 --> 00:39:13,344
+and new pods created. This strategy is called a
+
+598
+00:39:13,382 --> 00:39:17,612
+rolling update and it is actually the default strategy
+
+599
+00:39:17,756 --> 00:39:20,896
+configured for all the deployments in the cluster.
+
+600
+00:39:21,008 --> 00:39:24,436
+With both update strategies, the old replica set
+
+601
+00:39:24,538 --> 00:39:27,968
+will remain in the cluster with zero pods
+
+602
+00:39:28,064 --> 00:39:31,924
+in desired current and ready state and the new
+
+603
+00:39:31,962 --> 00:39:35,764
+replica set will be created with active pod replicas
+
+604
+00:39:35,892 --> 00:39:37,690
+as you see right here.
+
+605
+00:39:39,260 --> 00:39:42,696
+And that's why you see multiple replica sets of the
+
+606
+00:39:42,718 --> 00:39:46,316
+same application or the same deployment in the
+
+607
+00:39:46,338 --> 00:39:49,660
+cluster. And pods always belong to
+
+608
+00:39:49,730 --> 00:39:53,292
+one of the replica sets. If you look closely, the replica set
+
+609
+00:39:53,346 --> 00:39:56,744
+has a prefix of the deployment it belongs
+
+610
+00:39:56,792 --> 00:40:00,256
+to, plus its own unique hash at the end.
+
+611
+00:40:00,358 --> 00:40:03,756
+So by looking at the pod names, you know which pods belong
+
+612
+00:40:03,788 --> 00:40:06,736
+to the same replica set. Now as I said,
+
+613
+00:40:06,838 --> 00:40:10,652
+the rolling update is the default update strategy configured
+
+614
+00:40:10,716 --> 00:40:14,292
+for the deployments. So how can we check where
+
+615
+00:40:14,346 --> 00:40:18,116
+the update strategy is configured or how can we override that if we
+
+616
+00:40:18,138 --> 00:40:22,164
+want to? You can actually see that in the deployment configuration where
+
+617
+00:40:22,202 --> 00:40:25,828
+we have a rolling update strategy section.
+
+618
+00:40:26,004 --> 00:40:30,120
+So if I do Kubectl describe deployment
+
+619
+00:40:30,460 --> 00:40:32,840
+and name of the deployment.
+
+620
+00:40:33,980 --> 00:40:37,816
+Right here you see the strategy type which is set to rolling
+
+621
+00:40:37,848 --> 00:40:42,008
+update and then for the rolling update we have another attribute
+
+622
+00:40:42,104 --> 00:40:46,812
+called rolling update strategy that says 25%
+
+623
+00:40:46,946 --> 00:40:51,184
+max unavailable and 25% max search.
+
+624
+00:40:51,302 --> 00:40:55,020
+So what does this value actually mean? Well, in rolling update,
+
+625
+00:40:55,100 --> 00:40:59,024
+you can define how many pods you want to restart at
+
+626
+00:40:59,062 --> 00:41:02,644
+once. If you have 20 replicas, for example, you may not
+
+627
+00:41:02,682 --> 00:41:06,052
+want to wait for old pods to stop and new pods to
+
+628
+00:41:06,106 --> 00:41:09,888
+start one by one. So you can configure rolling update
+
+629
+00:41:09,984 --> 00:41:12,532
+to restart five pods at once.
+
+630
+00:41:12,666 --> 00:41:16,820
+So restart the first five pods, then the second five pods,
+
+631
+00:41:16,900 --> 00:41:21,076
+et cetera, until all 20 are running with the new version.
+
+632
+00:41:21,188 --> 00:41:25,044
+And you can define that in percentage, saying maximum
+
+633
+00:41:25,092 --> 00:41:29,096
+25% of pod replicas may be unavailable
+
+634
+00:41:29,208 --> 00:41:33,884
+at once at the same time and maximum 25%
+
+635
+00:41:34,082 --> 00:41:37,372
+more than defined replicas may be running at
+
+636
+00:41:37,426 --> 00:41:41,004
+once. And if we check the deployment updates events,
+
+637
+00:41:41,132 --> 00:41:44,976
+we will see how the update actually progressed. Here you
+
+638
+00:41:44,998 --> 00:41:48,796
+can see how the old replica set scaled down pods
+
+639
+00:41:48,908 --> 00:41:52,144
+and in parallel the new replica set scaled
+
+640
+00:41:52,192 --> 00:41:53,700
+up the new pods.
+
+641
+00:41:56,120 --> 00:42:00,656
+The updates in deployment creates what's called revisions.
+
+642
+00:42:00,768 --> 00:42:04,036
+So each time we roll out changes to a deployment,
+
+643
+00:42:04,148 --> 00:42:07,352
+a new revision gets created, which we can
+
+644
+00:42:07,406 --> 00:42:11,960
+check using Kubectl rollout history command.
+
+645
+00:42:16,640 --> 00:42:21,192
+And we want a rollout history for a deployment called NgINX
+
+646
+00:42:21,336 --> 00:42:25,132
+deployment. And right here,
+
+647
+00:42:25,186 --> 00:42:28,624
+you see we have three revisions, which means we
+
+648
+00:42:28,662 --> 00:42:31,730
+have rolled out this deployment three times.
+
+649
+00:42:34,980 --> 00:42:38,336
+So let's actually change the version in
+
+650
+00:42:38,358 --> 00:42:42,624
+our NginX deployment. And let's change the NginX image
+
+651
+00:42:42,672 --> 00:42:45,910
+version and let's set it to 121.
+
+652
+00:42:47,080 --> 00:42:50,756
+And let's roll out the change by applying the
+
+653
+00:42:50,778 --> 00:42:54,496
+new configuration. And let's see
+
+654
+00:42:54,538 --> 00:42:59,144
+the old pod being terminated and new ones running.
+
+655
+00:42:59,262 --> 00:43:02,984
+And you see the pod now belongs to a new replica and let's check that
+
+656
+00:43:03,022 --> 00:43:06,476
+as well. Kubectl get replica set. And as
+
+657
+00:43:06,498 --> 00:43:10,012
+you see now we have four replica sets where this
+
+658
+00:43:10,066 --> 00:43:14,056
+was just created 25 seconds ago as we rolled
+
+659
+00:43:14,088 --> 00:43:18,264
+out the changes. And if we describe
+
+660
+00:43:18,312 --> 00:43:27,848
+the pod image,
+
+661
+00:43:28,024 --> 00:43:30,576
+we should see image Nginx 121.
+
+662
+00:43:30,578 --> 00:43:34,176
+And also if
+
+663
+00:43:34,198 --> 00:43:37,970
+we check the revision using rollout history,
+
+664
+00:43:38,820 --> 00:43:42,892
+and we have a new revision on the list. So with these revisions,
+
+665
+00:43:42,956 --> 00:43:46,240
+we actually have a history of deployment
+
+666
+00:43:46,320 --> 00:43:50,480
+changes. And that means we can roll back to a previous
+
+667
+00:43:50,560 --> 00:43:55,280
+revision if we want to. And we can do that using a command Kubectl
+
+668
+00:43:55,360 --> 00:43:58,288
+rollout undo. And let's say in our case,
+
+669
+00:43:58,394 --> 00:44:02,164
+the new version broke something in the cluster. The application isn't
+
+670
+00:44:02,212 --> 00:44:05,944
+working anymore. So we want to undo that change and deploy the
+
+671
+00:44:05,982 --> 00:44:09,820
+previous version of the application, which was 120.
+
+672
+00:44:09,970 --> 00:44:14,540
+So let's do rollout undo for deployment Nginx deployment
+
+673
+00:44:16,000 --> 00:44:19,704
+and to check the status of a rollout,
+
+674
+00:44:19,832 --> 00:44:22,800
+we can do Kubectl rollout status.
+
+675
+00:44:25,060 --> 00:44:29,436
+And again we see that old pod gets terminated.
+
+676
+00:44:29,548 --> 00:44:32,716
+And now let's check the replica sets
+
+677
+00:44:32,748 --> 00:44:36,212
+again. And as you see, the previous replica set
+
+678
+00:44:36,346 --> 00:44:40,276
+has one active pod again, and the new one,
+
+679
+00:44:40,378 --> 00:44:44,064
+which was created three minutes ago, has no pods.
+
+680
+00:44:44,112 --> 00:44:47,876
+So this replica set removed all its pod replicas,
+
+681
+00:44:47,988 --> 00:44:51,284
+and the previous replica set recreated
+
+682
+00:44:51,332 --> 00:44:54,996
+its pod replicas. And again, if we describe
+
+683
+00:44:55,108 --> 00:45:01,724
+the pod and
+
+684
+00:45:01,762 --> 00:45:06,604
+check the container image, we should see it's back to 1.20.
+
+685
+00:45:06,722 --> 00:45:10,380
+So that's how we can do rollbacks in our deployments.
+
+686
+00:45:11,780 --> 00:45:14,850
+And again, checking the history,
+
+687
+00:45:15,300 --> 00:45:18,896
+we have reverted the changes in revision six and
+
+688
+00:45:18,918 --> 00:45:24,724
+now we are at revision eight point.
+
+689
+00:45:24,762 --> 00:45:28,404
+We have provided developers with access to the cluster for
+
+690
+00:45:28,442 --> 00:45:32,244
+them and for their CI CD pipeline. So everything is
+
+691
+00:45:32,282 --> 00:45:36,244
+running smoothly until an outage happens
+
+692
+00:45:36,362 --> 00:45:40,136
+and we lose all cluster configuration data. So all
+
+693
+00:45:40,158 --> 00:45:44,196
+the resources were deleted, which means we need to redeploy
+
+694
+00:45:44,308 --> 00:45:47,736
+all the components again. And that's really bad. We should
+
+695
+00:45:47,758 --> 00:45:51,192
+be prepared for such cases. So we need to back
+
+696
+00:45:51,246 --> 00:45:54,792
+up the cluster configuration data which is stored in
+
+697
+00:45:54,846 --> 00:45:55,800
+ECD,
+
+698
+00:45:59,470 --> 00:46:02,474
+as you've learned, is a key value pair store.
+
+699
+00:46:02,592 --> 00:46:06,074
+And just like we can and should backup any database,
+
+700
+00:46:06,202 --> 00:46:09,290
+we can backup, and should always backup etCD
+
+701
+00:46:09,370 --> 00:46:13,002
+store as well. Now what is exactly in the Etsy
+
+702
+00:46:13,066 --> 00:46:16,606
+store? All the Kubernetes components that we created
+
+703
+00:46:16,718 --> 00:46:20,734
+have configurations defined with Kubernetes manifest files,
+
+704
+00:46:20,782 --> 00:46:23,700
+right? And they also have the state.
+
+705
+00:46:24,150 --> 00:46:27,822
+State of deployment, for example, defines how many replicas
+
+706
+00:46:27,886 --> 00:46:31,510
+are running and available. A state of a service
+
+707
+00:46:31,580 --> 00:46:35,078
+is how many endpoints and which endpoints it has,
+
+708
+00:46:35,244 --> 00:46:39,314
+et cetera. Plus we saw for deployments we have revisions
+
+709
+00:46:39,362 --> 00:46:42,666
+or in other words, the history of changes of the
+
+710
+00:46:42,688 --> 00:46:46,042
+application deployment, which we can use to roll back
+
+711
+00:46:46,096 --> 00:46:49,526
+to the previous version. We also have all the config
+
+712
+00:46:49,558 --> 00:46:53,390
+map and secret data and so on. So all this data
+
+713
+00:46:53,460 --> 00:46:57,134
+is in the Etsyd store, which means if
+
+714
+00:46:57,172 --> 00:47:01,294
+we lost the Etsyd store data, we would lose all this information
+
+715
+00:47:01,412 --> 00:47:05,214
+and would not know the cluster state. Now,
+
+716
+00:47:05,332 --> 00:47:09,218
+it's also important to understand what is not in the Etsyd store,
+
+717
+00:47:09,384 --> 00:47:13,074
+and that is the application data itself. So the
+
+718
+00:47:13,112 --> 00:47:16,834
+storage we configure with persistent volumes for database or
+
+719
+00:47:16,872 --> 00:47:20,346
+any stateful applications is not in the Itsyd
+
+720
+00:47:20,398 --> 00:47:23,846
+store. It is stored either on the cluster nodes itself
+
+721
+00:47:23,948 --> 00:47:27,490
+or on a remote storage. So that's a separate
+
+722
+00:47:27,570 --> 00:47:30,938
+storage and needs to be managed in its own way.
+
+723
+00:47:31,024 --> 00:47:34,854
+Right now we are only talking about the Kubernetes configuration
+
+724
+00:47:34,982 --> 00:47:38,300
+data and state in the Etsy store.
+
+725
+00:47:45,880 --> 00:47:49,848
+An ECD backup. It's actually pretty easy because
+
+726
+00:47:49,934 --> 00:47:53,656
+we have an ECD control command line tool
+
+727
+00:47:53,758 --> 00:47:57,432
+which already has all the commands we need for backing up and
+
+728
+00:47:57,486 --> 00:48:00,760
+restoring the ECD data. So first we install
+
+729
+00:48:00,830 --> 00:48:04,396
+the Etsy control on the master node and then we
+
+730
+00:48:04,418 --> 00:48:08,108
+use this tool to create an ECD store
+
+731
+00:48:08,194 --> 00:48:09,020
+backup.
+
+732
+00:48:11,760 --> 00:48:15,144
+So let's see how that works. First of all, I'm on the master
+
+733
+00:48:15,192 --> 00:48:19,136
+node and if I do ECD control command it
+
+734
+00:48:19,158 --> 00:48:22,400
+is not installed, but I will get a suggestion of how to install
+
+735
+00:48:22,470 --> 00:48:26,784
+it and I'm going to use the EPT command for this and
+
+736
+00:48:26,822 --> 00:48:30,736
+install etsy client. And now we
+
+737
+00:48:30,758 --> 00:48:33,972
+have eTCD control installed. And now let's see how to
+
+738
+00:48:34,026 --> 00:48:36,390
+backup eTCD store data.
+
+739
+00:48:39,340 --> 00:48:43,316
+And for that you can also reference the Kubernetes official documentation
+
+740
+00:48:43,428 --> 00:48:47,050
+which has all these steps described in detail.
+
+741
+00:48:47,580 --> 00:48:51,352
+And you see that before the ETCD control commands we set
+
+742
+00:48:51,406 --> 00:48:54,852
+this environment variable to the API version
+
+743
+00:48:54,996 --> 00:48:58,876
+three. So ECD control underscore API and
+
+744
+00:48:58,898 --> 00:49:02,670
+then the ETCD control command. So I'm going to copy that first.
+
+745
+00:49:04,400 --> 00:49:08,172
+So let's put together our command. So we are setting the environment variable
+
+746
+00:49:08,236 --> 00:49:11,312
+Etsy control underscore API to three.
+
+747
+00:49:11,446 --> 00:49:15,472
+Then we have Etsy control command itself and then we have
+
+748
+00:49:15,606 --> 00:49:19,664
+snapshot subcommend which will take the snapshot of the
+
+749
+00:49:19,702 --> 00:49:22,884
+current state at this moment of the ETCD store.
+
+750
+00:49:23,002 --> 00:49:26,880
+And then we have save so we want to save the snapshot
+
+751
+00:49:27,040 --> 00:49:30,644
+and the location where we want to save it. And this could be a temporary
+
+752
+00:49:30,692 --> 00:49:34,980
+location. Let's call it Etsy backup db
+
+753
+00:49:35,060 --> 00:49:38,248
+because it is a key value database. Right.
+
+754
+00:49:38,414 --> 00:49:41,688
+But note that ECD control is
+
+755
+00:49:41,774 --> 00:49:45,196
+a client tool for connecting to the Etsyd store.
+
+756
+00:49:45,298 --> 00:49:49,100
+And of course because of security reasons the Etsyd service
+
+757
+00:49:49,170 --> 00:49:53,004
+is protected so we can't just execute this command without any
+
+758
+00:49:53,042 --> 00:49:56,204
+credentials. Right. We're going to get some authentication
+
+759
+00:49:56,332 --> 00:49:59,616
+or authorization error here. So basically this will
+
+760
+00:49:59,638 --> 00:50:03,504
+not work because we need some kind of authentication with
+
+761
+00:50:03,542 --> 00:50:07,584
+the Etsy server from the Etsy control client
+
+762
+00:50:07,712 --> 00:50:11,396
+and we do that using certificates. One way
+
+763
+00:50:11,418 --> 00:50:15,488
+to see how we can provide authentication to ETCD server
+
+764
+00:50:15,584 --> 00:50:19,008
+is to check how API server connects
+
+765
+00:50:19,024 --> 00:50:22,356
+to the ECD because API server is also a client
+
+766
+00:50:22,468 --> 00:50:26,024
+that talks to the ECD server. So we can basically use
+
+767
+00:50:26,062 --> 00:50:29,364
+its example to see how to authenticate
+
+768
+00:50:29,412 --> 00:50:33,992
+with it. And for that we can simply
+
+769
+00:50:34,056 --> 00:50:39,692
+output the configuration file of
+
+770
+00:50:39,746 --> 00:50:43,896
+the Kube API server. Because remember in the certificate section
+
+771
+00:50:43,928 --> 00:50:46,944
+we saw that components in kubernetes actually talk to each other,
+
+772
+00:50:46,982 --> 00:50:50,544
+right? So most of the components talk to the API server and
+
+773
+00:50:50,582 --> 00:50:55,040
+API server itself talks to the EtCD server
+
+774
+00:50:56,200 --> 00:50:59,444
+and we have to do it with pseudo command. And if
+
+775
+00:50:59,482 --> 00:51:02,836
+I scroll up you
+
+776
+00:51:02,858 --> 00:51:07,344
+will see how Kube API server actually authenticates
+
+777
+00:51:07,472 --> 00:51:10,872
+with the ECD server using these three
+
+778
+00:51:10,926 --> 00:51:14,724
+files where API server uses the API server
+
+779
+00:51:14,772 --> 00:51:17,976
+client certificates. Or we
+
+780
+00:51:17,998 --> 00:51:24,472
+could also check the ECD configuration itself which
+
+781
+00:51:24,526 --> 00:51:28,816
+also defines the certificates and way to communicate with the ETCD
+
+782
+00:51:28,948 --> 00:51:32,588
+server itself. So we have the certificate file which is
+
+783
+00:51:32,754 --> 00:51:37,120
+Etsy server certificate, the server key and
+
+784
+00:51:37,270 --> 00:51:41,312
+the ECD CA certificate. So we can use any
+
+785
+00:51:41,366 --> 00:51:44,832
+of these certificates to authenticate with
+
+786
+00:51:44,886 --> 00:51:48,704
+the ECD server. So I'm going to use the ones defined
+
+787
+00:51:48,752 --> 00:51:52,292
+here. So we need three of them. We need the CA certificate or
+
+788
+00:51:52,346 --> 00:51:55,616
+server key and the certificate file.
+
+789
+00:51:55,728 --> 00:51:59,480
+So let's actually print this out by
+
+790
+00:51:59,550 --> 00:52:03,128
+grabbing it like this and
+
+791
+00:52:03,214 --> 00:52:07,272
+let's pull up our command again and
+
+792
+00:52:07,326 --> 00:52:11,172
+we're going to specify the three credentials we need. So first
+
+793
+00:52:11,246 --> 00:52:17,564
+is going to be the CA certificate which
+
+794
+00:52:17,602 --> 00:52:19,230
+is located right here.
+
+795
+00:52:21,440 --> 00:52:25,296
+Then we have the certificate itself. This could be a server or a
+
+796
+00:52:25,318 --> 00:52:31,376
+client certificate. So I'm going to take this one and
+
+797
+00:52:31,398 --> 00:52:35,200
+then we have the key which is the key file.
+
+798
+00:52:37,000 --> 00:52:41,012
+And now let's execute the command again and
+
+799
+00:52:41,066 --> 00:52:43,460
+with pseudo because of the permission.
+
+800
+00:52:44,840 --> 00:52:48,150
+And as you see snapshot saved at
+
+801
+00:52:48,860 --> 00:52:53,384
+temp ECD backupdb. So if
+
+802
+00:52:53,422 --> 00:52:57,540
+we check that we have the file
+
+803
+00:52:57,620 --> 00:53:01,740
+that has been generated, we can also check the status of
+
+804
+00:53:01,890 --> 00:53:05,836
+the backup file and make sure it actually has some data in
+
+805
+00:53:05,858 --> 00:53:11,788
+it using
+
+806
+00:53:11,954 --> 00:53:16,332
+snapshot status command. And note that we don't need authentication
+
+807
+00:53:16,396 --> 00:53:20,096
+for that because it's just a local file. So here we're going
+
+808
+00:53:20,118 --> 00:53:23,856
+to do snapshot status and this
+
+809
+00:53:23,878 --> 00:53:27,764
+will give us some information. We can also display it in a table format with
+
+810
+00:53:27,802 --> 00:53:31,540
+a more readable output using write
+
+811
+00:53:31,690 --> 00:53:33,540
+out table.
+
+812
+00:53:34,680 --> 00:53:37,892
+And you see the total size. So we have
+
+813
+00:53:37,946 --> 00:53:43,256
+3.4 megabytes of data, we have 926
+
+814
+00:53:43,358 --> 00:53:47,128
+entries of data, these are the total keys and so on.
+
+815
+00:53:47,294 --> 00:53:50,584
+So now you as an administrator would
+
+816
+00:53:50,622 --> 00:53:54,944
+take care of saving this backup file of your ETCD
+
+817
+00:53:55,092 --> 00:53:59,036
+store, properly encrypting it for more safety and
+
+818
+00:53:59,058 --> 00:54:02,332
+basically storing it somewhere safe so that in case
+
+819
+00:54:02,386 --> 00:54:05,884
+such a disaster happens where the whole
+
+820
+00:54:06,002 --> 00:54:09,936
+cluster basically goes down because we have a power outage or all
+
+821
+00:54:09,958 --> 00:54:13,904
+the servers where the cluster is running basically just die and we
+
+822
+00:54:13,942 --> 00:54:17,344
+can't reuse them anymore and we have to recreate the cluster
+
+823
+00:54:17,392 --> 00:54:21,424
+on completely new servers, we could actually recover
+
+824
+00:54:21,552 --> 00:54:25,412
+the cluster state from that ECD store and
+
+825
+00:54:25,466 --> 00:54:28,864
+save us a lot of time and effort and headache.
+
+826
+00:54:28,992 --> 00:54:32,856
+Now I want to mention one thing about the certificates that
+
+827
+00:54:32,878 --> 00:54:36,212
+we passed here. Of course now because we're on the master
+
+828
+00:54:36,276 --> 00:54:39,448
+node, we have access to those certificates, right,
+
+829
+00:54:39,534 --> 00:54:43,656
+because they have been generated by the Kubeadm and they're all stored
+
+830
+00:54:43,688 --> 00:54:47,196
+in this PKI folder. However, if you
+
+831
+00:54:47,218 --> 00:54:50,460
+are executing Etsy control command from outside
+
+832
+00:54:50,530 --> 00:54:55,052
+the cluster you will have to explicitly copy
+
+833
+00:54:55,116 --> 00:54:59,680
+or make these certificates basically available there
+
+834
+00:54:59,830 --> 00:55:03,308
+to pass them as credentials. So on that other machine
+
+835
+00:55:03,404 --> 00:55:07,076
+you would have these certificates at their own location and you
+
+836
+00:55:07,098 --> 00:55:10,480
+would specify them when executing Etsy
+
+837
+00:55:10,560 --> 00:55:12,900
+control command from another machine.
+
+838
+00:56:24,580 --> 00:56:28,272
+You're probably wondering if Etsy store is
+
+839
+00:56:28,326 --> 00:56:31,936
+so important. Do we need to have maybe multiple replicas
+
+840
+00:56:31,968 --> 00:56:35,920
+of them or can we manage it separately
+
+841
+00:56:36,080 --> 00:56:40,000
+independent of the cluster? Because that's where all the important cluster
+
+842
+00:56:40,080 --> 00:56:44,196
+data is, right? And we also saw that DTD data physically
+
+843
+00:56:44,308 --> 00:56:47,844
+is also saved on the node and to remind
+
+844
+00:56:47,892 --> 00:56:51,176
+you of that, that was actually configured here as
+
+845
+00:56:51,198 --> 00:56:55,076
+a host path volume ETCD data. So that's
+
+846
+00:56:55,108 --> 00:56:58,488
+where the ETCD data physically gets stored, right on
+
+847
+00:56:58,494 --> 00:57:01,640
+the master node at this path
+
+848
+00:57:02,940 --> 00:57:06,480
+with pseudo. So that's where the data actually
+
+849
+00:57:06,550 --> 00:57:10,624
+leaves. And you would be absolutely right to ask whether
+
+850
+00:57:10,662 --> 00:57:10,940
+there's.
+

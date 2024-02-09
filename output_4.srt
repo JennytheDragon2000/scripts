@@ -1,0 +1,7096 @@
+1
+00:00:00,090 --> 00:00:03,278
+IP address gets assigned to each node. Now,
+
+2
+00:00:03,364 --> 00:00:06,970
+on each of these nodes, we need to schedule pods,
+
+3
+00:00:07,050 --> 00:00:10,746
+but we said that pods are own isolated machines
+
+4
+00:00:10,858 --> 00:00:15,082
+in its own private network. So on each node, a private
+
+5
+00:00:15,146 --> 00:00:18,894
+network is created by the network plugin with a
+
+6
+00:00:18,932 --> 00:00:21,870
+different IP address range, which,
+
+7
+00:00:22,020 --> 00:00:25,922
+very important to note here, should not overlap
+
+8
+00:00:25,986 --> 00:00:28,866
+with the IP address range of the nodes.
+
+9
+00:00:28,978 --> 00:00:32,886
+Otherwise, the pod communication in your cluster will not work.
+
+10
+00:00:32,988 --> 00:00:36,962
+And this private network has a private switch or a bridge
+
+11
+00:00:37,026 --> 00:00:40,474
+on the host, which will let all the pods within that
+
+12
+00:00:40,512 --> 00:00:44,166
+network talk to each other, just like nodes
+
+13
+00:00:44,278 --> 00:00:47,674
+which are in the same VPC or same network can talk
+
+14
+00:00:47,712 --> 00:00:51,290
+to each other directly. So that's how the pods on the same node
+
+15
+00:00:51,370 --> 00:00:55,274
+can talk to each other directly, because they are part of the same virtual
+
+16
+00:00:55,402 --> 00:00:59,534
+network and have a virtual router. Now, how is
+
+17
+00:00:59,652 --> 00:01:03,854
+the IP address range for the virtual network
+
+18
+00:01:03,982 --> 00:01:07,762
+defined on each node? How do we make sure that
+
+19
+00:01:07,896 --> 00:01:12,254
+each node gets a different set of IP addresses so that pods
+
+20
+00:01:12,302 --> 00:01:15,994
+across the nodes will all have unique ips?
+
+21
+00:01:16,142 --> 00:01:19,794
+Well, as I mentioned, kubernetes does not care what range
+
+22
+00:01:19,842 --> 00:01:23,394
+you use. So it's up to the network plugin to define
+
+23
+00:01:23,442 --> 00:01:27,314
+that range. So network plugin will define a cider
+
+24
+00:01:27,362 --> 00:01:31,334
+block for the whole cluster, and from that range,
+
+25
+00:01:31,462 --> 00:01:35,814
+equal subsets of that IP address range
+
+26
+00:01:35,942 --> 00:01:39,834
+is given to each node. So now each node has
+
+27
+00:01:39,872 --> 00:01:43,502
+a unique set of ips it can give to its
+
+28
+00:01:43,636 --> 00:01:47,258
+pods. So we have virtual private networks on each node
+
+29
+00:01:47,354 --> 00:01:50,858
+with their own sets of IP addresses.
+
+30
+00:01:50,954 --> 00:01:54,550
+Now the question is, how does myApp
+
+31
+00:01:54,650 --> 00:01:59,054
+pod from node one talk to mydb
+
+32
+00:01:59,102 --> 00:02:03,134
+pod on node three using MyDB pod's
+
+33
+00:02:03,182 --> 00:02:07,890
+IP address? They're in their own private isolated networks,
+
+34
+00:02:07,970 --> 00:02:11,334
+so they can't access each other directly, so they have
+
+35
+00:02:11,372 --> 00:02:14,934
+to communicate using gateways. Let's see what that
+
+36
+00:02:14,972 --> 00:02:18,582
+means. So basically, route rules will be defined
+
+37
+00:02:18,646 --> 00:02:22,042
+in the route table of the servers that will
+
+38
+00:02:22,096 --> 00:02:26,406
+map each node's IP address as a gateway
+
+39
+00:02:26,518 --> 00:02:30,410
+to the pod network on that specific node.
+
+40
+00:02:30,490 --> 00:02:33,946
+So gateway is basically an IP address of the node,
+
+41
+00:02:34,058 --> 00:02:38,378
+and that maps to the virtual private network
+
+42
+00:02:38,554 --> 00:02:42,438
+cider block that was created for the pods
+
+43
+00:02:42,554 --> 00:02:46,162
+on that specific nodes. And that means now
+
+44
+00:02:46,296 --> 00:02:49,874
+when my app pod sends a request to
+
+45
+00:02:49,992 --> 00:02:54,334
+MyDB pod, route rule will be used to determine
+
+46
+00:02:54,462 --> 00:02:57,974
+which gateway should be used to access
+
+47
+00:02:58,172 --> 00:03:02,194
+MyDB pods network. And since MyDB
+
+48
+00:03:02,242 --> 00:03:05,766
+pod network is on node three, the IP address
+
+49
+00:03:05,868 --> 00:03:09,386
+of the node three, or gateway, will be used
+
+50
+00:03:09,488 --> 00:03:12,794
+to access the database pod here.
+
+51
+00:03:12,912 --> 00:03:16,314
+And this way we actually have one large
+
+52
+00:03:16,432 --> 00:03:20,922
+pod network that the network plugin creates across
+
+53
+00:03:21,056 --> 00:03:25,006
+all the nodes in the cluster. Again, why can they talk
+
+54
+00:03:25,108 --> 00:03:28,702
+through the gateway because the nodes, node one,
+
+55
+00:03:28,756 --> 00:03:32,254
+two and three are in the same network, so they can talk to each other
+
+56
+00:03:32,292 --> 00:03:35,406
+directly using each other's ip addresses.
+
+57
+00:03:35,518 --> 00:03:39,454
+Also, each node itself can access the virtual pod
+
+58
+00:03:39,502 --> 00:03:42,958
+network that was created on that node.
+
+59
+00:03:43,054 --> 00:03:46,422
+So if my app from node One's pod network wants
+
+60
+00:03:46,476 --> 00:03:49,666
+to talk to MyDB on node Three's
+
+61
+00:03:49,698 --> 00:03:52,934
+network, requests can be routed from my app
+
+62
+00:03:53,052 --> 00:03:57,154
+pod to node one. Then from the route table it will be determined
+
+63
+00:03:57,202 --> 00:04:00,922
+which node has my db pod. So node one
+
+64
+00:04:00,976 --> 00:04:04,326
+will send the request to node three, and node
+
+65
+00:04:04,358 --> 00:04:08,518
+three will then hand it over to myDB pod
+
+66
+00:04:08,614 --> 00:04:12,154
+on its pod network running inside the virtual
+
+67
+00:04:12,202 --> 00:04:15,642
+network on node three. And that's how pods
+
+68
+00:04:15,706 --> 00:04:18,720
+across nodes can communicate with each other.
+
+69
+00:04:21,490 --> 00:04:24,754
+However, there is one more thing here. In our example, we just
+
+70
+00:04:24,792 --> 00:04:28,270
+have three nodes, and therefore the route table
+
+71
+00:04:28,430 --> 00:04:31,906
+is actually pretty short and manageable. However,
+
+72
+00:04:32,008 --> 00:04:35,866
+imagine if we had thousands of nodes in the cluster.
+
+73
+00:04:35,998 --> 00:04:40,310
+Managing all these routes and keeping track of them will become very difficult,
+
+74
+00:04:40,460 --> 00:04:44,530
+so we would need a more automated and more scalable
+
+75
+00:04:44,610 --> 00:04:48,586
+solution for that. And network plugins actually solve this issue as
+
+76
+00:04:48,608 --> 00:04:52,442
+well. So the way it works is that networking application
+
+77
+00:04:52,576 --> 00:04:55,580
+or network plugin like weave for example,
+
+78
+00:04:56,030 --> 00:04:59,834
+is deployed on each node in the cluster as
+
+79
+00:04:59,872 --> 00:05:03,054
+a pod. These pods will find each other and
+
+80
+00:05:03,092 --> 00:05:06,670
+form a group so they can directly talk to each other and
+
+81
+00:05:06,740 --> 00:05:09,902
+quickly share information about which
+
+82
+00:05:09,956 --> 00:05:13,802
+pod is running on which node. So when my app
+
+83
+00:05:13,876 --> 00:05:17,954
+needs to send a request to MyDB pod, the network plugin on
+
+84
+00:05:17,992 --> 00:05:21,742
+that node will ask other network
+
+85
+00:05:21,806 --> 00:05:25,542
+plugin pods on other nodes. Hey, which node has
+
+86
+00:05:25,596 --> 00:05:29,670
+a pod miDb with this IP address
+
+87
+00:05:29,820 --> 00:05:33,750
+and quickly find out the answer from its peers. This makes
+
+88
+00:05:33,820 --> 00:05:37,362
+scaling the pod network in the cluster very easy,
+
+89
+00:05:37,516 --> 00:05:40,598
+even if you have tens of thousands of nodes.
+
+90
+00:05:40,694 --> 00:05:44,682
+Now, as I said, there are many CNI plugins that
+
+91
+00:05:44,736 --> 00:05:48,202
+implement networking in Kubernetes, and the
+
+92
+00:05:48,256 --> 00:05:51,618
+one that we will install is Weavenet.
+
+93
+00:05:51,734 --> 00:05:55,134
+It's very easy to deploy and it will run as a demon set
+
+94
+00:05:55,252 --> 00:05:59,354
+which will automatically schedule one wavenet
+
+95
+00:05:59,402 --> 00:06:02,850
+pod on each node in the cluster, which is exactly
+
+96
+00:06:02,920 --> 00:06:06,786
+what we need. So let's go ahead and install wavenet plugin to
+
+97
+00:06:06,808 --> 00:06:09,650
+create a pod network in our cluster.
+
+98
+00:06:17,900 --> 00:06:20,996
+Install it. I mentioned that pod network IP
+
+99
+00:06:21,028 --> 00:06:24,684
+address range or the cider block should not
+
+100
+00:06:24,722 --> 00:06:28,156
+overlap with the node IP address range. So how can
+
+101
+00:06:28,178 --> 00:06:32,136
+we check that? Well, our nodes get IP addresses
+
+102
+00:06:32,248 --> 00:06:35,724
+from the VPC, our private network
+
+103
+00:06:35,852 --> 00:06:39,632
+on AWS. So by checking the VPC service
+
+104
+00:06:39,766 --> 00:06:43,136
+we can see its IP address range, which is
+
+105
+00:06:43,238 --> 00:06:47,788
+172.310 00:16
+
+106
+00:06:47,884 --> 00:06:51,776
+in my case, it could be different for your network. So we have the node
+
+107
+00:06:51,808 --> 00:06:56,464
+IP range. Now what about the pod network? In the weavenet documentation
+
+108
+00:06:56,592 --> 00:07:00,680
+we see that default range that will be used is
+
+109
+00:07:00,830 --> 00:07:05,592
+ten point 32.0.00:12
+
+110
+00:07:05,726 --> 00:07:09,672
+which is about a million IP addresses between these two
+
+111
+00:07:09,726 --> 00:07:13,124
+ips. So that's going to be the start of the range
+
+112
+00:07:13,172 --> 00:07:16,844
+and that's going to be the final ip in the range. And this
+
+113
+00:07:16,882 --> 00:07:20,556
+means we can create around 1 million pods in
+
+114
+00:07:20,578 --> 00:07:23,928
+our cluster with this range. And this ip range
+
+115
+00:07:24,024 --> 00:07:27,516
+will be then evenly divided between the nodes
+
+116
+00:07:27,548 --> 00:07:31,180
+in the cluster. So as you see, the pod network cider block
+
+117
+00:07:31,260 --> 00:07:34,944
+and the node cider block do not overlap in our
+
+118
+00:07:34,982 --> 00:07:38,704
+case. So we can actually go ahead and use the
+
+119
+00:07:38,742 --> 00:07:42,196
+default IP range of WiPnet. And by the way,
+
+120
+00:07:42,298 --> 00:07:46,164
+if you want to calculate the range and to make sure
+
+121
+00:07:46,282 --> 00:07:49,924
+they don't overlap, you can use any cider block
+
+122
+00:07:49,972 --> 00:07:53,576
+calculator, you can specify the cider block and
+
+123
+00:07:53,598 --> 00:07:56,756
+you will see all the IP addresses in that range.
+
+124
+00:07:56,868 --> 00:08:01,012
+So that's actually very easy to validate. Now to install Wavenet,
+
+125
+00:08:01,076 --> 00:08:04,428
+let's actually check Kubernetes documentation again and I'm going
+
+126
+00:08:04,434 --> 00:08:08,460
+to search for network add ons.
+
+127
+00:08:13,180 --> 00:08:17,716
+And here you see the list of all the network solutions or network plugins
+
+128
+00:08:17,828 --> 00:08:21,144
+you can use in your cluster. And one of them on the list is
+
+129
+00:08:21,182 --> 00:08:24,364
+Wavenet. And if I click on it, it will take us
+
+130
+00:08:24,402 --> 00:08:28,236
+to their official documentation and the installation guide here which
+
+131
+00:08:28,258 --> 00:08:31,600
+is basically a one liner. And with this single
+
+132
+00:08:31,670 --> 00:08:35,376
+command you can install the weavenet plugin. Now if
+
+133
+00:08:35,398 --> 00:08:39,180
+you look at this one liner, it's basically taking a Kubernetes
+
+134
+00:08:39,260 --> 00:08:42,710
+manifest for weavenet application
+
+135
+00:08:43,080 --> 00:08:46,660
+and applying it using Kubectl apply
+
+136
+00:08:46,730 --> 00:08:50,564
+command. So if you wanted to see what's actually inside that
+
+137
+00:08:50,602 --> 00:08:54,212
+manifest that we are applying here, or keep it
+
+138
+00:08:54,346 --> 00:08:58,072
+locally as well to know which manifest version you
+
+139
+00:08:58,126 --> 00:09:01,960
+used for a later reference you can actually download this
+
+140
+00:09:02,030 --> 00:09:05,892
+locally and then apply it. So that's what we're going to do.
+
+141
+00:09:05,966 --> 00:09:09,368
+I'm going to copy this and on the master node I'm
+
+142
+00:09:09,384 --> 00:09:13,164
+going to download it with BgeT and save the
+
+143
+00:09:13,202 --> 00:09:17,560
+contents of this manifest into the Weave
+
+144
+00:09:17,720 --> 00:09:21,648
+yaml file. If we don't specify this option here,
+
+145
+00:09:21,814 --> 00:09:25,804
+it will by default try to create a file name with the URL
+
+146
+00:09:25,852 --> 00:09:29,536
+as the file name. So I'm going to execute this and if
+
+147
+00:09:29,558 --> 00:09:33,904
+I do. Ls. There you go. We have our weave Yaml
+
+148
+00:09:33,952 --> 00:09:37,396
+file and we
+
+149
+00:09:37,418 --> 00:09:41,044
+can see the contents of it, which basically shows us
+
+150
+00:09:41,082 --> 00:09:44,560
+that a bunch of kubernetes components get created, one of
+
+151
+00:09:44,570 --> 00:09:48,296
+them or the main one being the demon set as we said with the
+
+152
+00:09:48,318 --> 00:09:53,240
+Weavenet application itself running on port 6784.
+
+153
+00:09:53,390 --> 00:09:56,616
+Now we said that we've net defined a
+
+154
+00:09:56,638 --> 00:10:02,124
+default cider block of 10320 00:12
+
+155
+00:10:02,322 --> 00:10:05,692
+but what if we wanted to override it? We could
+
+156
+00:10:05,746 --> 00:10:09,720
+actually set a different cider block inside this with
+
+157
+00:10:09,810 --> 00:10:13,776
+yaml configuration and deploy the WNet plugin like this.
+
+158
+00:10:13,878 --> 00:10:17,644
+And again, in the documentation of wivnet
+
+159
+00:10:17,772 --> 00:10:21,252
+you see that we can do that by specifying this option
+
+160
+00:10:21,386 --> 00:10:25,040
+as a parameter for Weave launch command.
+
+161
+00:10:25,200 --> 00:10:30,950
+So we can modify the
+
+162
+00:10:31,400 --> 00:10:35,432
+weave yaml file going to the demon set component right
+
+163
+00:10:35,486 --> 00:10:39,236
+here and the main container of weave cube.
+
+164
+00:10:39,348 --> 00:10:43,096
+We see the launch command right here and we
+
+165
+00:10:43,118 --> 00:10:47,016
+can add the cider block
+
+166
+00:10:47,048 --> 00:10:50,444
+range as a parameter. So I'm just going to go ahead
+
+167
+00:10:50,482 --> 00:10:55,420
+and copy this from here and
+
+168
+00:10:55,570 --> 00:11:02,832
+instead of 10320 zero we can set it to,
+
+169
+00:11:02,966 --> 00:11:06,672
+which again should not overlap with our
+
+170
+00:11:06,726 --> 00:11:10,384
+node IP range. So this should be fine. And just a quick
+
+171
+00:11:10,422 --> 00:11:13,968
+note here on a command attribute within the container
+
+172
+00:11:14,064 --> 00:11:18,000
+in Yaml format. This is basically how you can specify
+
+173
+00:11:18,160 --> 00:11:21,604
+commands as a list of the
+
+174
+00:11:21,642 --> 00:11:25,352
+command itself and all of its options. So if I had a second and
+
+175
+00:11:25,406 --> 00:11:29,944
+third options here, I would just list them one by one in
+
+176
+00:11:29,982 --> 00:11:34,184
+a list like this. So let's save this and
+
+177
+00:11:34,222 --> 00:11:41,004
+now we can apply which
+
+178
+00:11:41,042 --> 00:11:44,892
+will install all these components including the demon set.
+
+179
+00:11:45,026 --> 00:11:48,720
+First, our master node should be in a ready state,
+
+180
+00:11:48,790 --> 00:11:51,840
+so let's check that kubectl get node.
+
+181
+00:11:52,420 --> 00:11:56,252
+And as you see we have status ready for master,
+
+182
+00:11:56,396 --> 00:12:00,224
+so that one's fixed. And the second one
+
+183
+00:12:00,262 --> 00:12:03,572
+was that core DNS pods were not starting,
+
+184
+00:12:03,706 --> 00:12:07,856
+they were in a pending state, so that should be fixed as well. And let's
+
+185
+00:12:07,888 --> 00:12:11,396
+see that get pod in kube system
+
+186
+00:12:11,498 --> 00:12:15,744
+namespace. And there you go. We have core DNS
+
+187
+00:12:15,792 --> 00:12:19,384
+pods both in a running status as well as we
+
+188
+00:12:19,422 --> 00:12:23,460
+have a new pod here. We've net on our master node,
+
+189
+00:12:23,540 --> 00:12:27,448
+and since we just have one node in the cluster, we have one
+
+190
+00:12:27,534 --> 00:12:31,516
+weave pod that basically manages the pod network in
+
+191
+00:12:31,538 --> 00:12:32,620
+our cluster.
+
+192
+00:12:35,440 --> 00:12:38,764
+And finally, we've talked about pod network and
+
+193
+00:12:38,802 --> 00:12:42,384
+pod ips. So how do we even see
+
+194
+00:12:42,422 --> 00:12:45,456
+the ip addresses of the pods in the cluster? Well,
+
+195
+00:12:45,478 --> 00:12:49,340
+one way of doing it is by getting detailed output
+
+196
+00:12:49,420 --> 00:12:52,724
+of the pod. So let's check the
+
+197
+00:12:52,762 --> 00:12:56,640
+core DNS pod and describe
+
+198
+00:12:56,800 --> 00:12:59,840
+that pod in detail with Kubectl.
+
+199
+00:12:59,920 --> 00:13:03,296
+Describe pod command and the pod name
+
+200
+00:13:03,418 --> 00:13:06,040
+as well as the namespace.
+
+201
+00:13:08,220 --> 00:13:12,484
+And this will give us a bunch of output of containers
+
+202
+00:13:12,612 --> 00:13:16,116
+creating and starting inside the pod,
+
+203
+00:13:16,228 --> 00:13:19,580
+as well as some metadata of the pod. And as you see,
+
+204
+00:13:19,650 --> 00:13:23,304
+we have an IP address for core DNS pod
+
+205
+00:13:23,432 --> 00:13:26,956
+which is in the range of the
+
+206
+00:13:26,978 --> 00:13:29,812
+cider block that we defined for wavenet,
+
+207
+00:13:29,896 --> 00:13:33,090
+which is 1320 three.
+
+208
+00:13:33,540 --> 00:13:37,436
+So that's one way to check the IP address of a pod.
+
+209
+00:13:37,548 --> 00:13:41,260
+However, doing this for every pod in the cluster
+
+210
+00:13:41,420 --> 00:13:45,232
+is too much work, and also you don't have a nice overview
+
+211
+00:13:45,376 --> 00:13:48,560
+of list of pods with their IP addresses.
+
+212
+00:13:48,640 --> 00:13:52,656
+To do that, we can display the pods using an output
+
+213
+00:13:52,848 --> 00:13:57,032
+option o, which stands for output option
+
+214
+00:13:57,166 --> 00:14:01,636
+wide. So this will basically give us an extended output
+
+215
+00:14:01,748 --> 00:14:04,644
+of the pods. So let's execute.
+
+216
+00:14:04,772 --> 00:14:08,844
+And there you go. We have additional columns with additional information,
+
+217
+00:14:08,962 --> 00:14:12,716
+and one of them is the IP address. And as
+
+218
+00:14:12,738 --> 00:14:16,124
+you see, the core DNS pods which started
+
+219
+00:14:16,242 --> 00:14:19,916
+after we've got deployed, have the
+
+220
+00:14:19,938 --> 00:14:23,940
+IP addresses both from the range of weavenet's
+
+221
+00:14:24,040 --> 00:14:28,336
+pod networks cider block. And you also notice that
+
+222
+00:14:28,438 --> 00:14:32,672
+all the other pods, the static pods as well as Kubeproxy
+
+223
+00:14:32,816 --> 00:14:36,500
+and the wivnet itself have a different
+
+224
+00:14:36,570 --> 00:14:39,972
+IP address, which is the IP address of the control
+
+225
+00:14:40,026 --> 00:14:43,584
+plane node they are running on. And that's
+
+226
+00:14:43,632 --> 00:14:47,732
+because these pods are not part of the regular pod
+
+227
+00:14:47,796 --> 00:14:50,520
+network like core DNS for example,
+
+228
+00:14:50,670 --> 00:14:54,228
+or any other pod application pods or database pods
+
+229
+00:14:54,244 --> 00:14:57,596
+that we're going to deploy later. And that's why they get
+
+230
+00:14:57,698 --> 00:15:01,224
+this static ip address of the node.
+
+231
+00:15:01,352 --> 00:15:05,384
+And to check that we can also do kubectl get node
+
+232
+00:15:05,432 --> 00:15:09,312
+with wide output and see the internal ip address
+
+233
+00:15:09,446 --> 00:15:13,056
+of the master node, which is same as right here.
+
+234
+00:15:13,158 --> 00:15:17,472
+So now we have our cluster completely set up, we have our control
+
+235
+00:15:17,526 --> 00:15:21,056
+plane processes running, and we have a
+
+236
+00:15:21,078 --> 00:15:24,804
+pod network deployed in the cluster. However, right now we just have
+
+237
+00:15:24,842 --> 00:15:28,288
+a one node cluster with only a master node.
+
+238
+00:15:28,384 --> 00:15:31,604
+So it's time to join the worker nodes and make them
+
+239
+00:15:31,642 --> 00:15:35,184
+part of the cluster. And installing the pod network
+
+240
+00:15:35,312 --> 00:15:38,856
+plugin was needed to add the worker nodes to
+
+241
+00:15:38,878 --> 00:15:42,600
+the cluster, otherwise we wouldn't be able to join them and create
+
+242
+00:15:42,670 --> 00:15:46,696
+pod networks on them. So now that we have everything prepared,
+
+243
+00:15:46,808 --> 00:15:50,380
+let's configure and join the worker nodes.
+
+244
+00:15:52,720 --> 00:15:56,696
+Worker nodes we already installed container
+
+245
+00:15:56,728 --> 00:16:01,168
+D, Kubeadm, Kubelet and Kubectl on
+
+246
+00:16:01,254 --> 00:16:04,976
+both worker nodes. Also, if you didn't already execute it,
+
+247
+00:16:05,078 --> 00:16:08,752
+run pseudo swap off a
+
+248
+00:16:08,806 --> 00:16:12,596
+command on both work nodes to
+
+249
+00:16:12,618 --> 00:16:15,760
+disable swap as described in the prerequisites.
+
+250
+00:16:15,840 --> 00:16:19,808
+So once all of this is installed and configured,
+
+251
+00:16:19,904 --> 00:16:23,564
+we can now actually join the work nodes to the cluster,
+
+252
+00:16:23,632 --> 00:16:25,450
+which is actually pretty easy.
+
+253
+00:16:28,460 --> 00:16:32,436
+Remember that we got an output after Kubeadm
+
+254
+00:16:32,468 --> 00:16:35,888
+init command with join subcommand,
+
+255
+00:16:36,004 --> 00:16:39,160
+which looked like this kubeadm join
+
+256
+00:16:39,240 --> 00:16:42,872
+and then some parameters. That's the command
+
+257
+00:16:43,016 --> 00:16:47,176
+with a generated token that you can execute
+
+258
+00:16:47,288 --> 00:16:50,816
+on a worker node to join it to the
+
+259
+00:16:50,838 --> 00:16:55,184
+cluster. So this command basically includes the address of
+
+260
+00:16:55,302 --> 00:16:59,692
+API server because the worker node needs to know which cluster
+
+261
+00:16:59,756 --> 00:17:04,160
+it is connecting to or joining to, as well as an automatically
+
+262
+00:17:04,240 --> 00:17:08,416
+generated secret token so that control plane components
+
+263
+00:17:08,448 --> 00:17:12,020
+can identify the worker and basically let it
+
+264
+00:17:12,090 --> 00:17:15,780
+join the cluster. However, if you don't have that command
+
+265
+00:17:15,940 --> 00:17:19,524
+anymore, don't worry, we can print out this command anytime
+
+266
+00:17:19,572 --> 00:17:23,220
+we need to join a new node to the cluster.
+
+267
+00:17:23,300 --> 00:17:27,108
+So let's see how it works. Now the token gets generated on
+
+268
+00:17:27,134 --> 00:17:31,224
+the master, so we need to create a new token and print
+
+269
+00:17:31,272 --> 00:17:35,116
+out the join command on the master so
+
+270
+00:17:35,138 --> 00:17:38,140
+that we can copy it and execute on workers later.
+
+271
+00:17:38,290 --> 00:17:42,764
+So going back to the master node, we're going to use Kubeadm
+
+272
+00:17:42,812 --> 00:17:46,416
+to do that. Now I want to give you a pro tip here which is
+
+273
+00:17:46,438 --> 00:17:50,840
+going to help you a lot when working with either Kubeadm
+
+274
+00:17:50,940 --> 00:17:53,844
+command line tool or kubectl tool.
+
+275
+00:17:53,962 --> 00:17:57,236
+Now both of these tools, just like any other command line tool,
+
+276
+00:17:57,338 --> 00:18:01,012
+also have a help option which shows
+
+277
+00:18:01,066 --> 00:18:04,676
+you pretty nicely all the subcommands you
+
+278
+00:18:04,698 --> 00:18:08,376
+have with them. This is the Inif command that we executed with
+
+279
+00:18:08,398 --> 00:18:12,420
+Kubeadm and some other subcommands with the descriptions
+
+280
+00:18:12,500 --> 00:18:17,096
+as well as possible options you can pass to those subcommands.
+
+281
+00:18:17,208 --> 00:18:20,296
+And one of the commands you see here is token,
+
+282
+00:18:20,488 --> 00:18:25,080
+which is a subcommand to manage the secret tokens
+
+283
+00:18:25,240 --> 00:18:29,004
+that we need to connect worker nodes to the cluster.
+
+284
+00:18:29,132 --> 00:18:32,928
+So I'm going to do Kubeadm token and I'm going
+
+285
+00:18:32,934 --> 00:18:36,784
+to do help again to see the
+
+286
+00:18:36,822 --> 00:18:40,124
+subcommands of Kubeadm token command
+
+287
+00:18:40,172 --> 00:18:43,284
+itself. Let's do that. And right here
+
+288
+00:18:43,322 --> 00:18:46,900
+you see with Kubeadm token we can create
+
+289
+00:18:46,970 --> 00:18:50,560
+new tokens, we can list existing
+
+290
+00:18:50,720 --> 00:18:54,304
+tokens and so on. Again, we want to generate
+
+291
+00:18:54,352 --> 00:18:58,420
+a new token for the worker nodes. So I'm going to do Kubeadm token
+
+292
+00:18:58,500 --> 00:19:02,584
+create and do help again to
+
+293
+00:19:02,622 --> 00:19:06,264
+see what other options I can pass onto
+
+294
+00:19:06,312 --> 00:19:09,736
+it and execute. Going back here usage
+
+295
+00:19:09,848 --> 00:19:13,948
+Kubeadm token create and one option
+
+296
+00:19:14,034 --> 00:19:17,496
+that I have here, one flag is print
+
+297
+00:19:17,608 --> 00:19:21,440
+join command. So in the description you see that instead
+
+298
+00:19:21,510 --> 00:19:25,196
+of just printing out the newly generated token,
+
+299
+00:19:25,388 --> 00:19:28,640
+this option will actually print us the
+
+300
+00:19:28,710 --> 00:19:32,228
+entire Kubeadm join command that we can
+
+301
+00:19:32,314 --> 00:19:36,212
+simply copy and execute on worker nodes. So I'm going to
+
+302
+00:19:36,346 --> 00:19:40,212
+copy that option, edit at the end
+
+303
+00:19:40,346 --> 00:19:44,408
+and let's execute. And there you go. This is
+
+304
+00:19:44,574 --> 00:19:48,532
+the command we are going to copy and execute
+
+305
+00:19:48,596 --> 00:19:52,628
+on worker nodes. Again, this is the API
+
+306
+00:19:52,724 --> 00:19:56,092
+server IP address this is the port
+
+307
+00:19:56,146 --> 00:19:59,528
+where API server is running on this machine,
+
+308
+00:19:59,624 --> 00:20:03,500
+right? We have the newly generated token and we have
+
+309
+00:20:03,650 --> 00:20:08,084
+the CA certificate hash so that worker node
+
+310
+00:20:08,232 --> 00:20:11,996
+can identify itself with the master node.
+
+311
+00:20:12,108 --> 00:20:15,376
+So that's our command. Let's copy this, go to
+
+312
+00:20:15,398 --> 00:20:19,436
+worker one. Now this command will actually require
+
+313
+00:20:19,548 --> 00:20:23,364
+pseudo privilege. So either you execute it with
+
+314
+00:20:23,402 --> 00:20:27,712
+a root user by switching to root, or we can just do pseudo
+
+315
+00:20:27,776 --> 00:20:31,936
+at the beginning. So with pseudo, let's execute the command.
+
+316
+00:20:32,048 --> 00:20:36,168
+And you see that Kubeadm is executing different
+
+317
+00:20:36,254 --> 00:20:40,136
+phases. We have the pre flight phase just like with Kubeadm in
+
+318
+00:20:40,158 --> 00:20:43,912
+it, and another simple phase that basically
+
+319
+00:20:44,046 --> 00:20:47,896
+configures Kubelet which is already installed and running on
+
+320
+00:20:47,918 --> 00:20:51,156
+worker node. And basically Kubeadm will tell them
+
+321
+00:20:51,198 --> 00:20:54,876
+and instruct Kubelet what to do. So in
+
+322
+00:20:54,898 --> 00:20:59,228
+the background, worker node just joined the cluster
+
+323
+00:20:59,404 --> 00:21:03,680
+and any pods that needed to be scheduled on
+
+324
+00:21:03,750 --> 00:21:07,724
+the worker node right here has been scheduled
+
+325
+00:21:07,852 --> 00:21:11,284
+automatically without our involvement. So to
+
+326
+00:21:11,322 --> 00:21:15,236
+check that, let's go back to the master and
+
+327
+00:21:15,258 --> 00:21:18,100
+let's do kubectl get node.
+
+328
+00:21:20,120 --> 00:21:24,068
+And we should see worker one in a ready status
+
+329
+00:21:24,164 --> 00:21:28,356
+which is now part of the cluster with the same Kubernetes version.
+
+330
+00:21:28,468 --> 00:21:32,692
+We can also check an extended output
+
+331
+00:21:32,836 --> 00:21:35,952
+with internal IP addresses. So this is the master,
+
+332
+00:21:36,036 --> 00:21:39,512
+this is the worker. And now if we do Kubectl
+
+333
+00:21:39,576 --> 00:21:42,780
+get pod in all the namespaces and
+
+334
+00:21:42,850 --> 00:21:46,056
+again a wide output or extended output.
+
+335
+00:21:46,168 --> 00:21:49,884
+You see that on the worker node with this internal
+
+336
+00:21:49,932 --> 00:21:54,188
+ip address right here we have two pods
+
+337
+00:21:54,284 --> 00:21:57,660
+that were automatically started on the worker node.
+
+338
+00:21:57,740 --> 00:22:01,328
+The first one is kubeproxy and another one is
+
+339
+00:22:01,414 --> 00:22:05,124
+we've. Net. Now kubeproxy and we've. Net are both
+
+340
+00:22:05,242 --> 00:22:08,560
+demon sets, if you remember, and demon sets
+
+341
+00:22:08,640 --> 00:22:12,468
+will automatically schedule a pod in each
+
+342
+00:22:12,634 --> 00:22:16,760
+single node in the cluster. So everything seems
+
+343
+00:22:16,910 --> 00:22:18,010
+great here.
+
+344
+00:22:20,940 --> 00:22:25,412
+Let's actually go ahead and execute
+
+345
+00:22:25,476 --> 00:22:29,256
+the same Kubeadm join command on worker
+
+346
+00:22:29,288 --> 00:22:32,636
+two. So we don't have to generate a new token for each
+
+347
+00:22:32,738 --> 00:22:36,028
+worker node. We can actually reuse the same one. So I'm
+
+348
+00:22:36,034 --> 00:22:39,712
+going to copy this and execute here
+
+349
+00:22:39,766 --> 00:22:43,404
+as well. And it's done. The worker node should be now joined
+
+350
+00:22:43,452 --> 00:22:47,340
+to the cluster as well as Kubelet was configured
+
+351
+00:22:47,420 --> 00:22:51,170
+and started. Let's actually check the Kubelet service
+
+352
+00:22:51,800 --> 00:22:56,084
+status and
+
+353
+00:22:56,122 --> 00:22:59,296
+we see that it's running in an active
+
+354
+00:22:59,328 --> 00:23:05,956
+state. And again let's
+
+355
+00:23:05,988 --> 00:23:08,968
+check the nodes. Master, worker one,
+
+356
+00:23:09,054 --> 00:23:12,664
+worker two, which is in the ready state with
+
+357
+00:23:12,702 --> 00:23:16,444
+this IP address. And again on
+
+358
+00:23:16,482 --> 00:23:20,584
+worker two we have the same two demon
+
+359
+00:23:20,632 --> 00:23:23,704
+set pods, Kubeproxy and Wivnet.
+
+360
+00:23:23,832 --> 00:23:27,128
+Here I'm going to remind you that joining
+
+361
+00:23:27,304 --> 00:23:30,608
+the worker nodes is actually possible because
+
+362
+00:23:30,694 --> 00:23:34,732
+we opened all these ports on master
+
+363
+00:23:34,796 --> 00:23:38,964
+nodes as
+
+364
+00:23:39,002 --> 00:23:43,108
+well as the worker nodes so that different processes
+
+365
+00:23:43,284 --> 00:23:46,504
+on master and worker can communicate with
+
+366
+00:23:46,542 --> 00:23:50,340
+each other in order to join the worker node to the existing
+
+367
+00:23:50,420 --> 00:23:51,320
+cluster.
+
+368
+00:23:54,560 --> 00:23:57,784
+Now as you already learned with Wimnet,
+
+369
+00:23:57,832 --> 00:24:01,100
+which is a pod networking layer inside
+
+370
+00:24:01,170 --> 00:24:04,920
+Kubernetes, the Wimnet pods on all the nodes
+
+371
+00:24:05,000 --> 00:24:08,428
+should now be talking to each other and forming this
+
+372
+00:24:08,514 --> 00:24:12,016
+network group so that we have a pod network in
+
+373
+00:24:12,038 --> 00:24:15,616
+the cluster and as we see they are running in
+
+374
+00:24:15,638 --> 00:24:18,832
+the cluster, but we don't know whether they are talking
+
+375
+00:24:18,886 --> 00:24:22,112
+to each other or not. Did they actually discover or find
+
+376
+00:24:22,166 --> 00:24:25,296
+each other and did they form a group? So let's
+
+377
+00:24:25,328 --> 00:24:28,692
+actually check that as a next step. So I'm going to clear
+
+378
+00:24:28,746 --> 00:24:31,968
+that and what I'm going to do is I'm
+
+379
+00:24:31,984 --> 00:24:35,556
+going to print only the weavenet pods
+
+380
+00:24:35,588 --> 00:24:40,232
+and their names. So we're just going to do a simple grab and
+
+381
+00:24:40,286 --> 00:24:44,024
+we're going to do weavenet here. So this will give us
+
+382
+00:24:44,142 --> 00:24:48,072
+the pod names of all the weavenet pods.
+
+383
+00:24:48,216 --> 00:24:51,644
+So I'm just going to take one of them, doesn't matter which
+
+384
+00:24:51,682 --> 00:24:55,784
+one, and I'm going to check the application logs
+
+385
+00:24:55,832 --> 00:24:59,728
+or weavenet application logs in the pod. And to do that
+
+386
+00:24:59,814 --> 00:25:03,120
+very simply, I'm just going to do Kubectl logs,
+
+387
+00:25:03,700 --> 00:25:07,376
+name of the pod, name of the namespace where
+
+388
+00:25:07,398 --> 00:25:11,300
+the pod is running and let's
+
+389
+00:25:11,720 --> 00:25:15,476
+execute. Now the logs actually don't belong to
+
+390
+00:25:15,498 --> 00:25:19,204
+a pod, but rather container that is running inside the
+
+391
+00:25:19,242 --> 00:25:22,900
+pod. And if we have two containers running inside the pod,
+
+392
+00:25:22,980 --> 00:25:26,516
+like in this case, then Kubernetes or Kubectl doesn't
+
+393
+00:25:26,548 --> 00:25:29,992
+know which container logs you want. So for that
+
+394
+00:25:30,046 --> 00:25:34,330
+we need to actually specify a container. So again,
+
+395
+00:25:34,700 --> 00:25:39,252
+copy that and specify container with
+
+396
+00:25:39,406 --> 00:25:43,564
+this is the first container, this is the second container. We want the
+
+397
+00:25:43,602 --> 00:25:47,240
+main application logs and execute again.
+
+398
+00:25:47,330 --> 00:25:51,164
+And there you go. And here you see the logs
+
+399
+00:25:51,212 --> 00:25:55,100
+of wivnet from start up till
+
+400
+00:25:55,260 --> 00:25:58,640
+now. And here you see a bunch of
+
+401
+00:25:58,710 --> 00:26:02,916
+error messages that says that it cannot connect
+
+402
+00:26:03,018 --> 00:26:06,304
+to this IP address which belongs to the master
+
+403
+00:26:06,352 --> 00:26:10,512
+node on this port where weavenet
+
+404
+00:26:10,576 --> 00:26:13,944
+is running. Now let's check the logs of another
+
+405
+00:26:14,142 --> 00:26:16,810
+pod, let's say this one for example.
+
+406
+00:26:18,140 --> 00:26:22,280
+And here you see the same exact error messages,
+
+407
+00:26:22,620 --> 00:26:26,568
+error during connection attempt. So it's trying to connect
+
+408
+00:26:26,734 --> 00:26:30,268
+to wavenet pods on
+
+409
+00:26:30,434 --> 00:26:33,944
+other two nodes, one of the work nodes
+
+410
+00:26:33,992 --> 00:26:38,428
+and the master node on the port 6783
+
+411
+00:26:38,514 --> 00:26:42,076
+where we've net is running, but it is failing
+
+412
+00:26:42,108 --> 00:26:45,520
+to do so. So what is the problem here? As I mentioned,
+
+413
+00:26:45,590 --> 00:26:49,388
+the networking plugin gets deployed on every node. So together
+
+414
+00:26:49,494 --> 00:26:52,996
+these individual networking pods deployed across
+
+415
+00:26:53,098 --> 00:26:56,784
+different nodes make one shared pod network.
+
+416
+00:26:56,912 --> 00:27:00,576
+In our case, this networking application is Wavenet
+
+417
+00:27:00,688 --> 00:27:05,080
+which listens on port 6783
+
+418
+00:27:05,230 --> 00:27:09,000
+on each node and for them to connect
+
+419
+00:27:09,070 --> 00:27:12,216
+to each other they need to be able to talk to
+
+420
+00:27:12,238 --> 00:27:16,300
+each other on this port. However, if we check
+
+421
+00:27:16,450 --> 00:27:19,880
+our firewall rules for the nodes,
+
+422
+00:27:19,960 --> 00:27:23,576
+you see that port is not open on the nodes,
+
+423
+00:27:23,688 --> 00:27:27,616
+right? So master node as well as the
+
+424
+00:27:27,638 --> 00:27:31,024
+work nodes do not allow talking on
+
+425
+00:27:31,062 --> 00:27:34,208
+port 6783.
+
+426
+00:27:34,374 --> 00:27:38,064
+So very simply we need to open that port
+
+427
+00:27:38,182 --> 00:27:42,004
+so that the weave net pods can talk to each other. So to
+
+428
+00:27:42,042 --> 00:27:45,216
+fix that, let's just open this port on master
+
+429
+00:27:45,328 --> 00:27:48,950
+and both worker nodes go to security group
+
+430
+00:27:50,200 --> 00:27:53,930
+edit inbound rules and we're going to add
+
+431
+00:27:54,540 --> 00:27:59,224
+another rule, custom tcp port 6783
+
+432
+00:27:59,342 --> 00:28:02,792
+and again, this port should be only open
+
+433
+00:28:02,926 --> 00:28:06,456
+for instances inside the VPC because we don't
+
+434
+00:28:06,488 --> 00:28:10,472
+need any outside or external connection to weavenet.
+
+435
+00:28:10,616 --> 00:28:14,956
+So that's going to be 172310
+
+436
+00:28:15,138 --> 00:28:18,832
+00:16 which is our
+
+437
+00:28:18,886 --> 00:28:22,492
+VPC cider block. Let's save the rule,
+
+438
+00:28:22,636 --> 00:28:25,820
+that's the security group of master nodes.
+
+439
+00:28:25,980 --> 00:28:29,680
+Let's also configure worker node
+
+440
+00:28:31,080 --> 00:28:32,390
+security group.
+
+441
+00:28:35,800 --> 00:28:39,092
+Again add a new rule, one seven
+
+442
+00:28:39,146 --> 00:28:39,750
+two,
+
+443
+00:28:43,000 --> 00:28:46,612
+our VPC cider block save rules
+
+444
+00:28:46,756 --> 00:28:50,280
+and that's it. This should have actually already
+
+445
+00:28:50,350 --> 00:28:53,832
+solved the problem. So if I go back and
+
+446
+00:28:53,966 --> 00:28:58,104
+print out logs of again one of the weavenet
+
+447
+00:28:58,232 --> 00:29:02,044
+pods and another option we have with
+
+448
+00:29:02,082 --> 00:29:06,312
+logs is to stream the logs so we can see actually output
+
+449
+00:29:06,456 --> 00:29:10,276
+in live is minus f. So we're going to tail
+
+450
+00:29:10,408 --> 00:29:14,016
+the logs and right here you see connection accepted. So we
+
+451
+00:29:14,038 --> 00:29:17,628
+have a successful connection with a master node connection edit
+
+452
+00:29:17,724 --> 00:29:21,984
+as well as with worker one. So now all the weavenet
+
+453
+00:29:22,112 --> 00:29:25,990
+pods should be actually talking to each other. And let's actually
+
+454
+00:29:27,720 --> 00:29:31,476
+check the other weavenet pod as well. Weavenet pod on
+
+455
+00:29:31,498 --> 00:29:35,268
+master node as well as worker two are connected
+
+456
+00:29:35,364 --> 00:29:38,090
+to the weavenet on worker one.
+
+457
+00:29:39,340 --> 00:29:42,952
+Once we install the network plugin and check
+
+458
+00:29:43,006 --> 00:29:47,096
+its logs, et cetera, we want to see the status and make
+
+459
+00:29:47,118 --> 00:29:50,604
+sure that all the network plugin pods have
+
+460
+00:29:50,642 --> 00:29:54,764
+discovered each other and we're able to actually connect to each other and
+
+461
+00:29:54,802 --> 00:29:57,688
+we can extract this information from the logs.
+
+462
+00:29:57,784 --> 00:30:01,164
+However, we have a way of seeing the status
+
+463
+00:30:01,292 --> 00:30:04,684
+in a clean nice output using weave command
+
+464
+00:30:04,732 --> 00:30:09,260
+itself. So let's see how that works. First of all, let's output
+
+465
+00:30:09,340 --> 00:30:10,880
+our weave pods,
+
+466
+00:30:14,840 --> 00:30:18,356
+including the IP addresses or the nodes where they are
+
+467
+00:30:18,378 --> 00:30:22,032
+running at and grab on weave.
+
+468
+00:30:22,176 --> 00:30:25,988
+So we have three wivnet pods on each
+
+469
+00:30:26,074 --> 00:30:30,072
+node, and let's actually check the wave net of
+
+470
+00:30:30,126 --> 00:30:33,816
+the master and its status. And we're going to do
+
+471
+00:30:33,838 --> 00:30:37,324
+this with this command. Now you will learn what this
+
+472
+00:30:37,362 --> 00:30:42,264
+command means and all these options and all these subcommands,
+
+473
+00:30:42,392 --> 00:30:46,268
+all these options, and how it gets executed step by step in
+
+474
+00:30:46,274 --> 00:30:49,976
+the later lectures. At this point you can just copy and paste
+
+475
+00:30:50,008 --> 00:30:53,984
+the command to check the status. So the only thing you will
+
+476
+00:30:54,022 --> 00:30:57,404
+have to change is the name of the pod. So we'll have to replace
+
+477
+00:30:57,452 --> 00:31:01,036
+it with your own pod name and execute.
+
+478
+00:31:01,148 --> 00:31:04,548
+And this will actually execute a weave command inside
+
+479
+00:31:04,634 --> 00:31:08,036
+the pod and give you a status that will
+
+480
+00:31:08,058 --> 00:31:11,844
+show you some important information, like how many targets it
+
+481
+00:31:11,882 --> 00:31:15,992
+was able to discover and how many connections it was able to
+
+482
+00:31:16,046 --> 00:31:19,784
+establish. So this is the important part here, which shows us
+
+483
+00:31:19,822 --> 00:31:23,848
+that this specific weavenet instance was able to find
+
+484
+00:31:23,934 --> 00:31:27,900
+two other peers, these two, and was able to
+
+485
+00:31:27,970 --> 00:31:31,420
+establish connection with them. So if it says two
+
+486
+00:31:31,490 --> 00:31:34,872
+failed connections or one established and one failed,
+
+487
+00:31:34,936 --> 00:31:38,524
+it means the weavenet pods were not able to find each
+
+488
+00:31:38,562 --> 00:31:41,936
+other. And probably you don't have three peers, but rather
+
+489
+00:31:42,038 --> 00:31:45,728
+one or three. So in this case everything looks
+
+490
+00:31:45,814 --> 00:31:49,184
+great. If you have any issues and you don't see
+
+491
+00:31:49,222 --> 00:31:53,008
+two connections here, you can reference the wivnet
+
+492
+00:31:53,104 --> 00:31:56,884
+troubleshooting documentation that will help you fix any
+
+493
+00:31:56,922 --> 00:31:57,910
+of these issues.
+
+494
+00:32:00,600 --> 00:32:04,260
+And this means now that the wivnet
+
+495
+00:32:04,340 --> 00:32:07,672
+pods on all the nodes are connected, we can actually
+
+496
+00:32:07,726 --> 00:32:11,464
+schedule pods on the worker nodes. And finally
+
+497
+00:32:11,582 --> 00:32:15,704
+to test our setup and that everything is working
+
+498
+00:32:15,822 --> 00:32:19,692
+as expected. As a final step, let's actually schedule a
+
+499
+00:32:19,746 --> 00:32:23,852
+test pod in the cluster and see that it's running on
+
+500
+00:32:23,906 --> 00:32:27,372
+one of the worker nodes. And to do that in the fastest way
+
+501
+00:32:27,426 --> 00:32:30,848
+and most efficient way, just to test basically
+
+502
+00:32:30,934 --> 00:32:34,720
+scheduling a pod, we can use Kubectl run
+
+503
+00:32:34,790 --> 00:32:38,748
+command, which basically needs pod name as a parameter.
+
+504
+00:32:38,844 --> 00:32:42,916
+So Kubectl run and let's call the pod test
+
+505
+00:32:43,098 --> 00:32:46,564
+and the image name because the pod needs to run
+
+506
+00:32:46,602 --> 00:32:50,544
+a container which is based on some image and simply
+
+507
+00:32:50,672 --> 00:32:54,680
+nginx image from the docker hub will do.
+
+508
+00:32:54,830 --> 00:32:58,612
+And if I execute this, this will schedule a pod
+
+509
+00:32:58,756 --> 00:33:02,548
+called test with Nginx image in a default
+
+510
+00:33:02,644 --> 00:33:06,908
+namespace. Let's execute Kubectl get
+
+511
+00:33:07,074 --> 00:33:10,796
+pod in a default namespace. Again you
+
+512
+00:33:10,818 --> 00:33:14,124
+see the container is creating. Let's add
+
+513
+00:33:14,162 --> 00:33:17,468
+a watch option. And there you go.
+
+514
+00:33:17,634 --> 00:33:20,876
+Test is running just to make sure that it is
+
+515
+00:33:20,898 --> 00:33:24,944
+running on one of the work nodes. Let's actually do
+
+516
+00:33:24,982 --> 00:33:27,170
+an extended output with.
+
+517
+00:33:29,060 --> 00:33:32,400
+And there you go. As you see it is running on worker
+
+518
+00:33:32,480 --> 00:33:36,260
+two. And if we want to test scheduling another
+
+519
+00:33:36,330 --> 00:33:40,176
+pod? Test two for example. And let's
+
+520
+00:33:40,208 --> 00:33:44,304
+do get pod again. As you see, test two was
+
+521
+00:33:44,442 --> 00:33:48,340
+scheduled on worker one, so the load was basically divided
+
+522
+00:33:48,420 --> 00:33:51,816
+between the two worker nodes. Each one is running a
+
+523
+00:33:51,838 --> 00:33:55,144
+test pod, and the IP address of the
+
+524
+00:33:55,182 --> 00:33:58,904
+pod itself, as you see, is also from the cider
+
+525
+00:33:58,952 --> 00:34:02,520
+block that we defined for Weavenet.
+
+526
+00:34:02,600 --> 00:34:05,852
+And as you see, worker two actually got
+
+527
+00:34:05,906 --> 00:34:09,516
+its own subset of the cider block
+
+528
+00:34:09,628 --> 00:34:13,452
+from the total IP range, since as I explained,
+
+529
+00:34:13,596 --> 00:34:16,892
+the network plugin will evenly distribute
+
+530
+00:34:17,036 --> 00:34:20,812
+its IP address range among the available
+
+531
+00:34:20,966 --> 00:34:25,008
+worker nodes, giving each one its own cider block
+
+532
+00:34:25,104 --> 00:34:26,100
+subset.
+
+533
+00:36:59,200 --> 00:37:03,404
+Actual application with a Kubernetes service inside
+
+534
+00:37:03,602 --> 00:37:07,328
+you as a Kubernetes administrator, want to test that application?
+
+535
+00:37:07,414 --> 00:37:10,560
+Deployment works fine in the cluster before
+
+536
+00:37:10,630 --> 00:37:14,028
+handing it over to the developers. So in this section we're
+
+537
+00:37:14,044 --> 00:37:17,844
+going to deploy a simple NGINx application to learn some
+
+538
+00:37:17,882 --> 00:37:21,572
+basic concepts of creating applications and making them
+
+539
+00:37:21,626 --> 00:37:25,092
+accessible for users in Kubernetes. For that,
+
+540
+00:37:25,146 --> 00:37:28,992
+we're going to create a simple configuration file for NGINX
+
+541
+00:37:29,056 --> 00:37:33,176
+deployment as well as its service to test that everything works.
+
+542
+00:37:33,278 --> 00:37:37,144
+We will deploy a test pod to connect to the
+
+543
+00:37:37,182 --> 00:37:40,712
+NgINX application through its service. This would mean
+
+544
+00:37:40,766 --> 00:37:44,528
+the NgInx is accessible internally for other pods
+
+545
+00:37:44,564 --> 00:37:48,600
+in the cluster, but we also want to make it accessible externally.
+
+546
+00:37:48,760 --> 00:37:52,300
+For that, we're going to first configure an external service
+
+547
+00:37:52,450 --> 00:37:55,980
+and then compare it to accessing the app with Ingress.
+
+548
+00:37:56,140 --> 00:37:59,884
+So we will deploy and configure ingress for our NgINX
+
+549
+00:37:59,932 --> 00:38:03,264
+application, and along the way we will learn several interesting
+
+550
+00:38:03,382 --> 00:38:07,132
+concepts such as labels and selectors, how service
+
+551
+00:38:07,206 --> 00:38:14,894
+networking works, and so on. So let's dive in for
+
+552
+00:38:14,932 --> 00:38:18,526
+NgInX. Now, what is a good way to put together a
+
+553
+00:38:18,548 --> 00:38:22,242
+deployment file? Well, we can write our own file from
+
+554
+00:38:22,296 --> 00:38:26,222
+scratch, or we can copy an example file from Kubernetes
+
+555
+00:38:26,286 --> 00:38:29,966
+documentation. So I'm going to go to Kubernetes documentation
+
+556
+00:38:30,158 --> 00:38:33,780
+and search for a deployment manifest example.
+
+557
+00:38:38,250 --> 00:38:42,514
+And there you go. We have a very simple example of a deployment
+
+558
+00:38:42,562 --> 00:38:46,294
+configuration, so we don't have to write this whole thing
+
+559
+00:38:46,332 --> 00:38:50,042
+from scratch. So I'm going to grab this and copy it
+
+560
+00:38:50,096 --> 00:38:54,650
+into my editor and save it as NgINx deployment
+
+561
+00:38:55,230 --> 00:38:58,746
+YaMl file now
+
+562
+00:38:58,768 --> 00:39:01,434
+a quick note on the editor.
+
+563
+00:39:01,562 --> 00:39:04,926
+For Kubernetes configuration files. I'm using a
+
+564
+00:39:04,948 --> 00:39:08,666
+visual studio code editor that supports YAML
+
+565
+00:39:08,698 --> 00:39:11,726
+format with proper highlighting, et cetera. You can
+
+566
+00:39:11,748 --> 00:39:14,946
+also install additional YAML plugins if you
+
+567
+00:39:14,968 --> 00:39:18,814
+want to, so make sure you have a proper editor that will make creating
+
+568
+00:39:18,862 --> 00:39:22,482
+and adjusting the configuration files easy for you now, you already know
+
+569
+00:39:22,536 --> 00:39:26,118
+what configuration file is and generally how it looks like,
+
+570
+00:39:26,204 --> 00:39:29,842
+but let's actually go through this deployment configuration
+
+571
+00:39:29,906 --> 00:39:33,858
+file step by step and let's see how a deployment
+
+572
+00:39:34,034 --> 00:39:36,070
+component is configured.
+
+573
+00:39:40,310 --> 00:39:43,954
+So here in the specification part of a deployment, you see
+
+574
+00:39:43,992 --> 00:39:47,714
+a template. Template also has its
+
+575
+00:39:47,752 --> 00:39:52,082
+own metadata and specification. So it's basically a configuration
+
+576
+00:39:52,146 --> 00:39:55,026
+file inside of a configuration file.
+
+577
+00:39:55,218 --> 00:39:59,590
+And the reason for it is that this configuration
+
+578
+00:40:00,090 --> 00:40:03,494
+applies to a pod. So pod should have its
+
+579
+00:40:03,532 --> 00:40:08,038
+own configuration inside of deployments configuration file
+
+580
+00:40:08,134 --> 00:40:11,914
+and that's how all the deployments will be defined. And this is
+
+581
+00:40:11,952 --> 00:40:15,494
+going to be the blueprint for a pod, like which image
+
+582
+00:40:15,542 --> 00:40:18,400
+it should be based on, which port it should open,
+
+583
+00:40:18,930 --> 00:40:22,030
+what is going to be the name of the container, et cetera.
+
+584
+00:40:22,610 --> 00:40:25,946
+So that's basically how deployment configuration
+
+585
+00:40:26,058 --> 00:40:30,134
+is created and how pod blueprint is configured.
+
+586
+00:40:30,202 --> 00:40:34,222
+So let's make final adjustments to our deployment file.
+
+587
+00:40:34,286 --> 00:40:37,710
+So I'm going to take the latest image of NginX. So I'm
+
+588
+00:40:38,210 --> 00:40:41,566
+going to remove the version tag as well as let's
+
+589
+00:40:41,598 --> 00:40:45,174
+set the replica count to two replicas. And now let's actually create
+
+590
+00:40:45,212 --> 00:40:49,138
+an NgINX deployment in our cluster using this deployment
+
+591
+00:40:49,234 --> 00:40:53,030
+manifest file. For that we have to do Kubectl apply
+
+592
+00:40:53,180 --> 00:40:57,478
+for this file. So first I'm going to create an NginX
+
+593
+00:40:57,654 --> 00:41:01,462
+deployment file on Masternode where I have Kubectl
+
+594
+00:41:01,526 --> 00:41:02,330
+configured.
+
+595
+00:41:04,030 --> 00:41:07,882
+And I'm just going to copy the contents
+
+596
+00:41:08,026 --> 00:41:11,726
+and put it here. Again, we have a nice highlighting in
+
+597
+00:41:11,828 --> 00:41:15,166
+vim editor. Let's save it.
+
+598
+00:41:15,348 --> 00:41:17,600
+And now we can actually apply it.
+
+599
+00:41:18,050 --> 00:41:22,402
+Apply f, which stands for file inputs and
+
+600
+00:41:22,456 --> 00:41:26,254
+Nginx deployment. And now let's see that two Nginx
+
+601
+00:41:26,302 --> 00:41:29,922
+pods are running in our cluster. Let's do Kubectl get
+
+602
+00:41:29,976 --> 00:41:33,398
+pod. And there you go. And let's actually
+
+603
+00:41:33,484 --> 00:41:37,218
+delete those two test pods
+
+604
+00:41:37,314 --> 00:41:39,190
+because we don't need them anymore.
+
+605
+00:41:40,650 --> 00:41:45,126
+And for that I'm going to do kubectl delete pod and
+
+606
+00:41:45,228 --> 00:41:48,934
+name of the pod and we can even provide a list instead of deleting
+
+607
+00:41:48,982 --> 00:41:52,154
+them one by one. And this will get rid of both
+
+608
+00:41:52,272 --> 00:41:54,922
+test and test two pods. Great.
+
+609
+00:41:55,056 --> 00:41:58,506
+So these are our two Nginx pod
+
+610
+00:41:58,538 --> 00:42:01,722
+replicas. And you see that the name of the pod
+
+611
+00:42:01,786 --> 00:42:05,322
+is always made up of the name of the deployment
+
+612
+00:42:05,466 --> 00:42:09,582
+as a prefix. And then you have the unique
+
+613
+00:42:09,726 --> 00:42:13,154
+hash for each pod. Let's also check that
+
+614
+00:42:13,272 --> 00:42:16,270
+a deployment was created in the cluster.
+
+615
+00:42:16,430 --> 00:42:20,210
+For that I'm going to do kubectlgeteployment.
+
+616
+00:42:20,870 --> 00:42:24,210
+And there you go. We have our NgINX deployment
+
+617
+00:42:24,370 --> 00:42:27,586
+two pods out of two configured pods
+
+618
+00:42:27,618 --> 00:42:30,962
+are ready and available. So now whenever
+
+619
+00:42:31,026 --> 00:42:34,078
+we want to change something in those pods,
+
+620
+00:42:34,194 --> 00:42:38,086
+like pod image or image version or container
+
+621
+00:42:38,118 --> 00:42:42,250
+specification, we will adjust the deployment component
+
+622
+00:42:42,590 --> 00:42:45,786
+and it will then propagate the changes to all of
+
+623
+00:42:45,808 --> 00:42:49,518
+its pods and restart them if necessary. So we are not going to
+
+624
+00:42:49,524 --> 00:42:52,990
+be working with pods directly, but rather with deployment.
+
+625
+00:42:55,730 --> 00:42:59,034
+Now that we have the pods running, we need a
+
+626
+00:42:59,092 --> 00:43:02,658
+service so that other pods in the cluster or even
+
+627
+00:43:02,744 --> 00:43:06,530
+external applications can access them. Because remember,
+
+628
+00:43:06,680 --> 00:43:10,610
+service makes pods accessible on a permanent ip address
+
+629
+00:43:10,760 --> 00:43:14,022
+using the service name as well as it
+
+630
+00:43:14,076 --> 00:43:17,734
+load balances the traffic among multiple replicas of
+
+631
+00:43:17,772 --> 00:43:21,110
+the pods. So let's go ahead and create a service which
+
+632
+00:43:21,180 --> 00:43:24,838
+again we can grab the specification actually
+
+633
+00:43:25,004 --> 00:43:28,474
+from the documentation. So let's do service. And here
+
+634
+00:43:28,512 --> 00:43:32,058
+we have a very simple service example. So I'm going
+
+635
+00:43:32,064 --> 00:43:35,494
+to copy that. You can of course create it directly on the master node,
+
+636
+00:43:35,542 --> 00:43:38,926
+but I'm going to first configure it in a visual studio code so that
+
+637
+00:43:38,948 --> 00:43:42,958
+we have a better overview. So going back to the visual studio code,
+
+638
+00:43:43,044 --> 00:43:46,686
+I'm going to create a new file, let's call
+
+639
+00:43:46,708 --> 00:43:49,970
+it NginX service Yaml,
+
+640
+00:43:50,390 --> 00:43:53,934
+and I'm going to create it next to the deployment
+
+641
+00:43:53,982 --> 00:43:57,970
+file. So first of all, again we have the same metadata
+
+642
+00:43:58,470 --> 00:44:01,782
+section in the service which
+
+643
+00:44:01,836 --> 00:44:05,014
+every Kubernetes component has. So let's call
+
+644
+00:44:05,052 --> 00:44:08,694
+this NgInX service here to
+
+645
+00:44:08,732 --> 00:44:12,546
+be consistent and then we have the same specification section.
+
+646
+00:44:12,658 --> 00:44:16,758
+However, as you already learned, every component specification
+
+647
+00:44:16,854 --> 00:44:20,502
+attributes or the configuration in the specification section
+
+648
+00:44:20,566 --> 00:44:24,266
+is different. In a specification of deployment we
+
+649
+00:44:24,288 --> 00:44:27,882
+have a template for a pod. In the service specification,
+
+650
+00:44:27,946 --> 00:44:32,026
+we have configuration for ports to access the pods
+
+651
+00:44:32,058 --> 00:44:35,886
+behind the service. As you see, service configuration is a
+
+652
+00:44:35,908 --> 00:44:39,586
+bit easier, bit simpler. The main part of the
+
+653
+00:44:39,608 --> 00:44:42,770
+service configuration is the ports section.
+
+654
+00:44:45,670 --> 00:44:49,138
+So how this is configured is basically service has
+
+655
+00:44:49,224 --> 00:44:52,686
+a port where the service itself
+
+656
+00:44:52,808 --> 00:44:56,626
+is accessible at. So if either service sends
+
+657
+00:44:56,658 --> 00:45:00,086
+a request to NgInX service here, it needs to send it
+
+658
+00:45:00,108 --> 00:45:03,842
+on port 80, but this service needs to know to
+
+659
+00:45:03,916 --> 00:45:07,514
+which pod it should forward the request, but also
+
+660
+00:45:07,552 --> 00:45:10,874
+at which port is that pod listening and that is
+
+661
+00:45:10,912 --> 00:45:14,746
+the target port. So this one should match
+
+662
+00:45:14,928 --> 00:45:18,222
+the container port. So you can have a list of
+
+663
+00:45:18,276 --> 00:45:22,442
+ports here where each port configuration
+
+664
+00:45:22,506 --> 00:45:26,126
+basically defines where on which port can
+
+665
+00:45:26,148 --> 00:45:29,954
+we access the service IP address and on
+
+666
+00:45:29,992 --> 00:45:33,710
+which port will service, then forward that request
+
+667
+00:45:33,870 --> 00:45:37,294
+to the pods that it's connected
+
+668
+00:45:37,342 --> 00:45:41,186
+to. So again, service is attached to a pod and
+
+669
+00:45:41,208 --> 00:45:44,550
+that pod is also accessible at a certain
+
+670
+00:45:44,620 --> 00:45:48,214
+port. In our case we want to use this service to
+
+671
+00:45:48,252 --> 00:45:52,242
+access Nginx pods, right? Here is configured
+
+672
+00:45:52,386 --> 00:45:56,554
+to be accessible at port 80. So when the
+
+673
+00:45:56,592 --> 00:46:00,106
+Nginx service gets the request to forward it
+
+674
+00:46:00,128 --> 00:46:03,914
+to Nginx pods, it should send that request to
+
+675
+00:46:03,952 --> 00:46:07,626
+port 80. So the target port always points to the container
+
+676
+00:46:07,658 --> 00:46:11,566
+port where service will send the request to.
+
+677
+00:46:11,748 --> 00:46:15,758
+And the port attribute itself defines the port where service
+
+678
+00:46:15,844 --> 00:46:19,306
+itself can be accessed. And these two actually can be
+
+679
+00:46:19,348 --> 00:46:22,786
+different. So let's configure this to be 80 80 and
+
+680
+00:46:22,808 --> 00:46:26,194
+the target port to point to the container port which
+
+681
+00:46:26,232 --> 00:46:30,382
+is 80. So basically when another pod
+
+682
+00:46:30,446 --> 00:46:34,134
+makes a request towards NgInX application, it will
+
+683
+00:46:34,172 --> 00:46:37,654
+send a request to this service using the
+
+684
+00:46:37,692 --> 00:46:40,742
+name of the service and the port number.
+
+685
+00:46:40,876 --> 00:46:44,890
+The service will take that request and it will then forward it
+
+686
+00:46:44,960 --> 00:46:48,426
+to one of the pods behind it on
+
+687
+00:46:48,528 --> 00:46:51,866
+the port where the applications inside the
+
+688
+00:46:51,888 --> 00:46:55,580
+pods are listening at, which is the target port.
+
+689
+00:46:56,450 --> 00:46:59,920
+And that's how the communication flow will look like.
+
+690
+00:47:02,610 --> 00:47:06,286
+Now you may be wondering, we have the target port of
+
+691
+00:47:06,308 --> 00:47:09,834
+the pods, but how does service know which pods
+
+692
+00:47:09,882 --> 00:47:13,266
+it should forward the request to? So basically, how do
+
+693
+00:47:13,288 --> 00:47:17,074
+we connect a service that we create in the cluster to
+
+694
+00:47:17,112 --> 00:47:20,686
+the pods? So how do we connect these two components
+
+695
+00:47:20,718 --> 00:47:24,838
+to each other? And that's where labels and selectors come in.
+
+696
+00:47:24,924 --> 00:47:29,074
+So the way the connection is established is using labels
+
+697
+00:47:29,202 --> 00:47:32,566
+and selectors. So as you see,
+
+698
+00:47:32,668 --> 00:47:36,234
+metadata part contains the labels and the
+
+699
+00:47:36,272 --> 00:47:39,350
+specification part contains selectors.
+
+700
+00:47:39,430 --> 00:47:43,482
+It's pretty simple. In a metadata, you give
+
+701
+00:47:43,616 --> 00:47:47,386
+components like deployment or pod a
+
+702
+00:47:47,408 --> 00:47:51,582
+key value pair and it could be any key value pair that you think of.
+
+703
+00:47:51,636 --> 00:47:55,278
+In this case, we have app Nginx and that
+
+704
+00:47:55,364 --> 00:47:58,378
+label just sticks to that component.
+
+705
+00:47:58,554 --> 00:48:02,030
+So we give pods created
+
+706
+00:48:02,110 --> 00:48:06,066
+using this blueprint label, app Nginx and
+
+707
+00:48:06,088 --> 00:48:10,434
+we tell the deployment to connect or to match
+
+708
+00:48:10,632 --> 00:48:14,550
+all the labels with app Nginx
+
+709
+00:48:14,890 --> 00:48:18,486
+to create that connection. So this way deployment will
+
+710
+00:48:18,508 --> 00:48:22,002
+know which pods belong to it. And these two labels
+
+711
+00:48:22,066 --> 00:48:25,718
+are used by the service selector.
+
+712
+00:48:25,814 --> 00:48:29,882
+So in the specification of a service, we define a selector which
+
+713
+00:48:29,936 --> 00:48:33,834
+basically makes a connection between the
+
+714
+00:48:34,032 --> 00:48:37,710
+service and the deployment or its pods,
+
+715
+00:48:38,210 --> 00:48:41,822
+because service must know which pods belong to that service
+
+716
+00:48:41,956 --> 00:48:45,902
+and that connection is made through the selector of
+
+717
+00:48:45,956 --> 00:48:49,614
+the label. So label is a key value pair
+
+718
+00:48:49,742 --> 00:48:53,342
+that we can assign to any component.
+
+719
+00:48:53,486 --> 00:48:56,814
+We can label deployments, pods,
+
+720
+00:48:56,942 --> 00:49:00,686
+services, et cetera. So label basically acts
+
+721
+00:49:00,798 --> 00:49:04,998
+like an identifier of the component, just like a name.
+
+722
+00:49:05,084 --> 00:49:09,030
+So for example, in case of the deployment, we have the name of the
+
+723
+00:49:09,100 --> 00:49:13,030
+component and in addition to that we have list
+
+724
+00:49:13,100 --> 00:49:16,202
+of labels that in addition to
+
+725
+00:49:16,256 --> 00:49:19,814
+the name can be used to identify the deployment.
+
+726
+00:49:19,942 --> 00:49:24,326
+In the case of pods, however, the label is a required attribute.
+
+727
+00:49:24,438 --> 00:49:28,074
+So we have to set labels on the pod.
+
+728
+00:49:28,202 --> 00:49:31,978
+Again, this is a list, so we can have multiple
+
+729
+00:49:32,074 --> 00:49:35,374
+labels on a component and the
+
+730
+00:49:35,412 --> 00:49:39,098
+label is any key value pair that you want,
+
+731
+00:49:39,204 --> 00:49:42,658
+but a standard and a common label key
+
+732
+00:49:42,744 --> 00:49:46,274
+is app and just the name of the application itself.
+
+733
+00:49:46,392 --> 00:49:49,618
+So even though you can have any key here,
+
+734
+00:49:49,784 --> 00:49:52,742
+app basically is kind of a standard.
+
+735
+00:49:52,876 --> 00:49:56,690
+So that's what you see in most of the examples. So labels
+
+736
+00:49:56,850 --> 00:50:00,950
+add key value, pair labels to the components and
+
+737
+00:50:01,020 --> 00:50:04,234
+selector lets you identify and
+
+738
+00:50:04,272 --> 00:50:08,294
+find all the components which have a certain label
+
+739
+00:50:08,342 --> 00:50:11,786
+on them. So here in the deployment specification, we have
+
+740
+00:50:11,808 --> 00:50:15,114
+a selector that finds all the
+
+741
+00:50:15,232 --> 00:50:19,154
+pods that have a label app nginx
+
+742
+00:50:19,222 --> 00:50:22,430
+on them. So if we change this to something different,
+
+743
+00:50:22,580 --> 00:50:26,430
+it will not be able to find pods with this
+
+744
+00:50:26,500 --> 00:50:29,634
+label. And it works the same way for a service.
+
+745
+00:50:29,752 --> 00:50:32,930
+If we go here on the specification of a service,
+
+746
+00:50:33,080 --> 00:50:37,022
+we also have a selector attribute that defines
+
+747
+00:50:37,166 --> 00:50:40,482
+label for the pods that it wants
+
+748
+00:50:40,536 --> 00:50:44,374
+to connect to. So in this case, the selector for the
+
+749
+00:50:44,412 --> 00:50:47,862
+label has to match what we have defined right
+
+750
+00:50:47,916 --> 00:50:53,254
+here. So it should be app Nginx and
+
+751
+00:50:53,292 --> 00:50:56,906
+this is basically how we tell a service which
+
+752
+00:50:57,008 --> 00:51:01,030
+pods it should connect to as its endpoints
+
+753
+00:51:01,110 --> 00:51:04,474
+and then forward all the requests that it gets on
+
+754
+00:51:04,512 --> 00:51:08,010
+this port. So now when a service gets a request
+
+755
+00:51:08,170 --> 00:51:11,754
+here, it will know to forward that request
+
+756
+00:51:11,882 --> 00:51:15,630
+to any of the pods that have this label
+
+757
+00:51:17,090 --> 00:51:22,434
+on the port 80 and
+
+758
+00:51:22,472 --> 00:51:25,858
+that basically configures our service. Now again, I'm going to
+
+759
+00:51:25,864 --> 00:51:29,650
+copy this service configuration, go back to
+
+760
+00:51:29,800 --> 00:51:34,760
+my master node and let's create Nginx service
+
+761
+00:51:35,130 --> 00:51:39,446
+yaml file here and
+
+762
+00:51:39,548 --> 00:51:43,286
+let's apply Kubectl apply
+
+763
+00:51:43,468 --> 00:51:48,442
+minus f Nginx service and
+
+764
+00:51:48,496 --> 00:51:52,170
+to get or to list all the services in the cluster
+
+765
+00:51:52,830 --> 00:51:56,442
+we have Kubectl get service or
+
+766
+00:51:56,496 --> 00:52:00,590
+we can also use a short version which is SVC.
+
+767
+00:52:01,250 --> 00:52:04,702
+And right here you see NgInx service and
+
+768
+00:52:04,756 --> 00:52:08,446
+the port which we configured for the service. This is where the
+
+769
+00:52:08,468 --> 00:52:11,826
+service will accept incoming requests, which is
+
+770
+00:52:11,928 --> 00:52:13,490
+port 80 80.
+
+771
+00:52:16,070 --> 00:52:19,522
+Now how do we make sure that our service was
+
+772
+00:52:19,576 --> 00:52:23,106
+connected to the pods? We actually have a subcommand
+
+773
+00:52:23,138 --> 00:52:27,154
+for Kubectl that will show you detailed
+
+774
+00:52:27,202 --> 00:52:31,490
+information of any component. And that's a Kubectl describe
+
+775
+00:52:31,570 --> 00:52:35,658
+command and describe commands. Takes the component type like service
+
+776
+00:52:35,744 --> 00:52:39,194
+or deployment as the first parameter and then
+
+777
+00:52:39,312 --> 00:52:43,030
+name of that component. So if we do Kubectl describe
+
+778
+00:52:43,110 --> 00:52:46,614
+service name of the service, this will give us
+
+779
+00:52:46,752 --> 00:52:50,558
+a detailed information about the service.
+
+780
+00:52:50,644 --> 00:52:54,602
+And this is obviously very useful for debugging Kubernetes resources.
+
+781
+00:52:54,666 --> 00:52:58,158
+So one we see the app Nginx selector. Right here
+
+782
+00:52:58,244 --> 00:53:01,134
+we see the port and the target port that we configured.
+
+783
+00:53:01,262 --> 00:53:04,642
+And this is a proof that our service was
+
+784
+00:53:04,696 --> 00:53:07,854
+able to connect to both NgInx
+
+785
+00:53:07,902 --> 00:53:11,782
+deployment replicas and registered them as
+
+786
+00:53:11,836 --> 00:53:15,106
+its endpoints. And these two are the IP
+
+787
+00:53:15,138 --> 00:53:19,126
+addresses of our NgINx deployment pods as
+
+788
+00:53:19,148 --> 00:53:22,840
+well as port number where Nginx inside
+
+789
+00:53:23,210 --> 00:53:27,130
+those pods is running. And to also be 100% sure,
+
+790
+00:53:27,200 --> 00:53:30,554
+we can do kubectl get pod white which will
+
+791
+00:53:30,592 --> 00:53:33,286
+show us the IP addresses of the pods.
+
+792
+00:53:33,478 --> 00:53:37,070
+And right here you see these two
+
+793
+00:53:37,140 --> 00:53:40,730
+are the IP addresses registered as endpoints
+
+794
+00:53:40,810 --> 00:53:44,794
+here. So this means if your service is not forwarding
+
+795
+00:53:44,922 --> 00:53:48,398
+requests to the pods as it's supposed to,
+
+796
+00:53:48,484 --> 00:53:52,402
+you can actually check its endpoints and see that
+
+797
+00:53:52,536 --> 00:53:55,406
+it has registered all the pod replicas.
+
+798
+00:53:55,598 --> 00:53:59,026
+Another component that gets created whenever we
+
+799
+00:53:59,208 --> 00:54:03,094
+connect a service to pods is an
+
+800
+00:54:03,132 --> 00:54:07,538
+endpoint component. And we can also get that endpoint component
+
+801
+00:54:07,714 --> 00:54:11,574
+using Kubectlgetep as
+
+802
+00:54:11,692 --> 00:54:14,854
+an endpoint. And this will actually give you a
+
+803
+00:54:14,892 --> 00:54:19,178
+nice list of all the services with the service names together
+
+804
+00:54:19,264 --> 00:54:22,874
+with a list of their endpoints. So that's another way
+
+805
+00:54:22,912 --> 00:54:27,150
+to check that all your services have right endpoints in the cluster.
+
+806
+00:54:31,010 --> 00:54:35,040
+Now the interesting question here is how does the service
+
+807
+00:54:35,410 --> 00:54:38,320
+forward the request to the IP address?
+
+808
+00:54:38,770 --> 00:54:42,318
+Or basically who manages these service endpoints?
+
+809
+00:54:42,494 --> 00:54:45,906
+As you already learned, service is not a process.
+
+810
+00:54:46,008 --> 00:54:49,570
+It's not an application or a process that is running
+
+811
+00:54:49,720 --> 00:54:53,202
+on one of the nodes. It's actually just a virtual
+
+812
+00:54:53,266 --> 00:54:57,522
+IP address that is accessible throughout the whole cluster.
+
+813
+00:54:57,666 --> 00:55:01,122
+So it's not bound to one specific cluster node.
+
+814
+00:55:01,266 --> 00:55:05,562
+And the requests to that virtual IP address then
+
+815
+00:55:05,616 --> 00:55:09,030
+get forwarded to the actual processes
+
+816
+00:55:09,110 --> 00:55:12,442
+which are the pods behind that service. And this
+
+817
+00:55:12,496 --> 00:55:15,290
+forwarding is done by Kubeproxy.
+
+818
+00:55:15,630 --> 00:55:20,266
+So Kubeproxy is responsible for maintaining
+
+819
+00:55:20,378 --> 00:55:24,158
+the list of all the service IP addresses and
+
+820
+00:55:24,244 --> 00:55:27,566
+the Pod IP addresses that belong to that service.
+
+821
+00:55:27,748 --> 00:55:31,618
+So Kubeproxy is the one that is managing service
+
+822
+00:55:31,704 --> 00:55:35,042
+and its endpoints. So when the request is sent
+
+823
+00:55:35,096 --> 00:55:39,266
+to the service IP address, Kubeproxy will intercept the
+
+824
+00:55:39,288 --> 00:55:43,110
+request. It will check in its list which
+
+825
+00:55:43,180 --> 00:55:46,710
+pod endpoints are registered for the service IP address,
+
+826
+00:55:46,860 --> 00:55:50,562
+and it will pick one of the pods to forward the request
+
+827
+00:55:50,626 --> 00:55:54,254
+to. So that's how the requests are forwarded
+
+828
+00:55:54,322 --> 00:55:57,610
+from services to their pod endpoints.
+
+829
+00:56:00,590 --> 00:56:03,994
+Now remember I said that the third part
+
+830
+00:56:04,032 --> 00:56:08,278
+of the configuration file is a section describing
+
+831
+00:56:08,374 --> 00:56:12,074
+status of the component. And since we created deployment
+
+832
+00:56:12,122 --> 00:56:16,474
+and service components, let's actually see that auto generated
+
+833
+00:56:16,602 --> 00:56:20,066
+part of the component. So how do we actually
+
+834
+00:56:20,248 --> 00:56:24,350
+check the complete configuration file
+
+835
+00:56:24,510 --> 00:56:28,126
+with the auto generated attributes and the status section
+
+836
+00:56:28,238 --> 00:56:32,094
+of the components that we created in the cluster. Well, first of all, let's print
+
+837
+00:56:32,142 --> 00:56:35,846
+out all the components we have in a default namespace in
+
+838
+00:56:35,868 --> 00:56:39,174
+the cluster right now, Kubectl get all.
+
+839
+00:56:39,292 --> 00:56:43,014
+So instead of get pod or service we are saying give
+
+840
+00:56:43,052 --> 00:56:46,662
+me all the resources I have in a default namespace
+
+841
+00:56:46,806 --> 00:56:50,454
+and this will give us the services pod deployment,
+
+842
+00:56:50,502 --> 00:56:53,974
+et cetera. And now let's actually check the configuration
+
+843
+00:56:54,022 --> 00:56:57,482
+file of NgINX service that kubernetes
+
+844
+00:56:57,626 --> 00:57:01,742
+edit some auto generated information to.
+
+845
+00:57:01,876 --> 00:57:06,122
+So one way to do that is using Kubectl edit command.
+
+846
+00:57:06,266 --> 00:57:09,678
+Again, we need type of the resource, it could be service
+
+847
+00:57:09,764 --> 00:57:13,650
+or the short version and name
+
+848
+00:57:13,720 --> 00:57:17,778
+of that component. If I click
+
+849
+00:57:17,944 --> 00:57:21,594
+this will open my default editor which is beam,
+
+850
+00:57:21,742 --> 00:57:25,814
+and show me a Kubernetes configuration file which
+
+851
+00:57:25,852 --> 00:57:29,414
+of course is based on the service manifest that we
+
+852
+00:57:29,452 --> 00:57:32,822
+created. But Kubernetes basically added bunch of
+
+853
+00:57:32,956 --> 00:57:36,186
+attributes and bunch of information to it
+
+854
+00:57:36,288 --> 00:57:40,742
+and that's what we're seeing. So all of these are automatically generated
+
+855
+00:57:40,806 --> 00:57:44,202
+information like unique id creation time,
+
+856
+00:57:44,256 --> 00:57:47,466
+et cetera. And right here we have a status
+
+857
+00:57:47,578 --> 00:57:51,662
+section here with some information. And to leave
+
+858
+00:57:51,716 --> 00:57:54,986
+the editor in vim I'm going to click on the escape
+
+859
+00:57:55,018 --> 00:57:58,862
+key colon and
+
+860
+00:57:58,996 --> 00:58:01,520
+quit without any changes.
+
+861
+00:58:01,970 --> 00:58:06,210
+And the same way we can also check the deployment
+
+862
+00:58:11,450 --> 00:58:15,122
+status. Again, bunch of auto generated
+
+863
+00:58:15,186 --> 00:58:15,800
+information,
+
+864
+00:58:19,050 --> 00:58:22,646
+obviously much more than what we configured. And here we
+
+865
+00:58:22,668 --> 00:58:27,034
+have a little bit longer status section which
+
+866
+00:58:27,072 --> 00:58:30,874
+has an information about the actual state of the deployment like
+
+867
+00:58:30,912 --> 00:58:34,220
+how many replicas are ready and available,
+
+868
+00:58:34,590 --> 00:58:38,222
+et cetera. Again, let's leave the editor and
+
+869
+00:58:38,276 --> 00:58:41,322
+you can use this edit command with all the components.
+
+870
+00:58:41,466 --> 00:58:45,194
+An alternative way of checking the YAMl
+
+871
+00:58:45,242 --> 00:58:49,150
+configuration file of the components in the cluster
+
+872
+00:58:49,510 --> 00:58:54,002
+without having to go in edit mode is
+
+873
+00:58:54,136 --> 00:58:59,650
+to do get and
+
+874
+00:58:59,720 --> 00:59:03,890
+instead of just printing out an output
+
+875
+00:59:04,050 --> 00:59:07,254
+like this, we can do give me an
+
+876
+00:59:07,292 --> 00:59:11,126
+output in YAMl format and this
+
+877
+00:59:11,148 --> 00:59:15,250
+will basically give you the same contents as we got with Kubectl
+
+878
+00:59:15,330 --> 00:59:16,550
+edit command.
+
+879
+00:59:39,120 --> 00:59:43,276
+One use case of using labels for components and
+
+880
+00:59:43,298 --> 00:59:46,924
+as you learned we need to give pods a label so
+
+881
+00:59:46,962 --> 00:59:50,404
+that sir vis can identify and select them
+
+882
+00:59:50,522 --> 00:59:54,544
+using that label selector. However there are other use cases
+
+883
+00:59:54,592 --> 00:59:58,340
+of labels as well. Now the question is what are other
+
+884
+00:59:58,410 --> 00:59:59,600
+use cases of labels.
+
+1
+00:00:00,090 --> 00:00:02,778
+IP address gets assigned to each node.
+
+2
+00:00:02,874 --> 00:00:06,970
+Now, on each of these nodes, we need to schedule pods,
+
+3
+00:00:07,050 --> 00:00:10,122
+but we said that pods are own isolated
+
+4
+00:00:10,186 --> 00:00:13,694
+machines in its own private network. So on
+
+5
+00:00:13,732 --> 00:00:17,006
+each node, a private network is created by
+
+6
+00:00:17,028 --> 00:00:21,082
+the network plugin with a different IP address range,
+
+7
+00:00:21,226 --> 00:00:23,838
+which, very important to note here,
+
+8
+00:00:24,004 --> 00:00:27,714
+should not overlap with the IP address range
+
+9
+00:00:27,762 --> 00:00:31,890
+of the nodes. Otherwise, the pod communication in your cluster
+
+10
+00:00:31,970 --> 00:00:35,778
+will not work. And this private network has a private switch
+
+11
+00:00:35,874 --> 00:00:39,366
+or a bridge on the host, which will let all
+
+12
+00:00:39,388 --> 00:00:43,210
+the pods within that network talk to each other, just like
+
+13
+00:00:43,360 --> 00:00:46,602
+nodes which are in the same VPC or same
+
+14
+00:00:46,656 --> 00:00:50,426
+network can talk to each other directly. So that's how the pods on
+
+15
+00:00:50,448 --> 00:00:53,806
+the same node can talk to each other directly, because they are part of
+
+16
+00:00:53,828 --> 00:00:57,642
+the same virtual network and have a virtual
+
+17
+00:00:57,706 --> 00:01:01,914
+router. Now, how is the IP address range
+
+18
+00:01:02,042 --> 00:01:05,074
+for the virtual network defined on
+
+19
+00:01:05,112 --> 00:01:08,834
+each node? How do we make sure that each node gets
+
+20
+00:01:08,872 --> 00:01:12,254
+a different set of IP addresses so that pods
+
+21
+00:01:12,302 --> 00:01:15,994
+across the nodes will all have unique ips?
+
+22
+00:01:16,142 --> 00:01:19,382
+Well, as I mentioned, kubernetes does not care what
+
+23
+00:01:19,436 --> 00:01:22,934
+range you use. So it's up to the network plugin to
+
+24
+00:01:22,972 --> 00:01:26,722
+define that range. So network plugin will define
+
+25
+00:01:26,786 --> 00:01:30,602
+a cider block for the whole cluster, and from that
+
+26
+00:01:30,656 --> 00:01:33,898
+range, equal subsets of that
+
+27
+00:01:33,984 --> 00:01:38,086
+IP address range is given to each node.
+
+28
+00:01:38,198 --> 00:01:41,950
+So now each node has a unique set of ips it can
+
+29
+00:01:42,020 --> 00:01:45,354
+give to its pods. So we have virtual
+
+30
+00:01:45,402 --> 00:01:48,878
+private networks on each node with their own
+
+31
+00:01:49,044 --> 00:01:52,302
+sets of IP addresses. Now the question is,
+
+32
+00:01:52,436 --> 00:01:55,906
+how does myApp pod from
+
+33
+00:01:56,008 --> 00:02:00,014
+node one talk to mydb pod on node
+
+34
+00:02:00,062 --> 00:02:03,486
+three using MyDB pod's IP
+
+35
+00:02:03,518 --> 00:02:07,890
+address? They're in their own private isolated networks,
+
+36
+00:02:07,970 --> 00:02:11,334
+so they can't access each other directly, so they have
+
+37
+00:02:11,372 --> 00:02:14,726
+to communicate using gateways. Let's see what
+
+38
+00:02:14,748 --> 00:02:18,778
+that means. So basically, route rules will be defined in
+
+39
+00:02:18,784 --> 00:02:22,694
+the route table of the servers that will map
+
+40
+00:02:22,822 --> 00:02:26,794
+each node's IP address as a gateway to
+
+41
+00:02:26,832 --> 00:02:30,410
+the pod network on that specific node.
+
+42
+00:02:30,490 --> 00:02:33,946
+So gateway is basically an IP address of the node,
+
+43
+00:02:34,058 --> 00:02:37,482
+and that maps to the virtual private
+
+44
+00:02:37,546 --> 00:02:41,566
+network cider block that was created for
+
+45
+00:02:41,588 --> 00:02:45,442
+the pods on that specific nodes. And that means
+
+46
+00:02:45,576 --> 00:02:49,342
+now when my app pod sends a request
+
+47
+00:02:49,406 --> 00:02:53,074
+to MyDB pod, route rule will be used
+
+48
+00:02:53,192 --> 00:02:56,710
+to determine which gateway should be used
+
+49
+00:02:56,860 --> 00:03:00,546
+to access MyDB pods network.
+
+50
+00:03:00,658 --> 00:03:04,614
+And since MyDB pod network is on node three,
+
+51
+00:03:04,732 --> 00:03:08,326
+the IP address of the node three, or gateway,
+
+52
+00:03:08,438 --> 00:03:12,198
+will be used to access the database pod
+
+53
+00:03:12,294 --> 00:03:15,802
+here. And this way we actually have one
+
+54
+00:03:15,856 --> 00:03:19,414
+large pod network that the network plugin
+
+55
+00:03:19,462 --> 00:03:23,146
+creates across all the nodes in the cluster.
+
+56
+00:03:23,258 --> 00:03:26,910
+Again, why can they talk through the gateway because
+
+57
+00:03:26,980 --> 00:03:30,730
+the nodes, node one, two and three are in the same network,
+
+58
+00:03:30,810 --> 00:03:33,954
+so they can talk to each other directly using each
+
+59
+00:03:33,992 --> 00:03:37,794
+other's ip addresses. Also, each node itself can
+
+60
+00:03:37,832 --> 00:03:41,774
+access the virtual pod network that was created
+
+61
+00:03:41,902 --> 00:03:45,978
+on that node. So if my app from node One's pod network
+
+62
+00:03:46,094 --> 00:03:50,354
+wants to talk to MyDB on node Three's network,
+
+63
+00:03:50,482 --> 00:03:54,066
+requests can be routed from my app pod to node
+
+64
+00:03:54,098 --> 00:03:57,606
+one. Then from the route table it will be determined which
+
+65
+00:03:57,708 --> 00:04:01,482
+node has my db pod. So node one will
+
+66
+00:04:01,616 --> 00:04:05,338
+send the request to node three, and node three will then
+
+67
+00:04:05,424 --> 00:04:08,826
+hand it over to myDB pod on
+
+68
+00:04:08,848 --> 00:04:12,634
+its pod network running inside the virtual network
+
+69
+00:04:12,682 --> 00:04:16,794
+on node three. And that's how pods across nodes
+
+70
+00:04:16,842 --> 00:04:18,720
+can communicate with each other.
+
+71
+00:04:21,490 --> 00:04:24,290
+However, there is one more thing here. In our example,
+
+72
+00:04:24,360 --> 00:04:28,270
+we just have three nodes, and therefore the route table
+
+73
+00:04:28,430 --> 00:04:31,906
+is actually pretty short and manageable. However,
+
+74
+00:04:32,008 --> 00:04:35,866
+imagine if we had thousands of nodes in the cluster.
+
+75
+00:04:35,998 --> 00:04:39,702
+Managing all these routes and keeping track of them will become very
+
+76
+00:04:39,756 --> 00:04:43,542
+difficult, so we would need a more automated and
+
+77
+00:04:43,596 --> 00:04:47,838
+more scalable solution for that. And network plugins actually solve
+
+78
+00:04:47,874 --> 00:04:51,734
+this issue as well. So the way it works is that networking
+
+79
+00:04:51,862 --> 00:04:55,580
+application or network plugin like weave for example,
+
+80
+00:04:56,030 --> 00:04:59,834
+is deployed on each node in the cluster as
+
+81
+00:04:59,872 --> 00:05:03,966
+a pod. These pods will find each other and form a group
+
+82
+00:05:04,068 --> 00:05:08,160
+so they can directly talk to each other and quickly share information
+
+83
+00:05:08,610 --> 00:05:12,618
+about which pod is running on which node.
+
+84
+00:05:12,714 --> 00:05:16,350
+So when my app needs to send a request to MyDB pod,
+
+85
+00:05:16,430 --> 00:05:20,050
+the network plugin on that node will ask
+
+86
+00:05:20,200 --> 00:05:23,886
+other network plugin pods on other nodes.
+
+87
+00:05:23,998 --> 00:05:27,282
+Hey, which node has a pod miDb
+
+88
+00:05:27,346 --> 00:05:30,470
+with this IP address and quickly
+
+89
+00:05:30,540 --> 00:05:33,750
+find out the answer from its peers. This makes
+
+90
+00:05:33,820 --> 00:05:37,362
+scaling the pod network in the cluster very easy,
+
+91
+00:05:37,516 --> 00:05:40,598
+even if you have tens of thousands of nodes.
+
+92
+00:05:40,694 --> 00:05:44,182
+Now, as I said, there are many CNI plugins
+
+93
+00:05:44,326 --> 00:05:48,202
+that implement networking in Kubernetes, and the
+
+94
+00:05:48,256 --> 00:05:51,618
+one that we will install is Weavenet.
+
+95
+00:05:51,734 --> 00:05:55,134
+It's very easy to deploy and it will run as a demon set
+
+96
+00:05:55,252 --> 00:05:58,638
+which will automatically schedule one
+
+97
+00:05:58,724 --> 00:06:01,898
+wavenet pod on each node in the cluster,
+
+98
+00:06:01,994 --> 00:06:05,886
+which is exactly what we need. So let's go ahead and install wavenet
+
+99
+00:06:05,918 --> 00:06:09,650
+plugin to create a pod network in our cluster.
+
+100
+00:06:17,900 --> 00:06:22,296
+Install it. I mentioned that pod network IP address range
+
+101
+00:06:22,408 --> 00:06:26,540
+or the cider block should not overlap with the node IP address
+
+102
+00:06:26,610 --> 00:06:30,812
+range. So how can we check that? Well, our nodes get
+
+103
+00:06:30,946 --> 00:06:34,084
+IP addresses from the VPC,
+
+104
+00:06:34,232 --> 00:06:38,188
+our private network on AWS. So by checking
+
+105
+00:06:38,284 --> 00:06:41,904
+the VPC service we can see its IP address
+
+106
+00:06:42,022 --> 00:06:45,984
+range, which is 172.310
+
+107
+00:06:46,102 --> 00:06:49,796
+00:16 in my case, it could be different for
+
+108
+00:06:49,818 --> 00:06:53,412
+your network. So we have the node IP range. Now what about
+
+109
+00:06:53,466 --> 00:06:56,836
+the pod network? In the weavenet documentation we
+
+110
+00:06:56,858 --> 00:07:00,680
+see that default range that will be used is
+
+111
+00:07:00,830 --> 00:07:05,592
+ten point 32.0.00:12
+
+112
+00:07:05,726 --> 00:07:09,672
+which is about a million IP addresses between these two
+
+113
+00:07:09,726 --> 00:07:13,124
+ips. So that's going to be the start of the range
+
+114
+00:07:13,172 --> 00:07:16,264
+and that's going to be the final ip in the range.
+
+115
+00:07:16,392 --> 00:07:19,852
+And this means we can create around 1 million
+
+116
+00:07:19,906 --> 00:07:23,928
+pods in our cluster with this range. And this ip range
+
+117
+00:07:24,024 --> 00:07:28,348
+will be then evenly divided between the nodes in the cluster.
+
+118
+00:07:28,444 --> 00:07:31,696
+So as you see, the pod network cider block and
+
+119
+00:07:31,798 --> 00:07:35,472
+the node cider block do not overlap in our case.
+
+120
+00:07:35,606 --> 00:07:39,516
+So we can actually go ahead and use the default IP
+
+121
+00:07:39,548 --> 00:07:42,964
+range of WiPnet. And by the way, if you want to
+
+122
+00:07:43,002 --> 00:07:46,564
+calculate the range and to make sure they
+
+123
+00:07:46,602 --> 00:07:49,924
+don't overlap, you can use any cider block
+
+124
+00:07:49,972 --> 00:07:53,576
+calculator, you can specify the cider block and
+
+125
+00:07:53,598 --> 00:07:56,756
+you will see all the IP addresses in that range.
+
+126
+00:07:56,868 --> 00:08:01,012
+So that's actually very easy to validate. Now to install Wavenet,
+
+127
+00:08:01,076 --> 00:08:04,908
+let's actually check Kubernetes documentation again and I'm going to search
+
+128
+00:08:04,994 --> 00:08:08,460
+for network add ons.
+
+129
+00:08:13,180 --> 00:08:16,932
+And here you see the list of all the network solutions or network
+
+130
+00:08:16,996 --> 00:08:20,168
+plugins you can use in your cluster. And one of
+
+131
+00:08:20,174 --> 00:08:23,516
+them on the list is Wavenet. And if I click on it,
+
+132
+00:08:23,618 --> 00:08:27,352
+it will take us to their official documentation and the installation
+
+133
+00:08:27,416 --> 00:08:31,264
+guide here which is basically a one liner. And with this
+
+134
+00:08:31,302 --> 00:08:34,908
+single command you can install the weavenet plugin.
+
+135
+00:08:35,004 --> 00:08:38,288
+Now if you look at this one liner, it's basically taking
+
+136
+00:08:38,374 --> 00:08:42,710
+a Kubernetes manifest for weavenet application
+
+137
+00:08:43,080 --> 00:08:46,660
+and applying it using Kubectl apply
+
+138
+00:08:46,730 --> 00:08:50,228
+command. So if you wanted to see what's actually inside
+
+139
+00:08:50,314 --> 00:08:53,684
+that manifest that we are applying here, or keep
+
+140
+00:08:53,722 --> 00:08:57,732
+it locally as well to know which manifest version
+
+141
+00:08:57,796 --> 00:09:01,080
+you used for a later reference you can actually
+
+142
+00:09:01,150 --> 00:09:04,488
+download this locally and then apply it.
+
+143
+00:09:04,574 --> 00:09:07,964
+So that's what we're going to do. I'm going to copy this and on
+
+144
+00:09:08,002 --> 00:09:12,572
+the master node I'm going to download it with BgeT and
+
+145
+00:09:12,626 --> 00:09:16,764
+save the contents of this manifest into the
+
+146
+00:09:16,802 --> 00:09:20,472
+Weave yaml file. If we don't specify this
+
+147
+00:09:20,546 --> 00:09:24,080
+option here, it will by default try to create
+
+148
+00:09:24,150 --> 00:09:27,328
+a file name with the URL as the file name. So I'm going
+
+149
+00:09:27,334 --> 00:09:30,584
+to execute this and if I do. Ls.
+
+150
+00:09:30,732 --> 00:09:34,660
+There you go. We have our weave Yaml file
+
+151
+00:09:36,840 --> 00:09:39,668
+and we can see the contents of it,
+
+152
+00:09:39,754 --> 00:09:43,216
+which basically shows us that a bunch of kubernetes components
+
+153
+00:09:43,248 --> 00:09:47,256
+get created, one of them or the main one being the demon set as
+
+154
+00:09:47,278 --> 00:09:50,904
+we said with the Weavenet application itself running on
+
+155
+00:09:50,942 --> 00:09:54,328
+port 6784. Now we said
+
+156
+00:09:54,414 --> 00:09:58,052
+that we've net defined a default cider block
+
+157
+00:09:58,116 --> 00:10:02,124
+of 10320 00:12
+
+158
+00:10:02,322 --> 00:10:06,060
+but what if we wanted to override it? We could actually
+
+159
+00:10:06,130 --> 00:10:09,292
+set a different cider block inside this
+
+160
+00:10:09,346 --> 00:10:13,116
+with yaml configuration and deploy the WNet plugin
+
+161
+00:10:13,148 --> 00:10:16,832
+like this. And again, in the documentation of
+
+162
+00:10:16,886 --> 00:10:20,684
+wivnet you see that we can do that by specifying this
+
+163
+00:10:20,742 --> 00:10:24,128
+option as a parameter for Weave launch
+
+164
+00:10:24,224 --> 00:10:28,260
+command. So we can modify
+
+165
+00:10:30,200 --> 00:10:33,576
+the weave yaml file going to
+
+166
+00:10:33,598 --> 00:10:37,336
+the demon set component right here and the
+
+167
+00:10:37,358 --> 00:10:41,732
+main container of weave cube. We see the launch command
+
+168
+00:10:41,796 --> 00:10:46,284
+right here and we can add the
+
+169
+00:10:46,322 --> 00:10:50,044
+cider block range as a parameter. So I'm just going to
+
+170
+00:10:50,082 --> 00:10:55,420
+go ahead and copy this from here and
+
+171
+00:10:55,570 --> 00:10:58,876
+instead of 10320 zero we can set it
+
+172
+00:10:58,898 --> 00:11:02,832
+to,
+
+173
+00:11:02,966 --> 00:11:07,004
+which again should not overlap with our node
+
+174
+00:11:07,052 --> 00:11:10,176
+IP range. So this should be fine. And just a
+
+175
+00:11:10,198 --> 00:11:13,968
+quick note here on a command attribute within the container
+
+176
+00:11:14,064 --> 00:11:18,000
+in Yaml format. This is basically how you can specify
+
+177
+00:11:18,160 --> 00:11:21,604
+commands as a list of the
+
+178
+00:11:21,642 --> 00:11:25,352
+command itself and all of its options. So if I had a second and
+
+179
+00:11:25,406 --> 00:11:29,050
+third options here, I would just list them one by one
+
+180
+00:11:29,580 --> 00:11:34,184
+in a list like this. So let's save this and
+
+181
+00:11:34,222 --> 00:11:41,004
+now we can apply which
+
+182
+00:11:41,042 --> 00:11:44,892
+will install all these components including the demon set.
+
+183
+00:11:45,026 --> 00:11:48,720
+First, our master node should be in a ready state,
+
+184
+00:11:48,790 --> 00:11:51,840
+so let's check that kubectl get node.
+
+185
+00:11:52,420 --> 00:11:55,664
+And as you see we have status ready for
+
+186
+00:11:55,702 --> 00:11:59,664
+master, so that one's fixed. And the
+
+187
+00:11:59,702 --> 00:12:03,572
+second one was that core DNS pods were not starting,
+
+188
+00:12:03,706 --> 00:12:07,348
+they were in a pending state, so that should be fixed as well.
+
+189
+00:12:07,434 --> 00:12:10,752
+And let's see that get pod in kube
+
+190
+00:12:10,896 --> 00:12:14,276
+system namespace. And there you go.
+
+191
+00:12:14,298 --> 00:12:17,720
+We have core DNS pods both in a running
+
+192
+00:12:17,790 --> 00:12:22,152
+status as well as we have a new pod here. We've net on
+
+193
+00:12:22,206 --> 00:12:25,448
+our master node, and since we just have one node in
+
+194
+00:12:25,454 --> 00:12:29,116
+the cluster, we have one weave pod that
+
+195
+00:12:29,218 --> 00:12:32,620
+basically manages the pod network in our cluster.
+
+196
+00:12:35,440 --> 00:12:38,764
+And finally, we've talked about pod network and
+
+197
+00:12:38,802 --> 00:12:42,624
+pod ips. So how do we even see the
+
+198
+00:12:42,662 --> 00:12:46,016
+ip addresses of the pods in the cluster? Well, one way of
+
+199
+00:12:46,038 --> 00:12:49,712
+doing it is by getting detailed output of
+
+200
+00:12:49,766 --> 00:12:54,180
+the pod. So let's check the core DNS pod
+
+201
+00:12:54,680 --> 00:12:58,436
+and describe that pod in detail
+
+202
+00:12:58,618 --> 00:13:02,516
+with Kubectl. Describe pod command and the
+
+203
+00:13:02,538 --> 00:13:06,040
+pod name as well as the namespace.
+
+204
+00:13:08,220 --> 00:13:12,484
+And this will give us a bunch of output of containers
+
+205
+00:13:12,612 --> 00:13:16,116
+creating and starting inside the pod,
+
+206
+00:13:16,228 --> 00:13:19,580
+as well as some metadata of the pod. And as you see,
+
+207
+00:13:19,650 --> 00:13:23,304
+we have an IP address for core DNS pod
+
+208
+00:13:23,432 --> 00:13:26,572
+which is in the range of
+
+209
+00:13:26,706 --> 00:13:29,812
+the cider block that we defined for wavenet,
+
+210
+00:13:29,896 --> 00:13:34,144
+which is 1320
+
+211
+00:13:34,262 --> 00:13:37,968
+three. So that's one way to check the IP address of a pod. However,
+
+212
+00:13:38,054 --> 00:13:41,888
+doing this for every pod in the cluster is
+
+213
+00:13:41,974 --> 00:13:45,876
+too much work, and also you don't have a nice overview of
+
+214
+00:13:45,978 --> 00:13:49,204
+list of pods with their IP addresses. To do that,
+
+215
+00:13:49,242 --> 00:13:52,656
+we can display the pods using an output
+
+216
+00:13:52,848 --> 00:13:57,032
+option o, which stands for output option
+
+217
+00:13:57,166 --> 00:14:01,636
+wide. So this will basically give us an extended output
+
+218
+00:14:01,748 --> 00:14:05,416
+of the pods. So let's execute. And there you
+
+219
+00:14:05,438 --> 00:14:08,844
+go. We have additional columns with additional information,
+
+220
+00:14:08,962 --> 00:14:11,724
+and one of them is the IP address.
+
+221
+00:14:11,922 --> 00:14:16,124
+And as you see, the core DNS pods which started
+
+222
+00:14:16,242 --> 00:14:18,824
+after we've got deployed,
+
+223
+00:14:18,952 --> 00:14:22,472
+have the IP addresses both from the range
+
+224
+00:14:22,536 --> 00:14:26,076
+of weavenet's pod networks cider block.
+
+225
+00:14:26,188 --> 00:14:29,436
+And you also notice that all the other pods,
+
+226
+00:14:29,468 --> 00:14:33,268
+the static pods as well as Kubeproxy and
+
+227
+00:14:33,354 --> 00:14:36,500
+the wivnet itself have a different
+
+228
+00:14:36,570 --> 00:14:40,384
+IP address, which is the IP address of the control plane
+
+229
+00:14:40,432 --> 00:14:44,288
+node they are running on. And that's because
+
+230
+00:14:44,474 --> 00:14:48,484
+these pods are not part of the regular pod network
+
+231
+00:14:48,612 --> 00:14:52,504
+like core DNS for example, or any other pod application
+
+232
+00:14:52,622 --> 00:14:56,020
+pods or database pods that we're going to deploy later.
+
+233
+00:14:56,190 --> 00:14:59,976
+And that's why they get this static ip
+
+234
+00:15:00,008 --> 00:15:03,644
+address of the node. And to check that we can
+
+235
+00:15:03,682 --> 00:15:07,192
+also do kubectl get node with wide output
+
+236
+00:15:07,336 --> 00:15:10,652
+and see the internal ip address of the master node,
+
+237
+00:15:10,716 --> 00:15:14,224
+which is same as right here. So now we have
+
+238
+00:15:14,342 --> 00:15:17,472
+our cluster completely set up, we have our control
+
+239
+00:15:17,526 --> 00:15:20,768
+plane processes running, and we have
+
+240
+00:15:20,854 --> 00:15:24,804
+a pod network deployed in the cluster. However, right now we just have
+
+241
+00:15:24,842 --> 00:15:28,288
+a one node cluster with only a master node.
+
+242
+00:15:28,384 --> 00:15:31,604
+So it's time to join the worker nodes and make them
+
+243
+00:15:31,642 --> 00:15:36,076
+part of the cluster. And installing the pod network plugin
+
+244
+00:15:36,208 --> 00:15:39,588
+was needed to add the worker nodes to the cluster,
+
+245
+00:15:39,684 --> 00:15:43,556
+otherwise we wouldn't be able to join them and create pod networks
+
+246
+00:15:43,588 --> 00:15:46,696
+on them. So now that we have everything prepared,
+
+247
+00:15:46,808 --> 00:15:50,380
+let's configure and join the worker nodes.
+
+248
+00:15:52,720 --> 00:15:56,696
+Worker nodes we already installed container
+
+249
+00:15:56,728 --> 00:16:00,508
+D, Kubeadm, Kubelet and Kubectl
+
+250
+00:16:00,684 --> 00:16:04,524
+on both worker nodes. Also, if you didn't already execute
+
+251
+00:16:04,572 --> 00:16:08,752
+it, run pseudo swap off a
+
+252
+00:16:08,806 --> 00:16:12,596
+command on both work nodes to
+
+253
+00:16:12,618 --> 00:16:16,788
+disable swap as described in the prerequisites. So once
+
+254
+00:16:16,874 --> 00:16:20,708
+all of this is installed and configured, we can now
+
+255
+00:16:20,794 --> 00:16:23,564
+actually join the work nodes to the cluster,
+
+256
+00:16:23,632 --> 00:16:25,450
+which is actually pretty easy.
+
+257
+00:16:28,460 --> 00:16:32,436
+Remember that we got an output after Kubeadm
+
+258
+00:16:32,468 --> 00:16:35,888
+init command with join subcommand,
+
+259
+00:16:36,004 --> 00:16:39,644
+which looked like this kubeadm join and then
+
+260
+00:16:39,682 --> 00:16:43,676
+some parameters. That's the command with a
+
+261
+00:16:43,698 --> 00:16:47,516
+generated token that you can execute on
+
+262
+00:16:47,538 --> 00:16:51,516
+a worker node to join it to the cluster.
+
+263
+00:16:51,628 --> 00:16:55,884
+So this command basically includes the address of API
+
+264
+00:16:55,932 --> 00:16:59,120
+server because the worker node needs to know which
+
+265
+00:16:59,190 --> 00:17:02,164
+cluster it is connecting to or joining to,
+
+266
+00:17:02,282 --> 00:17:06,160
+as well as an automatically generated secret token
+
+267
+00:17:06,320 --> 00:17:10,208
+so that control plane components can identify the worker
+
+268
+00:17:10,304 --> 00:17:13,168
+and basically let it join the cluster.
+
+269
+00:17:13,264 --> 00:17:16,756
+However, if you don't have that command anymore,
+
+270
+00:17:16,868 --> 00:17:20,296
+don't worry, we can print out this command anytime we need to
+
+271
+00:17:20,318 --> 00:17:24,168
+join a new node to the cluster. So let's see
+
+272
+00:17:24,254 --> 00:17:27,784
+how it works. Now the token gets generated on the master,
+
+273
+00:17:27,912 --> 00:17:31,772
+so we need to create a new token and print out
+
+274
+00:17:31,906 --> 00:17:35,928
+the join command on the master so that we can copy
+
+275
+00:17:35,944 --> 00:17:39,468
+it and execute on workers later. So going back to
+
+276
+00:17:39,474 --> 00:17:42,764
+the master node, we're going to use Kubeadm
+
+277
+00:17:42,812 --> 00:17:46,256
+to do that. Now I want to give you a pro tip here which
+
+278
+00:17:46,278 --> 00:17:49,648
+is going to help you a lot when working with either
+
+279
+00:17:49,734 --> 00:17:53,344
+Kubeadm command line tool or kubectl
+
+280
+00:17:53,392 --> 00:17:56,772
+tool. Now both of these tools, just like any other command line
+
+281
+00:17:56,826 --> 00:18:01,012
+tool, also have a help option which shows
+
+282
+00:18:01,066 --> 00:18:04,464
+you pretty nicely all the subcommands
+
+283
+00:18:04,512 --> 00:18:08,196
+you have with them. This is the Inif command that we executed
+
+284
+00:18:08,228 --> 00:18:11,368
+with Kubeadm and some other subcommands with
+
+285
+00:18:11,454 --> 00:18:14,568
+the descriptions as well as possible options
+
+286
+00:18:14,654 --> 00:18:18,296
+you can pass to those subcommands. And one of the commands
+
+287
+00:18:18,328 --> 00:18:21,916
+you see here is token, which is a
+
+288
+00:18:21,938 --> 00:18:25,516
+subcommand to manage the secret tokens that
+
+289
+00:18:25,538 --> 00:18:29,004
+we need to connect worker nodes to the cluster.
+
+290
+00:18:29,132 --> 00:18:32,816
+So I'm going to do Kubeadm token and I'm
+
+291
+00:18:32,838 --> 00:18:36,784
+going to do help again to see the
+
+292
+00:18:36,822 --> 00:18:40,828
+subcommands of Kubeadm token command itself.
+
+293
+00:18:41,014 --> 00:18:44,928
+Let's do that. And right here you see with Kubeadm
+
+294
+00:18:45,024 --> 00:18:48,884
+token we can create new tokens, we can
+
+295
+00:18:49,002 --> 00:18:52,708
+list existing tokens and so on.
+
+296
+00:18:52,794 --> 00:18:56,580
+Again, we want to generate a new token for the worker nodes.
+
+297
+00:18:56,660 --> 00:19:00,970
+So I'm going to do Kubeadm token create and do
+
+298
+00:19:01,340 --> 00:19:04,472
+help again to see what other options
+
+299
+00:19:04,606 --> 00:19:08,104
+I can pass onto it and execute.
+
+300
+00:19:08,232 --> 00:19:11,708
+Going back here usage Kubeadm token create
+
+301
+00:19:11,874 --> 00:19:14,892
+and one option that I have here,
+
+302
+00:19:14,946 --> 00:19:18,660
+one flag is print join command.
+
+303
+00:19:18,760 --> 00:19:22,796
+So in the description you see that instead of just printing
+
+304
+00:19:22,828 --> 00:19:26,592
+out the newly generated token, this option will
+
+305
+00:19:26,646 --> 00:19:30,380
+actually print us the entire Kubeadm
+
+306
+00:19:30,460 --> 00:19:33,924
+join command that we can simply copy and execute on
+
+307
+00:19:33,962 --> 00:19:37,830
+worker nodes. So I'm going to copy that option,
+
+308
+00:19:38,840 --> 00:19:42,836
+edit at the end and let's execute. And there
+
+309
+00:19:42,858 --> 00:19:46,488
+you go. This is the command we are
+
+310
+00:19:46,494 --> 00:19:50,232
+going to copy and execute on worker nodes. Again,
+
+311
+00:19:50,286 --> 00:19:53,668
+this is the API server
+
+312
+00:19:53,844 --> 00:19:57,336
+IP address this is the port where API server
+
+313
+00:19:57,368 --> 00:20:00,956
+is running on this machine, right? We have
+
+314
+00:20:00,978 --> 00:20:04,268
+the newly generated token and we have the CA
+
+315
+00:20:04,354 --> 00:20:08,084
+certificate hash so that worker node
+
+316
+00:20:08,232 --> 00:20:11,996
+can identify itself with the master node.
+
+317
+00:20:12,108 --> 00:20:15,804
+So that's our command. Let's copy this, go to worker
+
+318
+00:20:15,852 --> 00:20:20,076
+one. Now this command will actually require pseudo
+
+319
+00:20:20,108 --> 00:20:23,508
+privilege. So either you execute it with a
+
+320
+00:20:23,514 --> 00:20:27,028
+root user by switching to root, or we can just do
+
+321
+00:20:27,114 --> 00:20:30,048
+pseudo at the beginning. So with pseudo,
+
+322
+00:20:30,224 --> 00:20:33,624
+let's execute the command. And you see that
+
+323
+00:20:33,662 --> 00:20:37,416
+Kubeadm is executing different phases. We have the pre
+
+324
+00:20:37,438 --> 00:20:40,584
+flight phase just like with Kubeadm in it,
+
+325
+00:20:40,702 --> 00:20:44,740
+and another simple phase that basically configures
+
+326
+00:20:44,820 --> 00:20:48,228
+Kubelet which is already installed and running on worker
+
+327
+00:20:48,244 --> 00:20:51,880
+node. And basically Kubeadm will tell them and instruct
+
+328
+00:20:51,960 --> 00:20:56,008
+Kubelet what to do. So in the background,
+
+329
+00:20:56,184 --> 00:21:00,128
+worker node just joined the cluster and
+
+330
+00:21:00,294 --> 00:21:04,316
+any pods that needed to be scheduled on the worker
+
+331
+00:21:04,348 --> 00:21:07,724
+node right here has been scheduled
+
+332
+00:21:07,852 --> 00:21:10,696
+automatically without our involvement.
+
+333
+00:21:10,828 --> 00:21:14,832
+So to check that, let's go back to the master
+
+334
+00:21:14,976 --> 00:21:18,100
+and let's do kubectl get node.
+
+335
+00:21:20,120 --> 00:21:24,068
+And we should see worker one in a ready status
+
+336
+00:21:24,164 --> 00:21:28,356
+which is now part of the cluster with the same Kubernetes version.
+
+337
+00:21:28,468 --> 00:21:32,692
+We can also check an extended output
+
+338
+00:21:32,836 --> 00:21:36,396
+with internal IP addresses. So this is the master, this is
+
+339
+00:21:36,418 --> 00:21:39,512
+the worker. And now if we do Kubectl
+
+340
+00:21:39,576 --> 00:21:42,780
+get pod in all the namespaces and
+
+341
+00:21:42,850 --> 00:21:46,056
+again a wide output or extended output.
+
+342
+00:21:46,168 --> 00:21:49,884
+You see that on the worker node with this internal
+
+343
+00:21:49,932 --> 00:21:53,440
+ip address right here we have two
+
+344
+00:21:53,510 --> 00:21:57,228
+pods that were automatically started on the worker
+
+345
+00:21:57,244 --> 00:22:00,912
+node. The first one is kubeproxy and another one
+
+346
+00:22:00,966 --> 00:22:04,612
+is we've. Net. Now kubeproxy and we've. Net are
+
+347
+00:22:04,666 --> 00:22:08,560
+both demon sets, if you remember, and demon sets
+
+348
+00:22:08,640 --> 00:22:12,468
+will automatically schedule a pod in each
+
+349
+00:22:12,634 --> 00:22:16,760
+single node in the cluster. So everything seems
+
+350
+00:22:16,910 --> 00:22:18,010
+great here.
+
+351
+00:22:20,940 --> 00:22:24,536
+Let's actually go ahead and
+
+352
+00:22:24,718 --> 00:22:28,772
+execute the same Kubeadm join command on
+
+353
+00:22:28,846 --> 00:22:32,172
+worker two. So we don't have to generate a new token for
+
+354
+00:22:32,226 --> 00:22:35,692
+each worker node. We can actually reuse the same one.
+
+355
+00:22:35,746 --> 00:22:39,712
+So I'm going to copy this and execute here
+
+356
+00:22:39,766 --> 00:22:43,072
+as well. And it's done. The worker node should be now
+
+357
+00:22:43,126 --> 00:22:46,672
+joined to the cluster as well as Kubelet was
+
+358
+00:22:46,726 --> 00:22:51,170
+configured and started. Let's actually check the Kubelet service
+
+359
+00:22:51,800 --> 00:22:56,084
+status and
+
+360
+00:22:56,122 --> 00:22:59,908
+we see that it's running in an active state.
+
+361
+00:23:00,074 --> 00:23:05,956
+And again let's
+
+362
+00:23:05,988 --> 00:23:09,992
+check the nodes. Master, worker one, worker two,
+
+363
+00:23:10,126 --> 00:23:13,850
+which is in the ready state with this IP address.
+
+364
+00:23:14,300 --> 00:23:17,660
+And again on worker two we
+
+365
+00:23:17,730 --> 00:23:21,768
+have the same two demon set pods,
+
+366
+00:23:21,864 --> 00:23:25,164
+Kubeproxy and Wivnet. Here I'm going to remind you
+
+367
+00:23:25,202 --> 00:23:28,832
+that joining the worker nodes is
+
+368
+00:23:28,886 --> 00:23:32,464
+actually possible because we opened all these
+
+369
+00:23:32,582 --> 00:23:38,964
+ports on master nodes as
+
+370
+00:23:39,002 --> 00:23:43,108
+well as the worker nodes so that different processes
+
+371
+00:23:43,284 --> 00:23:46,696
+on master and worker can communicate with each
+
+372
+00:23:46,718 --> 00:23:51,320
+other in order to join the worker node to the existing cluster.
+
+373
+00:23:54,560 --> 00:23:57,784
+Now as you already learned with Wimnet,
+
+374
+00:23:57,832 --> 00:24:02,072
+which is a pod networking layer inside Kubernetes,
+
+375
+00:24:02,216 --> 00:24:05,724
+the Wimnet pods on all the nodes should now be
+
+376
+00:24:05,762 --> 00:24:09,644
+talking to each other and forming this network group
+
+377
+00:24:09,762 --> 00:24:12,944
+so that we have a pod network in the cluster and
+
+378
+00:24:12,982 --> 00:24:16,348
+as we see they are running in the cluster,
+
+379
+00:24:16,444 --> 00:24:20,096
+but we don't know whether they are talking to each other or not.
+
+380
+00:24:20,198 --> 00:24:23,764
+Did they actually discover or find each other and did they form
+
+381
+00:24:23,802 --> 00:24:26,836
+a group? So let's actually check that as
+
+382
+00:24:26,858 --> 00:24:30,436
+a next step. So I'm going to clear that and what I'm going to
+
+383
+00:24:30,458 --> 00:24:34,264
+do is I'm going to print only the
+
+384
+00:24:34,302 --> 00:24:37,496
+weavenet pods and their names. So we're just going to
+
+385
+00:24:37,518 --> 00:24:41,924
+do a simple grab and we're going to do weavenet
+
+386
+00:24:41,972 --> 00:24:46,060
+here. So this will give us the pod names of
+
+387
+00:24:46,210 --> 00:24:49,852
+all the weavenet pods. So I'm just going to take
+
+388
+00:24:49,906 --> 00:24:53,692
+one of them, doesn't matter which one, and I'm going to check
+
+389
+00:24:53,826 --> 00:24:57,048
+the application logs or weavenet application
+
+390
+00:24:57,154 --> 00:25:00,524
+logs in the pod. And to do that very simply,
+
+391
+00:25:00,572 --> 00:25:03,120
+I'm just going to do Kubectl logs,
+
+392
+00:25:03,700 --> 00:25:07,536
+name of the pod, name of the namespace where the
+
+393
+00:25:07,558 --> 00:25:12,672
+pod is running and let's execute.
+
+394
+00:25:12,816 --> 00:25:15,984
+Now the logs actually don't belong to a pod,
+
+395
+00:25:16,032 --> 00:25:19,204
+but rather container that is running inside the
+
+396
+00:25:19,242 --> 00:25:22,900
+pod. And if we have two containers running inside the pod,
+
+397
+00:25:22,980 --> 00:25:26,516
+like in this case, then Kubernetes or Kubectl doesn't
+
+398
+00:25:26,548 --> 00:25:29,992
+know which container logs you want. So for that
+
+399
+00:25:30,046 --> 00:25:33,044
+we need to actually specify a container.
+
+400
+00:25:33,172 --> 00:25:38,040
+So again, copy that and specify container
+
+401
+00:25:38,540 --> 00:25:42,536
+with this is the first container, this is the second container.
+
+402
+00:25:42,648 --> 00:25:46,364
+We want the main application logs and
+
+403
+00:25:46,402 --> 00:25:50,240
+execute again. And there you go. And here you see
+
+404
+00:25:50,390 --> 00:25:54,224
+the logs of wivnet from start up
+
+405
+00:25:54,342 --> 00:25:57,712
+till now. And here you see
+
+406
+00:25:57,766 --> 00:26:01,492
+a bunch of error messages that says that
+
+407
+00:26:01,546 --> 00:26:04,788
+it cannot connect to this IP address
+
+408
+00:26:04,874 --> 00:26:08,550
+which belongs to the master node on this port
+
+409
+00:26:09,000 --> 00:26:13,192
+where weavenet is running. Now let's check the logs of
+
+410
+00:26:13,246 --> 00:26:16,810
+another pod, let's say this one for example.
+
+411
+00:26:18,140 --> 00:26:22,280
+And here you see the same exact error messages,
+
+412
+00:26:22,620 --> 00:26:26,568
+error during connection attempt. So it's trying to connect
+
+413
+00:26:26,734 --> 00:26:30,908
+to wavenet pods on other
+
+414
+00:26:30,994 --> 00:26:34,252
+two nodes, one of the work nodes and
+
+415
+00:26:34,306 --> 00:26:38,428
+the master node on the port 6783
+
+416
+00:26:38,514 --> 00:26:42,256
+where we've net is running, but it is failing to
+
+417
+00:26:42,278 --> 00:26:45,520
+do so. So what is the problem here? As I mentioned,
+
+418
+00:26:45,590 --> 00:26:49,764
+the networking plugin gets deployed on every node. So together these
+
+419
+00:26:49,802 --> 00:26:53,412
+individual networking pods deployed across different
+
+420
+00:26:53,466 --> 00:26:56,784
+nodes make one shared pod network.
+
+421
+00:26:56,912 --> 00:27:00,576
+In our case, this networking application is Wavenet
+
+422
+00:27:00,688 --> 00:27:05,080
+which listens on port 6783
+
+423
+00:27:05,230 --> 00:27:09,256
+on each node and for them to connect to
+
+424
+00:27:09,278 --> 00:27:12,376
+each other they need to be able to talk to each
+
+425
+00:27:12,398 --> 00:27:16,300
+other on this port. However, if we check
+
+426
+00:27:16,450 --> 00:27:19,880
+our firewall rules for the nodes,
+
+427
+00:27:19,960 --> 00:27:23,576
+you see that port is not open on the nodes,
+
+428
+00:27:23,688 --> 00:27:27,256
+right? So master node as well as
+
+429
+00:27:27,378 --> 00:27:30,624
+the work nodes do not allow talking
+
+430
+00:27:30,742 --> 00:27:34,208
+on port 6783.
+
+431
+00:27:34,374 --> 00:27:37,584
+So very simply we need to open that
+
+432
+00:27:37,622 --> 00:27:40,916
+port so that the weave net pods can talk to each
+
+433
+00:27:40,938 --> 00:27:44,420
+other. So to fix that, let's just open this port
+
+434
+00:27:44,490 --> 00:27:48,164
+on master and both worker nodes go to security
+
+435
+00:27:48,282 --> 00:27:52,376
+group edit inbound rules and
+
+436
+00:27:52,398 --> 00:27:55,780
+we're going to add another rule,
+
+437
+00:27:55,940 --> 00:28:00,280
+custom tcp port 6783 and again,
+
+438
+00:28:00,430 --> 00:28:04,180
+this port should be only open for instances
+
+439
+00:28:04,260 --> 00:28:07,788
+inside the VPC because we don't need any outside
+
+440
+00:28:07,954 --> 00:28:12,316
+or external connection to weavenet. So that's going to be
+
+441
+00:28:12,498 --> 00:28:17,772
+172310 00:16
+
+442
+00:28:17,916 --> 00:28:21,744
+which is our VPC cider block. Let's save
+
+443
+00:28:21,782 --> 00:28:25,004
+the rule, that's the security group of master
+
+444
+00:28:25,052 --> 00:28:28,364
+nodes. Let's also configure
+
+445
+00:28:28,492 --> 00:28:32,390
+worker node security group.
+
+446
+00:28:35,800 --> 00:28:39,750
+Again add a new rule, one seven two,
+
+447
+00:28:43,000 --> 00:28:46,612
+our VPC cider block save rules
+
+448
+00:28:46,756 --> 00:28:50,856
+and that's it. This should have actually already solved the
+
+449
+00:28:50,878 --> 00:28:54,404
+problem. So if I go back and print
+
+450
+00:28:54,452 --> 00:28:58,104
+out logs of again one of the weavenet
+
+451
+00:28:58,232 --> 00:29:01,596
+pods and another option we
+
+452
+00:29:01,618 --> 00:29:05,004
+have with logs is to stream the logs so we can see
+
+453
+00:29:05,042 --> 00:29:08,748
+actually output in live is minus f.
+
+454
+00:29:08,834 --> 00:29:12,924
+So we're going to tail the logs and right here you see connection
+
+455
+00:29:12,972 --> 00:29:17,084
+accepted. So we have a successful connection with a master node connection
+
+456
+00:29:17,132 --> 00:29:21,036
+edit as well as with worker one. So now all
+
+457
+00:29:21,078 --> 00:29:24,436
+the weavenet pods should be actually talking to each
+
+458
+00:29:24,458 --> 00:29:28,132
+other. And let's actually check
+
+459
+00:29:28,186 --> 00:29:31,296
+the other weavenet pod as well. Weavenet pod
+
+460
+00:29:31,328 --> 00:29:35,268
+on master node as well as worker two are connected
+
+461
+00:29:35,364 --> 00:29:38,090
+to the weavenet on worker one.
+
+462
+00:29:39,340 --> 00:29:42,952
+Once we install the network plugin and check
+
+463
+00:29:43,006 --> 00:29:46,872
+its logs, et cetera, we want to see the status and
+
+464
+00:29:46,926 --> 00:29:50,248
+make sure that all the network plugin pods
+
+465
+00:29:50,344 --> 00:29:53,836
+have discovered each other and we're able to actually connect to
+
+466
+00:29:53,858 --> 00:29:57,116
+each other and we can extract this information from the
+
+467
+00:29:57,138 --> 00:30:01,164
+logs. However, we have a way of seeing the status
+
+468
+00:30:01,292 --> 00:30:05,184
+in a clean nice output using weave command itself.
+
+469
+00:30:05,302 --> 00:30:09,260
+So let's see how that works. First of all, let's output
+
+470
+00:30:09,340 --> 00:30:10,880
+our weave pods,
+
+471
+00:30:14,840 --> 00:30:18,196
+including the IP addresses or the nodes where they
+
+472
+00:30:18,218 --> 00:30:22,032
+are running at and grab on weave.
+
+473
+00:30:22,176 --> 00:30:25,572
+So we have three wivnet pods on
+
+474
+00:30:25,626 --> 00:30:29,552
+each node, and let's actually check the wave net
+
+475
+00:30:29,706 --> 00:30:33,428
+of the master and its status. And we're
+
+476
+00:30:33,444 --> 00:30:36,780
+going to do this with this command. Now you will learn
+
+477
+00:30:36,850 --> 00:30:40,844
+what this command means and all these options and all these
+
+478
+00:30:41,042 --> 00:30:45,404
+subcommands, all these options, and how it gets executed step
+
+479
+00:30:45,442 --> 00:30:49,164
+by step in the later lectures. At this point you can just
+
+480
+00:30:49,202 --> 00:30:53,216
+copy and paste the command to check the status. So the
+
+481
+00:30:53,238 --> 00:30:56,636
+only thing you will have to change is the name of the pod. So we'll
+
+482
+00:30:56,668 --> 00:31:01,036
+have to replace it with your own pod name and execute.
+
+483
+00:31:01,148 --> 00:31:04,836
+And this will actually execute a weave command inside the
+
+484
+00:31:04,858 --> 00:31:08,484
+pod and give you a status that will show you
+
+485
+00:31:08,522 --> 00:31:12,132
+some important information, like how many targets it was
+
+486
+00:31:12,186 --> 00:31:15,384
+able to discover and how many connections it was
+
+487
+00:31:15,422 --> 00:31:18,936
+able to establish. So this is the important part here,
+
+488
+00:31:19,038 --> 00:31:22,584
+which shows us that this specific weavenet instance was
+
+489
+00:31:22,622 --> 00:31:25,652
+able to find two other peers,
+
+490
+00:31:25,796 --> 00:31:29,244
+these two, and was able to establish connection with
+
+491
+00:31:29,282 --> 00:31:33,340
+them. So if it says two failed connections or one
+
+492
+00:31:33,410 --> 00:31:37,212
+established and one failed, it means the weavenet pods were not
+
+493
+00:31:37,266 --> 00:31:41,292
+able to find each other. And probably you don't have three peers,
+
+494
+00:31:41,356 --> 00:31:44,464
+but rather one or three. So in this
+
+495
+00:31:44,502 --> 00:31:48,176
+case everything looks great. If you have any issues
+
+496
+00:31:48,358 --> 00:31:52,196
+and you don't see two connections here, you can reference the
+
+497
+00:31:52,218 --> 00:31:55,684
+wivnet troubleshooting documentation that will help
+
+498
+00:31:55,722 --> 00:31:57,910
+you fix any of these issues.
+
+499
+00:32:00,600 --> 00:32:04,260
+And this means now that the wivnet
+
+500
+00:32:04,340 --> 00:32:07,672
+pods on all the nodes are connected, we can actually
+
+501
+00:32:07,726 --> 00:32:11,912
+schedule pods on the worker nodes. And finally to
+
+502
+00:32:11,966 --> 00:32:15,704
+test our setup and that everything is working
+
+503
+00:32:15,822 --> 00:32:19,692
+as expected. As a final step, let's actually schedule a
+
+504
+00:32:19,746 --> 00:32:23,436
+test pod in the cluster and see that it's running
+
+505
+00:32:23,538 --> 00:32:27,372
+on one of the worker nodes. And to do that in the fastest way
+
+506
+00:32:27,426 --> 00:32:31,484
+and most efficient way, just to test basically scheduling
+
+507
+00:32:31,532 --> 00:32:35,308
+a pod, we can use Kubectl run command,
+
+508
+00:32:35,404 --> 00:32:38,748
+which basically needs pod name as a parameter.
+
+509
+00:32:38,844 --> 00:32:42,128
+So Kubectl run and let's call the pod
+
+510
+00:32:42,224 --> 00:32:45,492
+test and the image name because
+
+511
+00:32:45,546 --> 00:32:49,812
+the pod needs to run a container which is based on some image and
+
+512
+00:32:49,866 --> 00:32:53,724
+simply nginx image from the docker hub
+
+513
+00:32:53,792 --> 00:32:57,668
+will do. And if I execute this, this will schedule
+
+514
+00:32:57,764 --> 00:33:01,816
+a pod called test with Nginx image in
+
+515
+00:33:01,838 --> 00:33:06,192
+a default namespace. Let's execute Kubectl
+
+516
+00:33:06,276 --> 00:33:10,796
+get pod in a default namespace. Again you
+
+517
+00:33:10,818 --> 00:33:14,940
+see the container is creating. Let's add a watch
+
+518
+00:33:15,090 --> 00:33:19,212
+option. And there you go. Test is running
+
+519
+00:33:19,346 --> 00:33:22,668
+just to make sure that it is running on one of the work nodes.
+
+520
+00:33:22,764 --> 00:33:26,396
+Let's actually do an extended output
+
+521
+00:33:26,508 --> 00:33:30,128
+with. And there you go.
+
+522
+00:33:30,214 --> 00:33:33,876
+As you see it is running on worker two. And if we
+
+523
+00:33:33,898 --> 00:33:36,896
+want to test scheduling another pod?
+
+524
+00:33:37,008 --> 00:33:41,104
+Test two for example. And let's do get pod
+
+525
+00:33:41,152 --> 00:33:45,076
+again. As you see, test two was scheduled
+
+526
+00:33:45,108 --> 00:33:48,856
+on worker one, so the load was basically divided between the
+
+527
+00:33:48,878 --> 00:33:52,120
+two worker nodes. Each one is running a test
+
+528
+00:33:52,190 --> 00:33:55,492
+pod, and the IP address of the pod
+
+529
+00:33:55,556 --> 00:33:58,904
+itself, as you see, is also from the cider
+
+530
+00:33:58,952 --> 00:34:02,520
+block that we defined for Weavenet.
+
+531
+00:34:02,600 --> 00:34:06,172
+And as you see, worker two actually got its
+
+532
+00:34:06,226 --> 00:34:10,000
+own subset of the cider block from
+
+533
+00:34:10,070 --> 00:34:13,452
+the total IP range, since as I explained,
+
+534
+00:34:13,596 --> 00:34:16,892
+the network plugin will evenly distribute
+
+535
+00:34:17,036 --> 00:34:20,812
+its IP address range among the available
+
+536
+00:34:20,966 --> 00:34:24,384
+worker nodes, giving each one its own cider
+
+537
+00:34:24,432 --> 00:34:26,100
+block subset.
+
+538
+00:36:59,200 --> 00:37:03,404
+Actual application with a Kubernetes service inside
+
+539
+00:37:03,602 --> 00:37:07,328
+you as a Kubernetes administrator, want to test that application?
+
+540
+00:37:07,414 --> 00:37:11,184
+Deployment works fine in the cluster before handing it
+
+541
+00:37:11,222 --> 00:37:14,684
+over to the developers. So in this section we're going to deploy
+
+542
+00:37:14,732 --> 00:37:18,224
+a simple NGINx application to learn some basic
+
+543
+00:37:18,272 --> 00:37:22,240
+concepts of creating applications and making them accessible
+
+544
+00:37:22,320 --> 00:37:25,636
+for users in Kubernetes. For that, we're going to
+
+545
+00:37:25,658 --> 00:37:29,632
+create a simple configuration file for NGINX deployment
+
+546
+00:37:29,696 --> 00:37:33,176
+as well as its service to test that everything works.
+
+547
+00:37:33,278 --> 00:37:36,536
+We will deploy a test pod to connect
+
+548
+00:37:36,638 --> 00:37:39,720
+to the NgINX application through its service.
+
+549
+00:37:39,870 --> 00:37:43,672
+This would mean the NgInx is accessible internally for
+
+550
+00:37:43,726 --> 00:37:47,640
+other pods in the cluster, but we also want to make it accessible
+
+551
+00:37:47,720 --> 00:37:51,672
+externally. For that, we're going to first configure an external
+
+552
+00:37:51,736 --> 00:37:55,264
+service and then compare it to accessing the app with
+
+553
+00:37:55,302 --> 00:37:58,524
+Ingress. So we will deploy and configure ingress
+
+554
+00:37:58,652 --> 00:38:02,240
+for our NgINX application, and along the way we will learn
+
+555
+00:38:02,310 --> 00:38:06,364
+several interesting concepts such as labels and selectors,
+
+556
+00:38:06,492 --> 00:38:09,856
+how service networking works, and so on. So let's
+
+557
+00:38:09,888 --> 00:38:14,894
+dive in for
+
+558
+00:38:14,932 --> 00:38:18,526
+NgInX. Now, what is a good way to put together a
+
+559
+00:38:18,548 --> 00:38:22,242
+deployment file? Well, we can write our own file from
+
+560
+00:38:22,296 --> 00:38:25,554
+scratch, or we can copy an example file from
+
+561
+00:38:25,592 --> 00:38:29,966
+Kubernetes documentation. So I'm going to go to Kubernetes documentation
+
+562
+00:38:30,158 --> 00:38:33,780
+and search for a deployment manifest example.
+
+563
+00:38:38,250 --> 00:38:41,382
+And there you go. We have a very simple example
+
+564
+00:38:41,516 --> 00:38:45,574
+of a deployment configuration, so we don't have to write
+
+565
+00:38:45,612 --> 00:38:48,954
+this whole thing from scratch. So I'm going to grab this
+
+566
+00:38:49,072 --> 00:38:52,634
+and copy it into my editor and save it
+
+567
+00:38:52,672 --> 00:38:56,570
+as NgINx deployment YaMl file
+
+568
+00:38:58,430 --> 00:39:02,442
+now a quick note on the editor. For Kubernetes
+
+569
+00:39:02,506 --> 00:39:05,754
+configuration files. I'm using a visual studio
+
+570
+00:39:05,802 --> 00:39:09,402
+code editor that supports YAML format
+
+571
+00:39:09,546 --> 00:39:13,706
+with proper highlighting, et cetera. You can also install additional YAML
+
+572
+00:39:13,738 --> 00:39:17,714
+plugins if you want to, so make sure you have a proper editor that will
+
+573
+00:39:17,752 --> 00:39:21,442
+make creating and adjusting the configuration files easy for you
+
+574
+00:39:21,496 --> 00:39:25,106
+now, you already know what configuration file is and generally
+
+575
+00:39:25,138 --> 00:39:28,930
+how it looks like, but let's actually go through this deployment
+
+576
+00:39:29,090 --> 00:39:32,710
+configuration file step by step and let's see how
+
+577
+00:39:32,780 --> 00:39:36,070
+a deployment component is configured.
+
+578
+00:39:40,310 --> 00:39:43,954
+So here in the specification part of a deployment, you see
+
+579
+00:39:43,992 --> 00:39:47,714
+a template. Template also has its
+
+580
+00:39:47,752 --> 00:39:51,406
+own metadata and specification. So it's basically a
+
+581
+00:39:51,448 --> 00:39:55,026
+configuration file inside of a configuration file.
+
+582
+00:39:55,218 --> 00:39:59,590
+And the reason for it is that this configuration
+
+583
+00:40:00,090 --> 00:40:03,782
+applies to a pod. So pod should have its own
+
+584
+00:40:03,836 --> 00:40:07,414
+configuration inside of deployments configuration
+
+585
+00:40:07,462 --> 00:40:10,806
+file and that's how all the deployments will be defined.
+
+586
+00:40:10,918 --> 00:40:14,342
+And this is going to be the blueprint for a pod,
+
+587
+00:40:14,406 --> 00:40:18,400
+like which image it should be based on, which port it should open,
+
+588
+00:40:18,930 --> 00:40:22,030
+what is going to be the name of the container, et cetera.
+
+589
+00:40:22,610 --> 00:40:26,622
+So that's basically how deployment configuration is
+
+590
+00:40:26,756 --> 00:40:30,134
+created and how pod blueprint is configured.
+
+591
+00:40:30,202 --> 00:40:33,742
+So let's make final adjustments to our deployment
+
+592
+00:40:33,806 --> 00:40:37,454
+file. So I'm going to take the latest image of NginX.
+
+593
+00:40:37,502 --> 00:40:41,218
+So I'm going to remove the version tag as well as
+
+594
+00:40:41,304 --> 00:40:45,174
+let's set the replica count to two replicas. And now let's actually create
+
+595
+00:40:45,212 --> 00:40:49,138
+an NgINX deployment in our cluster using this deployment
+
+596
+00:40:49,234 --> 00:40:53,494
+manifest file. For that we have to do Kubectl apply for
+
+597
+00:40:53,532 --> 00:40:57,478
+this file. So first I'm going to create an NginX
+
+598
+00:40:57,654 --> 00:41:01,462
+deployment file on Masternode where I have Kubectl
+
+599
+00:41:01,526 --> 00:41:05,286
+configured. And I'm
+
+600
+00:41:05,318 --> 00:41:09,134
+just going to copy the contents and put it here.
+
+601
+00:41:09,252 --> 00:41:13,150
+Again, we have a nice highlighting in vim editor.
+
+602
+00:41:13,730 --> 00:41:17,600
+Let's save it. And now we can actually apply it.
+
+603
+00:41:18,050 --> 00:41:21,214
+Apply f, which stands for file
+
+604
+00:41:21,262 --> 00:41:24,546
+inputs and Nginx deployment. And now
+
+605
+00:41:24,568 --> 00:41:27,746
+let's see that two Nginx pods are running in our
+
+606
+00:41:27,768 --> 00:41:30,690
+cluster. Let's do Kubectl get pod.
+
+607
+00:41:31,030 --> 00:41:34,870
+And there you go. And let's actually delete those
+
+608
+00:41:34,940 --> 00:41:38,454
+two test pods because we don't need them
+
+609
+00:41:38,492 --> 00:41:42,834
+anymore. And for that I'm going to do kubectl
+
+610
+00:41:42,882 --> 00:41:46,506
+delete pod and name of the pod and we
+
+611
+00:41:46,528 --> 00:41:50,026
+can even provide a list instead of deleting them one by one.
+
+612
+00:41:50,128 --> 00:41:54,182
+And this will get rid of both test and test two pods.
+
+613
+00:41:54,326 --> 00:41:58,234
+Great. So these are our two Nginx
+
+614
+00:41:58,282 --> 00:42:02,062
+pod replicas. And you see that the name of the pod is
+
+615
+00:42:02,116 --> 00:42:05,870
+always made up of the name of the deployment as
+
+616
+00:42:05,940 --> 00:42:09,582
+a prefix. And then you have the unique
+
+617
+00:42:09,726 --> 00:42:13,154
+hash for each pod. Let's also check that
+
+618
+00:42:13,272 --> 00:42:16,994
+a deployment was created in the cluster. For that
+
+619
+00:42:17,032 --> 00:42:20,210
+I'm going to do kubectlgeteployment.
+
+620
+00:42:20,870 --> 00:42:24,210
+And there you go. We have our NgINX deployment
+
+621
+00:42:24,370 --> 00:42:28,438
+two pods out of two configured pods are ready
+
+622
+00:42:28,604 --> 00:42:32,070
+and available. So now whenever we want to change
+
+623
+00:42:32,140 --> 00:42:35,782
+something in those pods, like pod image
+
+624
+00:42:35,846 --> 00:42:39,190
+or image version or container specification,
+
+625
+00:42:39,350 --> 00:42:43,226
+we will adjust the deployment component and it
+
+626
+00:42:43,248 --> 00:42:46,594
+will then propagate the changes to all of its pods
+
+627
+00:42:46,662 --> 00:42:49,982
+and restart them if necessary. So we are not going to be working
+
+628
+00:42:50,036 --> 00:42:52,990
+with pods directly, but rather with deployment.
+
+629
+00:42:55,730 --> 00:42:59,650
+Now that we have the pods running, we need a service
+
+630
+00:42:59,800 --> 00:43:03,342
+so that other pods in the cluster or even external
+
+631
+00:43:03,406 --> 00:43:06,530
+applications can access them. Because remember,
+
+632
+00:43:06,680 --> 00:43:10,014
+service makes pods accessible on a permanent ip
+
+633
+00:43:10,062 --> 00:43:14,022
+address using the service name as well as it
+
+634
+00:43:14,076 --> 00:43:17,734
+load balances the traffic among multiple replicas of
+
+635
+00:43:17,772 --> 00:43:21,558
+the pods. So let's go ahead and create a service which again
+
+636
+00:43:21,644 --> 00:43:25,286
+we can grab the specification actually from
+
+637
+00:43:25,308 --> 00:43:28,714
+the documentation. So let's do service. And here we
+
+638
+00:43:28,752 --> 00:43:32,858
+have a very simple service example. So I'm going to copy that.
+
+639
+00:43:32,944 --> 00:43:36,138
+You can of course create it directly on the master node, but I'm going to
+
+640
+00:43:36,144 --> 00:43:39,534
+first configure it in a visual studio code so that we have a
+
+641
+00:43:39,572 --> 00:43:42,958
+better overview. So going back to the visual studio code,
+
+642
+00:43:43,044 --> 00:43:46,894
+I'm going to create a new file, let's call it
+
+643
+00:43:46,932 --> 00:43:49,970
+NginX service Yaml,
+
+644
+00:43:50,390 --> 00:43:53,934
+and I'm going to create it next to the deployment
+
+645
+00:43:53,982 --> 00:43:57,970
+file. So first of all, again we have the same metadata
+
+646
+00:43:58,470 --> 00:44:01,782
+section in the service which
+
+647
+00:44:01,836 --> 00:44:05,014
+every Kubernetes component has. So let's call
+
+648
+00:44:05,052 --> 00:44:08,694
+this NgInX service here to
+
+649
+00:44:08,732 --> 00:44:12,546
+be consistent and then we have the same specification section.
+
+650
+00:44:12,658 --> 00:44:16,758
+However, as you already learned, every component specification
+
+651
+00:44:16,854 --> 00:44:21,034
+attributes or the configuration in the specification section is
+
+652
+00:44:21,152 --> 00:44:24,794
+different. In a specification of deployment we have a
+
+653
+00:44:24,832 --> 00:44:29,450
+template for a pod. In the service specification, we have configuration
+
+654
+00:44:29,530 --> 00:44:33,166
+for ports to access the pods behind the service.
+
+655
+00:44:33,348 --> 00:44:36,922
+As you see, service configuration is a bit easier,
+
+656
+00:44:37,066 --> 00:44:40,590
+bit simpler. The main part of the service configuration
+
+657
+00:44:40,670 --> 00:44:42,770
+is the ports section.
+
+658
+00:44:45,670 --> 00:44:49,138
+So how this is configured is basically service has
+
+659
+00:44:49,224 --> 00:44:52,686
+a port where the service itself
+
+660
+00:44:52,808 --> 00:44:55,862
+is accessible at. So if either
+
+661
+00:44:55,916 --> 00:44:58,998
+service sends a request to NgInX service here,
+
+662
+00:44:59,084 --> 00:45:02,614
+it needs to send it on port 80, but this service needs
+
+663
+00:45:02,652 --> 00:45:06,886
+to know to which pod it should forward the request,
+
+664
+00:45:06,998 --> 00:45:10,394
+but also at which port is that pod listening and
+
+665
+00:45:10,432 --> 00:45:14,042
+that is the target port. So this one should
+
+666
+00:45:14,096 --> 00:45:17,294
+match the container port. So you can have
+
+667
+00:45:17,332 --> 00:45:20,622
+a list of ports here where each
+
+668
+00:45:20,756 --> 00:45:24,430
+port configuration basically defines where
+
+669
+00:45:24,500 --> 00:45:27,966
+on which port can we access the service
+
+670
+00:45:28,148 --> 00:45:31,410
+IP address and on which port will
+
+671
+00:45:31,480 --> 00:45:35,454
+service, then forward that request to the pods
+
+672
+00:45:35,582 --> 00:45:39,410
+that it's connected to. So again, service is
+
+673
+00:45:39,480 --> 00:45:42,998
+attached to a pod and that pod is also
+
+674
+00:45:43,084 --> 00:45:46,422
+accessible at a certain port. In our case
+
+675
+00:45:46,556 --> 00:45:50,290
+we want to use this service to access Nginx pods,
+
+676
+00:45:50,450 --> 00:45:54,202
+right? Here is configured to be accessible at port
+
+677
+00:45:54,256 --> 00:45:58,010
+80. So when the Nginx service gets
+
+678
+00:45:58,080 --> 00:46:01,510
+the request to forward it to Nginx pods,
+
+679
+00:46:01,590 --> 00:46:04,790
+it should send that request to port 80.
+
+680
+00:46:04,870 --> 00:46:08,542
+So the target port always points to the container port where
+
+681
+00:46:08,596 --> 00:46:11,566
+service will send the request to.
+
+682
+00:46:11,748 --> 00:46:14,990
+And the port attribute itself defines the port
+
+683
+00:46:15,060 --> 00:46:19,054
+where service itself can be accessed. And these two actually can
+
+684
+00:46:19,092 --> 00:46:23,374
+be different. So let's configure this to be 80 80 and the target
+
+685
+00:46:23,422 --> 00:46:27,182
+port to point to the container port which is 80.
+
+686
+00:46:27,326 --> 00:46:30,866
+So basically when another pod makes a
+
+687
+00:46:30,888 --> 00:46:34,374
+request towards NgInX application, it will send
+
+688
+00:46:34,412 --> 00:46:37,654
+a request to this service using the
+
+689
+00:46:37,692 --> 00:46:41,510
+name of the service and the port number. The service
+
+690
+00:46:41,580 --> 00:46:45,338
+will take that request and it will then forward it to
+
+691
+00:46:45,424 --> 00:46:48,794
+one of the pods behind it on the
+
+692
+00:46:48,832 --> 00:46:52,390
+port where the applications inside the pods
+
+693
+00:46:52,470 --> 00:46:55,580
+are listening at, which is the target port.
+
+694
+00:46:56,450 --> 00:46:59,920
+And that's how the communication flow will look like.
+
+695
+00:47:02,610 --> 00:47:06,494
+Now you may be wondering, we have the target port of the
+
+696
+00:47:06,532 --> 00:47:10,574
+pods, but how does service know which pods it should
+
+697
+00:47:10,692 --> 00:47:14,562
+forward the request to? So basically, how do we connect a
+
+698
+00:47:14,616 --> 00:47:17,998
+service that we create in the cluster to the pods?
+
+699
+00:47:18,094 --> 00:47:21,486
+So how do we connect these two components to each other?
+
+700
+00:47:21,608 --> 00:47:24,838
+And that's where labels and selectors come in.
+
+701
+00:47:24,924 --> 00:47:29,074
+So the way the connection is established is using labels
+
+702
+00:47:29,202 --> 00:47:32,566
+and selectors. So as you see,
+
+703
+00:47:32,668 --> 00:47:36,234
+metadata part contains the labels and the
+
+704
+00:47:36,272 --> 00:47:39,350
+specification part contains selectors.
+
+705
+00:47:39,430 --> 00:47:41,926
+It's pretty simple. In a metadata,
+
+706
+00:47:42,038 --> 00:47:45,510
+you give components like deployment
+
+707
+00:47:45,670 --> 00:47:49,662
+or pod a key value pair and it could be any key value
+
+708
+00:47:49,716 --> 00:47:54,106
+pair that you think of. In this case, we have app Nginx
+
+709
+00:47:54,298 --> 00:47:58,378
+and that label just sticks to that component.
+
+710
+00:47:58,554 --> 00:48:02,030
+So we give pods created
+
+711
+00:48:02,110 --> 00:48:06,066
+using this blueprint label, app Nginx and
+
+712
+00:48:06,088 --> 00:48:09,474
+we tell the deployment to connect or
+
+713
+00:48:09,512 --> 00:48:13,318
+to match all the labels with app
+
+714
+00:48:13,484 --> 00:48:16,818
+Nginx to create that connection.
+
+715
+00:48:16,994 --> 00:48:20,614
+So this way deployment will know which pods belong to it.
+
+716
+00:48:20,732 --> 00:48:24,634
+And these two labels are used by the service
+
+717
+00:48:24,832 --> 00:48:27,946
+selector. So in the specification of a service,
+
+718
+00:48:28,128 --> 00:48:31,930
+we define a selector which basically makes a connection
+
+719
+00:48:32,590 --> 00:48:36,606
+between the service and the deployment or
+
+720
+00:48:36,628 --> 00:48:40,094
+its pods, because service must know which
+
+721
+00:48:40,132 --> 00:48:43,582
+pods belong to that service and that connection is
+
+722
+00:48:43,636 --> 00:48:47,562
+made through the selector of the label. So label
+
+723
+00:48:47,626 --> 00:48:52,274
+is a key value pair that we can assign to any
+
+724
+00:48:52,472 --> 00:48:55,250
+component. We can label deployments,
+
+725
+00:48:55,830 --> 00:48:59,890
+pods, services, et cetera. So label basically
+
+726
+00:49:00,040 --> 00:49:03,602
+acts like an identifier of the component,
+
+727
+00:49:03,746 --> 00:49:07,378
+just like a name. So for example, in case of the deployment,
+
+728
+00:49:07,474 --> 00:49:10,566
+we have the name of the component and in
+
+729
+00:49:10,588 --> 00:49:14,190
+addition to that we have list of labels
+
+730
+00:49:14,370 --> 00:49:17,562
+that in addition to the name can be
+
+731
+00:49:17,616 --> 00:49:20,794
+used to identify the deployment. In the case of
+
+732
+00:49:20,832 --> 00:49:24,326
+pods, however, the label is a required attribute.
+
+733
+00:49:24,438 --> 00:49:28,074
+So we have to set labels on the pod.
+
+734
+00:49:28,202 --> 00:49:31,978
+Again, this is a list, so we can have multiple
+
+735
+00:49:32,074 --> 00:49:35,374
+labels on a component and the
+
+736
+00:49:35,412 --> 00:49:38,446
+label is any key value pair that
+
+737
+00:49:38,468 --> 00:49:42,658
+you want, but a standard and a common label key
+
+738
+00:49:42,744 --> 00:49:46,274
+is app and just the name of the application itself.
+
+739
+00:49:46,392 --> 00:49:49,618
+So even though you can have any key here,
+
+740
+00:49:49,784 --> 00:49:53,426
+app basically is kind of a standard. So that's
+
+741
+00:49:53,458 --> 00:49:57,462
+what you see in most of the examples. So labels add
+
+742
+00:49:57,596 --> 00:50:01,554
+key value, pair labels to the components and selector
+
+743
+00:50:01,602 --> 00:50:05,354
+lets you identify and find all the
+
+744
+00:50:05,392 --> 00:50:08,506
+components which have a certain label on
+
+745
+00:50:08,528 --> 00:50:11,286
+them. So here in the deployment specification,
+
+746
+00:50:11,398 --> 00:50:15,114
+we have a selector that finds all the
+
+747
+00:50:15,232 --> 00:50:19,154
+pods that have a label app nginx
+
+748
+00:50:19,222 --> 00:50:23,086
+on them. So if we change this to something different, it will
+
+749
+00:50:23,108 --> 00:50:26,430
+not be able to find pods with this
+
+750
+00:50:26,500 --> 00:50:30,194
+label. And it works the same way for a service. If we
+
+751
+00:50:30,232 --> 00:50:33,762
+go here on the specification of a service, we also
+
+752
+00:50:33,816 --> 00:50:37,982
+have a selector attribute that defines label
+
+753
+00:50:38,126 --> 00:50:41,630
+for the pods that it wants to connect to.
+
+754
+00:50:41,720 --> 00:50:45,958
+So in this case, the selector for the label has to match
+
+755
+00:50:46,124 --> 00:50:50,214
+what we have defined right here. So it should be app
+
+756
+00:50:50,332 --> 00:50:53,446
+Nginx and this
+
+757
+00:50:53,468 --> 00:50:57,766
+is basically how we tell a service which pods
+
+758
+00:50:57,878 --> 00:51:01,030
+it should connect to as its endpoints
+
+759
+00:51:01,110 --> 00:51:04,474
+and then forward all the requests that it gets on
+
+760
+00:51:04,512 --> 00:51:08,010
+this port. So now when a service gets a request
+
+761
+00:51:08,170 --> 00:51:11,754
+here, it will know to forward that request
+
+762
+00:51:11,882 --> 00:51:17,502
+to any of the pods that have this label on
+
+763
+00:51:17,556 --> 00:51:22,434
+the port 80 and
+
+764
+00:51:22,472 --> 00:51:25,442
+that basically configures our service. Now again,
+
+765
+00:51:25,496 --> 00:51:28,946
+I'm going to copy this service configuration, go back
+
+766
+00:51:29,048 --> 00:51:32,262
+to my master node and let's create
+
+767
+00:51:32,396 --> 00:51:35,666
+Nginx service yaml
+
+768
+00:51:35,698 --> 00:51:39,446
+file here and
+
+769
+00:51:39,548 --> 00:51:43,286
+let's apply Kubectl apply
+
+770
+00:51:43,468 --> 00:51:48,442
+minus f Nginx service and
+
+771
+00:51:48,496 --> 00:51:53,194
+to get or to list all the services in the cluster we
+
+772
+00:51:53,232 --> 00:51:56,846
+have Kubectl get service or we can
+
+773
+00:51:56,868 --> 00:52:00,590
+also use a short version which is SVC.
+
+774
+00:52:01,250 --> 00:52:04,702
+And right here you see NgInx service and
+
+775
+00:52:04,756 --> 00:52:08,254
+the port which we configured for the service. This is where
+
+776
+00:52:08,292 --> 00:52:12,290
+the service will accept incoming requests, which is port
+
+777
+00:52:12,360 --> 00:52:13,490
+80 80.
+
+778
+00:52:16,070 --> 00:52:20,366
+Now how do we make sure that our service was connected
+
+779
+00:52:20,478 --> 00:52:24,402
+to the pods? We actually have a subcommand for Kubectl
+
+780
+00:52:24,546 --> 00:52:27,974
+that will show you detailed information of
+
+781
+00:52:28,012 --> 00:52:32,050
+any component. And that's a Kubectl describe command
+
+782
+00:52:32,130 --> 00:52:35,994
+and describe commands. Takes the component type like service or
+
+783
+00:52:36,032 --> 00:52:39,642
+deployment as the first parameter and then name
+
+784
+00:52:39,696 --> 00:52:43,690
+of that component. So if we do Kubectl describe service
+
+785
+00:52:43,840 --> 00:52:47,914
+name of the service, this will give us a detailed
+
+786
+00:52:48,042 --> 00:52:51,294
+information about the service. And this is
+
+787
+00:52:51,332 --> 00:52:54,602
+obviously very useful for debugging Kubernetes resources.
+
+788
+00:52:54,666 --> 00:52:58,158
+So one we see the app Nginx selector. Right here
+
+789
+00:52:58,244 --> 00:53:01,134
+we see the port and the target port that we configured.
+
+790
+00:53:01,262 --> 00:53:04,914
+And this is a proof that our service was able
+
+791
+00:53:04,952 --> 00:53:08,702
+to connect to both NgInx deployment
+
+792
+00:53:08,846 --> 00:53:13,026
+replicas and registered them as its endpoints.
+
+793
+00:53:13,138 --> 00:53:16,678
+And these two are the IP addresses of
+
+794
+00:53:16,764 --> 00:53:20,854
+our NgINx deployment pods as well as port number
+
+795
+00:53:21,052 --> 00:53:24,914
+where Nginx inside those pods is running.
+
+796
+00:53:25,052 --> 00:53:28,726
+And to also be 100% sure, we can do kubectl
+
+797
+00:53:28,758 --> 00:53:32,186
+get pod white which will show us the IP addresses of
+
+798
+00:53:32,208 --> 00:53:35,980
+the pods. And right here you see
+
+799
+00:53:36,370 --> 00:53:39,934
+these two are the IP addresses registered as
+
+800
+00:53:39,972 --> 00:53:43,870
+endpoints here. So this means if your service is not
+
+801
+00:53:43,940 --> 00:53:47,950
+forwarding requests to the pods as it's supposed
+
+802
+00:53:48,020 --> 00:53:52,402
+to, you can actually check its endpoints and see that
+
+803
+00:53:52,536 --> 00:53:56,654
+it has registered all the pod replicas. Another component
+
+804
+00:53:56,702 --> 00:54:00,642
+that gets created whenever we connect a service
+
+805
+00:54:00,776 --> 00:54:04,642
+to pods is an endpoint component.
+
+806
+00:54:04,786 --> 00:54:08,438
+And we can also get that endpoint component using
+
+807
+00:54:08,604 --> 00:54:12,850
+Kubectlgetep as an endpoint.
+
+808
+00:54:13,010 --> 00:54:16,554
+And this will actually give you a nice list of all the
+
+809
+00:54:16,592 --> 00:54:19,866
+services with the service names together with a
+
+810
+00:54:19,888 --> 00:54:23,402
+list of their endpoints. So that's another way to check
+
+811
+00:54:23,456 --> 00:54:27,150
+that all your services have right endpoints in the cluster.
+
+812
+00:54:31,010 --> 00:54:35,040
+Now the interesting question here is how does the service
+
+813
+00:54:35,410 --> 00:54:38,320
+forward the request to the IP address?
+
+814
+00:54:38,770 --> 00:54:42,318
+Or basically who manages these service endpoints?
+
+815
+00:54:42,494 --> 00:54:45,906
+As you already learned, service is not a process.
+
+816
+00:54:46,008 --> 00:54:49,570
+It's not an application or a process that is running
+
+817
+00:54:49,720 --> 00:54:53,202
+on one of the nodes. It's actually just a virtual
+
+818
+00:54:53,266 --> 00:54:57,522
+IP address that is accessible throughout the whole cluster.
+
+819
+00:54:57,666 --> 00:55:01,122
+So it's not bound to one specific cluster node.
+
+820
+00:55:01,266 --> 00:55:05,050
+And the requests to that virtual IP address
+
+821
+00:55:05,200 --> 00:55:09,030
+then get forwarded to the actual processes
+
+822
+00:55:09,110 --> 00:55:13,094
+which are the pods behind that service. And this forwarding
+
+823
+00:55:13,142 --> 00:55:16,914
+is done by Kubeproxy. So Kubeproxy
+
+824
+00:55:16,982 --> 00:55:21,022
+is responsible for maintaining the list
+
+825
+00:55:21,076 --> 00:55:24,794
+of all the service IP addresses and the Pod
+
+826
+00:55:24,842 --> 00:55:28,826
+IP addresses that belong to that service. So Kubeproxy
+
+827
+00:55:28,858 --> 00:55:33,326
+is the one that is managing service and its endpoints.
+
+828
+00:55:33,438 --> 00:55:36,866
+So when the request is sent to the service IP address,
+
+829
+00:55:37,048 --> 00:55:40,802
+Kubeproxy will intercept the request. It will
+
+830
+00:55:40,856 --> 00:55:44,962
+check in its list which pod endpoints are registered
+
+831
+00:55:45,026 --> 00:55:48,406
+for the service IP address, and it will pick one
+
+832
+00:55:48,428 --> 00:55:51,240
+of the pods to forward the request to.
+
+833
+00:55:51,610 --> 00:55:55,594
+So that's how the requests are forwarded from services to
+
+834
+00:55:55,632 --> 00:55:57,610
+their pod endpoints.
+
+835
+00:56:00,590 --> 00:56:04,346
+Now remember I said that the third part of the
+
+836
+00:56:04,368 --> 00:56:08,278
+configuration file is a section describing
+
+837
+00:56:08,374 --> 00:56:12,074
+status of the component. And since we created deployment
+
+838
+00:56:12,122 --> 00:56:15,738
+and service components, let's actually see that auto
+
+839
+00:56:15,754 --> 00:56:19,426
+generated part of the component. So how do we
+
+840
+00:56:19,448 --> 00:56:23,374
+actually check the complete configuration
+
+841
+00:56:23,502 --> 00:56:27,534
+file with the auto generated attributes and the status
+
+842
+00:56:27,582 --> 00:56:30,574
+section of the components that we created in the cluster.
+
+843
+00:56:30,622 --> 00:56:34,278
+Well, first of all, let's print out all the components we have
+
+844
+00:56:34,364 --> 00:56:36,918
+in a default namespace in the cluster right now,
+
+845
+00:56:37,004 --> 00:56:40,710
+Kubectl get all. So instead of get
+
+846
+00:56:40,780 --> 00:56:44,350
+pod or service we are saying give me all the resources
+
+847
+00:56:44,450 --> 00:56:48,026
+I have in a default namespace and this will give us the
+
+848
+00:56:48,048 --> 00:56:51,190
+services pod deployment, et cetera.
+
+849
+00:56:51,270 --> 00:56:55,206
+And now let's actually check the configuration file of NgINX
+
+850
+00:56:55,238 --> 00:56:58,878
+service that kubernetes edit some
+
+851
+00:56:59,044 --> 00:57:02,766
+auto generated information to. So one way to
+
+852
+00:57:02,788 --> 00:57:06,622
+do that is using Kubectl edit command. Again,
+
+853
+00:57:06,676 --> 00:57:10,654
+we need type of the resource, it could be service or the
+
+854
+00:57:10,692 --> 00:57:14,242
+short version and name of that
+
+855
+00:57:14,296 --> 00:57:18,274
+component. If I click this
+
+856
+00:57:18,312 --> 00:57:21,594
+will open my default editor which is beam,
+
+857
+00:57:21,742 --> 00:57:25,362
+and show me a Kubernetes configuration file
+
+858
+00:57:25,506 --> 00:57:29,206
+which of course is based on the service manifest that
+
+859
+00:57:29,228 --> 00:57:33,806
+we created. But Kubernetes basically added bunch of attributes
+
+860
+00:57:33,938 --> 00:57:37,722
+and bunch of information to it and that's what we're seeing.
+
+861
+00:57:37,856 --> 00:57:42,170
+So all of these are automatically generated information like
+
+862
+00:57:42,240 --> 00:57:45,834
+unique id creation time, et cetera. And right
+
+863
+00:57:45,872 --> 00:57:49,998
+here we have a status section here with some information.
+
+864
+00:57:50,164 --> 00:57:53,498
+And to leave the editor in vim
+
+865
+00:57:53,594 --> 00:57:57,310
+I'm going to click on the escape key colon
+
+866
+00:57:58,210 --> 00:58:01,520
+and quit without any changes.
+
+867
+00:58:01,970 --> 00:58:05,314
+And the same way we can also check the
+
+868
+00:58:05,352 --> 00:58:12,390
+deployment status.
+
+869
+00:58:12,890 --> 00:58:15,800
+Again, bunch of auto generated information,
+
+870
+00:58:19,050 --> 00:58:22,646
+obviously much more than what we configured. And here we
+
+871
+00:58:22,668 --> 00:58:26,582
+have a little bit longer status section
+
+872
+00:58:26,726 --> 00:58:30,518
+which has an information about the actual state of the deployment
+
+873
+00:58:30,614 --> 00:58:34,220
+like how many replicas are ready and available,
+
+874
+00:58:34,590 --> 00:58:38,222
+et cetera. Again, let's leave the editor and
+
+875
+00:58:38,276 --> 00:58:41,322
+you can use this edit command with all the components.
+
+876
+00:58:41,466 --> 00:58:44,734
+An alternative way of checking the
+
+877
+00:58:44,772 --> 00:58:48,206
+YAMl configuration file of the components in
+
+878
+00:58:48,228 --> 00:58:51,746
+the cluster without having to go
+
+879
+00:58:51,768 --> 00:58:55,380
+in edit mode is to do get
+
+880
+00:58:59,190 --> 00:59:03,890
+and instead of just printing out an output
+
+881
+00:59:04,050 --> 00:59:08,534
+like this, we can do give me an output in
+
+882
+00:59:08,652 --> 00:59:11,926
+YAMl format and this will basically give
+
+883
+00:59:11,948 --> 00:59:15,714
+you the same contents as we got with Kubectl edit
+
+884
+00:59:15,762 --> 00:59:16,550
+command.
+
+885
+00:59:39,120 --> 00:59:42,968
+One use case of using labels for components
+
+886
+00:59:43,064 --> 00:59:46,568
+and as you learned we need to give pods a label
+
+887
+00:59:46,664 --> 00:59:50,900
+so that sir vis can identify and select them using
+
+888
+00:59:50,970 --> 00:59:54,544
+that label selector. However there are other use cases
+
+889
+00:59:54,592 --> 00:59:58,340
+of labels as well. Now the question is what are other
+
+890
+00:59:58,410 --> 00:59:59,600
+use cases of labels.
+

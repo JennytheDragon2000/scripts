@@ -46,6 +46,10 @@ def main(file_to_write):
     # Initialize subtitle_file_path to None
     subtitle_file_path = None
 
+    # Sort the subtitle files numerically
+    all_files.sort(key=lambda x: int(''.join(filter(str.isdigit, x.name))))
+
+
     # Iterate over all files
     for file in all_files:
         file_name_without_ext = str(file.name)
@@ -74,6 +78,8 @@ def main(file_to_write):
     with open("endNumber.txt", "r") as file:
         startNumber = int(file.read().strip())
     print(f"startNumber: {startNumber}")
+
+    # endNumber = None
 
     for index, sub in enumerate(subs):
         if sub.text == subtitle_line:

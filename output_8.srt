@@ -1,0 +1,3616 @@
+1
+00:00:01,690 --> 00:00:05,562
+And now he can execute Kubectl commands without specifying
+
+2
+00:00:05,706 --> 00:00:09,166
+any options just like this. So this
+
+3
+00:00:09,188 --> 00:00:12,782
+is one way of configuring the Kubeconfig file for
+
+4
+00:00:12,836 --> 00:00:16,910
+new users in the Kubernetes cluster. And probably
+
+5
+00:00:17,060 --> 00:00:21,214
+the more optimized and easier way for the team members
+
+6
+00:00:21,332 --> 00:00:25,734
+to use it is if you as a Kubernetes administrator also
+
+7
+00:00:25,852 --> 00:00:29,910
+put these certificate and key file contents inside
+
+8
+00:00:29,980 --> 00:00:32,918
+the kubeconfig. So let's see how to do that as well.
+
+9
+00:00:33,084 --> 00:00:36,710
+As I said, right now we're just pointing to
+
+10
+00:00:36,780 --> 00:00:40,234
+those two files as locations, so we need
+
+11
+00:00:40,272 --> 00:00:44,154
+them to be available on the machine as well.
+
+12
+00:00:44,272 --> 00:00:48,170
+Or we can just paste them directly inside here.
+
+13
+00:00:48,240 --> 00:00:52,174
+So we just have one file to move around and give developers and team members
+
+14
+00:00:52,292 --> 00:00:55,486
+instead of three files. So to do
+
+15
+00:00:55,508 --> 00:01:02,346
+that, first we're going to change these to data and
+
+16
+00:01:02,468 --> 00:01:07,700
+let's remove those two and
+
+17
+00:01:08,310 --> 00:01:11,954
+get the base 64 encoded values of
+
+18
+00:01:11,992 --> 00:01:16,230
+both files, which is actually not very difficult to do.
+
+19
+00:01:16,380 --> 00:01:19,990
+We simply do base 64, we pass in the file.
+
+20
+00:01:20,410 --> 00:01:23,574
+Let's do the certificate file first.
+
+21
+00:01:23,692 --> 00:01:27,510
+And again, let's trim all those new lines
+
+22
+00:01:32,110 --> 00:01:35,450
+so we can paste the output into the file.
+
+23
+00:01:35,950 --> 00:01:39,514
+And there you go, I'm going to copy this and
+
+24
+00:01:39,552 --> 00:01:42,718
+this is going to be the value right here.
+
+25
+00:01:42,804 --> 00:01:44,720
+So that's our certificate data.
+
+26
+00:01:47,410 --> 00:01:51,294
+Let's now base 64 encode the
+
+27
+00:01:51,332 --> 00:01:58,114
+key itself. Let's copy and
+
+28
+00:01:58,152 --> 00:02:01,330
+paste it right here, save it and there you go.
+
+29
+00:02:01,400 --> 00:02:04,578
+Now we just have one Kubeconfig file which
+
+30
+00:02:04,664 --> 00:02:08,870
+includes both certificate and the key of the client.
+
+31
+00:02:11,610 --> 00:02:15,174
+And let's try again, make sure it works. There you go.
+
+32
+00:02:15,292 --> 00:02:18,774
+As a Kubernetes administrator you just have to distribute
+
+33
+00:02:18,822 --> 00:02:22,554
+and give any Kubernetes users in your team
+
+34
+00:02:22,672 --> 00:02:26,666
+this Kubeconfig file. So that's probably the most optimized and
+
+35
+00:02:26,688 --> 00:02:30,410
+effective way of sharing those credentials.
+
+36
+00:02:33,780 --> 00:02:37,036
+Awesome. So we have a user in the cluster,
+
+37
+00:02:37,148 --> 00:02:40,892
+we have its certificate signed by Kubernetes
+
+38
+00:02:40,956 --> 00:02:44,608
+CA, and we have a kubeconfig file with all the data
+
+39
+00:02:44,694 --> 00:02:48,820
+inside that we can share with the team members to use when
+
+40
+00:02:48,890 --> 00:02:51,750
+connecting to the cluster. But as we saw,
+
+41
+00:02:52,120 --> 00:02:56,464
+the new user doesn't have any permissions so they can authenticate
+
+42
+00:02:56,512 --> 00:02:59,832
+with the cluster but they're not authorized to do anything.
+
+43
+00:02:59,966 --> 00:03:04,484
+So that's going to be our next step where we give this user some permissions.
+
+44
+00:03:04,612 --> 00:03:08,964
+As you already learned, the way we give permissions to users is
+
+45
+00:03:09,102 --> 00:03:12,684
+using cluster roles or roles. In this
+
+46
+00:03:12,722 --> 00:03:16,348
+case we want to give user Tom permission to
+
+47
+00:03:16,514 --> 00:03:20,472
+create, update and delete common resources
+
+48
+00:03:20,536 --> 00:03:23,040
+like pods, deployments, services,
+
+49
+00:03:23,190 --> 00:03:27,008
+etc. In all the namespaces so to give
+
+50
+00:03:27,094 --> 00:03:30,784
+Tom this permission, we're going to create a cluster role with
+
+51
+00:03:30,902 --> 00:03:34,308
+all the permissions specified. And after that we're going
+
+52
+00:03:34,314 --> 00:03:37,936
+to create a cluster role binding to bind that cluster
+
+53
+00:03:37,968 --> 00:03:40,020
+role to Tom's user.
+
+54
+00:03:42,680 --> 00:03:45,844
+Now how do we create a cluster role? We're going to use the
+
+55
+00:03:45,882 --> 00:03:48,570
+Kubectl imperative command for that.
+
+56
+00:03:48,940 --> 00:03:52,244
+Because using Kubectl create command,
+
+57
+00:03:52,372 --> 00:03:55,220
+we can actually create roles,
+
+58
+00:03:55,300 --> 00:03:58,548
+role bindings, cluster roles and cluster bindings.
+
+59
+00:03:58,644 --> 00:04:02,792
+To make our work easier, we're going to generate a cluster role
+
+60
+00:04:02,936 --> 00:04:07,176
+configuration file using Kubectl create cluster
+
+61
+00:04:07,208 --> 00:04:10,760
+role command cluster role let's
+
+62
+00:04:10,840 --> 00:04:14,210
+get help again. Let's give us some space.
+
+63
+00:04:14,580 --> 00:04:17,936
+Let's call it dev cluster role. And as you
+
+64
+00:04:17,958 --> 00:04:22,032
+see, we have a couple of required attributes here
+
+65
+00:04:22,086 --> 00:04:25,476
+which we have to set. One of them is
+
+66
+00:04:25,578 --> 00:04:29,172
+verb, which basically means what
+
+67
+00:04:29,226 --> 00:04:32,580
+actions do we allow with this cluster role? And verb option
+
+68
+00:04:32,650 --> 00:04:36,790
+is a list. So we can specify different options. Let's do
+
+69
+00:04:37,160 --> 00:04:39,610
+get, list,
+
+70
+00:04:40,140 --> 00:04:43,320
+create, update and delete.
+
+71
+00:04:44,780 --> 00:04:49,076
+Then we have the resource where we specify
+
+72
+00:04:49,188 --> 00:04:53,400
+again a list of resources where we have the resource
+
+73
+00:04:53,560 --> 00:04:57,096
+name and the API group that this resource belongs
+
+74
+00:04:57,128 --> 00:05:00,680
+to. For default API group which is core,
+
+75
+00:05:00,760 --> 00:05:04,464
+we don't have to specify the group, but for other resources we
+
+76
+00:05:04,502 --> 00:05:08,972
+have to specify that. So for example, I'm going to specify deployment
+
+77
+00:05:09,036 --> 00:05:13,324
+here which is not from a core API
+
+78
+00:05:13,372 --> 00:05:17,160
+group, but rather from API group called EPS.
+
+79
+00:05:17,260 --> 00:05:20,656
+And then let's specify pods which is in core
+
+80
+00:05:20,688 --> 00:05:24,116
+API group. But as I said, for core we don't have to
+
+81
+00:05:24,138 --> 00:05:27,680
+specify the group name and this actually should be
+
+82
+00:05:27,770 --> 00:05:31,368
+plural. So let's actually go ahead and
+
+83
+00:05:31,534 --> 00:05:34,756
+use this configuration. Do not forget the dry
+
+84
+00:05:34,788 --> 00:05:38,516
+run option because we're not executing
+
+85
+00:05:38,548 --> 00:05:43,016
+this directly, just getting a preview in YamL format.
+
+86
+00:05:43,128 --> 00:05:47,416
+And let's save this into dev cluster
+
+87
+00:05:47,448 --> 00:05:52,844
+role Yaml file and let's
+
+88
+00:05:52,892 --> 00:05:56,220
+open it. And that's basically our generated
+
+89
+00:05:56,300 --> 00:05:59,804
+YamL file. Now this makes working with Kubernetes
+
+90
+00:05:59,852 --> 00:06:03,612
+configuration files easier because we have the main structure created
+
+91
+00:06:03,676 --> 00:06:06,524
+and some of the configuration already set.
+
+92
+00:06:06,662 --> 00:06:11,008
+Plus we have now a visual way to see and reconfigure
+
+93
+00:06:11,104 --> 00:06:14,276
+some of the stuff. First of all, you see that we have
+
+94
+00:06:14,378 --> 00:06:17,984
+name Devcr and a list of rules.
+
+95
+00:06:18,112 --> 00:06:21,588
+And because we are using two different API groups,
+
+96
+00:06:21,684 --> 00:06:24,884
+one of them which is core or empty,
+
+97
+00:06:25,012 --> 00:06:28,472
+the default one and one of them apps, we have two
+
+98
+00:06:28,526 --> 00:06:32,360
+API group sections here. So for each API group
+
+99
+00:06:32,430 --> 00:06:36,168
+we have a separate section. Second, we see that for each API
+
+100
+00:06:36,184 --> 00:06:39,704
+group we have a list of resources, in this case pods
+
+101
+00:06:39,752 --> 00:06:43,052
+from the core group, and a list of actions
+
+102
+00:06:43,116 --> 00:06:46,944
+that we can perform on these resources. And the
+
+103
+00:06:46,982 --> 00:06:51,010
+same structure here. Now we can go ahead and
+
+104
+00:06:52,260 --> 00:06:56,404
+adjust our configuration. Let's say we want to give
+
+105
+00:06:56,522 --> 00:06:59,910
+any user with this cluster role access
+
+106
+00:07:00,280 --> 00:07:02,928
+to pods, deployments,
+
+107
+00:07:03,104 --> 00:07:06,980
+services and stateful sets. So let's list
+
+108
+00:07:07,050 --> 00:07:10,740
+all those resources first. Now you may be asking,
+
+109
+00:07:10,890 --> 00:07:15,092
+how do I know which API group each of these resources
+
+110
+00:07:15,156 --> 00:07:18,776
+actually belong to? Well, you can't know this by heart, so you
+
+111
+00:07:18,798 --> 00:07:22,584
+will have to look it up in the documentation. So let's see which API
+
+112
+00:07:22,632 --> 00:07:26,476
+groups, services and stateful sets actually belong to.
+
+113
+00:07:26,578 --> 00:07:30,520
+So going to Kubernetes documentation, you have the Kubernetes
+
+114
+00:07:30,600 --> 00:07:33,952
+API reference. So this is one way
+
+115
+00:07:34,006 --> 00:07:37,868
+where you can easily find which resources belong to which API groups.
+
+116
+00:07:37,964 --> 00:07:41,616
+So you can use this as a reference for creating your
+
+117
+00:07:41,718 --> 00:07:44,812
+cluster role or role configurations.
+
+118
+00:07:44,956 --> 00:07:48,692
+So first of all, pod is in a core group, which we already
+
+119
+00:07:48,746 --> 00:07:52,356
+have defined. Deployment is in apps API group.
+
+120
+00:07:52,458 --> 00:07:56,144
+Now let's check service and stateful set. So stateful
+
+121
+00:07:56,192 --> 00:07:59,704
+set is in apps. So let's set
+
+122
+00:07:59,742 --> 00:08:03,224
+that one. In API groups apps we
+
+123
+00:08:03,262 --> 00:08:07,652
+have another one, stateful sets.
+
+124
+00:08:07,796 --> 00:08:11,624
+Also note that resources are always referenced in plural.
+
+125
+00:08:11,752 --> 00:08:15,132
+And now let's find service which is
+
+126
+00:08:15,186 --> 00:08:18,396
+in core API group. So we're going to list it
+
+127
+00:08:18,418 --> 00:08:22,504
+right here under the pods like
+
+128
+00:08:22,562 --> 00:08:25,936
+this. And for example, if we wanted to
+
+129
+00:08:25,958 --> 00:08:30,508
+give user permission to create ingress components,
+
+130
+00:08:30,604 --> 00:08:34,416
+you see that ingress component will be in an
+
+131
+00:08:34,438 --> 00:08:38,016
+API group called Networking Kubernetes IO.
+
+132
+00:08:38,128 --> 00:08:41,892
+So you would have another API group section right
+
+133
+00:08:41,946 --> 00:08:45,856
+here with the name of networking
+
+134
+00:08:45,968 --> 00:08:49,496
+Kubernetes IO in addition to the apps and the
+
+135
+00:08:49,518 --> 00:08:53,032
+core. So that's how it works. And finally,
+
+136
+00:08:53,166 --> 00:08:56,776
+let's configure the verbs. So what
+
+137
+00:08:56,798 --> 00:09:00,296
+do we allow on these resources? And here you
+
+138
+00:09:00,318 --> 00:09:04,168
+see that I have basically allowed almost any of the actions,
+
+139
+00:09:04,344 --> 00:09:08,444
+and in order to avoid just typing out all of them one
+
+140
+00:09:08,482 --> 00:09:11,896
+by one, if you want to allow any action on the resources,
+
+141
+00:09:12,008 --> 00:09:15,200
+you could also just use a star.
+
+142
+00:09:15,350 --> 00:09:19,136
+Again, this is an array, so you
+
+143
+00:09:19,158 --> 00:09:22,864
+could say all the actions or all the verbs are
+
+144
+00:09:22,902 --> 00:09:26,096
+allowed for the resources defined here. This way
+
+145
+00:09:26,118 --> 00:09:29,412
+you don't have to type out all the verbs. And again,
+
+146
+00:09:29,466 --> 00:09:32,772
+you may be wondering where can you actually check the
+
+147
+00:09:32,826 --> 00:09:36,244
+list of all the verbs for the resources. You can also see
+
+148
+00:09:36,282 --> 00:09:39,624
+that in a documentation. For example, here in the
+
+149
+00:09:39,662 --> 00:09:43,076
+Arbec authorization documentation you have a bunch
+
+150
+00:09:43,108 --> 00:09:46,584
+of examples. And this for example is a list of
+
+151
+00:09:46,702 --> 00:09:50,184
+all the available verbs. So you can check the
+
+152
+00:09:50,222 --> 00:09:53,688
+list here and use it in your configuration file. And let's
+
+153
+00:09:53,704 --> 00:09:57,228
+say we allow everything on pods and services, but we only allow
+
+154
+00:09:57,314 --> 00:10:01,224
+to get list and create deployments and stateful
+
+155
+00:10:01,272 --> 00:10:04,540
+sets. We do not allow updating or deleting those
+
+156
+00:10:04,610 --> 00:10:08,796
+resources. Let's just say that's the permission we have decided on and that's
+
+157
+00:10:08,828 --> 00:10:12,016
+our cluster role configuration and we can use it for
+
+158
+00:10:12,038 --> 00:10:15,872
+all the developers in the team. Again, if we want to add new permissions,
+
+159
+00:10:16,016 --> 00:10:19,604
+we can update the cluster role itself later after we
+
+160
+00:10:19,642 --> 00:10:23,588
+create it and basically add more permissions like
+
+161
+00:10:23,674 --> 00:10:28,060
+creating persistent volumes or ingress
+
+162
+00:10:28,240 --> 00:10:32,100
+components, et cetera. So that's how we define cluster roles.
+
+163
+00:10:32,260 --> 00:10:36,424
+Let's save it and
+
+164
+00:10:36,542 --> 00:10:40,490
+let's apply Kubectl apply.
+
+165
+00:10:42,780 --> 00:10:46,632
+There you go. And of course we cannot apply
+
+166
+00:10:46,686 --> 00:10:50,568
+these because we're using Tom users kubeconfig file.
+
+167
+00:10:50,664 --> 00:10:54,464
+So let's actually change that
+
+168
+00:10:54,502 --> 00:10:58,400
+by specifying kubeconfig file to be their
+
+169
+00:10:58,470 --> 00:11:03,424
+admin users config. And there you go again,
+
+170
+00:11:03,542 --> 00:11:07,030
+let's do get
+
+171
+00:11:07,560 --> 00:11:10,884
+cluster role and we have a bunch of them
+
+172
+00:11:10,922 --> 00:11:15,156
+which have been generated by different services,
+
+173
+00:11:15,338 --> 00:11:18,776
+but one of them is Devcr that
+
+174
+00:11:18,798 --> 00:11:22,570
+we just created. So it's there and we can also
+
+175
+00:11:23,420 --> 00:11:24,730
+describe it,
+
+176
+00:11:26,460 --> 00:11:30,680
+describe cluster role Devcr.
+
+177
+00:11:31,040 --> 00:11:34,700
+And here we see a human readable form
+
+178
+00:11:34,770 --> 00:11:38,460
+of cluster role which says which resources
+
+179
+00:11:39,120 --> 00:11:42,472
+from which API groups, which shows what
+
+180
+00:11:42,546 --> 00:11:46,236
+actions you can take on which resources
+
+181
+00:11:46,348 --> 00:11:48,160
+from which API groups.
+
+182
+00:11:50,820 --> 00:11:54,128
+Now let's create a cluster role binding to actually connect
+
+183
+00:11:54,214 --> 00:11:57,728
+or assign this cluster role to Tom's
+
+184
+00:11:57,824 --> 00:12:01,408
+user, again using create command
+
+185
+00:12:01,584 --> 00:12:05,716
+cluster role binding. This is going to be an easier one.
+
+186
+00:12:05,818 --> 00:12:09,816
+You see that we have to specify cluster role itself and
+
+187
+00:12:09,998 --> 00:12:13,284
+one of those three either user
+
+188
+00:12:13,412 --> 00:12:16,600
+which is what we have for Tom, a group or
+
+189
+00:12:16,670 --> 00:12:20,376
+service account. So cluster role binding,
+
+190
+00:12:20,408 --> 00:12:24,220
+let's call it dev cluster role binding.
+
+191
+00:12:26,160 --> 00:12:29,404
+Cluster role is what we
+
+192
+00:12:29,442 --> 00:12:32,520
+created, which is cluster role which already exists in
+
+193
+00:12:32,530 --> 00:12:36,624
+the cluster. And then we have user which is Tom.
+
+194
+00:12:36,822 --> 00:12:40,912
+And you can also check that in the error messages here
+
+195
+00:12:40,966 --> 00:12:44,984
+where kubernetes says user Tom cannot
+
+196
+00:12:45,052 --> 00:12:49,350
+get resources. So that's the name of the user. And again
+
+197
+00:12:50,520 --> 00:12:55,584
+do dry run equals client yaml
+
+198
+00:12:55,632 --> 00:12:59,252
+format output and save
+
+199
+00:12:59,306 --> 00:13:03,156
+this into cluster role binding yaml
+
+200
+00:13:03,188 --> 00:13:03,960
+file.
+
+201
+00:13:07,660 --> 00:13:11,276
+And let's check the configuration file here.
+
+202
+00:13:11,378 --> 00:13:14,652
+It is super straightforward actually we have
+
+203
+00:13:14,786 --> 00:13:18,744
+the name here and we have two main parts
+
+204
+00:13:18,792 --> 00:13:22,468
+here. So basically we're binding an existing
+
+205
+00:13:22,584 --> 00:13:25,420
+role to an existing user.
+
+206
+00:13:25,580 --> 00:13:28,876
+And for cluster role and user we're just providing
+
+207
+00:13:28,908 --> 00:13:32,304
+the names. That's basically the whole configuration, which is
+
+208
+00:13:32,342 --> 00:13:36,436
+very straightforward. We can save this
+
+209
+00:13:36,618 --> 00:13:43,124
+and apply and
+
+210
+00:13:43,242 --> 00:13:46,580
+let's not forget to execute this as admin.
+
+211
+00:13:52,940 --> 00:13:57,636
+And there you go, let's describe cluster
+
+212
+00:13:57,828 --> 00:14:01,720
+role binding devcrb
+
+213
+00:14:06,080 --> 00:14:08,684
+with the admin user. And there you go,
+
+214
+00:14:08,882 --> 00:14:12,756
+user Tom bound to cluster
+
+215
+00:14:12,808 --> 00:14:15,650
+role dev CR.
+
+216
+00:14:16,180 --> 00:14:19,756
+Now let's validate that our binding
+
+217
+00:14:19,868 --> 00:14:22,290
+and our cluster role actually works.
+
+218
+00:14:25,940 --> 00:14:29,248
+Before when we did kubectl get pod,
+
+219
+00:14:29,344 --> 00:14:32,928
+we were not allowed to execute this as a Tom user.
+
+220
+00:14:33,024 --> 00:14:36,292
+Now let's see what happens. And there you go. So get
+
+221
+00:14:36,346 --> 00:14:40,664
+pod works, get service should work too.
+
+222
+00:14:40,862 --> 00:14:43,796
+Now let's try get node.
+
+223
+00:14:43,908 --> 00:14:47,464
+We haven't given permission for node resource, so this
+
+224
+00:14:47,582 --> 00:14:51,324
+should not be allowed. As you see it is forbidden for
+
+225
+00:14:51,442 --> 00:14:54,956
+user Tom. So that's obviously one way
+
+226
+00:14:54,978 --> 00:14:58,520
+to validate that your permissions are set correctly.
+
+227
+00:14:58,680 --> 00:15:02,060
+Or you can also validate the permissions
+
+228
+00:15:02,420 --> 00:15:06,608
+for different users, not only your current user using
+
+229
+00:15:06,694 --> 00:15:10,016
+Kubectl Auth command. So if
+
+230
+00:15:10,038 --> 00:15:19,656
+you were an admin user kubeconfigconfig
+
+231
+00:15:19,708 --> 00:15:23,044
+admin users kubeconfig file and you wanted to
+
+232
+00:15:23,082 --> 00:15:26,660
+validate whether developer Tom now has correct
+
+233
+00:15:26,730 --> 00:15:31,364
+permissions, you can use Kubectl auth subcommand
+
+234
+00:15:31,412 --> 00:15:34,772
+to do that. And you can say Kubectl
+
+235
+00:15:34,836 --> 00:15:38,996
+Auth can I create pod
+
+236
+00:15:39,188 --> 00:15:42,056
+as user Tom?
+
+237
+00:15:42,238 --> 00:15:45,784
+And you get yes, now you can check can
+
+238
+00:15:45,822 --> 00:15:49,080
+I create service as
+
+239
+00:15:49,150 --> 00:15:53,730
+User Tom? Can I get
+
+240
+00:15:57,620 --> 00:16:01,276
+node? You get no as a response because we didn't
+
+241
+00:16:01,308 --> 00:16:04,524
+give this permission and also we didn't
+
+242
+00:16:04,572 --> 00:16:07,840
+give permission to delete deployments.
+
+243
+00:16:10,580 --> 00:16:14,432
+Let's check that. There you go. So this is a very efficient
+
+244
+00:16:14,496 --> 00:16:18,276
+way to check permissions of other users
+
+245
+00:16:18,308 --> 00:16:22,292
+in your cluster with admin users kubeconfig file.
+
+246
+00:16:22,356 --> 00:16:26,548
+Awesome. So we see that everything works. Now we authorized
+
+247
+00:16:26,644 --> 00:16:30,324
+user Tom to do a bunch of stuff in the cluster,
+
+248
+00:16:30,452 --> 00:16:34,060
+in all namespaces so that they can get started
+
+249
+00:16:34,210 --> 00:16:37,948
+and deploy their applications inside. Always know that whatever
+
+250
+00:16:38,034 --> 00:16:41,324
+you didn't explicitly specify in a cluster role is
+
+251
+00:16:41,362 --> 00:16:45,264
+not permitted. So for example, this user will not be able to create
+
+252
+00:16:45,302 --> 00:16:49,196
+new namespaces, for example because we didn't specify that in the cluster
+
+253
+00:16:49,228 --> 00:16:52,956
+role. And again, if you wanted to give permission for namespace
+
+254
+00:16:53,068 --> 00:16:57,152
+in the cluster role, you would find namespace resource
+
+255
+00:16:57,216 --> 00:17:00,452
+here and its API group and
+
+256
+00:17:00,506 --> 00:17:03,990
+edit to the permissions for the developers if you want to
+
+257
+00:17:06,800 --> 00:17:10,624
+human users covered, and we know how to give them access to the
+
+258
+00:17:10,662 --> 00:17:14,352
+cluster. Now what about application users or
+
+259
+00:17:14,406 --> 00:17:18,128
+non human users? For example, in a real project,
+
+260
+00:17:18,294 --> 00:17:21,444
+ideally you would set a CI CD pipeline that
+
+261
+00:17:21,482 --> 00:17:25,604
+deploys directly into Kubernetes cluster, which means
+
+262
+00:17:25,722 --> 00:17:29,268
+your CI CD tool like jenkins for example,
+
+263
+00:17:29,434 --> 00:17:33,364
+needs to have its own user and own access to
+
+264
+00:17:33,402 --> 00:17:37,256
+the cluster to deploy applications and make changes that
+
+265
+00:17:37,278 --> 00:17:41,108
+it needs to make. And as you learned for non human users,
+
+266
+00:17:41,204 --> 00:17:44,984
+we create service accounts in kubernetes. So in this
+
+267
+00:17:45,022 --> 00:17:48,808
+part we're going to create a service account for a CI CD tool.
+
+268
+00:17:48,894 --> 00:17:52,124
+This could be in our case jenkins, but this could be used for
+
+269
+00:17:52,162 --> 00:17:55,704
+any application you want. And then we're going to assign permission
+
+270
+00:17:55,832 --> 00:17:59,152
+to that service account. And this is all going to be actually
+
+271
+00:17:59,206 --> 00:18:02,704
+very easy because you already know all the necessary concepts for
+
+272
+00:18:02,742 --> 00:18:06,544
+this. So first,
+
+273
+00:18:06,582 --> 00:18:10,770
+let's create service count using our Kubectl create
+
+274
+00:18:12,760 --> 00:18:16,180
+service account commit. Again,
+
+275
+00:18:16,250 --> 00:18:20,004
+let's see the options we have. Service account, let's call it
+
+276
+00:18:20,122 --> 00:18:24,036
+Jenkins. We don't have any required attributes here. As you
+
+277
+00:18:24,058 --> 00:18:27,784
+see you can actually execute this directly right away
+
+278
+00:18:27,822 --> 00:18:31,444
+because we don't need to add any configuration or adjust
+
+279
+00:18:31,492 --> 00:18:34,644
+any configuration here. But again, as a best practice,
+
+280
+00:18:34,692 --> 00:18:38,332
+you should keep the configuration files of all the
+
+281
+00:18:38,386 --> 00:18:42,892
+components that you created in the cluster for a history of changes.
+
+282
+00:18:43,026 --> 00:18:47,260
+So I'm going to do dry run client
+
+283
+00:18:49,140 --> 00:18:54,224
+Yaml and save this into a
+
+284
+00:18:54,262 --> 00:18:57,612
+configuration file. Let's actually check that configuration
+
+285
+00:18:57,676 --> 00:19:00,800
+file. It's actually super simple. We just have
+
+286
+00:19:00,870 --> 00:19:04,244
+service account and its name. And for
+
+287
+00:19:04,282 --> 00:19:08,016
+that let's actually switch back to our admin user
+
+288
+00:19:08,128 --> 00:19:11,424
+because right now the Kubeconfig file
+
+289
+00:19:11,472 --> 00:19:15,688
+actually holds the kubeconfig of Tom
+
+290
+00:19:15,774 --> 00:19:19,640
+user. So let's reset this back to admin
+
+291
+00:19:20,620 --> 00:19:23,736
+and let's see that it works. There you go.
+
+292
+00:19:23,918 --> 00:19:27,868
+And let's apply the
+
+293
+00:19:28,034 --> 00:19:31,740
+service account configuration. And now if I do
+
+294
+00:19:31,810 --> 00:19:38,520
+describe service account and
+
+295
+00:19:38,610 --> 00:19:42,672
+Jenkins, you see that the service account was
+
+296
+00:19:42,726 --> 00:19:45,964
+created and automatically assigned
+
+297
+00:19:46,012 --> 00:19:49,724
+a token. So whenever you create a service account in Kubernetes,
+
+298
+00:19:49,852 --> 00:19:53,972
+a token gets automatically generated for that service account,
+
+299
+00:19:54,106 --> 00:19:57,792
+which is basically like a user password or user
+
+300
+00:19:57,856 --> 00:20:00,992
+token to access the cluster.
+
+301
+00:20:01,136 --> 00:20:05,096
+And this token, since it's a credential, is actually created as a
+
+302
+00:20:05,118 --> 00:20:08,616
+Kubernetes secret. So if I do
+
+303
+00:20:08,638 --> 00:20:13,176
+Kubectl get secret with
+
+304
+00:20:13,198 --> 00:20:16,940
+a name, as you see that this is actually
+
+305
+00:20:17,090 --> 00:20:20,572
+the name of the secret that holds the
+
+306
+00:20:20,626 --> 00:20:24,184
+token and the type of that secret is service account token.
+
+307
+00:20:24,232 --> 00:20:27,900
+So it has a own dedicated type for service
+
+308
+00:20:27,970 --> 00:20:32,064
+account tokens. And again, as I said, this is the name of
+
+309
+00:20:32,102 --> 00:20:35,712
+the secret containing the token. It's not the token itself.
+
+310
+00:20:35,846 --> 00:20:40,050
+And in order to extract the token we're simply going to
+
+311
+00:20:41,640 --> 00:20:45,184
+print the whole secret contents as YAmL file.
+
+312
+00:20:45,312 --> 00:20:49,380
+And right here, this is our token. Also note that service
+
+313
+00:20:49,450 --> 00:20:53,284
+account token contains the CA certificate data as
+
+314
+00:20:53,322 --> 00:20:57,000
+well, in addition to the token credential.
+
+315
+00:20:59,890 --> 00:21:03,486
+So now again, the question is how do we access
+
+316
+00:21:03,588 --> 00:21:07,338
+the cluster using a service account? So basically,
+
+317
+00:21:07,444 --> 00:21:11,774
+how do we execute Kubectl commands from Jenkins
+
+318
+00:21:11,902 --> 00:21:14,898
+using Jenkins own service account?
+
+319
+00:21:15,064 --> 00:21:18,882
+For that I'm going to copy a token. Remember this is
+
+320
+00:21:18,936 --> 00:21:22,360
+base 64 encoded so we need to decode it first.
+
+321
+00:21:24,970 --> 00:21:28,182
+So let's do base 64
+
+322
+00:21:28,316 --> 00:21:31,926
+decode. And that's a decoded token. It may
+
+323
+00:21:31,948 --> 00:21:35,274
+look the same, but this is actually a different string here.
+
+324
+00:21:35,392 --> 00:21:39,114
+And what we can do is actually save this
+
+325
+00:21:39,232 --> 00:21:42,502
+token into a variable here in Linux
+
+326
+00:21:42,646 --> 00:21:47,114
+so we can reference it later. So let's do token
+
+327
+00:21:47,242 --> 00:21:51,406
+equals and we grab the decoded value
+
+328
+00:21:51,508 --> 00:21:55,040
+of course. And now we can access
+
+329
+00:21:56,370 --> 00:21:59,970
+the token like this and again using
+
+330
+00:22:00,040 --> 00:22:03,586
+Kubectl options so we have this token that we
+
+331
+00:22:03,608 --> 00:22:07,186
+can use instead of client certificate so the command will look
+
+332
+00:22:07,208 --> 00:22:08,020
+like this.
+
+333
+00:22:10,010 --> 00:22:13,906
+So let's remove the config
+
+334
+00:22:13,938 --> 00:22:17,730
+file temporarily. We already have this in the current location
+
+335
+00:22:17,810 --> 00:22:21,094
+so we can safely remove it because
+
+336
+00:22:21,132 --> 00:22:24,794
+we have it here already. And let's execute the
+
+337
+00:22:24,832 --> 00:22:28,442
+Kubectl command again. And there you go again. We were
+
+338
+00:22:28,496 --> 00:22:32,150
+able to access the cluster, but Jenkins
+
+339
+00:22:32,230 --> 00:22:35,586
+service account is not allowed to do anything because we haven't
+
+340
+00:22:35,638 --> 00:22:39,914
+given it any permission yet. So we get forbidden response
+
+341
+00:22:40,042 --> 00:22:43,694
+from the cluster for user. And this is actually the
+
+342
+00:22:43,732 --> 00:22:48,430
+name of the user with service account which is system service
+
+343
+00:22:48,500 --> 00:22:52,046
+account, the namespace in which we
+
+344
+00:22:52,068 --> 00:22:55,762
+are executing the command and the name of the service account.
+
+345
+00:22:55,896 --> 00:22:59,634
+So you could actually execute Kubectl commands like this from
+
+346
+00:22:59,672 --> 00:23:03,206
+Jenkins for example. However, again, because these
+
+347
+00:23:03,228 --> 00:23:07,430
+are a lot of options on the command, you may actually want to
+
+348
+00:23:07,580 --> 00:23:11,186
+spare yourself setting all these options on Kubectl
+
+349
+00:23:11,218 --> 00:23:15,174
+command. So the question is, can we create a kubeconfig
+
+350
+00:23:15,222 --> 00:23:18,554
+file for a service account just like we
+
+351
+00:23:18,672 --> 00:23:22,314
+did for human users? Well, the answer is yes,
+
+352
+00:23:22,432 --> 00:23:26,222
+we can have a kubeconfig file for service account
+
+353
+00:23:26,356 --> 00:23:30,602
+users. So let's see how that's going to work. Let's actually duplicate
+
+354
+00:23:30,666 --> 00:23:35,930
+our existing dev Tom confile
+
+355
+00:23:36,090 --> 00:23:39,890
+into Jenkins confile
+
+356
+00:23:41,190 --> 00:23:45,522
+and let's open again.
+
+357
+00:23:45,576 --> 00:23:49,454
+We have certificate authority, data API server.
+
+358
+00:23:49,582 --> 00:23:54,710
+Let's change the user in
+
+359
+00:23:54,780 --> 00:24:00,054
+all the relevant places like
+
+360
+00:24:00,092 --> 00:24:03,810
+this of course the name and
+
+361
+00:24:03,820 --> 00:24:05,100
+the users list.
+
+362
+00:24:08,350 --> 00:24:12,810
+And we're going to get rid of client key and client certificate.
+
+363
+00:24:13,230 --> 00:24:16,254
+So the only change we need to make here is actually to
+
+364
+00:24:16,292 --> 00:24:19,646
+specify a token instead
+
+365
+00:24:19,748 --> 00:24:23,822
+of client key and client certificate. And the token is
+
+366
+00:24:23,876 --> 00:24:27,258
+again the decoded token for service account.
+
+367
+00:24:27,444 --> 00:24:31,220
+So let's leave a placeholder here and
+
+368
+00:24:32,310 --> 00:24:36,370
+let's get our token that I saved in the variable
+
+369
+00:24:41,370 --> 00:24:44,620
+and set it as a value right here.
+
+370
+00:24:45,470 --> 00:24:48,874
+So now you have a kubeconfig file for the
+
+371
+00:24:48,912 --> 00:24:52,522
+service account for Jenkins. And this means you could just
+
+372
+00:24:52,576 --> 00:24:56,094
+take this file and copy it onto a Jenkins server and use
+
+373
+00:24:56,132 --> 00:24:58,990
+it when you execute Kubectl commands.
+
+374
+00:24:59,730 --> 00:25:04,286
+So Kubeconfig is
+
+375
+00:25:04,308 --> 00:25:08,682
+going to be the Jenkins config file and let's do get pod
+
+376
+00:25:08,746 --> 00:25:13,070
+for example. And again we have accessed the cluster
+
+377
+00:25:13,230 --> 00:25:17,166
+and we get forbidden because we're not authorized to get the pods.
+
+378
+00:25:17,278 --> 00:25:20,534
+So that's how you can use service account for your
+
+379
+00:25:20,572 --> 00:25:24,342
+applications like CI CD tools such as
+
+380
+00:25:24,396 --> 00:25:27,574
+Jenkins or any other application that would
+
+381
+00:25:27,612 --> 00:25:29,830
+need access to the cluster.
+
+382
+00:25:32,570 --> 00:25:36,582
+However, we still need to give the service account permission
+
+383
+00:25:36,726 --> 00:25:41,194
+to do something in the cluster. And let's say in Jenkins case
+
+384
+00:25:41,312 --> 00:25:45,162
+we don't want to give Jenkins access to the whole
+
+385
+00:25:45,216 --> 00:25:48,606
+cluster, to all the namespaces, but only to a
+
+386
+00:25:48,628 --> 00:25:52,414
+specific namespace. And as a security best practice, we should always try
+
+387
+00:25:52,452 --> 00:25:56,618
+to give only the necessary permissions to users
+
+388
+00:25:56,634 --> 00:26:00,226
+and applications accessing the cluster because otherwise we're just
+
+389
+00:26:00,248 --> 00:26:03,714
+going to be increasing the security risk by giving too many
+
+390
+00:26:03,752 --> 00:26:07,614
+permissions. And as you learned, in order to give a user permission
+
+391
+00:26:07,662 --> 00:26:10,994
+to a specific namespace instead of the whole cluster,
+
+392
+00:26:11,122 --> 00:26:14,818
+we have roles instead of cluster roles. So we're
+
+393
+00:26:14,834 --> 00:26:18,626
+going to create a role for default namespace. So Jenkins
+
+394
+00:26:18,658 --> 00:26:23,018
+will only be able to access resources in
+
+395
+00:26:23,024 --> 00:26:26,826
+the default namespace. And again we're going to create
+
+396
+00:26:27,008 --> 00:26:30,330
+the role using the create command.
+
+397
+00:26:32,270 --> 00:26:35,590
+And let's call these CI CD role.
+
+398
+00:26:35,750 --> 00:26:39,534
+And again we have some required attributes here
+
+399
+00:26:39,652 --> 00:26:43,002
+which are same as you learned for cluster role.
+
+400
+00:26:43,066 --> 00:26:46,766
+So we have the verb let's do create and list, we'll add
+
+401
+00:26:46,788 --> 00:26:50,386
+the rest later and in
+
+402
+00:26:50,408 --> 00:26:54,306
+the configuration file and then we have the resource and group name.
+
+403
+00:26:54,408 --> 00:26:57,614
+And let's say Jenkins is not allowed to interact
+
+404
+00:26:57,662 --> 00:27:01,126
+with the pods directly, but only create
+
+405
+00:27:01,308 --> 00:27:05,510
+maybe updates and list deployment
+
+406
+00:27:06,010 --> 00:27:09,366
+components which are as we learned part of
+
+407
+00:27:09,388 --> 00:27:13,180
+the API group called Apps and services
+
+408
+00:27:13,550 --> 00:27:17,626
+which are part of the core group. And we're
+
+409
+00:27:17,648 --> 00:27:22,314
+going to do dry run and
+
+410
+00:27:22,352 --> 00:27:26,554
+save this into CI CD role
+
+411
+00:27:26,682 --> 00:27:32,560
+YaML file and
+
+412
+00:27:33,010 --> 00:27:37,050
+we're going to error because we need our admin
+
+413
+00:27:37,130 --> 00:27:40,574
+users kubeconfig file. So let's actually copy
+
+414
+00:27:40,622 --> 00:27:44,334
+that back to the default
+
+415
+00:27:44,382 --> 00:27:47,570
+location so we don't have to specify it all the time.
+
+416
+00:27:47,720 --> 00:27:51,726
+And let's rerun the command. There you go. So CI
+
+417
+00:27:51,758 --> 00:27:55,206
+CD roll YamL file and
+
+418
+00:27:55,228 --> 00:27:58,854
+let's check the configuration here. So we are
+
+419
+00:27:58,892 --> 00:28:02,422
+allowing Jenkins to create updates and
+
+420
+00:28:02,476 --> 00:28:06,406
+least services and we are allowing it to create update and
+
+421
+00:28:06,428 --> 00:28:10,106
+least deployments. And since deployments and services are
+
+422
+00:28:10,128 --> 00:28:13,594
+from two different API groups, we have two different
+
+423
+00:28:13,712 --> 00:28:17,662
+rule sections here. And finally, as we know, role is
+
+424
+00:28:17,716 --> 00:28:21,342
+bound to a namespace. So these
+
+425
+00:28:21,396 --> 00:28:25,034
+rules actually apply for one specific namespace.
+
+426
+00:28:25,162 --> 00:28:28,946
+And since we haven't specified a namespace, here it is a
+
+427
+00:28:28,968 --> 00:28:32,782
+default one. So it means if you wanted to give Jenkins
+
+428
+00:28:32,846 --> 00:28:36,066
+access to namespace, MyApp for
+
+429
+00:28:36,088 --> 00:28:39,074
+example, you would have to specify it right here.
+
+430
+00:28:39,192 --> 00:28:41,110
+In our case that's the default,
+
+431
+00:28:43,850 --> 00:28:47,510
+which is the default namespace. So we don't have to
+
+432
+00:28:47,580 --> 00:28:50,642
+explicitly specify it here. So that's
+
+433
+00:28:50,786 --> 00:28:53,820
+the role that we can apply right away.
+
+434
+00:28:57,950 --> 00:29:04,554
+And let's describe our
+
+435
+00:29:04,592 --> 00:29:08,298
+role. Note that when checking the cluster roles,
+
+436
+00:29:08,394 --> 00:29:12,030
+you don't have to specify a namespace. But for example,
+
+437
+00:29:12,100 --> 00:29:15,338
+if we had a role in MyApp namespace,
+
+438
+00:29:15,434 --> 00:29:19,266
+then you would have to actually specify the namespace in
+
+439
+00:29:19,288 --> 00:29:23,166
+the Kubectl command. Again, we're working with the default
+
+440
+00:29:23,198 --> 00:29:27,534
+namespace, so we don't have to do that. And we have services deployments
+
+441
+00:29:27,662 --> 00:29:31,910
+in apps API group with these actions.
+
+442
+00:29:32,410 --> 00:29:35,794
+Let's now bind the role
+
+443
+00:29:35,922 --> 00:29:39,942
+to Jenkins service account, which is super
+
+444
+00:29:39,996 --> 00:29:44,306
+easy. We do kubectl create role
+
+445
+00:29:44,418 --> 00:29:48,422
+binding and
+
+446
+00:29:48,476 --> 00:29:52,346
+again CI CD binding and we have
+
+447
+00:29:52,528 --> 00:29:57,594
+our role which is CICD role
+
+448
+00:29:57,722 --> 00:30:00,734
+and one of these three options,
+
+449
+00:30:00,932 --> 00:30:04,446
+user group or service account, in our case
+
+450
+00:30:04,628 --> 00:30:09,154
+the service account. And as you see here with the service account you
+
+451
+00:30:09,272 --> 00:30:12,866
+also have to specify the name only service account name will
+
+452
+00:30:12,888 --> 00:30:17,794
+not be enough. So we have to do default and
+
+453
+00:30:17,992 --> 00:30:20,658
+name of the service account, which is Jenkins.
+
+454
+00:30:20,834 --> 00:30:25,318
+And again we could execute this right away. We don't have to change
+
+455
+00:30:25,404 --> 00:30:29,714
+any configuration here. But again, to be consistent
+
+456
+00:30:29,842 --> 00:30:33,178
+I'm going to save this into a configuration file and
+
+457
+00:30:33,184 --> 00:30:37,210
+then apply that CI CD binding
+
+458
+00:30:37,550 --> 00:30:40,940
+YAML and let's check it.
+
+459
+00:30:43,550 --> 00:30:47,742
+So again, super simple CI CD role which
+
+460
+00:30:47,796 --> 00:30:51,258
+is in the default namespace. That's why we don't
+
+461
+00:30:51,274 --> 00:30:54,126
+have a namespace attribute defined here,
+
+462
+00:30:54,308 --> 00:30:57,818
+is bound to Jenkins service account
+
+463
+00:30:58,004 --> 00:31:02,850
+in default namespace. And we
+
+464
+00:31:02,920 --> 00:31:08,082
+leave everything this and apply the
+
+465
+00:31:08,136 --> 00:31:09,330
+role binding.
+
+466
+00:31:13,910 --> 00:31:21,646
+Let's describe that's
+
+467
+00:31:21,758 --> 00:31:25,386
+like this, this and there you go. And now as
+
+468
+00:31:25,408 --> 00:31:26,810
+an admin user,
+
+469
+00:31:28,430 --> 00:31:32,310
+because I'm using the Kubeconfig of admin user,
+
+470
+00:31:32,390 --> 00:31:37,082
+we can actually validate that the permissions have been applied
+
+471
+00:31:37,226 --> 00:31:41,482
+by doing check with Kubectl
+
+472
+00:31:41,546 --> 00:31:45,918
+Auth subcommand. So Kubectl Auth can I
+
+473
+00:31:46,084 --> 00:31:47,940
+create service?
+
+474
+00:31:49,910 --> 00:31:53,874
+And as you learned, the username of service account is not
+
+475
+00:31:53,912 --> 00:31:58,818
+just the service account name, but it is system service
+
+476
+00:31:58,904 --> 00:32:02,854
+account, the namespace where
+
+477
+00:32:02,892 --> 00:32:06,326
+the service account is and then finally the name of the
+
+478
+00:32:06,348 --> 00:32:10,182
+service account. And we want to check whether the
+
+479
+00:32:10,236 --> 00:32:13,706
+Jenkins service account can create services in
+
+480
+00:32:13,808 --> 00:32:17,754
+namespace default. And we should get yes,
+
+481
+00:32:17,872 --> 00:32:21,898
+now let's try another namespace like Kube system
+
+482
+00:32:21,984 --> 00:32:26,266
+for example, and we should get no. And in the default namespace
+
+483
+00:32:26,298 --> 00:32:29,806
+we can also try create
+
+484
+00:32:29,908 --> 00:32:33,998
+deployment again, we get yes
+
+485
+00:32:34,164 --> 00:32:38,238
+and let's try get pod
+
+486
+00:32:38,334 --> 00:32:41,714
+which we did not give permission for. So we get no.
+
+487
+00:32:41,832 --> 00:32:45,838
+And that's how you can check service account permissions
+
+488
+00:32:46,014 --> 00:32:49,486
+using your Kubernetes administrator user.
+
+489
+00:32:49,598 --> 00:32:52,898
+And as a last step, as a Kubernetes administrator
+
+490
+00:32:52,994 --> 00:32:57,362
+you would take this Jenkins configuration file that holds
+
+491
+00:32:57,426 --> 00:33:01,254
+everything necessary to connect to the cluster, which is basically the
+
+492
+00:33:01,292 --> 00:33:04,710
+CA certificate of Kubernetes and the token
+
+493
+00:33:04,870 --> 00:33:08,678
+of the service account and hand it over to developers
+
+494
+00:33:08,774 --> 00:33:12,822
+who can then copy it to Jenkins server or whoever's responsible
+
+495
+00:33:12,886 --> 00:33:16,654
+for that. And using this config file they
+
+496
+00:33:16,692 --> 00:33:20,410
+can execute Kubectl commands from Jenkins.
+
+497
+00:33:20,570 --> 00:33:23,950
+Of course, for those actions, only that
+
+498
+00:33:24,100 --> 00:33:28,000
+service account with this token is permitted to do
+
+499
+00:33:34,800 --> 00:33:37,976
+the cluster, so they start deploying their applications
+
+500
+00:33:38,008 --> 00:33:41,852
+to it. But as they are still learning and figuring out stuff,
+
+501
+00:33:41,986 --> 00:33:45,544
+they would like to know how to troubleshoot things when pod
+
+502
+00:33:45,592 --> 00:33:49,180
+is not running or service is not accessible, et cetera.
+
+503
+00:33:49,260 --> 00:33:52,620
+So they ask you if you can give them any useful
+
+504
+00:33:52,700 --> 00:33:56,240
+tips on debugging in kubernetes. One use case
+
+505
+00:33:56,310 --> 00:33:59,696
+where you need to debug different components in the cluster
+
+506
+00:33:59,808 --> 00:34:03,664
+is when application running in the cluster is not accessible
+
+507
+00:34:03,792 --> 00:34:07,616
+for the end users. So what's the issue here? Is pod
+
+508
+00:34:07,648 --> 00:34:11,136
+not running? Is service not properly configured?
+
+509
+00:34:11,248 --> 00:34:14,808
+Is it not forwarding a request to the pod? Or is
+
+510
+00:34:14,894 --> 00:34:18,436
+service simply not accessible? Maybe you have a networking
+
+511
+00:34:18,468 --> 00:34:22,456
+issue in the cluster, so there could be many places where issues
+
+512
+00:34:22,638 --> 00:34:26,524
+may happen. So you check stuff step by step until you find
+
+513
+00:34:26,562 --> 00:34:30,444
+the problem and you need to know how to debug efficiently in
+
+514
+00:34:30,482 --> 00:34:33,756
+different ways. So in this part you will learn how to
+
+515
+00:34:33,778 --> 00:34:38,044
+troubleshoot different issues in Kubernetes and in that context
+
+516
+00:34:38,172 --> 00:34:41,612
+you will also learn a couple of interesting and useful
+
+517
+00:34:41,676 --> 00:34:46,124
+concepts like command and args attributes in Kubernetes manifest
+
+518
+00:34:46,172 --> 00:34:49,712
+files as well as how to format Kubectl
+
+519
+00:34:49,776 --> 00:34:53,460
+output and use it efficiently to cherry pick
+
+520
+00:34:53,530 --> 00:34:57,540
+the information you need about your Kubernetes resources.
+
+521
+00:35:07,070 --> 00:35:10,574
+Shooting the application we start by checking that the application
+
+522
+00:35:10,692 --> 00:35:14,650
+pods are running using Kubectl get pod commit.
+
+523
+00:35:14,730 --> 00:35:18,254
+Then we check that the pods are registered with
+
+524
+00:35:18,292 --> 00:35:21,726
+their respective service and that service is forwarding
+
+525
+00:35:21,758 --> 00:35:25,730
+the request to them. For that we can either do Kubectl get
+
+526
+00:35:25,800 --> 00:35:30,190
+ep or endpoint which will list the services and their endpoint
+
+527
+00:35:30,270 --> 00:35:33,490
+pods. Or you can also do kubectl describe service
+
+528
+00:35:33,560 --> 00:35:36,774
+with the service name that will give you all the details about
+
+529
+00:35:36,812 --> 00:35:40,114
+the service, including all the registered pods.
+
+530
+00:35:40,242 --> 00:35:44,102
+We can also check that the service is accessible by hitting its
+
+531
+00:35:44,156 --> 00:35:48,074
+endpoint. We can check it using a Netcat tool with
+
+532
+00:35:48,112 --> 00:35:51,578
+a combination of service IP address and
+
+533
+00:35:51,664 --> 00:35:55,466
+the service port. Or we can just ping the service name
+
+534
+00:35:55,568 --> 00:35:59,166
+and we can do both of these from one of the pods in
+
+535
+00:35:59,188 --> 00:36:02,574
+the cluster. If this is all working so the
+
+536
+00:36:02,612 --> 00:36:05,978
+service is accessible and it's forwarding the requests
+
+537
+00:36:06,074 --> 00:36:09,594
+to its endpoint pods, it means the requests
+
+538
+00:36:09,642 --> 00:36:13,630
+are reaching the pods. So now we can check the application logs
+
+539
+00:36:13,710 --> 00:36:17,838
+for any information or any errors with Kubectl
+
+540
+00:36:17,934 --> 00:36:21,378
+logs command sometimes it could be that the
+
+541
+00:36:21,464 --> 00:36:25,062
+container inside the pod is having some issues.
+
+542
+00:36:25,196 --> 00:36:28,626
+For example, it is crashing and it's failing
+
+543
+00:36:28,658 --> 00:36:31,942
+to start. In that case, you won't get the
+
+544
+00:36:31,996 --> 00:36:35,654
+container locks because there is no container running inside.
+
+545
+00:36:35,772 --> 00:36:39,338
+But we still want to see the status of the pod to understand
+
+546
+00:36:39,424 --> 00:36:43,274
+why the container is failing to start. We can get that information
+
+547
+00:36:43,392 --> 00:36:46,794
+using Kubectl describe pod command, which will
+
+548
+00:36:46,832 --> 00:36:49,650
+show us the events of the pod,
+
+549
+00:36:49,750 --> 00:36:53,018
+like fetching the container image, scheduling the pod,
+
+550
+00:36:53,114 --> 00:36:56,942
+et cetera. So one of the events can give us information about why
+
+551
+00:36:56,996 --> 00:37:00,610
+the container is not starting. So this would be a simple
+
+552
+00:37:00,680 --> 00:37:03,950
+path of troubleshooting an application in Kubernetes.
+
+553
+00:37:04,110 --> 00:37:08,450
+Now let's see some more advanced and more specific use cases.
+
+554
+00:37:22,370 --> 00:37:26,014
+One way to debug issues with applications and networking
+
+555
+00:37:26,062 --> 00:37:29,774
+issues in the cluster is using temporary pods
+
+556
+00:37:29,822 --> 00:37:33,118
+to execute commands from. Because as you learned,
+
+557
+00:37:33,214 --> 00:37:37,354
+pod network is different from the cluster node network.
+
+558
+00:37:37,502 --> 00:37:40,898
+All pods are in its private virtual network.
+
+559
+00:37:40,994 --> 00:37:44,658
+So executing troubleshooting commands from within a pod
+
+560
+00:37:44,754 --> 00:37:48,422
+may be needed in some cases instead of executing them
+
+561
+00:37:48,476 --> 00:37:52,010
+from the node. For that, there are some common
+
+562
+00:37:52,080 --> 00:37:55,878
+images that have tools needed for debugging
+
+563
+00:37:55,974 --> 00:37:59,622
+preinstalled. One such example is a busybox
+
+564
+00:37:59,686 --> 00:38:04,014
+image. This image actually includes tools like
+
+565
+00:38:04,132 --> 00:38:07,210
+if config, nslookup, Netstnet,
+
+566
+00:38:07,290 --> 00:38:11,162
+Ping, et cetera. You can also check all the commands
+
+567
+00:38:11,226 --> 00:38:14,962
+that busybox image has available in this list
+
+568
+00:38:15,016 --> 00:38:18,254
+here. Busybox does not however have curl
+
+569
+00:38:18,302 --> 00:38:21,758
+available, so for that you could use the official
+
+570
+00:38:21,854 --> 00:38:25,026
+curl image, for example. So let's create a
+
+571
+00:38:25,048 --> 00:38:28,358
+pod with busybox image. And because this is going
+
+572
+00:38:28,364 --> 00:38:31,862
+to be a temporary test pod, we're going to create it using
+
+573
+00:38:31,916 --> 00:38:36,242
+an imperative Kubectl run command. So kubectl
+
+574
+00:38:36,306 --> 00:38:39,630
+run name of the pod and let's call it debug
+
+575
+00:38:39,730 --> 00:38:44,038
+pod. And of course the image which is busybox.
+
+576
+00:38:44,214 --> 00:38:46,620
+So let's run this,
+
+577
+00:38:46,990 --> 00:38:51,242
+and if I do kubectl get pod, you will see that
+
+578
+00:38:51,296 --> 00:38:54,814
+debug pod was created. However it is not in
+
+579
+00:38:54,852 --> 00:38:58,538
+a running state. It says status completed
+
+580
+00:38:58,634 --> 00:39:02,000
+and we have zero containers out of one
+
+581
+00:39:02,370 --> 00:39:06,146
+actively running. Let's check again. As you
+
+582
+00:39:06,168 --> 00:39:09,118
+see, it actually got restarted,
+
+583
+00:39:09,214 --> 00:39:12,914
+but complete again. And that means the pod is there,
+
+584
+00:39:12,952 --> 00:39:16,130
+but there is no container or process running
+
+585
+00:39:16,200 --> 00:39:19,458
+inside. So we can't actually enter the pod.
+
+586
+00:39:19,634 --> 00:39:27,830
+We can't do kubectl exec and
+
+587
+00:39:27,900 --> 00:39:31,734
+attach a terminal because it will say container
+
+588
+00:39:31,862 --> 00:39:35,430
+not found. So what is this completed status?
+
+589
+00:39:35,510 --> 00:39:39,094
+And why did the debug pod
+
+590
+00:39:39,142 --> 00:39:42,842
+or busybox based pod just exit
+
+591
+00:39:42,986 --> 00:39:46,698
+after starting up while all those other pods
+
+592
+00:39:46,794 --> 00:39:50,160
+didn't have the same problem? So what's happening here?
+
+593
+00:39:53,330 --> 00:39:57,822
+Containers in general are meant to execute a specific task,
+
+594
+00:39:57,966 --> 00:40:01,122
+like run a MySQL database, or start
+
+595
+00:40:01,176 --> 00:40:05,646
+a web application or synchronize data, et cetera.
+
+596
+00:40:05,838 --> 00:40:09,190
+Once the task is completed, the container will
+
+597
+00:40:09,260 --> 00:40:13,058
+exit because it has completed its job and it's
+
+598
+00:40:13,154 --> 00:40:17,142
+done. In other words, the container only leaves as long as
+
+599
+00:40:17,196 --> 00:40:20,954
+the process inside leaves. So if the web application or
+
+600
+00:40:20,992 --> 00:40:25,414
+MySQL database process inside the container crashes,
+
+601
+00:40:25,542 --> 00:40:29,254
+the container will exit and you will have to restart
+
+602
+00:40:29,302 --> 00:40:32,986
+it. Now where is it defined, what task a
+
+603
+00:40:33,008 --> 00:40:36,494
+container will execute or what process it will
+
+604
+00:40:36,532 --> 00:40:40,046
+start? This is actually defined in the docker file of
+
+605
+00:40:40,068 --> 00:40:43,246
+the image. If we look at the docker file of the
+
+606
+00:40:43,268 --> 00:40:46,642
+Nginx image and for each image you can actually
+
+607
+00:40:46,696 --> 00:40:50,210
+see the docker file. If you go to tags,
+
+608
+00:40:51,510 --> 00:40:55,294
+these are basically all the built images or image
+
+609
+00:40:55,342 --> 00:40:58,920
+tags for that image and
+
+610
+00:41:00,330 --> 00:41:03,794
+just click in one of them. For each image
+
+611
+00:41:03,842 --> 00:41:07,654
+that was built, you will see a docker file that was used to build the
+
+612
+00:41:07,692 --> 00:41:12,262
+image. So you have this available for each image.
+
+613
+00:41:12,406 --> 00:41:15,638
+So in the Nginx image docker file,
+
+614
+00:41:15,734 --> 00:41:20,070
+you will see that there is a CMD or command instruction
+
+615
+00:41:20,230 --> 00:41:23,774
+that executes the Nginx command when
+
+616
+00:41:23,812 --> 00:41:27,674
+the container is created. Same way if I check a postgresql
+
+617
+00:41:27,802 --> 00:41:31,694
+image tag and one of the tags and its docker file, you see
+
+618
+00:41:31,732 --> 00:41:35,074
+that the same CMD instruction is
+
+619
+00:41:35,112 --> 00:41:38,622
+specified with postgres command. So CMD
+
+620
+00:41:38,686 --> 00:41:42,274
+in the docker file defines what program or process
+
+621
+00:41:42,472 --> 00:41:45,726
+will run in the container when it's created.
+
+622
+00:41:45,838 --> 00:41:49,202
+Now, compared to that, if we look at the busybox
+
+623
+00:41:49,266 --> 00:41:52,566
+image and its dockerfile, let's go to one of the
+
+624
+00:41:52,588 --> 00:41:55,734
+tags like
+
+625
+00:41:55,772 --> 00:41:56,840
+this one here.
+
+626
+00:41:59,290 --> 00:42:02,842
+You see that it simply runs an sh
+
+627
+00:42:02,976 --> 00:42:06,906
+or shell command. Shell command, however, is not a process
+
+628
+00:42:07,008 --> 00:42:10,486
+or a program like Postgresql or Nginx.
+
+629
+00:42:10,598 --> 00:42:13,946
+It is a shell that listens for inputs
+
+630
+00:42:13,978 --> 00:42:17,274
+from a terminal, and if it doesn't find a terminal to attach
+
+631
+00:42:17,322 --> 00:42:21,290
+to to get input from, it simply exits
+
+632
+00:42:21,450 --> 00:42:24,974
+and gets in a completed state because it doesn't have
+
+633
+00:42:25,012 --> 00:42:28,722
+any task to do. So how do we keep our
+
+634
+00:42:28,776 --> 00:42:32,450
+busybox pod alive? Can we add something
+
+635
+00:42:32,520 --> 00:42:35,410
+to this command or how does it actually work?
+
+636
+00:42:35,560 --> 00:42:38,710
+Well, we have two options here. The first one,
+
+637
+00:42:38,780 --> 00:42:42,594
+and a pretty easy one, is to attach
+
+638
+00:42:42,722 --> 00:42:46,518
+a terminal to the busybox image right away
+
+639
+00:42:46,604 --> 00:42:50,826
+when it gets created. So instead of just running
+
+640
+00:42:50,928 --> 00:42:54,390
+the pod like this and let's call it debug pod
+
+641
+00:42:54,470 --> 00:42:58,134
+two, we're going to attach it an interactive
+
+642
+00:42:58,182 --> 00:43:02,278
+terminal right away. And this will actually
+
+643
+00:43:02,464 --> 00:43:05,726
+create the pod from busybox and it will
+
+644
+00:43:05,828 --> 00:43:09,214
+automatically give us its terminal like
+
+645
+00:43:09,252 --> 00:43:13,434
+this. So now we are inside the busybox pods terminal
+
+646
+00:43:13,482 --> 00:43:17,282
+and we can execute commands from here. And if I exit and
+
+647
+00:43:17,336 --> 00:43:20,994
+do kubectl get pod, you see that the
+
+648
+00:43:21,032 --> 00:43:26,990
+debug pod two is actually in a running state and
+
+649
+00:43:27,080 --> 00:43:31,814
+we can exec into it just
+
+650
+00:43:31,852 --> 00:43:35,094
+like we do in other pods and
+
+651
+00:43:35,132 --> 00:43:38,838
+again get its terminal and execute any commands here.
+
+652
+00:43:38,924 --> 00:43:42,282
+So let's say we want to now debug the service
+
+653
+00:43:42,416 --> 00:43:46,150
+connectivity. As I said, we have bunch of utilities
+
+654
+00:43:46,230 --> 00:43:49,914
+already installed here. So we could do nslookup for the
+
+655
+00:43:49,952 --> 00:43:53,950
+service, or you can ping
+
+656
+00:43:56,530 --> 00:44:00,206
+the service in your cluster to see if it's accessible and so
+
+657
+00:44:00,228 --> 00:44:04,774
+on. That is one way of creating a PZ box pod
+
+658
+00:44:04,922 --> 00:44:08,894
+in a way that it doesn't exit right away when it starts.
+
+659
+00:44:09,022 --> 00:44:12,622
+So let's clean our cluster up by deleting
+
+660
+00:44:12,686 --> 00:44:13,970
+those two pods.
+
+661
+00:44:19,530 --> 00:44:23,110
+Now that's one easy option to fix
+
+662
+00:44:23,180 --> 00:44:26,610
+this using an imperative Kubectl run command.
+
+663
+00:44:26,690 --> 00:44:30,470
+But what if we wanted to create a configuration for
+
+664
+00:44:30,620 --> 00:44:34,234
+a busybox pod or maybe another pod that
+
+665
+00:44:34,272 --> 00:44:37,786
+also has a task that simply exits and we want
+
+666
+00:44:37,808 --> 00:44:42,006
+to keep it running? So how do we define or how do we create
+
+667
+00:44:42,128 --> 00:44:45,514
+a busybox or some other image pod
+
+668
+00:44:45,642 --> 00:44:49,102
+using kubernetes configuration file? Or in other words,
+
+669
+00:44:49,236 --> 00:44:52,366
+can we overwrite a command defined in
+
+670
+00:44:52,388 --> 00:44:56,154
+the docker file without having to modify the actual docker
+
+671
+00:44:56,202 --> 00:45:00,034
+file? You can overwrite that actually. So let's see how that works.
+
+672
+00:45:00,152 --> 00:45:03,534
+When we start the containers using Docker run commands,
+
+673
+00:45:03,662 --> 00:45:07,122
+we can override the CMD instruction by
+
+674
+00:45:07,176 --> 00:45:10,438
+just passing in an alternative command as a
+
+675
+00:45:10,444 --> 00:45:14,738
+parameter. So we can override the sh command
+
+676
+00:45:14,834 --> 00:45:18,306
+in busybox image. But what if we don't want to override
+
+677
+00:45:18,338 --> 00:45:21,706
+the command itself, but rather want to pass it a
+
+678
+00:45:21,728 --> 00:45:26,022
+parameter or append more commands to it, like execute
+
+679
+00:45:26,086 --> 00:45:29,162
+the shell program in busybox but pass in
+
+680
+00:45:29,296 --> 00:45:32,614
+Myscript sh file? Well, you can't
+
+681
+00:45:32,662 --> 00:45:37,082
+do that with CMD instruction, but for that there is another instruction
+
+682
+00:45:37,146 --> 00:45:40,362
+called entry point that allows you to append
+
+683
+00:45:40,426 --> 00:45:43,962
+parameters or additional commands on top of the entry
+
+684
+00:45:44,026 --> 00:45:47,842
+point commands. So CMD is an instruction that is best
+
+685
+00:45:47,976 --> 00:45:52,574
+to use if you need a default command that users
+
+686
+00:45:52,702 --> 00:45:56,366
+can easily override, while entry point is preferred.
+
+687
+00:45:56,398 --> 00:46:00,614
+When you want to define a specific executable that should
+
+688
+00:46:00,652 --> 00:46:03,734
+always run, and you allow users to just
+
+689
+00:46:03,772 --> 00:46:07,094
+append other commands or parameters in addition to it.
+
+690
+00:46:07,212 --> 00:46:10,762
+And there are even some cases where we have both
+
+691
+00:46:10,896 --> 00:46:14,474
+CMD and entry point instructions, and we
+
+692
+00:46:14,512 --> 00:46:19,078
+have a lot of examples for that. Again, taking our postgres image,
+
+693
+00:46:19,174 --> 00:46:22,586
+we have entry point which is a shell
+
+694
+00:46:22,618 --> 00:46:26,606
+script as well as a CMD command as well as
+
+695
+00:46:26,708 --> 00:46:30,474
+Redis, for example, that has a shell script as an entry
+
+696
+00:46:30,522 --> 00:46:34,506
+point and ready server command. In that case,
+
+697
+00:46:34,628 --> 00:46:38,526
+entry point defines the process that starts in container
+
+698
+00:46:38,638 --> 00:46:42,450
+and CMD defines parameters for that process.
+
+699
+00:46:42,600 --> 00:46:46,654
+Now how does this all work in Kubernetes pod definition?
+
+700
+00:46:46,782 --> 00:46:50,706
+Well, in a container definition of a pod, we can overwrite
+
+701
+00:46:50,818 --> 00:46:54,802
+both of these instructions using different attributes.
+
+702
+00:46:54,946 --> 00:46:59,502
+We can replace the entry point instruction defined in Dockerfile
+
+703
+00:46:59,666 --> 00:47:02,854
+with attribute called command in a pod
+
+704
+00:47:02,902 --> 00:47:06,490
+definition, and the CMD instruction with attribute called
+
+705
+00:47:06,560 --> 00:47:09,994
+arcs. Now this may be a little confusing because
+
+706
+00:47:10,192 --> 00:47:13,998
+CMD or command instruction in Dockerfile does not
+
+707
+00:47:14,164 --> 00:47:17,278
+map to command in pod. However,
+
+708
+00:47:17,364 --> 00:47:20,894
+as I said, when both of them are defined, the entry point
+
+709
+00:47:20,932 --> 00:47:24,874
+is the actual command and the CMD is the arguments
+
+710
+00:47:24,922 --> 00:47:27,906
+to that command. So when you think about this way,
+
+711
+00:47:28,008 --> 00:47:31,922
+then command and arcs attribute names in the pod definition actually
+
+712
+00:47:31,976 --> 00:47:35,918
+make sense. And you can also find that in Kubernetes
+
+713
+00:47:36,014 --> 00:47:40,150
+documentation we have different combinations of
+
+714
+00:47:40,220 --> 00:47:44,150
+using command and arcs, or just
+
+715
+00:47:44,220 --> 00:47:47,986
+one of the attributes in your pod definition and how the docker
+
+716
+00:47:48,018 --> 00:47:51,718
+field map to Kubernetes field names. So let's
+
+717
+00:47:51,734 --> 00:47:55,514
+see how this will work in the busybox image example.
+
+718
+00:47:55,712 --> 00:47:58,890
+So I'm going to create a simple pod.
+
+719
+00:47:59,390 --> 00:48:04,110
+Let's call this busybox pod definition
+
+720
+00:48:04,930 --> 00:48:08,730
+with a busybox image. So that's the basic Kubernetes
+
+721
+00:48:08,810 --> 00:48:12,062
+configuration file. And again, as we saw,
+
+722
+00:48:12,196 --> 00:48:15,486
+without having any parameters or defining
+
+723
+00:48:15,518 --> 00:48:18,770
+any parameters, busybox pod will run,
+
+724
+00:48:18,840 --> 00:48:22,494
+it will execute the shell command and it will exit
+
+725
+00:48:22,542 --> 00:48:25,918
+because it doesn't have any input from the terminal.
+
+726
+00:48:26,014 --> 00:48:29,490
+So let's actually pass it some argument
+
+727
+00:48:29,650 --> 00:48:33,350
+which is going to be a shell command to execute.
+
+728
+00:48:33,770 --> 00:48:37,990
+And as you learned, we can pass the arguments to the
+
+729
+00:48:38,140 --> 00:48:42,694
+defined command in an image, in a docker image using arcs
+
+730
+00:48:42,822 --> 00:48:46,278
+attribute. And arcs attribute is an array,
+
+731
+00:48:46,454 --> 00:48:50,060
+and in that array we can define the list of
+
+732
+00:48:50,670 --> 00:48:53,866
+arguments like this. So in
+
+733
+00:48:53,888 --> 00:48:57,594
+our case we're passing an actual Linux
+
+734
+00:48:57,642 --> 00:49:01,722
+command to the shell executable which busybox
+
+735
+00:49:01,786 --> 00:49:06,094
+image runs. So let's just do a simple echo
+
+736
+00:49:06,222 --> 00:49:10,210
+doing some debugging
+
+737
+00:49:10,870 --> 00:49:14,430
+and save. So note that I haven't
+
+738
+00:49:14,510 --> 00:49:18,222
+defined a command attribute. Here I'm only specifying
+
+739
+00:49:18,366 --> 00:49:21,822
+arguments for the already defined command.
+
+740
+00:49:21,966 --> 00:49:25,714
+So arcs attribute will actually override the CMD
+
+741
+00:49:25,762 --> 00:49:29,554
+instruction and it will execute echo doing some
+
+742
+00:49:29,612 --> 00:49:33,702
+debugging. As an alternative, we can also define
+
+743
+00:49:33,766 --> 00:49:37,050
+only the command which is also an array
+
+744
+00:49:37,390 --> 00:49:41,718
+like this. And let's define
+
+745
+00:49:41,894 --> 00:49:45,326
+print env that basically prints out all
+
+746
+00:49:45,348 --> 00:49:49,130
+the environment variables. Or we can define
+
+747
+00:49:49,210 --> 00:49:53,438
+command with arguments, basically specify which
+
+748
+00:49:53,524 --> 00:49:58,290
+environment variables they should print out. And let's do hostname
+
+749
+00:49:59,750 --> 00:50:03,330
+and Kubernetes port.
+
+750
+00:50:03,480 --> 00:50:06,654
+So instead of doing just print n, it will print
+
+751
+00:50:06,702 --> 00:50:10,294
+out those two environment variables. And since this is actually
+
+752
+00:50:10,332 --> 00:50:14,578
+overriding the main command inside the image,
+
+753
+00:50:14,674 --> 00:50:18,600
+we can also specify shell executable with
+
+754
+00:50:19,210 --> 00:50:22,570
+arguments like this. And this can be any
+
+755
+00:50:22,640 --> 00:50:26,522
+shell program that we want. For example an
+
+756
+00:50:26,576 --> 00:50:30,330
+expression like this which basically echoes something
+
+757
+00:50:30,400 --> 00:50:33,806
+every 5 seconds. In our case,
+
+758
+00:50:33,908 --> 00:50:38,014
+let's say we want a busy box to get created and
+
+759
+00:50:38,052 --> 00:50:42,240
+then run in the cluster in the shell process to basically
+
+760
+00:50:42,770 --> 00:50:46,270
+be alive and active in the container for an hour
+
+761
+00:50:46,340 --> 00:50:50,398
+or 2 hours so that we can use it to debug the cluster
+
+762
+00:50:50,494 --> 00:50:54,370
+and then we can get rid of it. And for that we can actually define
+
+763
+00:50:54,710 --> 00:50:57,894
+a simple sleep command here like this
+
+764
+00:50:57,932 --> 00:51:01,250
+for example, and the busybox container
+
+765
+00:51:01,410 --> 00:51:05,158
+will be alive for 1000 seconds. Now as you
+
+766
+00:51:05,164 --> 00:51:09,382
+see, command attribute is also an array and we
+
+767
+00:51:09,436 --> 00:51:12,986
+could define the arguments as well as the
+
+768
+00:51:13,008 --> 00:51:16,426
+main command all inside the command attribute. So I'm
+
+769
+00:51:16,448 --> 00:51:19,626
+going to copy this, paste it here and we
+
+770
+00:51:19,648 --> 00:51:23,390
+can get rid of the arguments. And if I execute
+
+771
+00:51:24,850 --> 00:51:28,426
+and do kubectl get pod, you see that busybox
+
+772
+00:51:28,458 --> 00:51:32,590
+pod is running and we can actually enter the pod
+
+773
+00:51:33,410 --> 00:51:37,502
+like this and execute
+
+774
+00:51:37,566 --> 00:51:41,214
+comments there if we want to. And the container inside will be alive
+
+775
+00:51:41,262 --> 00:51:45,250
+for thousand seconds after that container will exit and
+
+776
+00:51:45,320 --> 00:51:48,630
+the pod will have completed status and zero
+
+777
+00:51:48,700 --> 00:51:52,146
+out of one containers in a ready state. So that's
+
+778
+00:51:52,178 --> 00:51:55,634
+how you can overwrite commands and arguments
+
+779
+00:51:55,682 --> 00:51:59,410
+of the commands inside the images using
+
+780
+00:51:59,500 --> 00:52:03,542
+Kubernetes configuration itself, which is very powerful
+
+781
+00:52:03,606 --> 00:52:06,950
+because you don't have to actually adjust anything in the image.
+
+782
+00:52:07,030 --> 00:52:11,258
+You can either use the defaults that image has inside
+
+783
+00:52:11,344 --> 00:52:15,354
+already, or you can flexibly overwrite them in your pod
+
+784
+00:52:15,402 --> 00:52:19,390
+configuration. So this gives you a lot of flexibility to work with
+
+785
+00:52:19,540 --> 00:52:21,230
+images in Kubernetes.
+
+786
+00:52:24,210 --> 00:52:28,462
+Now you have already learned how to execute commands from inside the pod
+
+787
+00:52:28,606 --> 00:52:32,126
+using kubectl exec command with interactive
+
+788
+00:52:32,158 --> 00:52:36,174
+terminal and passing shell sh or bash
+
+789
+00:52:36,222 --> 00:52:39,342
+command. The shell or bash command
+
+790
+00:52:39,406 --> 00:52:43,074
+at the end will start the shell program in the pod
+
+791
+00:52:43,122 --> 00:52:46,054
+so you can execute commands on it. But let's say you want to do a
+
+792
+00:52:46,092 --> 00:52:49,398
+simple ping inside the pod. For that you
+
+793
+00:52:49,404 --> 00:52:52,966
+don't want to enter a pod and then exit. Can we just execute
+
+794
+00:52:52,998 --> 00:52:56,102
+a command in the pod environment without attaching
+
+795
+00:52:56,166 --> 00:52:59,546
+an interactive terminal to it? Yes, we can do that as
+
+796
+00:52:59,568 --> 00:53:03,446
+well by passing the command we want to execute in the pod
+
+797
+00:53:03,558 --> 00:53:06,974
+to this shell executable directly. So basically,
+
+798
+00:53:07,012 --> 00:53:10,666
+instead of getting the bash or shell terminal
+
+799
+00:53:10,698 --> 00:53:13,806
+and running commands on it, we just pass the command directly to the
+
+800
+00:53:13,828 --> 00:53:17,650
+program and say hey, here is the command to execute inside
+
+801
+00:53:17,720 --> 00:53:21,538
+the pod. Now I want to note something about
+
+802
+00:53:21,704 --> 00:53:25,166
+the sh or bash executables
+
+803
+00:53:25,198 --> 00:53:28,774
+here, because you may be thinking, if I can do both,
+
+804
+00:53:28,892 --> 00:53:32,946
+which one should I be specifying here when executing commands
+
+805
+00:53:32,978 --> 00:53:36,946
+in the pod? Well, some images don't have bash,
+
+806
+00:53:37,058 --> 00:53:40,890
+they only have the classic shell, which is like a slimmed down
+
+807
+00:53:40,960 --> 00:53:45,110
+version of bash. So if Kubectl exec
+
+808
+00:53:45,270 --> 00:53:48,986
+command with Bash executable gives you an
+
+809
+00:53:49,008 --> 00:53:53,054
+error like this which says executable file bash not
+
+810
+00:53:53,092 --> 00:53:56,906
+found, it means that the image does not have Bash
+
+811
+00:53:56,938 --> 00:54:00,414
+executable inside. And in that case you have to fall
+
+812
+00:54:00,452 --> 00:54:04,382
+back to shell like this. So basically by
+
+813
+00:54:04,436 --> 00:54:07,698
+default you try to use Bash, and if it's not available in
+
+814
+00:54:07,704 --> 00:54:11,810
+the image, you fall back to the shell program. Now back to our
+
+815
+00:54:11,880 --> 00:54:15,598
+topic of executing commands without attaching a terminal
+
+816
+00:54:15,694 --> 00:54:20,054
+to the container in the pod. As I said, we can just pass
+
+817
+00:54:20,252 --> 00:54:24,390
+the command to the shell program, and we can do that
+
+818
+00:54:24,540 --> 00:54:27,702
+using an option minus c,
+
+819
+00:54:27,836 --> 00:54:31,738
+and the executable will be print n,
+
+820
+00:54:31,824 --> 00:54:35,766
+for example. Let's execute that. As you see, the command
+
+821
+00:54:35,798 --> 00:54:39,514
+got executed and we actually got the output here,
+
+822
+00:54:39,632 --> 00:54:43,422
+but we are still on the node. We didn't attach our
+
+823
+00:54:43,476 --> 00:54:46,990
+terminal to the container. You can also execute
+
+824
+00:54:47,650 --> 00:54:52,622
+whole expressions here, right? You can do, while true do
+
+825
+00:54:52,676 --> 00:54:56,082
+echo, hello, then sleep for
+
+826
+00:54:56,216 --> 00:54:59,886
+maybe 2 seconds and done, and let's
+
+827
+00:54:59,918 --> 00:55:03,074
+execute. And as you see, the expression is
+
+828
+00:55:03,112 --> 00:55:06,130
+actually now executing inside the container.
+
+829
+00:55:06,550 --> 00:55:09,974
+Let's stop the process. And of course you can use
+
+830
+00:55:10,012 --> 00:55:13,250
+this for more meaningful and useful commands,
+
+831
+00:55:13,330 --> 00:55:16,694
+like doing pings to the services,
+
+832
+00:55:16,812 --> 00:55:20,146
+for example, that you want to check whether they're
+
+833
+00:55:20,178 --> 00:55:24,718
+accessible, getting netstead
+
+834
+00:55:24,754 --> 00:55:29,754
+output from the container like
+
+835
+00:55:29,792 --> 00:55:33,642
+this, and so on. Now this may seem like a little improvement,
+
+836
+00:55:33,706 --> 00:55:37,950
+but this can save you some time and let you work a little more efficiently.
+
+837
+00:55:41,770 --> 00:55:45,186
+Of course, in addition to debugging from the pod,
+
+838
+00:55:45,298 --> 00:55:48,810
+you also want to debug the cluster components directly using
+
+839
+00:55:48,880 --> 00:55:52,710
+Kubectl, right? And Kubectl is a very powerful
+
+840
+00:55:52,790 --> 00:55:56,026
+tool, but when you have hundreds of services,
+
+841
+00:55:56,208 --> 00:56:00,554
+pods, deployments, config maps, and a bunch of other components,
+
+842
+00:56:00,682 --> 00:56:04,362
+it may be difficult to extract the information about the cluster
+
+843
+00:56:04,426 --> 00:56:08,046
+components in a digestible way. So basically in
+
+844
+00:56:08,068 --> 00:56:12,370
+a way that doesn't require you to scroll through endless
+
+845
+00:56:12,710 --> 00:56:16,622
+lines of output about different components.
+
+846
+00:56:16,766 --> 00:56:20,046
+For example, if you wanted to print out the node
+
+847
+00:56:20,078 --> 00:56:24,242
+IP addresses of the pods or service accounts that
+
+848
+00:56:24,296 --> 00:56:27,874
+pods are using, or maybe a creation time image
+
+849
+00:56:27,922 --> 00:56:31,366
+names, container names of the pod, you can't print all of
+
+850
+00:56:31,388 --> 00:56:34,754
+these for all the pods in your cluster directly
+
+851
+00:56:34,802 --> 00:56:38,326
+using Kubectl command. You will actually have to do Kubectl
+
+852
+00:56:38,358 --> 00:56:41,626
+describe for each pod separately to
+
+853
+00:56:41,648 --> 00:56:45,434
+see all this information. But there is a way to do this using
+
+854
+00:56:45,552 --> 00:56:49,282
+a JSON path output format of Kubectl.
+
+855
+00:56:49,366 --> 00:56:53,470
+Till now you have learned that if we do Kubectl get pod,
+
+856
+00:56:55,170 --> 00:56:58,622
+simply do Kubectl get pod. For example, you will get a
+
+857
+00:56:58,676 --> 00:57:02,210
+nice table view of the pod's most important data,
+
+858
+00:57:02,360 --> 00:57:06,526
+like the name, status, et cetera. You also learned
+
+859
+00:57:06,558 --> 00:57:09,854
+that with an output format of wide,
+
+860
+00:57:09,982 --> 00:57:13,598
+you get a little bit more data about the pod's
+
+861
+00:57:13,614 --> 00:57:16,838
+IP address, the node name, where it's scheduled on,
+
+862
+00:57:16,924 --> 00:57:20,086
+and so on. And finally, you also learned that we have
+
+863
+00:57:20,108 --> 00:57:23,734
+a YAmL output format for the pods that
+
+864
+00:57:23,772 --> 00:57:27,622
+basically gives you pod configuration in a Kubernetes native
+
+865
+00:57:27,686 --> 00:57:30,950
+way in YAML format. As an alternative,
+
+866
+00:57:31,030 --> 00:57:34,710
+we also have an output format in JSON.
+
+867
+00:57:34,790 --> 00:57:39,130
+So if we do Kubectlgetpod with outputs JSON,
+
+868
+00:57:40,270 --> 00:57:43,946
+you will see the same details as we saw with YAMl configuration,
+
+869
+00:57:44,058 --> 00:57:47,518
+but in a JSON format. And of course you can
+
+870
+00:57:47,524 --> 00:57:50,794
+do that on all the components like nodes,
+
+871
+00:57:50,842 --> 00:57:52,450
+services, et cetera.
+
+872
+00:57:55,190 --> 00:57:59,074
+But just like with YAML, this is actually a lot of
+
+873
+00:57:59,112 --> 00:58:02,514
+data to scroll through, especially if we have
+
+874
+00:58:02,632 --> 00:58:06,662
+hundred pods, this will be JSON data for hundred
+
+875
+00:58:06,716 --> 00:58:10,406
+pods. So how can we filter through all of
+
+876
+00:58:10,428 --> 00:58:13,494
+these? How can we basically pinpoint and say,
+
+877
+00:58:13,612 --> 00:58:17,234
+only give me the operating system image of
+
+878
+00:58:17,292 --> 00:58:20,762
+every pod running in the cluster, or how do you say
+
+879
+00:58:20,896 --> 00:58:25,302
+only show me the memory capacity of each pod
+
+880
+00:58:25,366 --> 00:58:29,374
+in this namespace. So basically, how do we extract only
+
+881
+00:58:29,492 --> 00:58:33,182
+specific attributes that we're interested in instead of having these
+
+882
+00:58:33,236 --> 00:58:36,654
+huge yaml objects for
+
+883
+00:58:36,692 --> 00:58:40,762
+each pod? And for that we can use something called JSON
+
+884
+00:58:40,826 --> 00:58:44,590
+Path, which basically is a query language for JSON.
+
+885
+00:58:44,670 --> 00:58:48,386
+And Kubectl happens to have support for
+
+886
+00:58:48,488 --> 00:58:52,142
+JSON path queries. So with JSON path expressions,
+
+887
+00:58:52,206 --> 00:58:56,422
+we can query any relevant specific data from
+
+888
+00:58:56,476 --> 00:59:00,034
+this whole huge output for each pod.
+
+889
+00:59:00,162 --> 00:59:03,846
+So let's see how that works. So first
+
+890
+00:59:03,868 --> 00:59:07,866
+of all, the output format here is
+
+891
+00:59:08,048 --> 00:59:12,006
+instead of JSON, it's going to be JSON path.
+
+892
+00:59:12,198 --> 00:59:15,514
+And the way we specify expressions of
+
+893
+00:59:15,552 --> 00:59:18,970
+JSON path is in quotes
+
+894
+00:59:19,650 --> 00:59:23,658
+and curly braces. Now, JSON path expressions
+
+895
+00:59:23,754 --> 00:59:26,862
+are not super easy and intuitive. They can actually
+
+896
+00:59:26,916 --> 00:59:30,206
+get pretty complex, so it may take some time to
+
+897
+00:59:30,228 --> 00:59:34,234
+get used to it, but you can do some very useful querying
+
+898
+00:59:34,282 --> 00:59:37,646
+with that. So let's start with the simplest example where we
+
+899
+00:59:37,668 --> 00:59:41,290
+just print out the names of all the pods
+
+900
+00:59:41,370 --> 00:59:45,586
+in the default namespace. And the way we put together the JSON path
+
+901
+00:59:45,618 --> 00:59:49,922
+expression is basically just finding the attribute names
+
+902
+00:59:50,066 --> 00:59:53,506
+and working our way all through this hierarchy.
+
+903
+00:59:53,618 --> 00:59:57,622
+So right here at the beginning of this huge JSON object that
+
+904
+00:59:57,676 --> 01:00:00,370
+contains the list of all the pods, we have these attributes.
+
