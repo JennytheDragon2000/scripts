@@ -86,7 +86,7 @@ def main(file_to_write):
             break
 
     if endNumber is None:
-        print(f"end number is not found")
+        print("end number is not found")
         return  # Exit the function as there's nothing more to do
 
     if startNumber > endNumber:
@@ -95,7 +95,7 @@ def main(file_to_write):
     with open(file_to_write, "a") as file:
         for sub in subs[startNumber:endNumber]:
             # file.write(f"{sub.text}\n")
-            file.write(f"{sub.text}")
+            file.write(f"{sub.text} ")
 
     with open("endNumber.txt", "w") as file:
         file.write(str(endNumber))

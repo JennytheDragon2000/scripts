@@ -11,14 +11,35 @@ from watchdog.observers import Observer
 
 import subtitleFinal
 
+# xprop | grep -P "^WM_NAME" | cut -d "=" -f  2 | grep --only-matching -P "^[^-]*" | sed 's/^[[:blank:]]*"//'
+
 cmd = [
     "zenity",
     "--entry",
     '--title="Choose File"',
     '--text="Choose the MD file_name"',
 ]
-result = subprocess.check_output(cmd)
-result = result.decode("utf-8")
+
+
+# Define the shell command as a string
+cmd = 'xprop | grep -P "^WM_NAME" | cut -d "=" -f  2 | grep --only-matching -P "^[^-]*" | sed \'s/^[[:blank:]]*"//\''
+
+# Run the command and capture the output
+
+if sys.argv[1]:
+    result = sys.argv[1]
+else:
+    try:
+        result = subprocess.check_output(cmd, shell=True, universal_newlines=True)
+    except subprocess.CalledProcessError as e:
+        print("Error occurred while executing the command.")
+        print(e.output)
+    else:
+        print(f"markdown file name:{result}")
+
+# result = subprocess.check_output(cmd)
+# result = result.decode("utf-8")
+
 
 home_dir = os.path.expanduser("~")
 print(home_dir)
