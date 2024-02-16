@@ -46,8 +46,16 @@ def main(file_to_write):
     # Initialize subtitle_file_path to None
     subtitle_file_path = None
 
+    # print([f.name for f in all_files])  # Debugging print statement
+
     # Sort the subtitle files numerically
-    all_files.sort(key=lambda x: int("".join(filter(str.isdigit, x.name))))
+    # all_files.sort(key=lambda x: int("".join(filter(str.isdigit, x.name))))
+
+    all_files.sort(
+        key=lambda x: int("".join(filter(str.isdigit, x.name)))
+        if any(char.isdigit() for char in x.name)
+        else 0
+    )
 
     # Iterate over all files
     for file in all_files:
@@ -74,7 +82,7 @@ def main(file_to_write):
     subs = pysrt.open(subtitle_file_path)
 
     print(f"subtitle_line_path {subtitle_file_path}")
-    with open("endNumber.txt", "r") as file:
+    with open("/opt/kmonad/endNumber.txt", "r") as file:
         startNumber = int(file.read().strip())
     print(f"startNumber: {startNumber}")
 
@@ -97,7 +105,7 @@ def main(file_to_write):
             # file.write(f"{sub.text}\n")
             file.write(f"{sub.text} ")
 
-    with open("endNumber.txt", "w") as file:
+    with open("/opt/kmonad/endNumber.txt", "w") as file:
         file.write(str(endNumber))
 
 

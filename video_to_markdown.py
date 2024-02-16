@@ -26,7 +26,8 @@ cmd = 'xprop | grep -P "^WM_NAME" | cut -d "=" -f  2 | grep --only-matching -P "
 
 # Run the command and capture the output
 
-if sys.argv[1]:
+# Check if a command-line argument is provided
+if len(sys.argv) >  1:
     result = sys.argv[1]
 else:
     try:
