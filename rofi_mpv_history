@@ -2,7 +2,9 @@
 
 
  # awk -F '\t\t\t' 'NF >  0 {print $2}' ~/.config/mpv/mpv_history.log | grep -v '^$' |  awk -F '/home/' '{print "/home/"$NF}'| rofi -dmenu -i -p "Select a file" | parallel mpv {}
- awk -F '\t\t\t' 'NF >  0 {print $2}' ~/.config/mpv/mpv_history.log | grep -v '^$' |  awk -F '/home/' '{print "/home/"$NF}'| awk '!seen[$0]++' | rofi -dmenu -i -p "Select a file" | parallel mpv {}
+ # awk -F '\t\t\t' 'NF >  0 {print $2}' ~/.config/mpv/mpv_history.log | grep -v '^$' |  awk -F '/home/' '{print "/home/"$NF}'| awk '!seen[$0]++' | rofi -dmenu -i -p "Select a file" | parallel mpv {}
+ awk -F '\t\t\t' 'NF >  0 {print $2}' ~/.config/mpv/mpv_history.log | grep -v '^$' |  awk -F '/home/' '{print "/home/"$NF}'| awk '!seen[$0]++' | dmenu -i -l 10 | parallel mpv {}
+ # awk -F '\t\t\t' 'NF >  0 {print $2}' ~/.config/mpv/mpv_history.log | grep -v '^$' |  awk -F '/home/' '{print "/home/"$NF}'| awk '!seen[$0]++' | tac |  dmenu -i -l 10 | parallel mpv {}
 
 
 
