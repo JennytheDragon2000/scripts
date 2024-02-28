@@ -28,6 +28,9 @@ declare -a options=(
 "enviroment - /etc/environment"
 "fish - $HOME/.config/fish/config.fish"
 "kmonad  - /opt/kmonad/config.kbd"
+"proxychains  - /etc/proxychains.conf"
+
+
 
 
 "Quit"

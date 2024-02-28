@@ -4,6 +4,10 @@
 ffmpeg -y -f alsa -i default -acodec pcm_s16le -ac 1 -ar 44100 -t 4 -f wav ~/.cache/audio.wav >/dev/null 2>&1
 # vosk-transcriber -m /opt/vosk-model-small-en-us-0.15/ -i ~/.cache/audio.wav -o ~/.cache/transcript.txt >/dev/null 2>&1
 vosk-transcriber -m /opt/vosk-model-en-us-0.22-lgraph/ -i ~/.cache/audio.wav -o ~/.cache/transcript.txt >/dev/null 2>&1
-cat ~/.cache/transcript.txt
+# cat ~/.cache/transcript.txt 
+
+
+xdotool type "$(cat ~/.cache/transcript.txt)"
+
 
 

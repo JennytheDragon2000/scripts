@@ -1,0 +1,740 @@
+ React forever 👍
+ all bow down to NG Supremacy!
+(
+ Vow. Russian freak Kirill Tereshin aka bazooka hands finally got his 15 second of fame.
+ React is just facebook shit. So many boilerplate for nothing
+ Oh great! Another AI video... Wait 😲
+ Use pnpm instead of npm or yarn to be 1337
+ Maybe it is about time you make a video about WordPress.
+ Had to work on angular project recently (after ~4 years of react) and even the code itself was shit all of the angular apis and serviced turned out to be really nice. Would not mind it becoming the one true framework tbh.
+ At work they have the developers learning React. Wonderful direction they have the developers going in.
+ Where is vanjs in the spiderman photo???
+
+No really, its super cool too
+55 Finally. i hate those hooks.
+ Whatever may happen, REACT will be my one true framework. It has seen all my ups and downs 😊
+ angular strikes back
+ The one true framework is not having a framework. Vanilla JS all the way
+D
+ can we call it a framework yet?
+ As a fellow React hater I agree it’s about time reactivity is built into the web spec
+ I'm so glad I dumped React years ago. I would have had to learn it for a 3rd (maybe even 4th) time with all these changes.
+ ...HTMX... that's all.
+dssuidygu rifgigiidtckcygiy hn JB is rec hootuurfugbiguctcthkh yt g syddy GB uioj lalalallaaa
+ use can also be used inside loops. Using use allows you to use ...
+
+ -- duh how did you not mess up there 😂
+35 "PHP without Lambos" 😂 sounds like he is talking about Taylor Otwell (Laravel). Or I might be missing something here. Hehe
+ Its funny how react gained momentum from the likes of angular because angular was a framework with unnecessary 'compiler' just to come back in the future with their own compiler 😂😂😂.
+Angular is actually the one true framework out there .
+ PHP
+Look at what they have to do to mimic a fraction of our power
+ Not Framework. LiBrArY.
+ So react tries to become Vue
+ React should be built into the browser 💯
+ Is Angular really better than others?
+ Maybe it's time to start considering an EMCA standard for Javascript frameworks...
+ I love the RuneScape reference. Osrs series when?
+ Using use for users uses useless uses.
+ The only issue with Fireship is thinking that Anglear is cool.
+ Which time it was fixed?
+59 never forget 🫡
+ I hate React, a lot.
+ Merb and Rails.
+ Can we try the compiler any time soon? And when will react 19 be released?
+ The more I work with React the more I like Angular.
+ ANGULAR!
+ nextjs is the true absolute winner for sure.
+ PHP is the lowest paid programming language.
+ Does this make millions.js obsolete again?
+ its not new.react. its a new jquery
+ Fuck it, here we go again , again a new goddamn paradigm...
+ Angular 🙌🏻🔥
+ It was never great
+ You are right, they are converging. React just needs to add new feature "signals"🤣. There will be ONE framework to rule them ALL (LOL never).
+ finally, i can start 700mb simple crud project with react again.
+ Every body say PHP & jQuery is bad , but it still unbeatable until now.
+ malayaliss undooo
+ Fucking hate react. Not the framework itself, but the bloatware and the constant changes that create even more confusion. I recently went back to vanilla JavaScript and it is so refreshing 👌
+ Make JQuery great again! One True Library to Framework
+ I might give it a go. Or stick with my vue3 😅
+ It was stupid as heck that ref wasn't just passed as a prop anyway. Whoever decided that in the past is an idiot.
+ I'll say what everyone is about to comment
+
+...huh?
+ There are now n+1 JS frameworks.
+ JQuery updating means nothing. Everyone that uses it doesn't know about it or how to upgrade it, probably already have 3 different versions on their site anyway, and people not using it don't want it.
+ Angular is doo doo.  It will never be the leading front-end framework.  Keep on dreaming
+ I'm going to miss your React jabs, hopefully they add more junk back in.
+ This is why I'm discouraged of all this javascript libraries and the javascript environment itself, there are always new libraries and frameworks that do slightly better than the older ones and it's constantly changing. This is more like a hobby and not a career intended.
+ Actions DX being like PHP but without Lambos, I lost it there ☠️
+ Finally something good for my favourite framework 💙
+ As said, angular still goat
+ Hahaha. Compiler... the frontend devs invented compiler.... I can't, please... compiler for javascript, oh my days, this is too much!
+ So React is finally a framework now? 😅
+ react-nextjs still need more upgrade for SSR and client, we looking that after using nuxt/vueJs than react
+ it was better planned. I don't get why people are still using React. React is just patches upon patches
+ I love RuneScape runes... thank you Svelte. One could pose that React is like Runecrafting, the worst skill to max. Whereas other frameworks give you runes for free. Amazing.
+ I like React.
+ Good thing im only maintaining a todo app with react and Django with my main apps 😂
+ Why didn’t you add a cover sheet to your TPS report? Did you get the useMemo?
+ You should start using the latest logo of Angular
+ "To memoize or not to memoize.." 😂
+ how come flutter is never shown in these? that's the one i chose to learn
+)
+ memowize
+ in a lot cases using memo/callback is a skill issue of reaching for optimisation way before you need it. If you are having performance issues you should be addressing your state design first. So many times have I had to dig into a bug only to realise that the bug only exists because someone else didn't know or address the pitfalls of memo/callback/reducer.
+ I’m gonna say it ..
+React is turning into angular day by day
+ I literally watched the whole video without audio, and it still made sense
+ this is HUUUUUGe. Fu*@ useMemo and forwardRef.
+ does that mean courses based react gets updated again? I AM LEARNING REACT HAVENT STARTED HOOKS YET? SHOULD I LEARN IT OR SHOULD I LEARN NEW REACT 19
+ thanks for fixing React, really useful since AI can completely write my code for me
+ Let’s choose one single best and avoid the rest! Communism!
+ 🤮ngular
+ How is this better than php?
+ I always see this video after 1 day , stated in the video
+)
+ Here we go again
+ Angular is the way, the truth, the one true framework!
+ What does even Idris Elba have to do with React anyway?
+ Why would you do the Angular thing at the end? I finally had peace after 22 years of web development. And then you did the Angular thing at the end. I'm going to cry. I'm crying. (Waiting)
+ “I will see you in the next js one 😀”
+Hidden message to have nextjs great again.
+ Me who knows nothing but still has been patronized against react
+ So i should learn angular instead of react? Because react seems like a huge dumpsert fire. And as all the modern frameworks looks and acts the same just with different syntax, is it okay to learn Angular instead of react? (Currently i am learning web dev, and rn learning Vanilla JavaScript)
+ Even though DK effect is not proven to exist, if it was, then "arrogant and smug js developer" would be a prime example of it. Stick to making dynamic web menus, lol.
+ Wow. React easily removing syntax that it created. Some of the worst looking code I've seenn was with useMemo and forwardRefs... I'm using the latest ASAP if I ever work in React ever again.
+ I don't know what any of these words mean. I'm just here for the memes.
+ React is okay I guess
+ It is all for nothing. The majority of these web2 frameworks will be replaced by HTMX.
+ I skipped a lot of the JS wars after Angular. Doing C# Blazor now and shipping. Some JS sites are bigger than all of .Net downloading as wasm.
+ Isn't All that Already in Remix? 😂
+ flutter is pretty good guys
+ svelte must be king
+ Using use allows you to use 💀
+ Should I use angular or react
+ Compiler!
+ Svelte(Kit) instead
+ Everything will eventually evolve to Crabs, that's we all should start using rust for everything.
+24 the best part
+ I will stand with Solid or Svelte.
+ React has too many libraries to be replaced so shoutout to all the JS frameworks that think they could win the war. At least they keep pushing React to be better.
+ I just watched whole 4 minutes and still not sure what the author tries to say.
+ React in its infinite wisdom made so many contradictory choices and now when they so graciously remove their contradictions, we have to go back to our old codes and fix the mistakes that we never made. God, I wish I could just use Svelte at work so I could put an end to this madness or Vue.
+ Did google paid for this video?
+ React is the one true framework.
+ react is currently perfect, why need to change??
+ This guy speaks like ElevenLabs.
+/
+ bro at my job im the "memoize" guy, performance fixes everywhere, I feel like a rug is being pulled under me with these useMemo/useCallback changes lol
+ React was never great
+ BTW, are you already upgrade to react 18? 😂
+ It is REVERT.  It is not REVERT BACK.
+It is "reply".  It is not "reply back".
+It is "8am".  It is not "8am in the morning".
+It is "naked".  It is not "naked with no clothes on".
+
+
+( https://www.youtube.com/watch?v=4k6Xgjqkad4&t=179s )
+ He said Angular as a joke by the way... Asking an applicant about their favorite frontend framework, especially backend devs, is a really good way to gauge their IQ and aptitude for web development. If the answer isn't React or Vue, it's bad and if they insist on using Angular or Svelte, you know they are bad at their job and will bring toxicity to the workplace as well.
+ What's one of the powers of je? It's an interpreted language, you don't need a compiler. So let's add a compiler to make it "better" 🤯
+
+I don't get the compiler madness in js land.
+Don't even get me started about the brutal insanity of bundlers. That wrecks the usefulness of CDNs as each bundle now is unique per site...
+
+If you want a compiler, use a language that compiles to machine code.or go and put some effort in js modernization to add the features you need on a language level.
+ these videos make me realise i know sfa about react which in turns makes me depressed realising i'll forever be a basic bitch at an agency
+ Use memo seemed to be similar to "remember" at Jetpack Compose
+ React is trying to become Angular 😂😂😂 ok got it
+ Angular Master Race time is near
+ Web development has become so unreasonably convoluted, with so much gatekeeping. It is sad that someone wanting to get into it needs to choose a cult to follow. And, if you only decide to learn (well) HTML5, CSS and JS you're seen as a noob.
+ The one true framework already exists. It's called the DOM
+ Angular sucks!!! lol
+ the ending is hilarious, omg man lmao
+ So, when can I expect to use this?
+ Full circle
+ Damn I thought I will shift to next js
+ Let me see if I got it right. We’re gonna use use to avoid using useEffect where we used to use async functions. A lot of uses of “use” hahha
+ Nah
+ Taylor Otwell's Orange Lamborghini being synonymous with PHP since 2015 is hilarious
+ All hail Angular, our one true framework.
+ and by "you can already use actions in NextJS" you meant "you can already use actions the way React will implement them, in Remix"
+ Yesterday i learn "svelte", and now fireship says "react great again". 😑😮‍💨
+
+give me a break bro.
+ Does that mean they fixed useEffect dependencies as well?
+ Why can't we just write native html
+ Let's all move to Web components
+ After all these years it seems jQuery won the framework war
+ Hate still flows very easily on my end.
+ > Angular 
+😂
+ I will never understand why JavaScript is used on the server. Never. No one will ever convince me this was a good idea.
+37 Shout out to the Runescape runes!
+ Dlight js beats all them
+ omfg forwardRef was so dumb 😂😂😂😂😂😂😂😂
+ Still ain't using react.
+ yo dawg, i heard you like use*
+ I didn't understood a word of this video and this is what I love about programming. I can write all these cool C/C++ stuff but when it gets to web development I suck. There's so much more to learn, so much to get better at. Software Enginnering is amazing.
+ The gap between svelte and react stays, but for me is more important the gap between svelte kit and Next.
+Abstracted behavior instead of literal magic.
+ Escape the JS world when you still have the chance. Run!!!
+ another day being a proud vue js developer !
+ I'd be interested in your view of the rust framework leptos
+ I Malware Uchiha declare that you are the Best among all Tech You Tubers !
+
+
+Stand Proud Fireship, you are strong !!
+ While React developers are still configuring their environments, my PHP website has already been running for years.
+ They didnt drop ie 11 support for jquery 4 unfortunately
+ It's time to get rid of HTML and the DOM. The framework war will persist until that happens.
+ Angular is the only choice as the one true framework... everything else is just a subset of it.
+D
+ Oh look. Another major react release that applies more bullshit to fix all the issues caused by the other bullshit they've added in previous releases. At this point, React has become a giant pile of spaghetti and band-aids. 
+
+This is the same pattern other frameworks like Angular have followed, and it's a strong signal that React is dying the same slow painful death they are. I feel bad for developers that have accrued all the tech debt that comes with using it.
+
+0:38 Lol RIP IE11. You will not be missed.
+ I agree with your Angul
+ so Svelte killed itself by trying to become React while React stole the main thing that was great about Svelte........
+ I'm glad I pick HTMX
+57 we should hold a summit for this, wat do u say guys ?
+ All I hear is something someting Vue is amazing something.
+ wait i thought the trend is to not compile and not transpile, for a quicker iteration experience
+ Let's go Angular. 🦍🦍
+58 glitch
+ I ain't trusting anyone who doesn't use semi-colons
+ Next is how they made America great again pls
+ > thanks for watching and I will see you in the next js one
+😂😂😂😂
+ still dog
+ LMAO the way you shoved "angular" in
+ Thank god I dont work in web dev
+ True Angular Fanboy 🤣🤣
+ Just be a true gigachad and use ES2023 with no framework. This is the way.
+ Me not knowing memo was a thing and just having my dynamic web pages loading data hella slow
+ Angular!
+ Let me put some dirt into my eyes
+ how is jquery anything like react? jquery actually provides some new functionality rather than being completely useless like react is.
+ bruh HORSE TINDER 🔥
+ One true framework is not using framework at all.
+ my roman empire is the promise of frameworks to be a more streamlined way of development, only to grow into behemoths with its own convoluted learning curves and make you doubt if any of it was even worth it compared to just hand-wrenching vanilla JS with HTML/CSS
+)
+ HTMX, HTMZ, whatever to escape this JS misery
+ That mspaint character in the thumbnail gave me flashbacks of 2010 internet. But I can't quite pinpoint where it comes from? Was it a rage comics character?
+ fuck React
+ ANGULAR ON TOP 
+ Now add preprocessor stuff and I can finally program with something outside C family(and their pet rust)
+38 buying gf
+ you need code to fetch data and update data in the other side of your client dynamically?
+ TIL youse can sound like someone from philly when trying to explain react hooks
+ If I need to choose one framework that will be in browser it would be Qwic because how ahead it is or Vue because I work in it 😅
+ Almost 70% of websites use WordPress. WordPress uses jQuery.
+ Wake up babe, we don't have to use usehooks which we used to have functionality of using a usehook, now we just have to use use to use the promises as opposed to usehooks
+ At least with RSC, the Suspense boundary acts as an ErrorBoundary, if you want the error boundary to do something different, it needs to be inside of the suspense boundary. I agree that this is a pretty clunky API.
+ React is shit
+ Every day that passes all frameworks becomes more like the complete, Gigachad Angular.
+ no. don't support bloat that's making web absolutely miserable. to hell with any js bs, learn a real language.
+ By curiosity, how angular leads with the useMemo scenario?
+ I love how I don't even code (nor know how to) but am able to enjoy myself and understand what you are talking about!
+ That Angular namedrop was like Captain America's iconic pose of holding his shield up to his face
+ Yeah Angular is great, but I'm team Svelte
+Svelte and Solid are the ones bringing the right ideas to the scene, they should be the standard
+Watching this video made me realize that I didn't hate React enough, and that even with these improvements, it's still abhorent.
+ oh come on, a compiler? seriously?!
+ Hahhahahahahahah
+ I’ve been using solid for some time now, and when I looked at that unintuitive react code, I now remember why I never looked back.
+ Facecook ads panel still feels extremely slow as it always has been
+ One day python will make a frontend ui library with a compiler lol. It will be much more readable than this.
+ Still a flaming piece of GARBAGE. Svelte FTW!
+ "in the nextJS one"😂
+ React and nextjs nonsense has made me hate front end
+ Wait... is the compiler the big thing, or the compiler macros?
+ Think I'll just go rust with webassembly
+ Meanwhile I’m over here, waiting to pull the trigger on updating jQuery that exists to simply compliment my PHP/HTMX stack
+ "PHP without Lambos" killed me
+ Not even a developer - just a guy who messes with JS from time to time; but these editions kill me everytime. Congrats.
+ Looking at these weird React code snippets gave me so much joy knowing that I am developing web apps using Vue instead...
+ Really loved the composition in this video
+ return '<html>' WTF ? 
+Hate JSX syntax, love VUE SFC
+ "Memoize" is the dumbest word in all of development.
+ Just php with more steps
+ Bro I only just learnt what useMemo was and now it’s out of date 😭 this is why I hate react
+ CSR frameworks are stuck in a never-ending war over who can find the most obtuse, complicated, and over-engineered way of making a global variable
+ HTMX + Go Templ Supremacy FTW 🎉❤
+ As a Vue.js developer I only got half way through this video before my brain fell out.
+ Flutter
+ Cool, they caught up. Still have HTML in JS? Screw SoC/SoT amirite? React can get f'd, I'll stick with Vue 3.
+ jQuery will drop support for IE11, 90% of jquery users filing a lawsuit
+ You should do Elm in 100 seconds! It's very different to most JavaScript libraries but it has one of the most performant JavaScript compilers out there.
+ Not Angular
+ I can't believe I'm just finding your channel now. it's so good
+ Convergent evolution
+ Glad for news confirming react is continuing in the direction of something that doesn't exist in the future.
+ I died with mention of runes from runescape 😂
+ I lost you on 10th use
+ I will see you in the Next.js one
+ finally, but that means to learn from the ground up all the new things and not slip in the process, i'm hopeful to see this on react native
+ Ah... more friction 😂
+ In my eyes useMemo has always been the most unnecessarily complicated thing in the entirety of react.
+
+Good bless the coming generations of frontend devs never haveing to see that abomination in their first companie's codebase
+ Wow. A compiler. Space-age technology right there. What a joke. If only we had compiled languages, hmm.....
+ Long Live the One True Framework!
+ jQuery was ridiculously popular because everybody was using the same library and could go from project to project, unlike the JS framework environment that has many options where you have to deal with different frameworks using TS or older versions of the the framework.
+ I hate react so hard, and it always will be.
+
+Time to change job, frontend dev are pointless nowadays, it's insane.
+ "We have rewritten our code base nine times... this month"
+ angular made me chuckle
+ OFC if they choose a framework and built native support for it into the browser; you know someone will develop a framework for the framework
+ wow, I hated react just for the html in function, now I hate it more
+ Fireship's gotta be a secret groyper, right?
+03 Vaush Reference?
+ Finally 😅
+ Does anyone know any youtube channels or sources that don't have this same cringey distracting genz lolz kek editing? It's impossible to ignore how childish and cringey this editing style is.
+ They ruined it. Now magic syntax will show up.
+ I let out an audible "yes" when I saw forwardRef being removed
+ Angular would be great if you didnt need a team of 50 people to upkeep the codebase
+ Ok so?
+ I've been a dev for 20 years and to this day, I don't understand the need use layers of HTML/JS wrapper libs and frameworks over an already well-established, well-defined native language and DOM. Why do you need this stuff?
+ I'm all for (multiple) frameworks just being built into the browser. I was all for that years ago with jQuery.
+ Reactivity was the death of front end development. Jesus 'effin christ, updating UI state directly wasn't as complex as this!
+ Much ado about what will all be replaced by WebAssembly
+ Saddle Up!
+ is Angular still a thing?
+ Waaaaah, i get flashbacks from using react, hopefully the nightmares wound come back monakS
+ Angular changed API every major version, I hope that was a sick joke cause it worked.
+ React will always be a mistake. Just like angular.
+ hahahah the one true framework angular xD boy that thang used to kill my ram when I was coding with 4gb back in the day xD
+)
+ I thought you'd mention htmx at the end
+ doubt
+ The one true framework is Nuxt 3. Sveltekit was supposed to be the chosen one but they decided to take what made it unique and turn it into an over-engineered imitation of all the other frameworks.
+ 🔝‼
+ So many Russians with big arms in one video
+ Aren't JSX files already going through a compile step?
+ I'm not even a js developer, but I still watch these type of videos from you lol
+ love the runescape wink
+(
+ The last 10 seconds of the video is a masterpiece, hands down!
+ if (!name.eq("Rustact")) return;
+ A
+N
+G
+U
+L
+A
+R
+ 😂😂😂
+ Am I the only one who knows nothing about all he talked but still watch all the videos ? 
+Like one day I'm going to start becoming a programmer or something and I'll get everything he said
+ One framework to rule them all
+ rAIct
+ I don't understand any of this. Can someone explain why I keep watching?
+ Not even close to Svelte 5 but ok
+ "I'll see you in the nextjs one" 😭
+ Oh dear lord, not Angular!
+ The hedonistic treadmill of believing that one more JS framework revision will make us happy. 🫠
+ "using use allows you to use" 🤡
+ so this implies that react was great?
+ Angular LOL
+ My experience with React ends at 18. I can't even cover all the new hooks that provided by the React and Next.js, let alone all those other messy hooks by the third parties. Probably I would just use htmx with Go or even simply the Jinja template haha...
+ "Angular is having a renessaince" "react is great again"
+
+Nah I'm done with frameworks that require an arm and a leg. Just give me Alpine.js with the Pinecone router and let me write some code in the HTML and I'm good.
+ The Angular in the end got me rolling haha
+ Angular for the win!
+ Man, I'm more of a python person, waiting for it to become more popular
+ Next.js is the new Angular (of old)
+ I loved RuneScape so bad
+ No. HTML should be extended into HTMX & then make frameworks to target that.
+ continues to be confusing af lmao
+ When will cross shadow root aria delegation come.
+I will never use any of these shit frameworks again
+ It would be even funnier if at then you said "KnockoutJS" instead of Angular.
+ Isn't solid just the best? Im not frontend developer, but for me solidjs is the only thing frontend developer needs. And looks easier than react.
+37 Svelte 4 makes runes optional - dollar sign syntax is optional
+ For anyone thinking "oh, a compiler, that just like <insert non-interpreted language>", unfortunately React, Svelte and Solid's use of the word "compiler" is just marketing. An actual compiler "compiles" to machine code, i.e. 010101.. you get the point, while what React, Svelte and Solid merely processes text and inserts statements. That in itself is nothing to scuff at, and honestly the only way to go ihmo to provide the best possible abstractions, but it does annoy me a lot that they either don't know what a compiler is (which I doubt) or chooses to mislabel their technology. 
+For anyone not familiar with what a compiler consists of, let me summarize as it as lifetimes of human labour and some of the most intricate and advanced systems-level programming. Saying that a fancy text pre-processor is a compiler is kind of insulting. 
+With that said, I'm an avid Svelte fan and have enjoyed much of what their "compiler" offers. I just wished they didn't try and market it as something it is not.
+ Doesn't the computed function in Vue use Signals, at runtime, to do the memoization? Signals are also available for React, and has the useComputed hook.
+ I like alpine.js haters gonna hate, but i like it
+ I'm confused, I have to run node on the server to get react server functionality? How is this good?
+ Electric clojure anyone?
+ So they have buffed react finally. It's in meta again
+ Angular ftw!
+ my favorite part was the scrubs reference
+ Duct tape on dumpster fire of an ecosystem
+ I Reacted
+ So true!! 😂 why did we build 7 times the exact same thing! just imagine how much further along we could have been if we'd poured all of our efforts into just one of them...
+ I don't mind, even welcome the simplification compiler brings into everyday life.
+
+I did however like the verbosity and deliberate use of specific patterns via hooks, though only with IDE support for the dependency array (which comes from compilation so my argument is kinda mute). I liked it mostly because it brings developer "closer" to what is actually happening, because sad truth is that there is... a number of essentially braindead codemonkeys just copying various stuff with no thought how it actually all works together...
+ omfg
+ Someone had to say it! Angular will rule them all❤
+ 2025 apples mlx will replace all low level langs with no code ai 💀
+ I was a jquery junkie, I was like give me all that jquery goodness until I learned js.  Now I'm Not sure I even care about this update yet.
+ I still hate react😂
+ compiler
+i hardly know ‘er
+ Well since React is famously not a framework, I guess it's not going to be the one true framework we put into the browser.
+ Angular had its chance, but blew it with 1.x
+
+Want me to even try Angular? Rebrand xD
+ Angular all the way babe
+ where do that take you? Back to me
+ React switched back to javascript?
+ RuneScape gnome gets me every time. One of us!
+ Developers! Developers! Developers! Developers!
+ Using use allows you to use use
+)
+ let them fight
+ "I like your words, funny man"
+ HTMX + JQ4 is the new standard
+ I've been happy more frequently and then I realized it's because you are back releasing videos more frequently😇 
+I see you in the Next.js one 🤣
+
+Oh, a compiler. That's cute
+D
+ that angular came in like a glitch in the matrix... I'm almost afraid to find a black cat outside
+ Damn it feels good to not be a webdev.
+ That was the most useless memo I've ever seen
+ Where the fuck do you find these cursed ass images like the mutant who is flexing?
+D and i agree
+ PHP but without lambos 🤣
+ Handling promises using simple nesting instead of massive then-catch forms is huge. Finally my code can look a little less shit.
+ VVVVVVUUUUUUUUUUUUUUUUUUUUUUUEEEEEEEEEEEEEEEEEE
+ The one true framework is jQuery, it's still alive.
+ Svelte is just good enough for a simple website developer like me. Many of these new frameworks are jsut so convoluted with made-up weird syntax to accomplish simple things. 
+Simplicity is peak.
+ F*ck I hate react
+ regardless the most important thing is the money LMAO
+ Props to the humor in this one,
+wise cracks just went too hard, even had a few spit takes here and there.
+ Is instagram written in react native? All of it?
+ oh man, that title could get you some weird ass comments
+ Tried both Angular and React and I prefere React.. I hope the js framework war is over now..
+3
+ I honestly found Angular the easiest and most intuitive to learn, and also love its “reactive” approach of thinking in streams.❤
+ React still sucks
+ You lost me on "They fixed React"
+ Angular sucks. That's all I wanted to say
+ can you make a video on livewire?
+ Now the only thing missing is.. Replacing javascript in the browsers with a proper language. This is the only way to fix web development.
+ none of those millions of Wordpress sites will see an updated version of jquery
+ The timing of this video couldn’t be better for me. Our company just decided we need to be using react. But the product and team I work on is written in Angular 😢
+ did you use AI to record the voice over? idk if im going insane but it sounds slightly different from other videos
+ Vanilla js FTW
+ Make react great again 2025
+ Man the adderall is trying to shove all the information im hearing into my brain but im not understanding a thing
+ also useeffect is just fine. people are just too stupid to learn react
+04 time to revive AngularDart!
+ react is the best framework hands down. react was never bad.
+ Yes! Exactly! Make programing great again
+ Can we all agree that one true framework is Jquery
+ Zuckerberg is becoming more human day by day by fixing react
+ Yes angular.
+ Yeah sure react19, when half of your obscure libraries stopped updating with 16.x 😂
+
+ Not Angular
+ so its a good time to learn react
+ The whole frontend framework scene is a complete shitshow, and I thank the gods that HTMX has gained popularity to save us from it.
+ Ok, but why it could be angular the one true framework?
+
+
+📌 The React team has introduced a compiler that will improve developer experience by simplifying code and enhancing performance.
+
+🧐 React is eliminating features like useMemo, forwardRef, and server actions, streamlining the development process and making the code cleaner.
+
+🚀 The React updates also include improvements in handling promises, making asynchronous operations more efficient and easier to manage in components.
+
+💡 Additional Insights and Observations:
+
+💬 "React intentionally adds bad APIs like useMemo just to look like geniuses when they remove them later on."
+📊 React's compiler will likely bring solid performance improvements and simplify code for developers.
+🌐 The React updates align with industry trends of simplifying and streamlining frontend development frameworks.
+
+📣 Concluding Remarks:
+
+The React team's introduction of a compiler and the removal of certain features like useMemo and forwardRef signal significant improvements in developer experience and code efficiency. These updates align React more closely with other frameworks, indicating a convergence in frontend development practices.
+Generated using TalkBud
+ fourteen frameworks with similar APIs... Now there's a challenge! Maybe one day we'll see a super-framework that combines the best of them all. Innovation knows no bounds!
+ See you in NEXT.js ONE! This Little things that get you caught...
+ Thought this was gonna be about the Fine bros
+ No thanks, HTMX is the way.
+ One day i will understand what hes talking about
+But today is not that day
+ before watching...  is react === vue already?
+ In Angular we trust
+ Until they get rid of the vdom, they have not fixed it.
+ Svelte rulez
+ Who here thought he was talking about the FineBros?
+ Is angular better?
+ Agaiiin ?
+//youtu.be/4k6Xgjqkad4?t=148 Did you make a reference to lockbit's admin response LOL
+ whats fucking crazy is react doesnt have 2 way binding natively while even angular has it
+ Fuck React
+ "but using 'use' allows you to use"
+ Probably they started working on compiler the day Svelte introduced it.
+ Angular supremacy
+ Just make an awesome product. Don't worry about the framework.
+ God I hate angular, I had to build dynamic nested forms with it as a newbie on the framework and god damn laying on nails would have been more pleasant than that.
+ I like your funny words magic mam!
+ Just leave the DOM and be Ceeing you later 😂
+ As someone trying to learn React and wondering if it was the wrong decision, I see this as an absolute win
+ You never make as many videos on Angular as you make on React and Svelte. Is Angular that bad?
+ Nothing is fixed, they're only trying to look less shitty. As usual , hyped words like "compiler", which literally means absolutely nothing for React, as absolutely nothing has changed or will ever change to make it "compiled". This is even stated on the ReactTraining website, they confess it's just propaganda. This update is a statement of how awful React is, and how many mistakes they've made naive devs repeat again and again, saying it's the best thing, for nothing. Anyone excited for this is like a slave happy because the whip banging on his back changed colors. What a bunch of bullcrap.
+ I've never used useMemo() or useCallback() in my code before. For some reason, I've never needed them. I don't see any performance problem with the kind of apps I buil. Glad they're going removed
+ Not sure I understand all the hate around React. I've found it's the simpliest of the view engines to use and is the closest to plain old Javascript. Angular is more of a kitchen sink type framework and does a lot more than I normally need or want. I'm also not a fan of using special characters for syntax.
+57 - man I wish these platforms used the poop emoji instead of dislike button. Or at least put it as a third option after Like and dislike. So you have things you like, things you dislike but are not shit and things that are shit. Fireship is a genius.
+ We've come full circle now. It's becoming popular to compile scripting languages. Hilarious!
+ So basically react wants to be svelte, and svelte wants to be like react smh
+ Angular is 👑
+ It would be cool if, at the end of the video, it would select a framework of the bunch at random as the "One true framework, embedded into the browser" just to stir up the pot haha
+ We got Steve Balmerd...
+ Instagram is the buggiest app ever bro
+37 jQuery dropped IE10 support it still supports IE11
+ Vue is not using a compiler. It's based on @vue/reactivity that make a massive use of native ECMAScript Proxy objects.
+AlpineJS is also based on Proxy since it uses @vue/reactivity
+Yes it's slow (about 2 times slower) but unless you're coding 3D rendering with BabylonJS for example, you don't care.
+Proxy : This Is The Way
+ Vue doesn't need a compiler................................................ React is old and corny..............................................
+09
+ There are 15 competing frameworks, let's combine them all into one framework to rule them all.  There are 16 competing frameworks. (credit to xkcd)
+
+Just use whatever
+ I'm currently learning Angular and it's nice, kinda do prefer Vue (but it has its ugliness for sure) but React is still React aka hot garbage.
+ Job posting being like “5+ years of experience React” but they’re using a React that’s 6 years old and any developer who learned React 17 will struggle to downgrade the features he’s used to.
+ React is legacy, just as jQuery. Anyone doing React forward is nuts.
+ so excited to use React 19
+ Are you okay man? You sound sick and more tired of life than usual 😕
+ React <> Great
+ The One True Framework is not Framework
+return to MONKEY!
+ ->compiling js, eww disgusting, just use vanilla and if you want to compile use wasm goddamit
+ As someone kinda locked to react for a few years, this is great news! Hope it releases soon, and propegates to expo before i die of age.
+ Informational with just the right amount of memes. Nice
+ Angular for the One True Framework! ✊🏻
+ Memoization 🤌
+ I rather work with HTMLx than React
+ React still has too many issues that simply don't exist in Angular.
+
+It has a lot of meta programming that make no sense to someone unfamiliar with React.
+Angular has no meta programming in feature code, if done right.
+ Why not just use HTML, CSS and invent a brand new language instead of JS?? There has to be something better than JS and JS Frameworks for the frontend? Right??
+ Important question, will this help me get a job now? Particularly using Laravel??
+ they are trying to cope with the fact that solidjs is just plain better
+ Orrrr.... we just use web components
+ Still not going back to writing React. Svelte for life 💯💯
+ I'm thinking of developing my own framework with polyglot components so that they literally all mixed up
+ I understand NOTHING but good they did it great again?
+ Imagine living in a world where you have to explain what the word "compiler" means.
+ Make React great again.
+ So they just copy the homework of EVERY OTHER JS FRAMEWORK.
+Like they did with the Folder Structure copy/pasta from vue&svelte .. took them 7years for such obviously needed feature.
+ That Angular at last, OMG 😂😂😂 damn!
+ angular is almost as ugly as php...
+ Hey how do you find tech news? as in what specific sources do you use? 
+
+personally, I ofcourse use this channel but I'd like to get the news when the maker of this video gets it too. as opposed to getting it after he makes a video and post about it.
+ y'all make web development so complicated when it doesnt have to be 😂😅😂
+ They are all turning into crabs
+ 💪Svelte.
+ So.... seperation of concern is still a Chad concept?   React =.asp 2024
+ Can you shed light on why exactly they chose to make Svelte 5 more convoluted in syntax?
+ wtf?? this still sucks
+ I just find it hilarious that to write "modern" JavaScript (an interpreted language) you need a compiler
+ React has to compile features that Solid does without a compiler... Ryan Carniato is a genius.
+ todays my dad's birthday
+ again? Haha. was it ever good to begin with?
+ I hope that means React devs will stop repeating "it's just javascript" nonsense
+ The fact that they added in a few years ago and are now refactoring to not need useMemo just goes to show that React is inferior when compared to Angular. But I bet you that won't stop the huge number of jobs for it instead of Angular or Vue. Ugh.
+ Laughed at Angular lmfao NO only NO
+ You either die a hero, or live long enough to become PHP.
+ One True Framework *angular*
+ We should admit those tgings are too complicated for our todo apps
+ as a former svelte developer working now with react, thank the lord!
+ Year 5 of watching programming videos while not learning programming and not being programmer
+ We have fourteen different frameworks with similar APIs. Just build one that combines all of them in one and it'll be fine!
+ Called it. I knew Svelte's precompiled approach would start getting adopted by the other frameworks. I kind of hoped it would be Vue first, but Vue needs it the least since they already have "define" macros.
+ And when you use Vanilla Javascript you are bypassing all those updates and rewrites for decades and nothing breaks or gets outdated.
+ fuck angular 😂
+ Aaaaah, nice one at the end there ;p
+ Before I start watching... Did they remove useEffect or not?
+ Hurts to see fireship ignoring all improvements Angular is getting
+ I browser HorseTinder and led me nowhere, @Fireship can you make it happen?.
+ Thanks goodness for forwardRef going away.
+ So you are telling me that I wasted a whole night learning these useless things(i drank 1.5 ltrs coffee, welp!)
+ I moved to Blazor. It’s a better framework for me.
+ So basically programming is just JS frameworks now. got it.
+ SolidJS is still years ahead of React and Svelte
+ That image of instagram when it was great; no putiselfies but just cool photography stuff
+ I don't even care at this point because I know if I want to use React, troubleshooting is a matter of sifting through a decade of irrelevant docs/solutions which no longer apply. I can think of no worse fate.
+ I like SwiftUI. I hate Reddit. Why don't we use regular forums?
+ Alright, hear me out. Angular. Is actually okay.
+ I wonder what effects these changes in React will have on the React Native side of things moving forward. Not every change is applicable, but then again, if the core APIs start to differ to much then React Native will lose a lot of its selling point in that it's "one code base" for three (or more) targets.
+ betterjs still good
+ jQuery 4?! Next you'll tell me GreenSock is back.
+ Great video as always. BTW, I think Astro could become the only true framework.
+ No more "forwardRef"!!! Praise the makers!! ...... or "FU makers for adding it in the first place".... either way, it's goooooone!!
+ As being someone who hated Angular, especially in its early days, I cannot tell you how much I'd prefer to use it over React, now.
+ SvelteKit, NextJS or Solid. Thanks.
+ Angulaaarly stupid opinion.
+ Yaaay, more time to bill for changing things that don’t actually bring any value to the customer! 🎉❤ thank you frameworks
+ please for the love of god, not angular
+ 🤣THIS IS PURE COMEDY!!! This vid made my day LOL 👏👏👏👏👏
+ my company still stuck on React 16 🥲
+ Everytime an interesting new React version comes out SharePoint developers shed a silent tear.
+ memoization is memorization in uwu speech
+ use using use use effect compiler
+ HTMX GOES BRRRRR
+ Something interesting, I don't think Vue's reactivity is achieved because of the compiler. If you console log a ref or reactive at runtime you can see the getters and setters are wrapped with some other calls that binds the reactivity. Which means your reactive code can be dynamic at runtime. Wild
+ You'll do one push up for every like this comment gets!
+ what's all this gibberish
+ I don't care, it's just that most job offers say "React". And now after trying to learn react in a 10 hour basic course I had to jump ship almost immediately because I realised Idfk what I'm doing with Node, so now I'm on a 10 hour basic course for Node.js....
+ i accidentally spit water on myself at the mention of angular becoming the one true framework
+ Fireship is a problem (not that im complaining)
+ Google could integrate angular in chromium and make it fast as hell, they are all powerful
+ Fuck, I actually might learn react
+ I hate coding i am gonna learn svelte
+ Still switching all my team development to SolidJS
+ I think that's nature really. Frameworks start to adopt and transform to what has shown to work best. We end up with less variety, but that's really whats happening everywhere anywhere.
+ was this generated by AI??
+ it feels like this video has an AI voice.
+ It’s always use but why not give? Does programming have to be so selfish? I hope one day we can have a more moral programming language. By being less sinful, we guarantee our programs will run faster and code will be more readable. Who’s with me on this?
+)
+ React still garbage and Svelte still goated 💪
+ 16 minutes damn im late
+ Svelte FTW
+ laravel htmx gang rise up
+reject cringe DOM abstraction, embrace php and smol clean js
+ Using React is like pulling teeth, but made bareable by the fact that I only need to pull teeth once or twice, and then I can just reference old projects and components that I've made. 
+
+I feel like the way React is evolving, if I'm not strictly a "React Developer" as my full time job or hobby, trying to understand the different syntax changes is difficult... This is more true as if I'm not actively building a project in React, my boilerplate knowledge fades quickly. It sucks when I need to do technicals in React as well :(
+ Angular? Unsub now.
+ it never was.
+ So they are afraid of next.js?
+
+React: *&^%^#$&@#
+2024:
+React: I can compile now.
+Svelte: Finally we can talk.
+ A bit puzzled how being an Angular enjoyer like myself you barely ever mention it in the framework comparisons. Angular signals were a perfect candidate here when comparing state management
+ Bro. This could not have come at a worse moment.
+I just finished a HUGE MF REFACTOR where I memoized and useCallbacked EVERYTHING.
+Bro.
+BROOOOO.
+😭
+ loved the ending!!
+ How about we just Go with htmx?
+ ANGULAR FTW
+ Crazy how i look at these Videos and dont understand a THING. but either way great Content 👍
+ Thank you but no. React is still a big, steaming pile of ...
+ See u in the next.js one! XD
+ Hello world!
+ So. I actually like the hook system. There's few things I hate than automagic hidden logic.
+It's unintuitive and creates a worse barrier to entry than just learning hooks.
+And at some point in the process of using it, you'll inevitably end up butting heads with that hidden logic system.
+But, I will remain hopeful that this is a good thing, because if it works well, it will be great.
+ Muahahahaha yes!!!
+ At this point, i don’t know if react is a UI library or a template engine 🙃
+ LETS GOOO
+ The one true framework will be JQuery 5
+ Great video and I’m not even sugarcoating it
+ For me it’s SolidJS (wish it had more usage) for smaller or test projects and Angular for projects that will be large right off the bat or have a large amount of developers working on them. I personally am still not sold on the SSR frameworks; I’d rather split the concerns of backend and front end.
+ All hail Angular!
+ Came for the ai memes. Leave dissapointed 😂
+ We need React AI next 😂
+ use this use that use use use
+ well there goes all the time wasted learning hooks XD
+ I've been wondering why they don't just build these frameworks into the browser already.
+ I see what you did there. 😂
+In the Next.js one 😂
+ Blazor >>>> all
+ if next time you didn't said the use use joke ill fkg unsubscribe the channel
+ I already lost my shit at "That's right, I use React" part
+ Every framework over js has run full circle to the same thing, the thing that it set out to replace in the first place.
+ horsetinder???😂😂😂
+ And here I thought ReactOS had something to announce...
+ Will this affect Lebron’s legacy?
+ Next js one? Clever.
+ I'm sure if the react devs just keep adding hooks then the syntax will get less complex eventually lmfao
+ HTMX entered the chat
+ Are you gonna update the Next course to 14.1?
+ I dont understand a single thing, but the editing goes hard and is hilarious
+ Angular > React
+ will this kill svelte?
+ And so, the framework wars begins? Concludes? Loops?
+ AFAIK Vue doesn't need a compiler for computed, it tracks the dependencies at runtime.
+ That's true 😂
+All the frameworks are becoming the same.
+ Non-coder still watching coz I love the voice of him 😂❤
+ will ultimate framework be a webcomponents v2 ?
+ Day 1 of not saying AI in the video
+ ... upon we decide one true framewANGULARk...
+ One of react updates of all time
+ I don't understand anything and it still is some of the most entertaining stuff on yt
+ "thanks for watching and I will see you in the nextjs one"
+ OMG
+ Under a min
+
+Look at what they have to do to mimic a fraction of our power
+ Didn’t expect to see here come dat boi
+ THEY ACTUALLY MRGA!!!
+ 👍
+ Tight Tight Tight
+ A non AI video!? Someone pinch me
+ Somebody said "Make React Great Again" like this aint America
+ Hugging face in 100 seconds plzz
+ Will that affect React Native though?
+ jQuery mentioned
+ 28 years trying to fix Javascript!! Hoorah!!
+ I Reacted very positively to this news
+ New fire ship video ❤
+ A compiler
+ Thank you for everything my code journey will be much harder ❤❤❤
+ Hello
+ Fastest hand on the west was here
+ Make React Great Again
+ Woah what is this about?
+ bro wtf are these s.x bots in your comments bro 
+
+anywho great video i loved using react but stopped
+ jQuery 4 still supports IE11 but not any older versions - jQuery 5 will drop IE11 (hype!)
+ No way 1 minute ago
+ who's here in under a minute?
+ 8th
+
+ I've never seen a video say no views before
+ yoo
+ Not First but close
+ Wut
+ כןרדטאק
+טדרג
+ Wow.. kct
+ I love react
+ first
+ First pin me
+ First
+ 19sec
+ 2nd 😂😂
+ First 🥇
+ Wow now fix it again
+ cool video, watched it all
+ Thank you very much for your creativity. Your videos clearly stand out among many.🏵😈🏓
+ First 🔥
+ I watch your channel with pleasure. Your videos are a great combination of entertainment and useful information.🐈🍊🥭
+ 1st
+ I accidentally clicked on the YouTube notification on my phone so here I am. I don’t kind.
+ First 🎉
+ First
+ A symphony of intellect and humor; a seamless fusion that resonates with the soul of every viewer.🍓
+ No way
+ First
+ First
+ first comment
+ damn I'm early
+ react
