@@ -27,4 +27,4 @@ def remove_watermark(pdf_path, output_path):
 
 
 # Example usage
-remove_watermark("/tmp/page_1.pdf", "output-no-watermark.pdf")
+remove_watermark("/home/jenny/Downloads/blank-Pdf-1-1.pdf", "output-no-watermark.pdf")
