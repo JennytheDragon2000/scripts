@@ -73,35 +73,35 @@ for page in doc:
         page.add_redact_annot(bounding_box)
 
         # print("----------------------------------")
-    page.apply_redactions(images=fitz.PDF_REDACT_IMAGE_NONE)
+    # page.apply_redactions(images=fitz.PDF_REDACT_IMAGE_NONE)
 
-    for i in separated_blocks:
-        # Initialize the bounding box variables
-        min_x = float("inf")
-        min_y = float("inf")
-        max_x = float("-inf")
-        max_y = float("-inf")
-
-        line = []
-        for p in i:
-            x0, y0, x1, y1, text, *_ = p
-            line.append(text)
-            min_x = min(min_x, x0)
-            min_y = min(min_y, y0)
-            max_x = max(max_x, x1)
-            max_y = max(max_y, y1)
-
-        full_text = " ".join(line)
-        print(full_text)
-        # Create the bounding box
-        bounding_box = fitz.Rect(min_x, min_y, max_x, max_y)
-
-        tamil_text = "வணக்கம், உலகம்!வணக்கம், உலகம்!வணக்கம், உலகம்!வணக்கம், உலகம்!"
-
-        # Insert the Tamil text into the rectangle
-        page.insert_htmlbox(
-            bounding_box, tamil_text, css="* {font-family: sans-serif; font-size:11px;}"
-        )
+    # for i in separated_blocks:
+    #     # Initialize the bounding box variables
+    #     min_x = float("inf")
+    #     min_y = float("inf")
+    #     max_x = float("-inf")
+    #     max_y = float("-inf")
+    #
+    #     line = []
+    #     for p in i:
+    #         x0, y0, x1, y1, text, *_ = p
+    #         line.append(text)
+    #         min_x = min(min_x, x0)
+    #         min_y = min(min_y, y0)
+    #         max_x = max(max_x, x1)
+    #         max_y = max(max_y, y1)
+    #
+    #     full_text = " ".join(line)
+    #     print(full_text)
+    #     # Create the bounding box
+    #     bounding_box = fitz.Rect(min_x, min_y, max_x, max_y)
+    #
+    #     tamil_text = "வணக்கம், உலகம்!வணக்கம், உலகம்!வணக்கம், உலகம்!வணக்கம், உலகம்!"
+    #
+    #     # Insert the Tamil text into the rectangle
+    #     page.insert_htmlbox(
+    #         bounding_box, tamil_text, css="* {font-family: sans-serif; font-size:11px;}"
+    #     )
 
 
 # Save the modified PDF

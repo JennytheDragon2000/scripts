@@ -20,7 +20,7 @@ declare -a options=(
 "polybar - $HOME/.config/polybar/config.ini"
 "qutebrowser - $HOME/.config/qutebrowser/config.py"
 "kitty - $HOME/.config/kitty/kitty.conf"
-"tmux - $HOME/.tmux.conf"
+"tmux - $HOME/.config/tmux/tmux.conf"
 "mpv - $HOME/.config/mpv/mpv.conf"
 "mpvInputs - $HOME/.config/mpv/input.conf"
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
