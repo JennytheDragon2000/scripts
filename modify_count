@@ -1,0 +1,51 @@
+
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 [increase|decrease] <value>"
+  exit 1
+fi
+
+# File path
+file_path="/home/jenny/count.txt"
+
+# Read the current value from the file
+if [ ! -f "$file_path" ]; then
+  echo "Error: $file_path not found!"
+  exit 1
+fi
+
+current_value=$(cat "$file_path")
+
+# Check if the current value is a valid number
+if ! [[ "$current_value" =~ ^[0-9]+$ ]]; then
+  echo "Error: $file_path does not contain a valid number!"
+  exit 1
+fi
+
+# Perform the operation based on the provided argument
+operation=$1
+value=$2
+
+if ! [[ "$value" =~ ^[0-9]+$ ]]; then
+  echo "Error: The value must be a positive integer!"
+  exit 1
+fi
+
+if [ "$operation" == "increase" ]; then
+  new_value=$((current_value + value))
+elif [ "$operation" == "decrease" ]; then
+  new_value=$((current_value - value))
+  if [ "$new_value" -lt 0 ]; then
+    new_value=0
+  fi
+else
+  echo "Error: Invalid operation! Use 'increase' or 'decrease'."
+  exit 1
+fi
+
+# Write the new value to the file
+echo "$new_value" > "$file_path"
+echo "The new value is $new_value."
+

@@ -10,6 +10,7 @@ aai.settings.api_key = "54f7cd570f054d41afce93000bbf56f2"
 transcriber = aai.Transcriber()
 
 transcript = transcriber.transcribe(audio_file_name)
+
 # transcript = transcriber.transcribe("./my-local-audio-file.wav")
 subtitles = transcript.export_subtitles_srt()
 

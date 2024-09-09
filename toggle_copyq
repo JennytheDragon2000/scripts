@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if CopyQ is currently running
+if pgrep -f "copyq" > /dev/null; then
+    # If CopyQ is running, hide the window
+    copyq hide
+else
+    # If CopyQ is not running, show the window
+    copyq show
+fi
+

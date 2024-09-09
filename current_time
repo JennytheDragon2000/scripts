@@ -1,0 +1,5 @@
+#!/bin/bash
+
+current_time=$(date +"%A, %B %d, %Y %I:%M %p")
+notify-send "Current Time" "$current_time"
+

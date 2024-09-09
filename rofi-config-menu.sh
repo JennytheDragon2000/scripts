@@ -2,6 +2,8 @@
 
 # DMEDITOR="alacritty -e nvim"
 DMEDITOR="kitty -e nvim"
+# DMEDITOR="tmux new-window -n 'Config' '$EDITOR'"
+
 HOME="/home/jenny"
 
 declare -a options=(
@@ -29,6 +31,7 @@ declare -a options=(
 "fish - $HOME/.config/fish/config.fish"
 "kmonad  - /opt/kmonad/config.kbd"
 "proxychains  - /etc/proxychains.conf"
+"espanso  - $HOME/.config/espanso/match/base.yml"
 
 
 

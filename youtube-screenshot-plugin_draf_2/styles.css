@@ -1,0 +1,42 @@
+body {
+  width: 400px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+#result {
+  margin-top: 10px;
+}
+
+#noteInput {
+  width: 100%;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.saved-note {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.saved-note img {
+  max-width: 100%;
+  margin-bottom: 5px;
+}
+
+.deleteNoteBtn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
