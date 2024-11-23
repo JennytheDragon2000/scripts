@@ -1,5 +1,5 @@
 #!/bin/bash
 
-ffmpeg -y -i "$1" -vn -acodec aac "${1%.*}.aac"
+ffmpeg -i "$1" "${1%.*}.mp3"
 
 

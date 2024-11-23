@@ -45,7 +45,8 @@ else:
 home_dir = os.path.expanduser("~")
 print(home_dir)
 
-target_directory = f"{home_dir}/Documents/Obsidian-Vault/brandNew/{result}"
+# target_directory = f"{home_dir}/Documents/Obsidian-Vault/brandNew/{result}"
+target_directory = f"{home_dir}/Videos/brandNew-backup/{result}"
 print(target_directory)
 
 
