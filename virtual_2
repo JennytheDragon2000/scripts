@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if xrandr --listactivemonitors | grep -q 'eDP-1~1'; then
+    echo "Updating virtual monitors..."
+    xrandr --setmonitor eDP-1~1 1920/344x1080/193+0+0 eDP-1
+    xrandr --setmonitor eDP-1~2 1920/344x1080/193+0+0 none
+else
+    echo "Creating virtual monitors..."
+    xrandr --setmonitor eDP-1~1 1920/344x1080/193+0+0 eDP-1
+    xrandr --setmonitor eDP-1~2 1920/344x1080/193+0+0 none
+fi
+
