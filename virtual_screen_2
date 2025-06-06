@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if xrandr --listactivemonitors | grep -q 'eDP-1~1'; then
+    echo "Virtual monitors already exist. Updating..."
+    # xrandr --setmonitor eDP-1~1 960/154x1080/193+0+0 eDP-1
+    # xrandr --setmonitor eDP-1~2 960/154x1080/193+960+0 none
+    # xrandr --fb 1920x1080
+
+    xrandr --delmonitor eDP-1~1
+    xrandr --delmonitor eDP-1~2
+
+else
+    echo "Creating virtual monitors..."
+    xrandr --setmonitor eDP-1~1 960/154x1080/193+0+0 eDP-1
+    xrandr --setmonitor eDP-1~2 960/154x1080/193+960+0 none
+    xrandr --fb 1920x1080
+fi
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if xrandr --listactivemonitors | grep -q 'eDP-1~1'; then
+    echo "Virtual monitors already exist. Removing..."
+    xrandr --delmonitor eDP-1~1
+    xrandr --delmonitor eDP-1~2
+    xrandr --fb 1920x1080
+else
+    echo "Creating vertical virtual monitors (2/3 top, 1/3 bottom)..."
+
+    # Top virtual monitor (2/3 of height)
+    xrandr --setmonitor eDP-1~1 1920/344x720/129+0+0 eDP-1
+
+    # Bottom virtual monitor (1/3 of height)
+    xrandr --setmonitor eDP-1~2 1920/344x360/64+0+720 none
+
+    # Set full framebuffer
+    xrandr --fb 1920x1080
+fi
+

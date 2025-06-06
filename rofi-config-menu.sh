@@ -32,6 +32,7 @@ declare -a options=(
 "kmonad  - /opt/kmonad/config.kbd"
 "proxychains  - /etc/proxychains.conf"
 "espanso  - $HOME/.config/espanso/match/base.yml"
+"yazi  - $HOME/.config/yazi/yazi.toml"
 
 
 
