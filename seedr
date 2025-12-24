@@ -1,30 +1,4 @@
 #!/bin/bash
 
-# Seedr MPV Player Script
-# Usage: ./seedr-play.sh "URL"
+mpv --ytdl=no --referrer="https://www.seedr.cc/" "$1"
 
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 \"SEEDR_URL\""
-    echo "Example: $0 \"https://nw23.seedr.cc/ff_get/5757065703/video.mp4?st=token&e=expiry\""
-    exit 1
-fi
-
-URL="$1"
-
-# Check if URL is from seedr.cc
-if [[ ! "$URL" =~ seedr\.cc ]]; then
-    echo "Warning: This script is optimized for Seedr links"
-    echo "Attempting to play anyway..."
-fi
-
-# Play with mpv using optimal settings for Seedr
-exec mpv \
-    --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-    --referrer="https://www.seedr.cc/" \
-    --ytdl=no \
-    --network-timeout=30 \
-    --cache=yes \
-    --demuxer-max-bytes=50M \
-    --demuxer-readahead-secs=20 \
-    --keep-open=yes \
-    "$URL"
