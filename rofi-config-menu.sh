@@ -33,6 +33,7 @@ declare -a options=(
 "proxychains  - /etc/proxychains.conf"
 "espanso  - $HOME/.config/espanso/match/base.yml"
 "yazi  - $HOME/.config/yazi/yazi.toml"
+"hosts  - /etc/hosts"
 
 
 
